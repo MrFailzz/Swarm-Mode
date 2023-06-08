@@ -1,0 +1,742 @@
+///////////////////////////////////////////////
+//                PLAYER CARDS               //
+///////////////////////////////////////////////
+IncludeScript("swarm/swarm_playercards_stocks");
+
+//Equipped Cards
+::p1Cards <- {};
+::p2Cards <- {};
+::p3Cards <- {};
+::p4Cards <- {};
+
+if (survivorSet == 1)
+{
+	p1Cards["Bill"] <- 1;
+	p2Cards["Zoey"] <- 1;
+	p3Cards["Louis"] <- 1;
+	p4Cards["Francis"] <- 1;
+}
+else
+{
+	p1Cards["Nick"] <- 1;
+	p2Cards["Rochelle"] <- 1;
+	p3Cards["Coach"] <- 1;
+	p4Cards["Ellis"] <- 1;
+}
+
+//Card Picking
+cardsPerCategory <- 2;
+
+//Can each player pick a card
+cardPickingAllowed <- [false, false, false, false];
+
+reflexCardsPick <- array(cardsPerCategory);
+brawnCardsPick <- array(cardsPerCategory);
+disciplineCardsPick <- array(cardsPerCategory);
+fortuneCardsPick <- array(cardsPerCategory);
+
+pickableCards <- array(cardsPerCategory * 4);
+
+function PickCard(player, cardID)
+{
+	local cardNumber = LetterToInt(cardID);
+	local card = null;
+	local cardName = null;
+	local cardTable = {};
+	local survivorID = null;
+
+	if (cardNumber != "" && cardNumber <= cardsPerCategory * 4)
+	{
+		card = pickableCards[cardNumber - 1];
+		cardName = GetPlayerCardName(card);
+		survivorID = GetSurvivorID(player);
+
+		if (cardPickingAllowed[survivorID] == true)
+		{
+			cardPickingAllowed[survivorID] = false;
+			AddCardToTable(GetSurvivorCardTable(survivorID), player, card);
+			GetAllPlayerCards();
+			ApplyCardEffects(player);
+		}
+	}
+}
+
+function ApplyCardEffects(player, heal = true)
+{
+	CalcMaxHealth(heal);
+	CalcSpeedMultiplier(player);
+	CalcUseSpeed();
+	CalcMaxAmmo();
+	EquipOptics(player);
+	ApplyLastLegs();
+}
+
+function AddCardToTable(cardTable, player, card)
+{
+	//Check if key in table
+	if (card in cardTable)
+	{
+		cardTable[card] += 1;
+	}
+	else
+	{
+		cardTable[card] <- 1;
+	}
+
+	ClientPrint(player, 3, "\x03" + "Card Played: " + "\x04" + GetPlayerCardName(card) + " \x01(" + GetPlayerCardName(card, "desc") + ")");
+}
+
+function InitCardPicking()
+{
+	reflexCardsPick = ReduceCardArray(reflexCardsPick, reflexCards);
+	brawnCardsPick = ReduceCardArray(brawnCardsPick, brawnCards);
+	disciplineCardsPick = ReduceCardArray(disciplineCardsPick, disciplineCards);
+	fortuneCardsPick = ReduceCardArray(fortuneCardsPick, fortuneCards);
+
+	local hudY = swarmHudY;
+	hudY = GetPickableCardsString(reflexCardsPick, 1, "REFLEX\n", "cardPickReflex", HUD_MID_BOX, hudY);
+	hudY = GetPickableCardsString(brawnCardsPick, 1 + cardsPerCategory, "BRAWN\n", "cardPickBrawn", HUD_MID_BOT, hudY);
+	hudY = GetPickableCardsString(disciplineCardsPick, 1 + (cardsPerCategory * 2), "DISCIPLINE\n", "cardPickDiscipline", HUD_RIGHT_TOP, hudY);
+	hudY = GetPickableCardsString(fortuneCardsPick, 1 + (cardsPerCategory * 3), "FORTUNE\n", "cardPickFortune", HUD_RIGHT_BOT, hudY);
+
+	cardPickingAllowed = [true, true, true, true];
+
+	ClientPrint(null, 3, "\x01" + "Use " + "\x03" + "!pick [A-Z]" + "\x01" + " to choose a card!");
+}
+
+function ReduceCardArray(pickArray, refArray)
+{
+	local iPick = 0;
+	local iRef = null;
+	local refLength = refArray.len();
+
+	while (iPick < cardsPerCategory)
+	{
+		iRef = RandomInt(0, (refLength - 1) - iPick);
+		pickArray[iPick] = refArray[iRef];
+
+		refArray.remove(iRef);
+
+		iPick++;
+	}
+
+	return pickArray;
+}
+
+function GetPickableCardsString(cardArray, cardCount, prefix, hudName, hudPlacement, hudY)
+{
+	local arrayLength = cardArray.len();
+	local cardsString = prefix;
+	local i = 0;
+	local card = null;
+
+	while (i < cardsPerCategory)
+	{
+		card = cardArray.pop();
+
+		if (i == cardsPerCategory - 1)
+		{
+			cardsString = cardsString + IntToLetter(cardCount) + ") " + GetPlayerCardName(card) + ": " + GetPlayerCardName(card, "desc");
+		}
+		else
+		{
+			cardsString = cardsString + IntToLetter(cardCount) + ") " + GetPlayerCardName(card) + ": " + GetPlayerCardName(card, "desc") + "\n";
+		}
+
+		pickableCards[cardCount - 1] = card;
+		cardCount++;
+		i++;
+	}
+
+	swarmHUD.Fields[hudName].dataval = cardsString;
+
+	local hudH = swarmHudH + (swarmHudLineH * (i == 0 ? 1 : i))
+	HUDPlace(hudPlacement, 0.5 - (swarmHudMidBoxW / 2), hudY, swarmHudMidBoxW, hudH);
+	hudY = hudY + hudH + swarmHudGapY;
+	return hudY;
+}
+
+function OnGameEvent_map_transition(params)
+{
+	SavePlayerCards();
+
+	//WellRested
+	local WellRested = TeamHasCard("WellRested");
+	local player = null;
+	if (WellRested > 0)
+	{
+		while ((player = Entities.FindByClassname(player, "player")) != null)
+		{
+			if (player.IsSurvivor())
+			{
+				Heal_PermaHealth(player, (25 * WellRested), player.GetHealthBuffer());
+			}
+		}
+	}
+}
+
+function SavePlayerCards()
+{
+	//End of map
+	printl("SAVED CARDS");
+
+	//Save table for next map
+	SaveTable("p1Cards", p1Cards);
+	SaveTable("p2Cards", p2Cards);
+	SaveTable("p3Cards", p3Cards);
+	SaveTable("p4Cards", p4Cards);
+}
+
+function OnGameEvent_round_freeze_end(params)
+{
+	LoadPlayerCards();
+
+	//Save cards so they can be loaded if a wipe occurs, as loading the tables deletes the stored tables
+	SavePlayerCards();
+
+	InitCardPicking();
+	GetAllPlayerCards();
+}
+
+function LoadPlayerCards()
+{
+	//Start of a new map
+	printl("LOADED CARDS");
+
+	//Load table from memory
+	RestoreTable("p1Cards", p1Cards);
+	RestoreTable("p2Cards", p2Cards);
+	RestoreTable("p3Cards", p3Cards);
+	RestoreTable("p4Cards", p4Cards);
+}
+
+function OnGameEvent_round_start_post_nav(params)
+{
+	//Clear saved cards on new session
+	if (Director.IsSessionStartMap() == true)
+	{
+		SavePlayerCards()
+	}
+}
+
+function OnGameEvent_player_first_spawn(params)
+{
+	GetAllPlayerCards();
+}
+
+function GetAllPlayerCards()
+{
+	local survivorNameArray = ["BILL", "ZOEY", "LOUIS", "FRANCIS"];
+	if (survivorSet == 2)
+	{
+		survivorNameArray = ["NICK", "ROCHELLE", "COACH", "ELLIS"];
+	}
+
+	local player = null;
+	local canPickString = ["","","",""];
+	local survivorID = null;
+	while ((player = Entities.FindByClassname(player, "player")) != null)
+	{
+		survivorID = GetSurvivorID(player);
+
+		if (player.IsSurvivor() && survivorID != -1)
+		{
+			if (!IsPlayerABot(player))
+			{
+				survivorNameArray[survivorID] = player.GetPlayerName().toupper();
+			}
+
+			if (cardPickingAllowed[survivorID] == true)
+			{
+				canPickString[survivorID] = " - !pick [A-Z]";
+			}
+		}
+	}
+
+	local hudY = swarmHudY;
+	hudY = GetEquippedCardsString(p1Cards, survivorNameArray[0] + canPickString[0], "playerCardsP1", HUD_FAR_LEFT, hudY);
+	hudY = GetEquippedCardsString(p2Cards, survivorNameArray[1] + canPickString[1], "playerCardsP2", HUD_LEFT_TOP, hudY);
+	hudY = GetEquippedCardsString(p3Cards, survivorNameArray[2] + canPickString[2], "playerCardsP3", HUD_LEFT_BOT, hudY);
+	hudY = GetEquippedCardsString(p4Cards, survivorNameArray[3] + canPickString[3], "playerCardsP4", HUD_MID_TOP, hudY);
+}
+
+function GetEquippedCardsString(cardTable, prefix, hudName, hudPlacement, hudY)
+{
+	DeepPrintTable(cardTable);
+
+	local cardsString = prefix;
+	local cardName = null;
+	local lineCount = 0;
+	local cardCountString = "";
+
+	foreach(key, value in cardTable)
+	{
+		if (value > 0)
+		{
+			cardName = GetPlayerCardName(key);
+			if (cardName != "None")
+			{
+				if (value == 1)
+				{
+					cardCountString = "";
+				}
+				else
+				{
+					cardCountString = " (x" + value + ")"
+				}
+
+				cardsString = cardsString + "\n" + cardName + cardCountString;
+				lineCount++;
+			}
+		}
+	}
+
+	swarmHUD.Fields[hudName].dataval = cardsString;
+
+	local hudH = swarmHudH + (swarmHudLineH * (lineCount == 0 ? 1 : lineCount))
+	HUDPlace(hudPlacement, swarmHudX, hudY, swarmHudW, hudH);
+	hudY = hudY + hudH + swarmHudGapY;
+	return hudY;
+}
+
+function SurvivorSpawn(player)
+{
+	//Change one time properties when a player spawns/respawns
+	//Some of these are preserved correctly on map transition (max health), but usually not if the player is dead
+	ApplyCardEffects(player, false);
+}
+
+function CalcMaxHealth(heal = true)
+{
+	local player = null;
+	while ((player = Entities.FindByClassname(player, "player")) != null)
+	{
+		if (player.IsSurvivor())
+		{
+			local CannedGoods = PlayerHasCard(player, "CannedGoods");
+			local SlowAndSteady = PlayerHasCard(player, "SlowAndSteady");
+			local FleetOfFoot = PlayerHasCard(player, "FleetOfFoot");
+			local CrossTrainers = PlayerHasCard(player, "CrossTrainers");
+			local Coach = PlayerHasCard(player, "Coach");
+			local SelflessPlayer = PlayerHasCard(player, "Selfless");
+			local SelflessTeam = TeamHasCard("Selfless") - SelflessPlayer;
+			local SelfishPlayer = PlayerHasCard(player, "Selfish");
+			local SelfishTeam = TeamHasCard("Selfish") - SelfishPlayer;
+
+			local currentMax = player.GetMaxHealth();
+			local newMax = 100 + (25 * CannedGoods) + (40 * SlowAndSteady) + (-10 * FleetOfFoot) + (5 * CrossTrainers) + (20 * Coach) + (-15 * SelflessPlayer) + (15 * SelflessTeam) + (30 * SelfishPlayer) + (-5 * SelfishTeam);
+			local currentHealth = player.GetHealth();
+			local healthAdjustment = newMax - currentMax;
+
+			if (newMax < 1)
+			{
+				newMax = 1;
+				healthAdjustment = 0;
+			}
+
+			if (newMax != currentMax)
+			{
+				player.SetMaxHealth(newMax);
+
+				if ((healthAdjustment > 0 && heal == true) || currentHealth == currentMax)
+				{
+					player.SetHealth(currentHealth + healthAdjustment);
+				}
+
+				if (newMax == 1)
+				{
+					player.SetHealth(1);
+				}
+			}
+		}
+	}
+}
+
+function CalcSpeedMultiplier(player)
+{
+	local SlowAndSteady = PlayerHasCard(player, "SlowAndSteady");
+	local FleetOfFoot = PlayerHasCard(player, "FleetOfFoot");
+	local CrossTrainers = PlayerHasCard(player, "CrossTrainers");
+	local MethHead = PlayerHasCard(player, "MethHead");
+	local Berserker = PlayerHasCard(player, "Berserker");
+	local Addict = PlayerHasCard(player, "Addict");
+	local AddictMultiplier = AddictGetValue(player);
+	local Louis = PlayerHasCard(player, "Louis");
+
+	local speedMultiplier = (1
+							+ (-0.1 * SlowAndSteady)
+							+ (0.125 * FleetOfFoot)
+							+ (0.07 * CrossTrainers)
+							+ (0.01 * MethHead * MethHeadCounter[GetSurvivorID(player)])
+							+ (0.05 * Berserker) + (AddictMultiplier * Addict)
+							+ (0.1 * Louis));
+
+	if (speedMultiplier <= 0.1)
+	{
+		speedMultiplier = 0.1;
+	}
+
+	if (NetProps.GetPropFloat(player, "m_flLaggedMovementValue") != speedMultiplier)
+	{
+		NetProps.SetPropFloat(player, "m_flLaggedMovementValue", speedMultiplier)
+	}
+}
+
+function CalcUseSpeed()
+{
+	local fatiguePenalty = 1;
+	if (corruptionPlayer == "playerFatigue")
+	{
+		fatiguePenalty = sluggishMultiplier;
+	}
+	local Multitool = TeamHasCard("Multitool");
+	local MultitoolMultiplier = 0.4 * Multitool;
+	local HelpingHand = TeamHasCard("HelpingHand");
+	local HelpingHandMultiplier = 0.75 * HelpingHand;
+
+	Convars.SetValue("ammo_pack_use_duration", (ammo_pack_use_duration * fatiguePenalty) / (1 + MultitoolMultiplier));
+	Convars.SetValue("cola_bottles_use_duration", (cola_bottles_use_duration * fatiguePenalty) / (1 + MultitoolMultiplier));
+	Convars.SetValue("defibrillator_use_duration", (defibrillator_use_duration * fatiguePenalty) / (1 + MultitoolMultiplier));
+	Convars.SetValue("first_aid_kit_use_duration", (first_aid_kit_use_duration * fatiguePenalty) / (1 + MultitoolMultiplier));
+	Convars.SetValue("gas_can_use_duration", (gas_can_use_duration * fatiguePenalty) / (1 + MultitoolMultiplier));
+	Convars.SetValue("upgrade_pack_use_duration", (upgrade_pack_use_duration * fatiguePenalty) / (1 + MultitoolMultiplier));
+	Convars.SetValue("survivor_revive_duration", (survivor_revive_duration * fatiguePenalty) / (1 + MultitoolMultiplier + HelpingHandMultiplier));
+
+	//Modify hold to use buttons
+	/*local button = null;
+	while ((button = Entities.FindByClassname(button, "func_button_timed")) != null)
+	{
+		//printl(NetProps.GetPropFloat(button, ""))
+	}*/
+}
+
+function CalcMaxAmmo()
+{
+	local ammoShortagePenalty = 1;
+	if (corruptionPlayer == "playerLessAmmo")
+	{
+		ammoShortagePenalty = ammoShortageMultiplier;
+	}
+	local PackMule = TeamHasCard("PackMule");
+	local PackMuleMultiplier = 0.4 * PackMule;
+
+	Convars.SetValue("ammo_assaultrifle_max", (ammo_assaultrifle_max * ammoShortagePenalty) * (1 + PackMuleMultiplier));
+	Convars.SetValue("ammo_autoshotgun_max", (ammo_autoshotgun_max * ammoShortagePenalty) * (1 + PackMuleMultiplier));
+	Convars.SetValue("ammo_huntingrifle_max", (ammo_huntingrifle_max * ammoShortagePenalty) * (1 + PackMuleMultiplier));
+	Convars.SetValue("ammo_shotgun_max", (ammo_shotgun_max * ammoShortagePenalty) * (1 + PackMuleMultiplier));
+	Convars.SetValue("ammo_smg_max", (ammo_smg_max * ammoShortagePenalty) * (1 + PackMuleMultiplier));
+	Convars.SetValue("ammo_sniperrifle_max", (ammo_sniperrifle_max * ammoShortagePenalty) * (1 + PackMuleMultiplier));
+}
+
+
+function InitOptics(params)
+{
+	local player = GetPlayerFromUserID(params["userid"]);
+
+	if (player.IsValid())
+	{
+		if (player.IsSurvivor())
+		{
+			EquipOptics(player);
+		}
+	}
+}
+
+function EquipOptics(player)
+{
+	local OpticsEnthusiast = PlayerHasCard(player, "OpticsEnthusiast");
+
+	if (OpticsEnthusiast > 0)
+	{
+		player.GiveUpgrade(UPGRADE_LASER_SIGHT);
+	}
+	else
+	{
+		//Doesnt work for some reason, maybe a timing issue
+		player.RemoveUpgrade(UPGRADE_LASER_SIGHT);
+	}
+}
+
+/*function OnGameEvent_weapon_drop(params)
+{
+	local player = GetPlayerFromUserID(params["userid"]);
+
+	if (player.IsValid())
+	{
+		if (player.IsSurvivor())
+		{
+			EquipOptics(player)
+		}
+	}
+}*/
+
+function ApplyLastLegs()
+{
+	if (TeamHasCard("LastLegs") > 0)
+	{
+		Convars.SetValue("survivor_allow_crawling", 1);
+	}
+	else
+	{
+		Convars.SetValue("survivor_allow_crawling", 0);
+	}
+}
+
+function ApplyAdrenalineRush()
+{
+	//AdrenalineRush
+	local AdrenalineRush = 0;
+	local adrenalineDuration = Convars.GetFloat("adrenaline_duration");
+	
+	local player = null;
+	while ((player = Entities.FindByClassname(player, "player")) != null)
+	{
+		if (player.IsSurvivor())
+		{
+			AdrenalineRush = PlayerHasCard(player, "AdrenalineRush");
+
+			if (AdrenalineRush != 0)
+			{
+				player.UseAdrenaline(adrenalineDuration);
+			}
+		}
+	}
+}
+
+function ApplyInspiringSacrifice()
+{
+	local InspiringSacrifice = TeamHasCard("InspiringSacrifice");
+
+	local player = null;
+	local healthBuffer = null;
+	local maxHealth = null;
+	local currentHealth = null;
+
+	while ((player = Entities.FindByClassname(player, "player")) != null)
+	{
+		if (player.IsSurvivor())
+		{
+			if (!player.IsDead() && !player.IsIncapacitated() && !player.IsHangingFromLedge())
+			{
+				healthBuffer = player.GetHealthBuffer();
+				maxHealth = player.GetMaxHealth();
+				currentHealth = player.GetHealth();
+
+				if ((25 * InspiringSacrifice) + (currentHealth + healthBuffer) > maxHealth)
+				{
+					player.SetHealthBuffer(maxHealth - currentHealth);
+				}
+				else
+				{
+					player.SetHealthBuffer((25 * InspiringSacrifice) + healthBuffer);
+				}
+			}
+		}
+	}
+}
+
+function GetReloadSpeedModifier(player)
+{
+	//Modifiers
+	local ReloadDrills = PlayerHasCard(player, "ReloadDrills");
+	local Addict = PlayerHasCard(player, "Addict");
+	local AddictMultiplier = AddictGetValue(player);
+	local Bill = PlayerHasCard(player, "Bill");
+	local Brazen = PlayerHasCard(player, "Brazen");
+
+	local reloadModifier = 1 + (0.25 * ReloadDrills) + (AddictMultiplier * Addict) + (0.1 * Bill) + (-0.25 * Brazen);
+
+	if (reloadModifier <= 0)
+	{
+		reloadModifier = 0.001
+	}
+
+	return reloadModifier;
+}
+::GetReloadSpeedModifier <- GetReloadSpeedModifier;
+
+function OnGameEvent_weapon_reload(params)
+{
+	local player = GetPlayerFromUserID(params["userid"]);
+
+	if (player != null)
+	{
+		if (player.IsPlayer())
+		{
+			if (player.IsSurvivor())
+			{
+				local weapon = player.GetActiveWeapon();
+				local weaponClass = weapon.GetClassname();
+				local weaponSequence = weapon.GetSequence();
+				local baseReloadSpeed = weapon.GetSequenceDuration(weaponSequence);
+				local reloadModifier = GetReloadSpeedModifier(player);
+				local newReloadSpeed = baseReloadSpeed / reloadModifier;
+
+				local oldNextAttack = NetProps.GetPropFloat(weapon, "m_flNextPrimaryAttack");
+				local newNextAttack = oldNextAttack - baseReloadSpeed + newReloadSpeed;
+				local playbackRate = baseReloadSpeed / newReloadSpeed;
+
+				NetProps.SetPropFloat(weapon, "m_flNextPrimaryAttack", newNextAttack);
+				NetProps.SetPropFloat(player, "m_flNextAttack", newNextAttack);
+				NetProps.SetPropFloat(weapon, "m_flPlaybackRate", playbackRate);
+			}
+		}
+	}
+}
+
+function SurvivorPickupItem(params)
+{
+	local player = GetPlayerFromUserID(params["userid"]);
+	local weapon = player.GetActiveWeapon();
+	local weaponClass = weapon.GetClassname();
+	local weaponID = weapon.GetEntityIndex();
+	if (weaponClass == "weapon_shotgun_chrome" || weaponClass == "weapon_pumpshotgun" || weaponClass == "weapon_autoshotgun" || weaponClass == "weapon_shotgun_spas")
+	{
+		local shotgunThinker = SpawnEntityFromTable("info_target", { targetname = "shotgunThinker" + weaponID });
+		if (shotgunThinker.ValidateScriptScope())
+		{
+			local entityscript = shotgunThinker.GetScriptScope();
+			entityscript["player"] <- player;
+			entityscript["weapon"] <- weapon;
+			entityscript["weaponClass"] <- weaponClass;
+			entityscript["reloadModifier"] <- 1;
+			entityscript["reloadStartDuration"] <- NetProps.GetPropFloat(weapon, "m_reloadStartDuration");
+			entityscript["reloadInsertDuration"] <- NetProps.GetPropFloat(weapon, "m_reloadInsertDuration");
+			entityscript["reloadEndDuration"] <- NetProps.GetPropFloat(weapon, "m_reloadEndDuration");
+			entityscript["weaponSequence"] <- weapon.GetSequence();
+			entityscript["ShotgunReload"] <- function()
+			{
+				if (entityscript["player"].IsValid() && entityscript["weapon"].IsValid())
+				{
+					if (entityscript["player"].GetActiveWeapon() == entityscript["weapon"])
+					{
+						entityscript["reloadModifier"] = GetReloadSpeedModifier(entityscript["player"]);
+						entityscript["reloadStartDuration"] = GetShotgunReloadDuration(entityscript["weaponClass"], 0);
+						entityscript["reloadInsertDuration"] = GetShotgunReloadDuration(entityscript["weaponClass"], 1);
+						entityscript["reloadEndDuration"] = GetShotgunReloadDuration(entityscript["weaponClass"], 2);
+
+						NetProps.SetPropFloat(entityscript["weapon"], "m_reloadStartDuration", entityscript["reloadStartDuration"] / entityscript["reloadModifier"]);
+						NetProps.SetPropFloat(entityscript["weapon"], "m_reloadInsertDuration", entityscript["reloadInsertDuration"] / entityscript["reloadModifier"]);
+						NetProps.SetPropFloat(entityscript["weapon"], "m_reloadEndDuration", entityscript["reloadEndDuration"] / entityscript["reloadModifier"]);
+
+						entityscript["weaponSequence"] = entityscript["weapon"].GetSequence();
+						if (entityscript["weapon"].GetSequenceName(entityscript["weaponSequence"]) == "reload_end_layer")
+						{
+							if ((entityscript["player"].GetButtonMask() & 1) == 1)
+							{
+								NetProps.SetPropFloat(entityscript["weapon"], "m_flNextPrimaryAttack", Time());
+								NetProps.SetPropFloat(entityscript["player"], "m_flNextAttack", Time());
+							}
+						}
+						//printl("time " + Time() + " next " + NetProps.GetPropFloat(entityscript["weapon"], "m_flNextPrimaryAttack"));
+					}
+				}
+			}
+
+			AddThinkToEnt(shotgunThinker, "ShotgunReload");
+		}
+	}
+}
+
+/*function OnGameEvent_weapon_drop(params)
+{
+	if ("propid" in params)
+	{
+		local weaponID = params.propid;
+		if (weaponID != null)
+		{
+			local weapon = null;
+			while ((weapon = Entities.FindByName(weapon, "shotgunThinker" + weaponID)) != null)
+			{
+				printl("kill " + weaponID)
+				weapon.Kill();
+			}
+		}
+	}
+}*/
+
+pipeDuration <- Convars.GetFloat("pipe_bomb_timer_duration");
+function ThrowPipeBomb(params)
+{
+	local player = GetPlayerFromUserID(params["userid"]);
+	local weapon = params.weapon;
+
+	//BombSquad
+	if (weapon == "pipe_bomb")
+	{
+		if (PlayerHasCard(player, "BombSquad") != 0)
+		{
+			Convars.SetValue("pipe_bomb_timer_duration", 0.75);
+		}
+	}
+}
+
+addictPlaySound <- false;
+function Update_PlayerCards()
+{
+	//Runs every second
+	
+	//Reset pipe bomb duration to default
+	if (Convars.GetFloat("pipe_bomb_timer_duration") != pipeDuration)
+	{
+		Convars.SetValue("pipe_bomb_timer_duration", pipeDuration);
+	}
+
+	local player = null;
+	while ((player = Entities.FindByClassname(player, "player")) != null)
+	{
+		if (player.IsSurvivor())
+		{
+			CalcSpeedMultiplier(player);
+
+			if (!player.IsDead() && !player.IsIncapacitated() && !player.IsHangingFromLedge())
+			{
+				local Addict = PlayerHasCard(player, "Addict");
+				if (Addict > 0)
+				{
+					local AddictValue = AddictGetValue(player);
+					if (AddictValue < 0)
+					{
+						if (AddictValue == -0.2)
+						{
+							ScreenFade(player, 0, 0, 0, 140, 1, 1, 1 | 2);
+						}
+						else
+						{
+							ScreenFade(player, 0, 0, 0, 90, 1, 1, 1 | 2);
+						}
+						//ScreenShake(vecCenter, flAmplitude, flFrequency, flDuration, flRadius, eCommand, bAirShake)
+						local playerOrigin = player.GetOrigin();
+						if (AddictValue == -0.2)
+						{
+							ScreenShake(Vector(playerOrigin.x, playerOrigin.y, playerOrigin.z + 34), RandomInt(4, 7), 10, 2, 5, 0, true);
+						}
+						else
+						{
+							ScreenShake(Vector(playerOrigin.x, playerOrigin.y, playerOrigin.z + 34), RandomInt(2, 6), 10, 2, 5, 0, true);
+						}
+						if (addictPlaySound == false)
+						{
+							StopSoundOn("Player.Heartbeat", player);
+							StopSoundOn("Player.Heartbeat", player);
+							addictPlaySound = true;
+						}
+						else
+						{
+							EmitSoundOnClient("Player.Heartbeat", player);
+							if (AddictValue == -0.2)
+							{
+								EmitSoundOnClient("Player.Heartbeat", player);
+							}
+							addictPlaySound = false;
+						}
+					}
+					else
+					{
+						StopSoundOn("Player.Heartbeat", player);
+					}
+				}
+			}
+		}
+	}
+}
