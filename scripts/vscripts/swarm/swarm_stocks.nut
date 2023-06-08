@@ -24,8 +24,8 @@ DirectorOptions <-
 	HunterLimit = 0
 	JockeyLimit = 2
 	SmokerLimit = 2
-	SpitterLimit = 2
-	
+	SpitterLimit = 0
+
 	TankHitDamageModifierCoop = 1
 	EscapeSpawnTanks = false
 	SurvivorMaxIncapacitatedCount = 2
@@ -38,7 +38,6 @@ if (difficulty == 0)
 	Convars.SetValue("z_jockey_health", 361);
 	Convars.SetValue("z_gas_health", 297);
 	Convars.SetValue("z_exploding_health", 595);
-	Convars.SetValue("z_spitter_health", 595);
 	Convars.SetValue("z_witch_health", 850);
 	DirectorOptions.SurvivorMaxIncapacitatedCount = 3
 }
@@ -47,7 +46,6 @@ else if (difficulty == 1)
 	Convars.SetValue("z_jockey_health", 361);
 	Convars.SetValue("z_gas_health", 297);
 	Convars.SetValue("z_exploding_health", 595);
-	Convars.SetValue("z_spitter_health", 595);
 	Convars.SetValue("z_witch_health", 850);
 	DirectorOptions.SurvivorMaxIncapacitatedCount = 2
 }
@@ -56,7 +54,6 @@ else if (difficulty == 2)
 	Convars.SetValue("z_jockey_health", 425);
 	Convars.SetValue("z_gas_health", 350);
 	Convars.SetValue("z_exploding_health", 700);
-	Convars.SetValue("z_spitter_health", 700);
 	Convars.SetValue("z_witch_health", 1000);
 	DirectorOptions.SurvivorMaxIncapacitatedCount = 2
 }
@@ -65,7 +62,6 @@ else if (difficulty == 3)
 	Convars.SetValue("z_jockey_health", 425);
 	Convars.SetValue("z_gas_health", 350);
 	Convars.SetValue("z_exploding_health", 700);
-	Convars.SetValue("z_spitter_health", 700);
 	Convars.SetValue("z_witch_health", 1000);
 	DirectorOptions.SurvivorMaxIncapacitatedCount = 1
 	DirectorOptions.TankHitDamageModifierCoop = 0.48

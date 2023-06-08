@@ -31,7 +31,6 @@ function InitCorruptionCards()
 	cardsCommons.append("commonExplode");
 	corruptionCommons = ChooseCorruptionCard(cardsCommons);
 
-
 	// Uncommons
 	local cardsUncommons = array(1, null);
 	cardsUncommons.clear();
@@ -45,7 +44,6 @@ function InitCorruptionCards()
 	cardsUncommons.append("uncommonConstruction");
 	cardsUncommons.append("uncommonJimmy");
 	corruptionUncommons = ChooseCorruptionCard(cardsUncommons);
-
 
 	// ZSpeed
 	local cardsZSpeed = array(1, null);
@@ -62,7 +60,6 @@ function InitCorruptionCards()
 	cardsZSpeed.append("commonBlitzing");
 	corruptionZSpeed = ChooseCorruptionCard(cardsZSpeed);
 
-
 	// Tallboys
 	local cardsTallboy = array(1, null);
 	cardsTallboy.clear();
@@ -72,7 +69,6 @@ function InitCorruptionCards()
 	corruptionTallboy = ChooseCorruptionCard(cardsTallboy);
 	ApplyTallboyCard();
 
-
 	// Hockers
 	local cardsHocker = array(1, null);
 	cardsHocker.clear();
@@ -81,7 +77,6 @@ function InitCorruptionCards()
 	corruptionHocker = ChooseCorruptionCard(cardsHocker);
 	ApplyHockerCard();
 
-
 	// Retches
 	local cardsRetch = array(1, null);
 	cardsRetch.clear();
@@ -89,7 +84,6 @@ function InitCorruptionCards()
 	cardsRetch.append("Exploder");
 	corruptionRetch = ChooseCorruptionCard(cardsRetch);
 	ApplyRetchCard();
-
 
 	// Hazards
 	local cardsHazards = array(1, null);
@@ -103,7 +97,6 @@ function InitCorruptionCards()
 		cardsHazards.append("hazardSleepers");
 	}
 	corruptionHazards = ChooseCorruptionCard(cardsHazards);
-
 
 	// Environmental
 	local cardsEnvironmental = array(1, null);
@@ -123,7 +116,6 @@ function InitCorruptionCards()
 	}
 	corruptionEnvironmental = ChooseCorruptionCard(cardsEnvironmental);
 	ApplyEnvironmentalCard();
-
 
 	// Hordes
 	local cardsHordes = array(1, null);
@@ -172,7 +164,6 @@ function InitCorruptionCards()
 	corruptionHordes = ChooseCorruptionCard(cardsHordes);
 	ApplyHordeCard();
 
-
 	// Gameplay
 	local cardsGameplay = array(1, null);
 	cardsGameplay.clear();
@@ -190,7 +181,6 @@ function InitCorruptionCards()
 	corruptionGameplay = ChooseCorruptionCard(cardsGameplay);
 	ApplyGameplayCard();
 
-	
 	// Player
 	local cardsPlayer = array(1, null);
 	cardsPlayer.clear();
@@ -705,8 +695,8 @@ function CorruptionCard_RetchHordes()
 	DirectorOptions.ChargerLimit = 0
 	DirectorOptions.JockeyLimit = 0
 	DirectorOptions.SmokerLimit = 0
-	DirectorOptions.BoomerLimit = 0
-	DirectorOptions.SpitterLimit = 4
+	DirectorOptions.BoomerLimit = 4
+	DirectorOptions.SpitterLimit = 0
 	DirectorOptions.cm_AggressiveSpecials = 1
 	DirectorOptions.SpecialRespawnInterval = 45
 }

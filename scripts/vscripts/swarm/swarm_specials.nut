@@ -20,8 +20,16 @@ function MutationSpawn(player)
 		}
 		case 2:
 		{
-			player.SetModel("models/infected/boomer.mdl");
-			break;
+			if (corruptionRetch == "Exploder")	
+			{
+				player.SetModel("models/infected/boomer.mdl");
+				break;
+			}
+			else if (corruptionRetch == "Retch")	
+			{
+				player.SetModel("models/infected/boomette.mdl");
+				break;
+			}
 		}
 		case 3:
 		{
@@ -67,13 +75,13 @@ function OnGameEvent_ability_use(params)
 			BreakerJump(player);
 			break;
 		case "ability_vomit":
-			ExploderAbility(player);
-			break;
+			if (corruptionRetch == "Exploder")	
+			{
+				ExploderAbility(player);
+				break;
+			}
 		case "ability_lunge":
 			SleeperLunge(player);
-			break;
-		case "ability_spit":
-			RetchAbility(player);
 			break;
 		default:
 			break;
@@ -442,6 +450,23 @@ function RetchAbility(player)
 }
 */
 
+function OnGameEvent_player_now_it(params)
+{
+	if (corruptionRetch == "Retch")	
+	{
+		local player = GetPlayerFromUserID(params["userid"]);
+		local origin = player.GetOrigin();
+
+		if (player.IsSurvivor())
+		{
+			for (local i = 0; i < 3; i++)
+			{
+				DropSpit(origin)
+			}
+		}
+	}
+}
+
 ///////////////////////////////////////////////
 //              CORRUPTION CARDS             //
 ///////////////////////////////////////////////
@@ -513,7 +538,7 @@ function ApplyRetchCard()
 		case "Retch":
 			CorruptionCard_Retch();
 			break;
-		case "Crusher":
+		case "Exploder":
 			CorruptionCard_Exploder();
 			break;
 	}
@@ -521,10 +546,12 @@ function ApplyRetchCard()
 
 function CorruptionCard_Retch()
 {
-	DirectorOptions.BoomerLimit = 0
+	Convars.SetValue("z_vomit_duration", 2.5);
+	Convars.SetValue("z_vomit_range", 1600);
 }
 
 function CorruptionCard_Exploder()
 {
-	DirectorOptions.SpitterLimit = 0
+	Convars.SetValue("z_vomit_duration", 0);
+	Convars.SetValue("z_vomit_range", 300);
 }

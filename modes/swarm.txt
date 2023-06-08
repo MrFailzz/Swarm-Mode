@@ -43,14 +43,16 @@
 		z_exploding_inner_radius 0
 		z_exploding_outer_radius 0
 		z_exploding_splat_radius 0
-		z_vomit_duration 0
 		boomer_pz_claw_dmg 4
-		z_vomit_fatigue 0
-		boomer_vomit_delay 0.2
+		boomer_vomit_delay 0.5
+		z_vomit_velocityfadestart 1.8
+		z_vomit_velocityfadeend 2.4
+		z_vomit_lifetime 2.5
+		z_vomit_maxdamagedist 1800
 
 		z_spit_interval 1
 		spitter_pz_claw_dmg 3
-		inferno_child_spawn_max_depth 2
+//		inferno_child_spawn_max_depth 2
 		
 		z_witch_damage 0
 		z_witch_always_kills 0
