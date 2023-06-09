@@ -1191,6 +1191,12 @@ function Update()
 	{
 		switch(corruptionHordes)
 		{
+			case "hordeTallboy":
+				TallboyTimerFunc();
+				break;
+			case "hordeCrusher":
+				CrusherTimerFunc();
+				break;
 			case "hordeBruiser":
 				BruiserTimerFunc();
 				break;

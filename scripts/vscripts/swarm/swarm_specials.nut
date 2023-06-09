@@ -157,7 +157,17 @@ function OnGameEvent_tongue_grab(params)
 ///////////////////////////////////////////////
 function BoomerDeath(player)
 {
-	BoomerExplosion(player.GetOrigin(), true);
+	local boomerOrigin = player.GetOrigin()
+
+	if (corruptionRetch == "Retch")
+	{
+		DropSpit(boomerOrigin)
+	}
+	if (corruptionRetch == "Exploder")
+	{
+	BoomerExplosion(boomerOrigin, true);
+	}
+
 	NetProps.SetPropInt(player, "m_clrRender", GetColorInt(Vector(255, 255, 255)));
 }
 

@@ -140,6 +140,14 @@ function InitCorruptionCards()
 		cardsHordes.append("hordeOnslaught");
 		cardsHordes.append("hordeDuringBoss");
 
+		if (corruptionTallboy == "Tallboy")
+		{
+			cardsHordes.append("hordeTallboy");
+		}
+		if (corruptionTallboy == "Crusher")
+		{
+			cardsHordes.append("hordeCrusher");
+		}
 		if (corruptionTallboy == "Bruiser")
 		{
 			cardsHordes.append("hordeBruiser");
@@ -280,6 +288,12 @@ function GetCorruptionCardName(cardID)
 			break;
 		case "hordeOnslaught":
 			return "Onslaught";
+			break;
+		case "hordeTallboy":
+			return "Tallboy Hordes";
+			break;
+		case "hordeCrusher":
+			return "Crusher Hordes";
 			break;
 		case "hordeBruiser":
 			return "Bruiser Hordes";
@@ -577,6 +591,12 @@ function ApplyHordeCard()
 		case "hordeOnslaught":
 			CorruptionCard_Onslaught();
 			break;
+		case "hordeTallboy":
+			CorruptionCard_TallboyHordes();
+			break;
+		case "hordeCrusher":
+			CorruptionCard_CrusherHordes();
+			break;
 		case "hordeBruiser":
 			CorruptionCard_BruiserHordes();
 			break;
@@ -646,12 +666,77 @@ function OnslaughtTimerFunc()
 	}
 }
 
+TallboyHordeEnabled <- false;
+CrusherHordeEnabled <- false;
 BruiserHordeEnabled <- false;
 StalkerHordeEnabled <- false;
 HockerHordeEnabled <- false;
 ExploderHordeEnabled <- false;
 RetchHordeEnabled <- false;
-SpecialHordeTimer <- Time() + 60;
+SpecialHordeTimer <- Time() + 90;
+
+	//count = Number of groups to spawn
+	//zType = Infected type to spawn, defaults to MOB
+	/*ZOMBIE_NORMAL = 0
+	ZOMBIE_SMOKER = 1
+	ZOMBIE_BOOMER = 2
+	ZOMBIE_HUNTER = 3
+	ZOMBIE_SPITTER = 4
+	ZOMBIE_JOCKEY = 5
+	ZOMBIE_CHARGER = 6
+	ZOMBIE_WITCH = 7
+	ZOMBIE_TANK = 8
+	ZSPAWN_MOB = 10
+	ZSPAWN_MUDMEN = 12
+	ZSPAWN_WITCHBRIDE = 11*/
+
+function CorruptionCard_TallboyHordes()
+{
+	TallboyHordeEnabled = true
+	DirectorOptions.cm_AggressiveSpecials = 1
+}
+
+function TallboyTimerFunc(count = 6, zType = 6)
+{
+	if (SpecialHordeTimer < Time())
+	{
+		local i = 0;
+		while (i < count)
+		{
+			ZSpawn({type = zType});
+			i++;
+			SpecialHordeTimer = Time() + 90;
+		}
+	}
+	else if (SpecialHordeTimer < Time() + 5)
+	{
+		ClientPrint(null, 3, "\x01 Prepare for the horde in \x04" + ceil(SpecialHordeTimer - Time()) + "...");
+	}
+}
+
+function CorruptionCard_CrusherHordes()
+{
+	CrusherHordeEnabled = true
+	DirectorOptions.cm_AggressiveSpecials = 1
+}
+
+function CrusherTimerFunc(count = 6, zType = 6)
+{
+	if (SpecialHordeTimer < Time())
+	{
+		local i = 0;
+		while (i < count)
+		{
+			ZSpawn({type = zType});
+			i++;
+			SpecialHordeTimer = Time() + 90;
+		}
+	}
+	else if (SpecialHordeTimer < Time() + 5)
+	{
+		ClientPrint(null, 3, "\x01 Prepare for the horde in \x04" + ceil(SpecialHordeTimer - Time()) + "...");
+	}
+}
 
 function CorruptionCard_BruiserHordes()
 {
@@ -668,11 +753,12 @@ function BruiserTimerFunc(count = 6, zType = 6)
 		{
 			ZSpawn({type = zType});
 			i++;
+			SpecialHordeTimer = Time() + 90;
 		}
 	}
 	else if (SpecialHordeTimer < Time() + 5)
 	{
-		ClientPrint(null, 3, "\x04" + "Onslaught: " + "\x01 Prepare for the horde in \x04" + ceil(SpecialHordeTimer - Time()) + "...");
+		ClientPrint(null, 3, "\x01 Prepare for the horde in \x04" + ceil(SpecialHordeTimer - Time()) + "...");
 	}
 }
 
@@ -691,11 +777,12 @@ function StalkerTimerFunc(count = 6, zType = 5)
 		{
 			ZSpawn({type = zType});
 			i++;
+			SpecialHordeTimer = Time() + 90;
 		}
 	}
 	else if (SpecialHordeTimer < Time() + 5)
 	{
-		ClientPrint(null, 3, "\x04" + "Onslaught: " + "\x01 Prepare for the horde in \x04" + ceil(SpecialHordeTimer - Time()) + "...");
+		ClientPrint(null, 3, "\x01 Prepare for the horde in \x04" + ceil(SpecialHordeTimer - Time()) + "...");
 	}
 }
 
@@ -714,11 +801,12 @@ function HockerTimerFunc(count = 6, zType = 1)
 		{
 			ZSpawn({type = zType});
 			i++;
+			SpecialHordeTimer = Time() + 90;
 		}
 	}
 	else if (SpecialHordeTimer < Time() + 5)
 	{
-		ClientPrint(null, 3, "\x04" + "Onslaught: " + "\x01 Prepare for the horde in \x04" + ceil(SpecialHordeTimer - Time()) + "...");
+		ClientPrint(null, 3, "\x01 Prepare for the horde in \x04" + ceil(SpecialHordeTimer - Time()) + "...");
 	}
 }
 
@@ -737,11 +825,12 @@ function ExploderTimerFunc(count = 6, zType = 2)
 		{
 			ZSpawn({type = zType});
 			i++;
+			SpecialHordeTimer = Time() + 90;
 		}
 	}
 	else if (SpecialHordeTimer < Time() + 5)
 	{
-		ClientPrint(null, 3, "\x04" + "Onslaught: " + "\x01 Prepare for the horde in \x04" + ceil(SpecialHordeTimer - Time()) + "...");
+		ClientPrint(null, 3, "\x01 Prepare for the horde in \x04" + ceil(SpecialHordeTimer - Time()) + "...");
 	}
 }
 
@@ -761,11 +850,12 @@ function RetchTimerFunc(count = 6, zType = 2)
 		{
 			ZSpawn({type = zType});
 			i++;
+			SpecialHordeTimer = Time() + 90;
 		}
 	}
 	else if (SpecialHordeTimer < Time() + 5)
 	{
-		ClientPrint(null, 3, "\x04" + "Onslaught: " + "\x01 Prepare for the horde in \x04" + ceil(SpecialHordeTimer - Time()) + "...");
+		ClientPrint(null, 3, "\x01 Prepare for the horde in \x04" + ceil(SpecialHordeTimer - Time()) + "...");
 	}
 }
 
