@@ -28,6 +28,21 @@ function MutationSpawn(player)
 			else if (corruptionRetch == "Retch")	
 			{
 				player.SetModel("models/infected/boomette.mdl");
+
+				local retchName = "__acid_retch_inst_" + player.GetEntityIndex();
+				DoEntFire("!self", "AddOutput", "targetname " + retchName, 0, player, player);
+
+				local spitTrail = SpawnEntityFromTable("info_particle_system",
+				{
+					targetname = retchName + "spitTrail",
+					origin = player.GetOrigin(),
+					angles = Vector(0, 0, 0),
+					effect_name = "spitter_slime_trail",
+					start_active = 1
+				});
+
+				EntFire(retchName + "spitTrail", "SetParent", retchName);
+				EntFire(retchName + "spitTrail", "SetParentAttachment", "mouth");
 				break;
 			}
 		}
@@ -459,10 +474,7 @@ function OnGameEvent_player_now_it(params)
 
 		if (player.IsSurvivor())
 		{
-			for (local i = 0; i < 3; i++)
-			{
-				DropSpit(origin)
-			}
+			DropSpit(origin)
 		}
 	}
 }

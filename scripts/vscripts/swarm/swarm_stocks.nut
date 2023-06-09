@@ -1187,6 +1187,28 @@ function Update()
 		OnslaughtTimerFunc();
 	}
 
+	if (corruptionHordes != "None")
+	{
+		switch(corruptionHordes)
+		{
+			case "hordeBruiser":
+				BruiserTimerFunc();
+				break;
+			case "hordeStalker":
+				StalkerTimerFunc();
+				break;
+			case "hordeHocker":
+				HockerTimerFunc();
+				break;
+			case "hordeExploder":
+				ExploderTimerFunc();
+				break;
+			case "hordeRetch":
+				RetchTimerFunc();
+				break;
+		}
+	}
+
 	if (bTankHudExists == true)
 	{
 		CalculateTankHudString();

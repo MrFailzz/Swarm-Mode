@@ -156,7 +156,7 @@ function InitCorruptionCards()
 		{
 			cardsHordes.append("hordeExploder");
 		}
-		if (corruptionRetch == "Stalker")
+		if (corruptionRetch == "Retch")
 		{
 			cardsHordes.append("hordeRetch");
 		}
@@ -646,60 +646,129 @@ function OnslaughtTimerFunc()
 	}
 }
 
+BruiserHordeEnabled <- false;
+StalkerHordeEnabled <- false;
+HockerHordeEnabled <- false;
+ExploderHordeEnabled <- false;
+RetchHordeEnabled <- false;
+SpecialHordeTimer <- Time() + 60;
+
 function CorruptionCard_BruiserHordes()
-{	
-	DirectorOptions.ChargerLimit = 4
-	DirectorOptions.JockeyLimit = 0
-	DirectorOptions.SmokerLimit = 0
-	DirectorOptions.BoomerLimit = 0
-	DirectorOptions.SpitterLimit = 0
+{
+	BruiserHordeEnabled = true
 	DirectorOptions.cm_AggressiveSpecials = 1
-	DirectorOptions.SpecialRespawnInterval = 45
+}
+
+function BruiserTimerFunc(count = 6, zType = 6)
+{
+	if (SpecialHordeTimer < Time())
+	{
+		local i = 0;
+		while (i < count)
+		{
+			ZSpawn({type = zType});
+			i++;
+		}
+	}
+	else if (SpecialHordeTimer < Time() + 5)
+	{
+		ClientPrint(null, 3, "\x04" + "Onslaught: " + "\x01 Prepare for the horde in \x04" + ceil(SpecialHordeTimer - Time()) + "...");
+	}
 }
 
 function CorruptionCard_StalkerHordes()
 {
-	DirectorOptions.ChargerLimit = 0
-	DirectorOptions.JockeyLimit = 4
-	DirectorOptions.SmokerLimit = 0
-	DirectorOptions.BoomerLimit = 0
-	DirectorOptions.SpitterLimit = 0
+	StalkerHordeEnabled = true
 	DirectorOptions.cm_AggressiveSpecials = 1
-	DirectorOptions.SpecialRespawnInterval = 45
+}
+
+function StalkerTimerFunc(count = 6, zType = 5)
+{
+	if (SpecialHordeTimer < Time())
+	{
+		local i = 0;
+		while (i < count)
+		{
+			ZSpawn({type = zType});
+			i++;
+		}
+	}
+	else if (SpecialHordeTimer < Time() + 5)
+	{
+		ClientPrint(null, 3, "\x04" + "Onslaught: " + "\x01 Prepare for the horde in \x04" + ceil(SpecialHordeTimer - Time()) + "...");
+	}
 }
 
 function CorruptionCard_HockerHordes()
 {
-	DirectorOptions.ChargerLimit = 0
-	DirectorOptions.JockeyLimit = 0
-	DirectorOptions.SmokerLimit = 4
-	DirectorOptions.BoomerLimit = 0
-	DirectorOptions.SpitterLimit = 0
+	HockerHordeEnabled = true
 	DirectorOptions.cm_AggressiveSpecials = 1
-	DirectorOptions.SpecialRespawnInterval = 45
+}
+
+function HockerTimerFunc(count = 6, zType = 1)
+{
+	if (SpecialHordeTimer < Time())
+	{
+		local i = 0;
+		while (i < count)
+		{
+			ZSpawn({type = zType});
+			i++;
+		}
+	}
+	else if (SpecialHordeTimer < Time() + 5)
+	{
+		ClientPrint(null, 3, "\x04" + "Onslaught: " + "\x01 Prepare for the horde in \x04" + ceil(SpecialHordeTimer - Time()) + "...");
+	}
 }
 
 function CorruptionCard_ExploderHordes()
 {
-	DirectorOptions.ChargerLimit = 0
-	DirectorOptions.JockeyLimit = 0
-	DirectorOptions.SmokerLimit = 0
-	DirectorOptions.BoomerLimit = 4
-	DirectorOptions.SpitterLimit = 0
+	ExploderHordeEnabled = true
 	DirectorOptions.cm_AggressiveSpecials = 1
-	DirectorOptions.SpecialRespawnInterval = 45
 }
 
-function CorruptionCard_RetchHordes()
-{		
-	DirectorOptions.ChargerLimit = 0
-	DirectorOptions.JockeyLimit = 0
-	DirectorOptions.SmokerLimit = 0
-	DirectorOptions.BoomerLimit = 4
-	DirectorOptions.SpitterLimit = 0
-	DirectorOptions.cm_AggressiveSpecials = 1
-	DirectorOptions.SpecialRespawnInterval = 45
+function ExploderTimerFunc(count = 6, zType = 2)
+{
+	if (SpecialHordeTimer < Time())
+	{
+		local i = 0;
+		while (i < count)
+		{
+			ZSpawn({type = zType});
+			i++;
+		}
+	}
+	else if (SpecialHordeTimer < Time() + 5)
+	{
+		ClientPrint(null, 3, "\x04" + "Onslaught: " + "\x01 Prepare for the horde in \x04" + ceil(SpecialHordeTimer - Time()) + "...");
+	}
 }
+
+
+function CorruptionCard_RetchHordes()
+{
+	RetchHordeEnabled = true
+	DirectorOptions.cm_AggressiveSpecials = 1
+}
+
+function RetchTimerFunc(count = 6, zType = 2)
+{
+	if (SpecialHordeTimer < Time())
+	{
+		local i = 0;
+		while (i < count)
+		{
+			ZSpawn({type = zType});
+			i++;
+		}
+	}
+	else if (SpecialHordeTimer < Time() + 5)
+	{
+		ClientPrint(null, 3, "\x04" + "Onslaught: " + "\x01 Prepare for the horde in \x04" + ceil(SpecialHordeTimer - Time()) + "...");
+	}
+}
+
 
 ///////////////////////////////////////////////
 //              GAMEPLAY CARDS               //
