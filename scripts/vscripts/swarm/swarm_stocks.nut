@@ -1177,20 +1177,21 @@ function Update()
 		FrigidOutskirtsTimer();
 	}
 
-	if (corruptionHordes == "hordeHunted")
+	if (corruptionHazards == "hazardSnitch")
 	{
-		HuntedTimerFunc();
-	}
-
-	if (corruptionHordes == "hordeOnslaught")
-	{
-		OnslaughtTimerFunc();
+		BossSpawn();
 	}
 
 	if (corruptionHordes != "None")
 	{
 		switch(corruptionHordes)
 		{
+			case "hordeHunted":
+				HuntedTimerFunc();
+				break;
+			case "hordeOnslaught":
+				OnslaughtTimerFunc();
+				break;
 			case "hordeTallboy":
 				TallboyTimerFunc();
 				break;

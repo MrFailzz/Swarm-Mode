@@ -157,11 +157,13 @@ function OnGameEvent_tongue_grab(params)
 ///////////////////////////////////////////////
 function BoomerDeath(player)
 {
-	local boomerOrigin = player.GetOrigin()
+	local boomerOrigin = player.GetOrigin();
+	local retchName = player.GetName();
 
 	if (corruptionRetch == "Retch")
 	{
-		DropSpit(boomerOrigin)
+		DropSpit(boomerOrigin);
+		EntFire(retchName + "spitTrail", "Kill");
 	}
 	if (corruptionRetch == "Exploder")
 	{
@@ -568,12 +570,14 @@ function ApplyRetchCard()
 
 function CorruptionCard_Retch()
 {
+	Convars.SetValue("z_exploding_speed", 210);
 	Convars.SetValue("z_vomit_duration", 2.5);
 	Convars.SetValue("z_vomit_range", 1600);
 }
 
 function CorruptionCard_Exploder()
 {
+	Convars.SetValue("z_exploding_speed", 240);
 	Convars.SetValue("z_vomit_duration", 0);
 	Convars.SetValue("z_vomit_range", 300);
 }

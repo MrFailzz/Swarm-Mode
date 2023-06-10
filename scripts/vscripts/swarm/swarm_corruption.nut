@@ -5,14 +5,14 @@ corruptionCards <- array(1, null);
 corruptionCommons <- null;
 corruptionUncommons <- null;
 corruptionZSpeed <- null;
+corruptionTallboy <- null;
+corruptionHocker <- null;
+corruptionRetch <- null;
 corruptionHazards <- null;
 corruptionEnvironmental <- null;
 corruptionHordes <- null;
 corruptionGameplay <- null;
 corruptionPlayer <- null;
-corruptionTallboy <- null;
-corruptionHocker <- null;
-corruptionRetch <- null;
 
 function InitCorruptionCards()
 {
@@ -95,6 +95,7 @@ function InitCorruptionCards()
 		cardsHazards.append("hazardBirds");
 		cardsHazards.append("hazardLockdown");
 		cardsHazards.append("hazardSleepers");
+		cardsHazards.append("hazardSnitch");
 	}
 	corruptionHazards = ChooseCorruptionCard(cardsHazards);
 
@@ -378,6 +379,9 @@ function GetCorruptionCardName(cardID)
 			break;
 		case "Exploder":
 			return "Exploders";
+			break;
+		case "hazardSnitch":
+			return "Snitches";
 			break;
 		default:
 			return "None";
@@ -675,28 +679,13 @@ ExploderHordeEnabled <- false;
 RetchHordeEnabled <- false;
 SpecialHordeTimer <- Time() + 90;
 
-	//count = Number of groups to spawn
-	//zType = Infected type to spawn, defaults to MOB
-	/*ZOMBIE_NORMAL = 0
-	ZOMBIE_SMOKER = 1
-	ZOMBIE_BOOMER = 2
-	ZOMBIE_HUNTER = 3
-	ZOMBIE_SPITTER = 4
-	ZOMBIE_JOCKEY = 5
-	ZOMBIE_CHARGER = 6
-	ZOMBIE_WITCH = 7
-	ZOMBIE_TANK = 8
-	ZSPAWN_MOB = 10
-	ZSPAWN_MUDMEN = 12
-	ZSPAWN_WITCHBRIDE = 11*/
-
 function CorruptionCard_TallboyHordes()
 {
 	TallboyHordeEnabled = true
 	DirectorOptions.cm_AggressiveSpecials = 1
 }
 
-function TallboyTimerFunc(count = 6, zType = 6)
+function TallboyTimerFunc(count = 4, zType = 6)
 {
 	if (SpecialHordeTimer < Time())
 	{
@@ -720,7 +709,7 @@ function CorruptionCard_CrusherHordes()
 	DirectorOptions.cm_AggressiveSpecials = 1
 }
 
-function CrusherTimerFunc(count = 6, zType = 6)
+function CrusherTimerFunc(count = 4, zType = 6)
 {
 	if (SpecialHordeTimer < Time())
 	{
@@ -744,7 +733,7 @@ function CorruptionCard_BruiserHordes()
 	DirectorOptions.cm_AggressiveSpecials = 1
 }
 
-function BruiserTimerFunc(count = 6, zType = 6)
+function BruiserTimerFunc(count = 4, zType = 6)
 {
 	if (SpecialHordeTimer < Time())
 	{
@@ -768,7 +757,7 @@ function CorruptionCard_StalkerHordes()
 	DirectorOptions.cm_AggressiveSpecials = 1
 }
 
-function StalkerTimerFunc(count = 6, zType = 5)
+function StalkerTimerFunc(count = 4, zType = 5)
 {
 	if (SpecialHordeTimer < Time())
 	{
@@ -792,7 +781,7 @@ function CorruptionCard_HockerHordes()
 	DirectorOptions.cm_AggressiveSpecials = 1
 }
 
-function HockerTimerFunc(count = 6, zType = 1)
+function HockerTimerFunc(count = 4, zType = 1)
 {
 	if (SpecialHordeTimer < Time())
 	{
@@ -816,7 +805,7 @@ function CorruptionCard_ExploderHordes()
 	DirectorOptions.cm_AggressiveSpecials = 1
 }
 
-function ExploderTimerFunc(count = 6, zType = 2)
+function ExploderTimerFunc(count = 4, zType = 2)
 {
 	if (SpecialHordeTimer < Time())
 	{
@@ -841,7 +830,7 @@ function CorruptionCard_RetchHordes()
 	DirectorOptions.cm_AggressiveSpecials = 1
 }
 
-function RetchTimerFunc(count = 6, zType = 2)
+function RetchTimerFunc(count = 4, zType = 2)
 {
 	if (SpecialHordeTimer < Time())
 	{

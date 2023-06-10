@@ -645,3 +645,31 @@ function AlarmPoliceStopSound(carIndex)
 	StopSoundOn("Car.Alarm", carEnt)
 }
 ::AlarmPoliceStopSound <- AlarmPoliceStopSound;
+
+///////////////////////////////////////////////
+//                 BOSSES                    //
+///////////////////////////////////////////////
+snitchSpawned <- false
+breakerSpawned <- false
+
+function BossSpawn()
+{
+	local progressPct = ( Director.GetFurthestSurvivorFlow() / GetMaxFlowDistance() )
+	local spawnBoss = (RandomFloat(0.1,1.0))
+	    
+	if (progressPct > spawnBoss && !snitchSpawned)
+	{
+		SnitchSpawn();
+		snitchSpawned = true;
+	}
+}
+
+function SnitchSpawn(count = 3, zType = 7)
+{
+	local i = 0;
+	while (i < count)
+	{
+		ZSpawn({type = zType});
+		i++;
+	}
+}
