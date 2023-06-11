@@ -651,8 +651,7 @@ function AlarmPoliceStopSound(carIndex)
 ///////////////////////////////////////////////
 function ApplyBossCard()
 {
-	ResetGameplayCvars();
-	switch(corruptionGameplay)
+	switch(corruptionBoss)
 	{
 		case "None":
 			break;
@@ -684,7 +683,7 @@ function CorruptionCard_Tank()
 function difficulty_RandomBoss()
 {
 	local progressPct = ( Director.GetFurthestSurvivorFlow() / GetMaxFlowDistance() )
-	local spawnBoss = (RandomFloat(0.1,1.0))
+	local spawnBoss = (RandomFloat(0.1,0.9))
 
 	local randomPct = (RandomInt(1,2))
 
@@ -696,7 +695,7 @@ function difficulty_RandomBoss()
 		}
 		if (randomPct == 2)
 		{
-			bossBreakerEnable = true;
+			bossTankEnable = true;
 		}
 	}
 	    
@@ -710,9 +709,9 @@ function difficulty_RandomBoss()
 function SpawnBoss()
 {
 	local progressPct = ( Director.GetFurthestSurvivorFlow() / GetMaxFlowDistance() )
-	local spawnSnitch = (RandomFloat(0.1,1.0))
-	local spawnBreaker = (RandomFloat(0.1,1.0))
-	local spawnTank = (RandomFloat(0.1,1.0))
+	local spawnSnitch = (RandomFloat(0.1,0.9))
+	local spawnBreaker = (RandomFloat(0.1,0.9))
+	local spawnTank = (RandomFloat(0.1,0.9))
 	    
 	if (progressPct > spawnSnitch && !snitchSpawned && corruptionHazards == "hazardSnitch")
 	{
@@ -726,7 +725,7 @@ function SpawnBoss()
 	}
 	if (progressPct > spawnTank && !tankSpawned && corruptionBoss == "hazardTank")
 	{
-		TankSpawn();
+		BreakerSpawn();
 		tankSpawned = true;
 	}
 }

@@ -21,6 +21,10 @@ DirectorOptions <-
 	cm_TankLimit = 1
 	cm_WitchLimit = -1
 	cm_CommonLimit = 30
+	cm_ProhibitBosses = true
+
+	MobSpawnMinTime = 9999
+	MobSpawnMaxTime = 9999
 
 	SpecialInitialSpawnDelayMax = 45
 	SpecialInitialSpawnDelayMin = 30
@@ -77,7 +81,7 @@ else if (difficulty == 3)
 swarmTickInterval <- 1;				// In seconds
 swarmDamagePerTick <- 2;
 
-tankJumpVelocity <- 450;
+tankJumpVelocity <- 500;
 tankJumpExtraHeight <- 300;			// Max extra height from aiming up
 
 breakerSpawned <- false;
@@ -1211,7 +1215,12 @@ function Update()
 		FrigidOutskirtsTimer();
 	}
 
-	if (corruptionHazards == "hazardSnitch" || corruptionBoss == "hazardBreaker")
+	if (difficulty > 1)
+	{
+		difficulty_RandomBoss()
+	}
+
+	if (corruptionHazards == "hazardSnitch" || corruptionBoss == "hazardBreaker" || corruptionBoss == "hazardTank")
 	{
 		SpawnBoss();
 	}
@@ -1248,11 +1257,6 @@ function Update()
 				RetchTimerFunc();
 				break;
 		}
-	}
-
-	if (difficulty > 1)
-	{
-		difficulty_RandomBoss()
 	}
 
 	if (bTankHudExists == true)

@@ -109,7 +109,7 @@ function InitCorruptionCards()
 	if (IsMissionFinalMap() == false)
 	{
 		cardsBoss.append("hazardBreaker");
-//		cardsBoss.append("hazardTank");
+		cardsBoss.append("hazardTank");
 	}
 	corruptionBoss = ChooseCorruptionCard(cardsBoss);
 	ApplyBossCard();
