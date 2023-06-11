@@ -3,8 +3,6 @@
 ///////////////////////////////////////////////
 if (!IsModelPrecached("models/infected/hunter_l4d1.mdl"))
 	PrecacheModel("models/infected/hunter_l4d1.mdl");
-if (!IsModelPrecached("models/infected/boomette.mdl"))
-	PrecacheModel("models/infected/boomette.mdl");
 if (!IsModelPrecached("models/infected/hunter.mdl"))
 	PrecacheModel("models/infected/hunter.mdl");
 
@@ -20,15 +18,8 @@ function MutationSpawn(player)
 		}
 		case 2:
 		{
-			if (corruptionRetch == "Exploder")	
+			if (corruptionRetch == "Retch")	
 			{
-				player.SetModel("models/infected/boomer.mdl");
-				break;
-			}
-			else if (corruptionRetch == "Retch")	
-			{
-				player.SetModel("models/infected/boomette.mdl");
-
 				local retchName = "__acid_retch_inst_" + player.GetEntityIndex();
 				DoEntFire("!self", "AddOutput", "targetname " + retchName, 0, player, player);
 
@@ -51,11 +42,6 @@ function MutationSpawn(player)
 			//Make regular hunters always use L4D2 model so we can change texture
 			player.SetModel("models/infected/hunter.mdl");
 			NetProps.SetPropInt(player, "m_fFlags", NetProps.GetPropInt(player, "m_fFlags") | (1 << 6)) //FL_ATCONTROLS			(1 << 6)	/**< Player can't move, but keeps key inputs for controlling another entity */
-			break;
-		}
-		case 4:
-		{
-			player.SetModel("models/infected/boomette.mdl");
 			break;
 		}
 		case 5:
@@ -452,36 +438,6 @@ function OnGameEvent_lunge_pounce(params)
 	}
 }
 
-/*
-// Retch Vomit
-function RetchAbility(player)
-{
-	local eyeAngles = player.EyeAngles();
-	local eyePosition = player.EyePosition();
-	local traceStart = eyePosition;
-	local traceEnd = eyePosition + (eyeAngles.Forward() * pingRange);
-
-	traceTable <-
-	{
-		start = eyePosition
-		end = traceEnd
-		ignore = player
-	}
-
-	if(TraceLine(traceTable))
-	{
-		if(traceTable.hit)
-		{
-			DropSpit(traceTable.pos)
-		}
-		else
-		{
-			return;
-		}
-	}
-}
-*/
-
 function OnGameEvent_player_now_it(params)
 {
 	if (corruptionRetch == "Retch")	
@@ -578,6 +534,7 @@ function CorruptionCard_Retch()
 	Convars.SetValue("z_exploding_speed", 210);
 	Convars.SetValue("z_vomit_duration", 2.5);
 	Convars.SetValue("z_vomit_range", 1600);
+	Convars.SetValue("z_female_boomer_spawn_chance", 0);
 }
 
 function CorruptionCard_Exploder()
@@ -585,4 +542,5 @@ function CorruptionCard_Exploder()
 	Convars.SetValue("z_exploding_speed", 240);
 	Convars.SetValue("z_vomit_duration", 0);
 	Convars.SetValue("z_vomit_range", 300);
+	Convars.SetValue("z_female_boomer_spawn_chance", 100);
 }

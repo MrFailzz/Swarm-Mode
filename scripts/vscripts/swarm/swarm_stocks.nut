@@ -5,6 +5,10 @@ difficulty <- GetDifficulty();
 survivorSet <- Director.GetSurvivorSet();
 z_speed <- Convars.GetFloat("z_speed");
 
+Convars.SetValue("z_versus_hunter_limit", 0);
+Convars.SetValue("z_versus_spitter_limit", 0);
+Convars.SetValue("z_ghost_delay_minspawn", 20);
+
 // DIRECTOR OPTIONS //
 DirectorOptions <-
 {

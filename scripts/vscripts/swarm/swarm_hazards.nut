@@ -649,6 +649,37 @@ function AlarmPoliceStopSound(carIndex)
 ///////////////////////////////////////////////
 //                 BOSSES                    //
 ///////////////////////////////////////////////
+function ApplyBossCard()
+{
+	ResetGameplayCvars();
+	switch(corruptionGameplay)
+	{
+		case "None":
+			break;
+		case "hazardBreaker":
+			CorruptionCard_Breaker();
+			break;
+		case "hazardTank":
+			CorruptionCard_Tank();
+			break;
+	}
+}
+
+function CorruptionCard_Breaker()
+{
+	bossBreakerEnable = true;
+	Convars.SetValue("z_tank_health", 8000);
+	Convars.SetValue("z_tank_speed", 185);
+	Convars.SetValue("z_tank_speed_vs", 185)
+}
+
+function CorruptionCard_Tank()
+{
+	bossTankEnable = true;
+	Convars.SetValue("z_tank_health", 10000);
+	Convars.SetValue("z_tank_speed", 200);
+	Convars.SetValue("z_tank_speed_vs", 200)
+}
 
 function difficulty_RandomBoss()
 {
@@ -665,7 +696,7 @@ function difficulty_RandomBoss()
 		}
 		if (randomPct == 2)
 		{
-			bossTankEnable = true;
+			bossBreakerEnable = true;
 		}
 	}
 	    
@@ -690,13 +721,11 @@ function SpawnBoss()
 	}
 	if (progressPct > spawnBreaker && !breakerSpawned && corruptionBoss == "hazardBreaker")
 	{
-		bossBreakerEnable = true;
 		BreakerSpawn();
 		breakerSpawned = true;
 	}
 	if (progressPct > spawnTank && !tankSpawned && corruptionBoss == "hazardTank")
 	{
-		bossTankEnable = true;
 		TankSpawn();
 		tankSpawned = true;
 	}

@@ -106,9 +106,13 @@ function InitCorruptionCards()
 	cardsBoss.clear();
 	cardsBoss.append("None");
 	cardsBoss.append("None");
-	cardsBoss.append("hazardBreaker");
-	cardsBoss.append("hazardTank");
+	if (IsMissionFinalMap() == false)
+	{
+		cardsBoss.append("hazardBreaker");
+//		cardsBoss.append("hazardTank");
+	}
 	corruptionBoss = ChooseCorruptionCard(cardsBoss);
+	ApplyBossCard();
 
 	// Environmental
 	local cardsEnvironmental = array(1, null);

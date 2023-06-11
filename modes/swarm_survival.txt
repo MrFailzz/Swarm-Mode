@@ -23,8 +23,8 @@
 		z_jockey_ride_damage_interval 0.5
 		z_pounce_stumble_radius 180
 		z_jockey_control_variance 0
-		z_jockey_control_min 0.65
-		z_jockey_control_max 0.65
+		z_jockey_control_min 0.6
+		z_jockey_control_max 0.6
 		z_jockey_leap_range 350
 		z_leap_power 700
 		z_leap_interval_post_incap 10
@@ -45,11 +45,11 @@
 		z_exploding_outer_radius 0
 		z_exploding_splat_radius 0
 		boomer_pz_claw_dmg 4
-		z_vomit_velocity 2500
+		z_vomit_velocity 3000
 		z_vomit_velocityfadestart 1.8
 		z_vomit_velocityfadeend 2.4
 		z_vomit_lifetime 2.5
-		z_vomit_maxdamagedist 2500
+		z_vomit_maxdamagedist 1600
 
 //		z_spit_interval 1
 //		spitter_pz_claw_dmg 3
@@ -65,10 +65,7 @@
 		witch_force_wander 1
 		
 		z_tank_damage_slow_max_range 0
-		z_tank_health 8000
 		z_tank_throw_interval 15
-		z_tank_speed_vs 185
-		z_tank_speed 185
 		tank_ground_pound_duration 3
 		tank_burn_duration 150
 		tank_burn_duration_hard 155
@@ -77,8 +74,6 @@
 		vs_tank_damage 18
 		
 		z_ghost_delay_max 20
-		z_versus_hunter_limit 0
-		z_versus_spitter_limit 0
 		z_mob_spawn_max_interval_easy 9999
 		z_mob_spawn_min_interval_easy 9999
 		z_mob_spawn_max_interval_normal 9999
