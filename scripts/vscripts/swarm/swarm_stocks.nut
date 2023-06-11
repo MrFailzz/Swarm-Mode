@@ -18,7 +18,9 @@ DirectorOptions <-
 	cm_WitchLimit = -1
 	cm_CommonLimit = 30
 
-	SpecialRespawnInterval = 20
+	SpecialInitialSpawnDelayMax = 45
+	SpecialInitialSpawnDelayMin = 30
+	SpecialRespawnInterval = 25
 	BoomerLimit = 2
 	ChargerLimit = 1
 	HunterLimit = 0
@@ -1156,30 +1158,14 @@ function Update()
 		}
 	}
 
-	if (corruptionZSpeed != "None")
-	{
-		switch(corruptionZSpeed)
-		{
-			case "commonShamble":
-				CorruptionCard_CommonShamble();
-				break;
-			case "commonRunning":
-				CorruptionCard_CommonRunning();
-				break;
-			case "commonBlitzing":
-				CorruptionCard_CommonBlitzing();
-				break;
-		}
-	}
-
 	if (corruptionEnvironmental == "environmentFrozen")
 	{
 		FrigidOutskirtsTimer();
 	}
 
-	if (corruptionHazards == "hazardSnitch")
+	if (corruptionHazards == "hazardSnitch" || corruptionBoss == "hazardBoss")
 	{
-		BossSpawn();
+		SpawnBoss();
 	}
 
 	if (corruptionHordes != "None")
@@ -1214,6 +1200,11 @@ function Update()
 				RetchTimerFunc();
 				break;
 		}
+	}
+
+	if (difficulty > 1)
+	{
+		difficulty_RandomBoss()
 	}
 
 	if (bTankHudExists == true)

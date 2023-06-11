@@ -9,6 +9,7 @@ corruptionTallboy <- null;
 corruptionHocker <- null;
 corruptionRetch <- null;
 corruptionHazards <- null;
+corruptionBoss <- null;
 corruptionEnvironmental <- null;
 corruptionHordes <- null;
 corruptionGameplay <- null;
@@ -59,6 +60,7 @@ function InitCorruptionCards()
 	cardsZSpeed.append("commonRunning");
 	cardsZSpeed.append("commonBlitzing");
 	corruptionZSpeed = ChooseCorruptionCard(cardsZSpeed);
+	ApplyZSpeedCard ();
 
 	// Tallboys
 	local cardsTallboy = array(1, null);
@@ -98,6 +100,14 @@ function InitCorruptionCards()
 		cardsHazards.append("hazardSnitch");
 	}
 	corruptionHazards = ChooseCorruptionCard(cardsHazards);
+
+	// Boss
+	local cardsBoss = array(1, null);
+	cardsBoss.clear();
+	cardsBoss.append("None");
+	cardsBoss.append("None");
+	cardsBoss.append("hazardBoss");
+	corruptionBoss = ChooseCorruptionCard(cardsBoss);
 
 	// Environmental
 	local cardsEnvironmental = array(1, null);
@@ -381,7 +391,10 @@ function GetCorruptionCardName(cardID)
 			return "Exploders";
 			break;
 		case "hazardSnitch":
-			return "Snitches";
+			return "Tattlers";
+			break;
+		case "hazardBoss":
+			return "Breaker";
 			break;
 		default:
 			return "None";
@@ -643,7 +656,7 @@ function HuntedTimerFunc()
 	}
 	else if (HuntedTimer < Time() + 5)
 	{
-		ClientPrint(null, 3, "\x04" + "Hunted: " + "\x01 Prepare for the horde in \x04" + ceil(HuntedTimer - Time()) + "...");
+		ClientPrint(null, 3, "\x01 Prepare for the horde in \x04" + ceil(HuntedTimer - Time()) + "...");
 	}
 }
 
@@ -666,7 +679,7 @@ function OnslaughtTimerFunc()
 	}
 	else if (OnslaughtTimer < Time() + 5)
 	{
-		ClientPrint(null, 3, "\x04" + "Onslaught: " + "\x01 Prepare for the horde in \x04" + ceil(OnslaughtTimer - Time()) + "...");
+		ClientPrint(null, 3, "\x01 Prepare for the horde in \x04" + ceil(OnslaughtTimer - Time()) + "...");
 	}
 }
 

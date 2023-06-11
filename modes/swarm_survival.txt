@@ -9,6 +9,9 @@
 
 	convar
 	{
+		director_no_bosses 1
+		director_no_mobs 1
+
 		charger_pz_claw_dmg 10
 		z_charge_duration 1
 		z_charge_interval 6
@@ -76,14 +79,15 @@
 		
 		z_ghost_delay_max 20
 		z_versus_hunter_limit 0
-		z_mob_spawn_max_interval_easy 9999
-		z_mob_spawn_min_interval_easy 9999
-		z_mob_spawn_max_interval_normal 9999
-		z_mob_spawn_min_interval_normal 9999
-		z_mob_spawn_max_interval_hard 9999
-		z_mob_spawn_min_interval_hard 9999
-		z_mob_spawn_max_interval_expert 9999
-		z_mob_spawn_min_interval_expert 9999
+		z_versus_spitter_limit 0
+//		z_mob_spawn_max_interval_easy 9999
+//		z_mob_spawn_min_interval_easy 9999
+//		z_mob_spawn_max_interval_normal 9999
+//		z_mob_spawn_min_interval_normal 9999
+//		z_mob_spawn_max_interval_hard 9999
+//		z_mob_spawn_min_interval_hard 9999
+//		z_mob_spawn_max_interval_expert 9999
+//		z_mob_spawn_min_interval_expert 9999
 		
 		survivor_limp_health 15
 		survivor_incapacitated_cycle_time 0.3

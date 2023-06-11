@@ -651,20 +651,39 @@ function AlarmPoliceStopSound(carIndex)
 ///////////////////////////////////////////////
 snitchSpawned <- false
 breakerSpawned <- false
+bossSpawned <- false
 
-function BossSpawn()
+function difficulty_RandomBoss()
 {
 	local progressPct = ( Director.GetFurthestSurvivorFlow() / GetMaxFlowDistance() )
 	local spawnBoss = (RandomFloat(0.1,1.0))
 	    
-	if (progressPct > spawnBoss && !snitchSpawned)
+	if (progressPct > spawnBoss && !bossSpawned)
+	{
+		BreakerSpawn();
+		bossSpawned = true;
+	}
+}
+
+function SpawnBoss()
+{
+	local progressPct = ( Director.GetFurthestSurvivorFlow() / GetMaxFlowDistance() )
+	local spawnSnitch = (RandomFloat(0.1,1.0))
+	local spawnBreaker = (RandomFloat(0.1,1.0))
+	    
+	if (progressPct > spawnSnitch && !snitchSpawned && corruptionHazards == "hazardSnitch")
 	{
 		SnitchSpawn();
 		snitchSpawned = true;
 	}
+	if (progressPct > spawnBreaker && !breakerSpawned && corruptionBoss == "hazardBoss")
+	{
+		BreakerSpawn();
+		breakerSpawned = true;
+	}
 }
 
-function SnitchSpawn(count = 3, zType = 7)
+function SnitchSpawn(count = RandomInt(1,3), zType = 7)
 {
 	local i = 0;
 	while (i < count)
@@ -673,3 +692,14 @@ function SnitchSpawn(count = 3, zType = 7)
 		i++;
 	}
 }
+
+function BreakerSpawn(count = 1, zType = 8)
+{
+	local i = 0;
+	while (i < count)
+	{
+		ZSpawn({type = zType});
+		i++;
+	}
+}
+

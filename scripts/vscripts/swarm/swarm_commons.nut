@@ -576,6 +576,21 @@ function CreateJimmy(common)
 ///////////////////////////////////////////////
 //              CORRUPTION CARDS             //
 ///////////////////////////////////////////////
+function ApplyZSpeedCard()
+{
+	switch(corruptionZSpeed)
+	{
+		case "commonShamble":
+			CorruptionCard_CommonShamble();
+			break;
+		case "commonRunning":
+			CorruptionCard_CommonRunning();
+			break;
+		case "commonBlitzing":
+			CorruptionCard_CommonBlitzing();
+			break;
+	}
+}
 
 function CorruptionCard_CommonShamble()
 {
