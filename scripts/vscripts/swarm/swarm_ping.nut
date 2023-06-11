@@ -112,27 +112,6 @@ function PingWorld(pingOrigin, player)
 {
 	local playerID = player.GetEntityIndex();
 	local pingName = "pingWorld" + playerID;
-	//Destroy player's old ping before making a new one - need to delay this or it kills the new one
-	//EntFire("pingBeam" + playerID, "Kill");
-
-	/*local pingBeam = SpawnEntityFromTable("env_beam",
-	{
-		targetname = "pingBeam" + playerID,
-		origin = pingOrigin,
-		spawnflags = 13,
-		texture = "sprites/laserbeam.spr",
-		rendercolor = Vector(255, 255, 255),
-		renderamt = 255,
-		Radius = 48,
-		//TextureScroll = 0,
-		damage = 0,
-		life = 10,
-		BoltWidth = 2,
-		//LightningStart = "gnome_closet",
-		//LightningEnd = "shootgame_start_button_model",
-		//ClipStyle = 0,
-		HDRColorScale = 1
-	});*/
 
 	// Create fake prop for glow
 	local pingWorld = SpawnEntityFromTable("prop_dynamic",

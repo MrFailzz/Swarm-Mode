@@ -355,7 +355,7 @@ function GetCorruptionCardName(cardID)
 			return "CEDA Operatives";
 			break;
 		case "uncommonConstruction":
-			return "Building Site";
+			return "Construction Site";
 			break;
 		case "uncommonJimmy":
 			return "Jimmy Gibbs and Cousins";
@@ -651,7 +651,7 @@ function HuntedTimerFunc()
 {
 	if (HuntedTimer < Time())
 	{
-		SpawnMob(2);
+		SpawnMob();
 		HuntedTimer = Time() + 180;
 	}
 	else if (HuntedTimer < Time() + 5)
@@ -674,7 +674,7 @@ function OnslaughtTimerFunc()
 {
 	if (OnslaughtTimer < Time())
 	{
-		SpawnMob(2);
+		SpawnMob();
 		OnslaughtTimer = Time() + 90;
 	}
 	else if (OnslaughtTimer < Time() + 5)

@@ -210,7 +210,7 @@ function InterceptChat(message, speaker)
 		cardHudTimeout = 0;
 		return false;
 	}
-	else if (command == "!pick" || command == "/pick")
+	else if (command == "!pick" || command == "/pick" || command == "!card" || command == "/card")
 	{
 		if (textArgs[1].len() == 1 && speaker.IsSurvivor())
 		{
@@ -218,7 +218,7 @@ function InterceptChat(message, speaker)
 		}
 		return false;
 	}
-	else if (command == "!pickbot" || command == "/pickbot")
+	else if (command == "!pickbot" || command == "/pickbot" || command == "!botpick" || command == "/botpick")
 	{
 		if (textArgs[1].len() == 1 && speaker.IsSurvivor())
 		{
@@ -280,7 +280,6 @@ function AllowTakeDamage(damageTable)
 	local Broken = 0;
 	local Pyromaniac = 0;
 	local BombSquad = 0;
-	local BombSquadMultiplier = 0;
 	local LuckyShot = 0;
 	local LuckyShotRoll = 0;
 	local FireProof = 0;
@@ -302,6 +301,7 @@ function AllowTakeDamage(damageTable)
 	local Zoey = 0;
 	local Francis = 0;
 	local ScarTissue = 0;
+	local Arsonist = 0;
 
 	//printl("Attacker: " + attacker);
 	//printl("Victim: " + victim);
@@ -343,16 +343,29 @@ function AllowTakeDamage(damageTable)
 				}
 				
 				//Pyromaniac
-				if ((damageType & DMG_BURN) == DMG_BURN || (damageType & DMG_BLAST) == DMG_BLAST || (damageType & DMG_BLAST_SURFACE) == DMG_BLAST_SURFACE)
+				//Arsonist
+				if ((damageType & DMG_BURN) == DMG_BURN)
 				{
 					Pyromaniac = PlayerHasCard(attacker, "Pyromaniac");
+					Arsonist = PlayerHasCard(attacker, "Arsonist");
+					if (Arsonist > 0)
+					{
+						Heal_TempHealth(attacker, 0.1 * Arsonist);
+					}
 				}
+
+				//BombSquad
+				if ((damageType & DMG_BLAST) == DMG_BLAST || (damageType & DMG_BLAST_SURFACE) == DMG_BLAST_SURFACE)
+				{
+					BombSquad = PlayerHasCard(attacker, "BombSquad");
+				}
+
 				/*if((damageType & DMG_BURN) == DMG_BURN){printl("DMG_BURN")}
 				if((damageType & DMG_BLAST) == DMG_BLAST){printl("DMG_BLAST")}
 				if((damageType & DMG_BLAST_SURFACE) == DMG_BLAST_SURFACE){printl("DMG_BLAST_SURFACE")}*/
 
 				//BombSquad
-				if (inflictorClass == "pipe_bomb_projectile")
+				/*if (inflictorClass == "pipe_bomb_projectile")
 				{
 					if (victimPlayer == true)
 					{
@@ -366,11 +379,11 @@ function AllowTakeDamage(damageTable)
 						BombSquad = PlayerHasCard(attacker, "BombSquad");
 					}
 				}
-				BombSquadMultiplier = BombSquad == 0 ? 0 : (BombSquad - 1)
+				BombSquadMultiplier = BombSquad == 0 ? 0 : (BombSquad - 1)*/
 
 				//LuckyShot
 				//Ellis Perk
-				LuckyShot = PlayerHasCard(attacker, "LuckyShot");
+				LuckyShot = TeamHasCard("LuckyShot");
 				Ellis = PlayerHasCard(attacker, "Ellis");
 				local critChance = (7 * LuckyShot) + (5 * Ellis);
 
@@ -431,8 +444,8 @@ function AllowTakeDamage(damageTable)
 								 + (0.25 * Sharpshooter)
 								 + (1 * Outlaw)
 								 + (0.2 * Broken)
-								 + (0.4 * Pyromaniac)
-								 + ((9 * BombSquad) + BombSquadMultiplier)
+								 + (1.5 * Pyromaniac)
+								 + (1.5 * BombSquad)
 								 + (3 * LuckyShotRoll)
 								 + (0.1 * EyeOfTheSwarmAttacker)
 								 + (0.4 * Brazen)
@@ -541,11 +554,11 @@ function AllowTakeDamage(damageTable)
 	return true;
 }
 
-pipeDuration <- Convars.GetFloat("pipe_bomb_timer_duration");
+/*pipeDuration <- Convars.GetFloat("pipe_bomb_timer_duration");
 function OnGameEvent_weapon_fire(params)
 {
 	ThrowPipeBomb(params);
-}
+}*/
 
 function OnGameEvent_player_spawn(params)
 {
@@ -624,34 +637,57 @@ function OnGameEvent_player_death(params)
 		if (RandomInt(1, 100) <= Pinata * 15)
 		{
 			local randomItem = RandomInt(1,100);
+			local randomItemArray =
+			[
+				"weapon_molotov",
+				"weapon_molotov",
+				"weapon_molotov",
+				"weapon_molotov",
+				"weapon_pipe_bomb",
+				"weapon_pipe_bomb",
+				"weapon_pipe_bomb",
+				"weapon_pipe_bomb",
+				"weapon_vomitjar",
+				"weapon_vomitjar",
+				"weapon_pain_pills",
+				"weapon_pain_pills",
+				"weapon_pain_pills",
+				"weapon_pain_pills",
+				"weapon_adrenaline",
+				"weapon_adrenaline",
+				"weapon_adrenaline",
+				"weapon_adrenaline",
+				"weapon_first_aid_kit",
+				"weapon_first_aid_kit",
+				"weapon_defibrillator"
+			];
 
-			if (randomItem <= 17)
+			local randomItem = randomItemArray[RandomInt(0, randomItemArray.len() - 1)];
+			printl(randomItem);
+
+			switch(randomItem)
 			{
-				SpawnEntityFromTable("weapon_molotov",{origin = Vector(origin.x, origin.y, origin.z + 16),angles = Vector(0, 0, 0),model = "models/w_models/weapons/w_eq_molotov.mdl"});
-			}
-			else if (randomItem <= 34)
-			{
-				SpawnEntityFromTable("weapon_pipe_bomb",{origin = Vector(origin.x, origin.y, origin.z + 16),angles = Vector(0, 0, 0),model = "models/w_models/weapons/w_eq_pipebomb.mdl"});
-			}
-			else if (randomItem <= 51)
-			{
-				SpawnEntityFromTable("weapon_vomitjar",{origin = Vector(origin.x, origin.y, origin.z + 16),angles = Vector(0, 0, 0),model = "models/w_models/weapons/w_eq_bile_flask.mdl"});
-			}
-			else if (randomItem <= 68)
-			{
-				SpawnEntityFromTable("weapon_pain_pills",{origin = Vector(origin.x, origin.y, origin.z + 16),angles = Vector(0, 0, 0),model = "models/w_models/weapons/w_eq_painpills.mdl"});
-			}
-			else if (randomItem <= 85)
-			{
-				SpawnEntityFromTable("weapon_adrenaline",{origin = Vector(origin.x, origin.y, origin.z + 16),angles = Vector(0, 0, 0),model = "models/w_models/weapons/w_eq_adrenaline.mdl"});
-			}
-			else if (randomItem <= 95)
-			{
-				SpawnEntityFromTable("weapon_first_aid_kit",{origin = Vector(origin.x, origin.y, origin.z + 16),angles = Vector(0, 0, 0),model = "models/w_models/weapons/w_eq_Medkit.mdl"});
-			}
-			else
-			{
-				SpawnEntityFromTable("weapon_defibrillator",{origin = Vector(origin.x, origin.y, origin.z + 16),angles = Vector(0, 0, 0),model = "models/w_models/weapons/w_eq_molotov.mdl"});
+				case "weapon_molotov":
+					SpawnEntityFromTable("weapon_molotov",{origin = Vector(origin.x, origin.y, origin.z + 16),angles = Vector(0, 0, 0),model = "models/w_models/weapons/w_eq_molotov.mdl"});
+					break;
+				case "weapon_pipe_bomb":
+					SpawnEntityFromTable("weapon_pipe_bomb",{origin = Vector(origin.x, origin.y, origin.z + 16),angles = Vector(0, 0, 0),model = "models/w_models/weapons/w_eq_pipebomb.mdl"});
+					break;
+				case "weapon_vomitjar":
+					SpawnEntityFromTable("weapon_vomitjar",{origin = Vector(origin.x, origin.y, origin.z + 16),angles = Vector(0, 0, 0),model = "models/w_models/weapons/w_eq_bile_flask.mdl"});
+					break;
+				case "weapon_pain_pills":
+					SpawnEntityFromTable("weapon_pain_pills",{origin = Vector(origin.x, origin.y, origin.z + 16),angles = Vector(0, 0, 0),model = "models/w_models/weapons/w_eq_painpills.mdl"});
+					break;
+				case "weapon_adrenaline":
+					SpawnEntityFromTable("weapon_adrenaline",{origin = Vector(origin.x, origin.y, origin.z + 16),angles = Vector(0, 0, 0),model = "models/w_models/weapons/w_eq_adrenaline.mdl"});
+					break;
+				case "weapon_first_aid_kit":
+					SpawnEntityFromTable("weapon_first_aid_kit",{origin = Vector(origin.x, origin.y, origin.z + 16),angles = Vector(0, 0, 0),model = "models/w_models/weapons/w_eq_Medkit.mdl"});
+					break;
+				case "weapon_defibrillator":
+					SpawnEntityFromTable("weapon_defibrillator",{origin = Vector(origin.x, origin.y, origin.z + 16),angles = Vector(0, 0, 0),model = "models/w_models/weapons/w_eq_defibrillator.mdl"});
+					break;
 			}
 		}
 
@@ -825,7 +861,7 @@ function OnGameEvent_pills_used(params)
 	local Addict = PlayerHasCard(player, "Addict");
 	local Rochelle = PlayerHasCard(player, "Rochelle");
 	local ScarTissue = PlayerHasCard(player, "ScarTissue");
-	local healMultiplier = 1 + ((0.5 * EMTBag) + (0.25 * AntibioticOintment) + (0.15 * MedicalExpert) + (0.75 * Addict) + (0.1 * Rochelle) + (-0.5 * ScarTissue));
+	local healMultiplier = 1 + ((0.5 * EMTBag) + (0.25 * AntibioticOintment) + (0.15 * MedicalExpert) + (0.5 * Addict) + (0.1 * Rochelle) + (-0.5 * ScarTissue));
 	local healAmount = pillsHealAmount * healMultiplier;
 
 	Heal_TempHealth(player, healAmount);

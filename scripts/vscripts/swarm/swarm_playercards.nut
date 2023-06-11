@@ -655,7 +655,7 @@ function SurvivorPickupItem(params)
 	}
 }*/
 
-pipeDuration <- Convars.GetFloat("pipe_bomb_timer_duration");
+/*pipeDuration <- Convars.GetFloat("pipe_bomb_timer_duration");
 function ThrowPipeBomb(params)
 {
 	local player = GetPlayerFromUserID(params["userid"]);
@@ -669,7 +669,7 @@ function ThrowPipeBomb(params)
 			Convars.SetValue("pipe_bomb_timer_duration", 0.75);
 		}
 	}
-}
+}*/
 
 addictPlaySound <- false;
 function Update_PlayerCards()
@@ -677,10 +677,10 @@ function Update_PlayerCards()
 	//Runs every second
 	
 	//Reset pipe bomb duration to default
-	if (Convars.GetFloat("pipe_bomb_timer_duration") != pipeDuration)
+	/*if (Convars.GetFloat("pipe_bomb_timer_duration") != pipeDuration)
 	{
 		Convars.SetValue("pipe_bomb_timer_duration", pipeDuration);
-	}
+	}*/
 
 	local player = null;
 	while ((player = Entities.FindByClassname(player, "player")) != null)
@@ -724,10 +724,10 @@ function Update_PlayerCards()
 						else
 						{
 							EmitSoundOnClient("Player.Heartbeat", player);
-							if (AddictValue == -0.2)
+							/*if (AddictValue == -0.2)
 							{
 								EmitSoundOnClient("Player.Heartbeat", player);
-							}
+							}*/
 							addictPlaySound = false;
 						}
 					}
