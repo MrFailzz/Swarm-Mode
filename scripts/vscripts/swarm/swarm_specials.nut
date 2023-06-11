@@ -87,8 +87,11 @@ function OnGameEvent_ability_use(params)
 	switch(ability)
 	{
 		case "ability_throw":
-			BreakerJump(player);
-			break;
+			if (bossBreakerEnable == true)
+			{
+				BreakerJump(player);
+				break;
+			}
 		case "ability_vomit":
 			if (corruptionRetch == "Exploder")	
 			{
@@ -167,12 +170,13 @@ function BoomerDeath(player)
 	}
 	if (corruptionRetch == "Exploder")
 	{
-	BoomerExplosion(boomerOrigin, true);
+		BoomerExplosion(boomerOrigin, true);
 	}
 
 	NetProps.SetPropInt(player, "m_clrRender", GetColorInt(Vector(255, 255, 255)));
 }
 
+/*
 function SpitterDeath(player)
 {
 	local spitterOrigin = player.GetOrigin();
@@ -191,6 +195,7 @@ function SpitterDeath(player)
 
 	EntFire("spitExplosionPart" + randomNameID, "Kill", null, 5);
 }
+*/
 
 function ExploderAbility(player)
 {

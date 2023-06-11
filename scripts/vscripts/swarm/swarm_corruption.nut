@@ -106,7 +106,8 @@ function InitCorruptionCards()
 	cardsBoss.clear();
 	cardsBoss.append("None");
 	cardsBoss.append("None");
-	cardsBoss.append("hazardBoss");
+	cardsBoss.append("hazardBreaker");
+	cardsBoss.append("hazardTank");
 	corruptionBoss = ChooseCorruptionCard(cardsBoss);
 
 	// Environmental
@@ -393,8 +394,11 @@ function GetCorruptionCardName(cardID)
 		case "hazardSnitch":
 			return "Tattlers";
 			break;
-		case "hazardBoss":
+		case "hazardBreaker":
 			return "Breaker";
+			break;
+		case "hazardTank":
+			return "Tank";
 			break;
 		default:
 			return "None";

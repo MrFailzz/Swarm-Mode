@@ -76,6 +76,12 @@ swarmDamagePerTick <- 2;
 tankJumpVelocity <- 450;
 tankJumpExtraHeight <- 300;			// Max extra height from aiming up
 
+breakerSpawned <- false;
+tankSpawned <- false;
+bossSpawned <- false;
+bossTankEnable <- false;
+bossBreakerEnable <- false;
+
 // INFECTED //
 boomerExplosionRange <- 250;
 boomerExplosionDamage <- 45;		// Max damage
@@ -125,6 +131,8 @@ sleeperCountMin <- 4;				// Mix number of sleepers to spawn
 sleeperCountMax <- 4;				// Max number of sleepers to spawn
 
 explosiveCarHealth <- 1000;			// HP of explosive cars
+
+snitchSpawned <- false;
 
 // HEALING //
 medkitHealAmount <- 50;				// HP healed by first aid kits
@@ -1199,7 +1207,7 @@ function Update()
 		FrigidOutskirtsTimer();
 	}
 
-	if (corruptionHazards == "hazardSnitch" || corruptionBoss == "hazardBoss")
+	if (corruptionHazards == "hazardSnitch" || corruptionBoss == "hazardBreaker")
 	{
 		SpawnBoss();
 	}

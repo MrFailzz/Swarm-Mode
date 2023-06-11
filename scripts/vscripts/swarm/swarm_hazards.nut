@@ -649,14 +649,25 @@ function AlarmPoliceStopSound(carIndex)
 ///////////////////////////////////////////////
 //                 BOSSES                    //
 ///////////////////////////////////////////////
-snitchSpawned <- false
-breakerSpawned <- false
-bossSpawned <- false
 
 function difficulty_RandomBoss()
 {
 	local progressPct = ( Director.GetFurthestSurvivorFlow() / GetMaxFlowDistance() )
 	local spawnBoss = (RandomFloat(0.1,1.0))
+
+	local randomPct = (RandomInt(1,2))
+
+	if (corruptionBoss == "None")
+	{
+		if (randomPct == 1)
+		{
+			bossBreakerEnable = true;
+		}
+		if (randomPct == 2)
+		{
+			bossTankEnable = true;
+		}
+	}
 	    
 	if (progressPct > spawnBoss && !bossSpawned)
 	{
@@ -670,16 +681,24 @@ function SpawnBoss()
 	local progressPct = ( Director.GetFurthestSurvivorFlow() / GetMaxFlowDistance() )
 	local spawnSnitch = (RandomFloat(0.1,1.0))
 	local spawnBreaker = (RandomFloat(0.1,1.0))
+	local spawnTank = (RandomFloat(0.1,1.0))
 	    
 	if (progressPct > spawnSnitch && !snitchSpawned && corruptionHazards == "hazardSnitch")
 	{
 		SnitchSpawn();
 		snitchSpawned = true;
 	}
-	if (progressPct > spawnBreaker && !breakerSpawned && corruptionBoss == "hazardBoss")
+	if (progressPct > spawnBreaker && !breakerSpawned && corruptionBoss == "hazardBreaker")
 	{
+		bossBreakerEnable = true;
 		BreakerSpawn();
 		breakerSpawned = true;
+	}
+	if (progressPct > spawnTank && !tankSpawned && corruptionBoss == "hazardTank")
+	{
+		bossTankEnable = true;
+		TankSpawn();
+		tankSpawned = true;
 	}
 }
 
