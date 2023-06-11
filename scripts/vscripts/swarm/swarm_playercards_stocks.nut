@@ -73,6 +73,7 @@ disciplineCards <-
 	"InspiringSacrifice",
 	"ReloadDrills",
 	//"MagCoupler",
+	"Arsonist",
 ];
 
 fortuneCards <-
@@ -142,19 +143,19 @@ function AddictGetValue(player)
 {
 	local healthBuffer = player.GetHealthBuffer();
 
-	if (healthBuffer >= 75)
+	if (healthBuffer >= 85)
 	{
 		return 0.25;
 	}
-	else if (healthBuffer >= 50)
+	else if (healthBuffer >= 60)
 	{
 		return 0.2;
 	}
-	else if (healthBuffer >= 35)
+	else if (healthBuffer >= 40)
 	{
 		return 0.1;
 	}
-	else if (healthBuffer >= 15)
+	else if (healthBuffer >= 20)
 	{
 		return 0.05;
 	}
@@ -168,7 +169,7 @@ function AddictGetValue(player)
 	}
 	else
 	{
-		return -0.2;
+		return -0.25;
 	}
 }
 ::AddictGetValue <- AddictGetValue;
@@ -531,6 +532,9 @@ function GetPlayerCardName(cardID, type = "name")
 			case "BuckshotBruiser":
 				return "Buckshot Bruiser";
 				break;
+			case "Arsonist":
+				return "Arsonist";
+				break;
 			default:
 				return cardID;
 				break;
@@ -604,7 +608,7 @@ function GetPlayerCardName(cardID, type = "name")
 				return "Non-event hordes heal +20 Team HP (5s CD)";
 				break;
 			case "Addict":
-				return "+75% Temp Heal EFF, perks by Temp HP level";
+				return "+50% Temp Heal EFF, perks by Temp HP level";
 				break;
 			case "FleetOfFoot":
 				return "+12.5% Move Speed, -10 Max HP";
@@ -625,10 +629,10 @@ function GetPlayerCardName(cardID, type = "name")
 				return "+20% DMG vs Breakers";
 				break;
 			case "Pyromaniac":
-				return "+40% Fire / Explosive DMG";
+				return "+150% Fire DMG";
 				break;
 			case "BombSquad":
-				return "Pipe Bombs become Frag Grenades, +1000% DMG";
+				return "+150% Explosive DMG";
 				break;
 			case "ConfidentKiller":
 				return "+1% DMG per Mutation death";
@@ -745,7 +749,7 @@ function GetPlayerCardName(cardID, type = "name")
 				return "+50% Reload Speed, DISABLES: Offensive Slot";
 				break;
 			case "LuckyShot":
-				return "+7% CRIT Chance (+400% DMG)";
+				return "+7% Team CRIT Chance (+400% DMG)";
 				break;
 			case "Selfless":
 				return "-15 Max HP, +15 Team Max HP";
@@ -782,6 +786,9 @@ function GetPlayerCardName(cardID, type = "name")
 				break;
 			case "BuckshotBruiser":
 				return "+0.25 Temp HP per Shotgun pellet";
+				break;
+			case "Arsonist":
+				return "+0.1 Temp HP per Fire DMG";
 				break;
 			default:
 				return cardID;
