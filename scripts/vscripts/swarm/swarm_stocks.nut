@@ -172,16 +172,6 @@ if (swarmMode == "hardcore" || swarmMode == "survival" || swarmMode == "vs")
 firstLeftCheckpoint <- false;
 cardHudTimeout <- 0;
 
-function DropItemFunc(player, weaponClass)
-{
-	local activeWeapon = player.GetActiveWeapon();
-	if (activeWeapon!=null && player.IsSurvivor() && activeWeapon.IsValid())
- 	{
-		local weaponClass = activeWeapon.GetClassname();
-		player.DropItem(weaponClass);
- 	}
-}
-
 function InterceptChat(message, speaker)
 {
 	// Remove player name from message
@@ -199,7 +189,14 @@ function InterceptChat(message, speaker)
 	}
 	else if ( command == "!drop" || command == "/drop") 
 	{
-		DropItem();
+		local activeWeapon = speaker.GetActiveWeapon();
+
+		if (activeWeapon!=null && speaker.IsSurvivor() && activeWeapon.IsValid())
+		{
+			local weaponClass = activeWeapon.GetClassname();
+			speaker.DropItem(weaponClass);
+		}
+		
 		return false;
 	}
 	else if (command == "!cards" || command == "/cards")

@@ -717,7 +717,7 @@ function SpawnBoss()
 		BreakerSpawn();
 		breakerSpawned = true;
 	}
-	if (progressPct > spawnOgre && !OgreSpawned && corruptionBoss == "hazardOgre")
+	if (progressPct > spawnOgre && !ogreSpawned && corruptionBoss == "hazardOgre")
 	{
 		BreakerSpawn();
 		ogreSpawned = true;

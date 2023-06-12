@@ -56,6 +56,15 @@ function MutationSpawn(player)
 			NetProps.SetPropFloat(player, "m_flLaggedMovementValue", (tallboyRunSpeed / z_speed))
 			break;
 		}
+		case 8:
+		{
+			if (bossOgreEnable == true)
+			{
+				player.SetModel("models/infected/jockey.mdl");
+				player.SetModelScale(3.0, 0.0);
+				break;
+			}
+		}
 		default:
 			break;
 	}
