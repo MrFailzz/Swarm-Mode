@@ -684,15 +684,13 @@ function difficulty_RandomBoss()
 {
 	local progressPct = ( Director.GetFurthestSurvivorFlow() / GetMaxFlowDistance() )
 
-	local randomPct = (RandomInt(1,2))
-
 	if (corruptionBoss == "None")
 	{
-		if (randomPct == 1)
+		if (randomPct < 50)
 		{
 			bossBreakerEnable = true;
 		}
-		if (randomPct == 2)
+	 else
 		{
 			bossOgreEnable = true;
 		}
