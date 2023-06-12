@@ -84,6 +84,7 @@ swarmDamagePerTick <- 2;
 tankJumpVelocity <- 500;
 tankJumpExtraHeight <- 300;			// Max extra height from aiming up
 
+randomPct <- (RandomInt(1,100))
 spawnBoss <- (RandomFloat(0.1,0.9))
 spawnBreaker <- (RandomFloat(0.1,0.9))
 spawnOgre <- (RandomFloat(0.1,0.9))
