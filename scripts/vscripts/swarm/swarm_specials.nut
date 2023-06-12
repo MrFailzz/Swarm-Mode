@@ -73,13 +73,13 @@ function OnGameEvent_ability_use(params)
 	switch(ability)
 	{
 		case "ability_throw":
-			if (bossBreakerEnable == true)
+			if (bossBreakerEnable == true && player.GetZombieType == 8)
 			{
 				BreakerJump(player);
 				break;
 			}
 		case "ability_vomit":
-			if (corruptionRetch == "Exploder")	
+			if (corruptionRetch == "Exploder" && player.GetZombieType == 2)	
 			{
 				ExploderAbility(player);
 				break;
