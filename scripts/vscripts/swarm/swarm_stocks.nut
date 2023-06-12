@@ -171,10 +171,10 @@ if (swarmMode == "hardcore" || swarmMode == "survival" || swarmMode == "vs")
 firstLeftCheckpoint <- false;
 cardHudTimeout <- 0;
 
-function DropItem(player, weaponClass)
+function DropItemFunc(player, weaponClass)
 {
 	local activeWeapon = player.GetActiveWeapon();
-	if (activeWeapon!=null && activeWeapon.IsValid())
+	if (activeWeapon!=null && player.IsSurvivor() && activeWeapon.IsValid())
  	{
 		local weaponClass = activeWeapon.GetClassname();
 		player.DropItem(weaponClass);
