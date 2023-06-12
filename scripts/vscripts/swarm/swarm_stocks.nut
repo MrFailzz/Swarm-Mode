@@ -84,10 +84,14 @@ swarmDamagePerTick <- 2;
 tankJumpVelocity <- 500;
 tankJumpExtraHeight <- 300;			// Max extra height from aiming up
 
+spawnBoss <- (RandomFloat(0.1,0.9))
+spawnBreaker <- (RandomFloat(0.1,0.9))
+spawnOgre <- (RandomFloat(0.1,0.9))
+
 breakerSpawned <- false;
-tankSpawned <- false;
+ogreSpawned <- false;
 bossSpawned <- false;
-bossTankEnable <- false;
+bossOgreEnable <- false;
 bossBreakerEnable <- false;
 
 // INFECTED //
@@ -140,6 +144,8 @@ sleeperCountMax <- 4;				// Max number of sleepers to spawn
 
 explosiveCarHealth <- 1000;			// HP of explosive cars
 
+spawnSnitch <- (RandomFloat(0.1,0.9))
+
 snitchSpawned <- false;
 
 // HEALING //
@@ -165,6 +171,16 @@ if (swarmMode == "hardcore" || swarmMode == "survival" || swarmMode == "vs")
 firstLeftCheckpoint <- false;
 cardHudTimeout <- 0;
 
+function DropItem(player, weaponClass)
+{
+	local activeWeapon = player.GetActiveWeapon();
+	if (activeWeapon!=null && activeWeapon.IsValid())
+ 	{
+		local weaponClass = activeWeapon.GetClassname();
+		player.DropItem(weaponClass);
+ 	}
+}
+
 function InterceptChat(message, speaker)
 {
 	// Remove player name from message
@@ -174,9 +190,15 @@ function InterceptChat(message, speaker)
 	textArgs = split(text, " ");
 	local command = textArgs[0].tolower();
 
+
 	if (command == "!ping" || command == "/ping")
 	{
 		TraceEye(speaker);
+		return false;
+	}
+	else if ( command == "!drop" || command == "/drop") 
+	{
+		DropItem();
 		return false;
 	}
 	else if (command == "!cards" || command == "/cards")
@@ -784,6 +806,16 @@ function OnGameEvent_player_left_safe_area(params)
 				// Print the number of continues left.
 				ClientPrint(null, 3, "\x04" + "Continues: " + "\x01"+ (3 - Director.GetMissionWipes()));
 			}
+	if (corruptionHordes == "hordeHunted")
+	{
+		HuntedEnabled = true;
+		HuntedTimer = Time() + 180 + 30;
+	}
+	if (corruptionHordes == "hordeOnslaught")
+	{
+		OnslaughtEnabled = true;
+		OnslaughtTimer = Time() + 90 + 30;
+	}
 
 			firstLeftCheckpoint = true;
 			cardHudTimeout = 0;
@@ -1220,7 +1252,7 @@ function Update()
 		difficulty_RandomBoss()
 	}
 
-	if (corruptionHazards == "hazardSnitch" || corruptionBoss == "hazardBreaker" || corruptionBoss == "hazardTank")
+	if (corruptionHazards == "hazardSnitch" || corruptionBoss == "hazardBreaker" || corruptionBoss == "hazardOgre")
 	{
 		SpawnBoss();
 	}

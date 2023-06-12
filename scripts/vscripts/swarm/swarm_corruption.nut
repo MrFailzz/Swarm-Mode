@@ -109,7 +109,7 @@ function InitCorruptionCards()
 	if (IsMissionFinalMap() == false)
 	{
 		cardsBoss.append("hazardBreaker");
-		cardsBoss.append("hazardTank");
+		cardsBoss.append("hazardOgre");
 	}
 	corruptionBoss = ChooseCorruptionCard(cardsBoss);
 	ApplyBossCard();
@@ -401,8 +401,8 @@ function GetCorruptionCardName(cardID)
 		case "hazardBreaker":
 			return "Breaker";
 			break;
-		case "hazardTank":
-			return "Tank";
+		case "hazardOgre":
+			return "Ogre";
 			break;
 		default:
 			return "None";
@@ -648,21 +648,21 @@ function ApplyHordeCard()
 
 // Hunted
 HuntedEnabled <- false;
-HuntedTimer <- Time() + 180 + 30;
+HuntedTimer <- null;
 
 function CorruptionCard_Hunted()
 {
-	HuntedEnabled = true
+	DirectorOptions.cm_CommonLimit = 30
 }
 
 function HuntedTimerFunc()
 {
-	if (HuntedTimer < Time())
+	if (HuntedTimer < Time() && HuntedEnabled == true)
 	{
 		SpawnMob();
 		HuntedTimer = Time() + 180;
 	}
-	else if (HuntedTimer < Time() + 5)
+	else if (HuntedTimer < Time() + 5 && HuntedEnabled == true)
 	{
 		ClientPrint(null, 3, "\x01 Prepare for the horde in \x04" + ceil(HuntedTimer - Time()) + "...");
 	}
@@ -670,22 +670,21 @@ function HuntedTimerFunc()
 
 // Onslaught
 OnslaughtEnabled <- false;
-OnslaughtTimer <- Time() + 90 + 30;
+OnslaughtTimer <- null;
 
 function CorruptionCard_Onslaught()
 {
-	OnslaughtEnabled = true
 	DirectorOptions.cm_CommonLimit = 50
 }
 
 function OnslaughtTimerFunc()
 {
-	if (OnslaughtTimer < Time())
+	if (OnslaughtTimer < Time() && OnslaughtEnabled == true)
 	{
 		SpawnMob();
 		OnslaughtTimer = Time() + 90;
 	}
-	else if (OnslaughtTimer < Time() + 5)
+	else if (OnslaughtTimer < Time() + 5 && OnslaughtEnabled == true)
 	{
 		ClientPrint(null, 3, "\x01 Prepare for the horde in \x04" + ceil(OnslaughtTimer - Time()) + "...");
 	}

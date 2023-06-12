@@ -658,8 +658,8 @@ function ApplyBossCard()
 		case "hazardBreaker":
 			CorruptionCard_Breaker();
 			break;
-		case "hazardTank":
-			CorruptionCard_Tank();
+		case "hazardOgre":
+			CorruptionCard_Ogre();
 			break;
 	}
 }
@@ -672,9 +672,9 @@ function CorruptionCard_Breaker()
 	Convars.SetValue("z_tank_speed_vs", 185)
 }
 
-function CorruptionCard_Tank()
+function CorruptionCard_Ogre()
 {
-	bossTankEnable = true;
+	bossOgreEnable = true;
 	Convars.SetValue("z_tank_health", 10000);
 	Convars.SetValue("z_tank_speed", 200);
 	Convars.SetValue("z_tank_speed_vs", 200)
@@ -683,7 +683,6 @@ function CorruptionCard_Tank()
 function difficulty_RandomBoss()
 {
 	local progressPct = ( Director.GetFurthestSurvivorFlow() / GetMaxFlowDistance() )
-	local spawnBoss = (RandomFloat(0.1,0.9))
 
 	local randomPct = (RandomInt(1,2))
 
@@ -695,7 +694,7 @@ function difficulty_RandomBoss()
 		}
 		if (randomPct == 2)
 		{
-			bossTankEnable = true;
+			bossOgreEnable = true;
 		}
 	}
 	    
@@ -709,9 +708,6 @@ function difficulty_RandomBoss()
 function SpawnBoss()
 {
 	local progressPct = ( Director.GetFurthestSurvivorFlow() / GetMaxFlowDistance() )
-	local spawnSnitch = (RandomFloat(0.1,0.9))
-	local spawnBreaker = (RandomFloat(0.1,0.9))
-	local spawnTank = (RandomFloat(0.1,0.9))
 	    
 	if (progressPct > spawnSnitch && !snitchSpawned && corruptionHazards == "hazardSnitch")
 	{
@@ -723,10 +719,10 @@ function SpawnBoss()
 		BreakerSpawn();
 		breakerSpawned = true;
 	}
-	if (progressPct > spawnTank && !tankSpawned && corruptionBoss == "hazardTank")
+	if (progressPct > spawnOgre && !OgreSpawned && corruptionBoss == "hazardOgre")
 	{
 		BreakerSpawn();
-		tankSpawned = true;
+		ogreSpawned = true;
 	}
 }
 
