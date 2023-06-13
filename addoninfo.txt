@@ -2,7 +2,7 @@
 {
 	addonSteamAppID "550"
 	addontitle "Swarm Mode"
-	addonversion "1.5"
+	addonversion "1.6"
 	addonauthor "Failzz, Derpduck"
 	addonauthorSteamID "LEAVE THIS BLANK"
 	addonDescription "The epic gamemode inspired by TRS's Swarm. Features mutations for Coop, Versus, and Survival!"

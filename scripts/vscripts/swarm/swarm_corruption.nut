@@ -868,7 +868,6 @@ function RetchTimerFunc(count = 4, zType = 2)
 	}
 }
 
-
 ///////////////////////////////////////////////
 //              GAMEPLAY CARDS               //
 ///////////////////////////////////////////////
@@ -1065,4 +1064,131 @@ function CorruptionCard_Sluggish()
 	Convars.SetValue("z_gun_swing_coop_min_penalty", 3);
 	Convars.SetValue("z_gun_swing_vs_max_penalty", 4);
 	Convars.SetValue("z_gun_swing_vs_min_penalty", 2);
+}
+
+///////////////////////////////////////////////
+//              INFECTED CARDS               //
+///////////////////////////////////////////////
+
+// Tallboy
+function ApplyTallboyCard()
+{
+	switch(corruptionTallboy)
+	{
+		case "Tallboy":
+			CorruptionCard_Tallboy();
+			break;
+		case "Crusher":
+			CorruptionCard_Crusher();
+			break;
+		case "Bruiser":
+			CorruptionCard_Bruiser();
+			break;
+	}
+}
+
+function CorruptionCard_Tallboy()
+{
+	Convars.SetValue("z_charger_health", 1360);
+	tallboyRunSpeed = 250
+}
+
+function CorruptionCard_Crusher()
+{
+	Convars.SetValue("z_charger_health", 1120);
+	tallboyRunSpeed = 250
+}
+
+function CorruptionCard_Bruiser()
+{
+	Convars.SetValue("z_charger_health", 1600);
+	tallboyRunSpeed = 210
+}
+
+// Hocker
+function ApplyHockerCard()
+{
+	switch(corruptionHocker)
+	{
+		case "Hocker":
+			CorruptionCard_Hocker();
+			break;
+		case "Crusher":
+			CorruptionCard_Stalker();
+			break;
+	}
+}
+
+function CorruptionCard_Hocker()
+{
+	DirectorOptions.JockeyLimit = 0
+}
+
+function CorruptionCard_Stalker()
+{
+	DirectorOptions.SmokerLimit = 0
+}
+
+// Retches
+function ApplyRetchCard()
+{
+	switch(corruptionRetch)
+	{
+		case "Retch":
+			CorruptionCard_Retch();
+			break;
+		case "Exploder":
+			CorruptionCard_Exploder();
+			break;
+	}
+}
+
+function CorruptionCard_Retch()
+{
+	Convars.SetValue("z_exploding_speed", 210);
+	Convars.SetValue("z_vomit_duration", 2.5);
+	Convars.SetValue("z_vomit_range", 1600);
+	Convars.SetValue("z_female_boomer_spawn_chance", 0);
+}
+
+function CorruptionCard_Exploder()
+{
+	Convars.SetValue("z_exploding_speed", 240);
+	Convars.SetValue("z_vomit_duration", 0);
+	Convars.SetValue("z_vomit_range", 300);
+	Convars.SetValue("z_female_boomer_spawn_chance", 100);
+}
+
+///////////////////////////////////////////////
+//                 BOSSES                    //
+///////////////////////////////////////////////
+function ApplyBossCard()
+{
+	switch(corruptionBoss)
+	{
+		case "None":
+			break;
+		case "hazardBreaker":
+			CorruptionCard_Breaker();
+			break;
+		case "hazardOgre":
+			CorruptionCard_Ogre();
+			break;
+	}
+}
+
+function CorruptionCard_Breaker()
+{
+	bossBreakerEnable = true;
+	Convars.SetValue("z_tank_health", 8000);
+	Convars.SetValue("z_tank_speed", 185);
+	Convars.SetValue("z_tank_speed_vs", 185)
+}
+
+function CorruptionCard_Ogre()
+{
+	bossOgreEnable = true;
+	Convars.SetValue("z_tank_health", 10000);
+	Convars.SetValue("z_tank_speed", 200);
+	Convars.SetValue("z_tank_speed_vs", 200)
 }

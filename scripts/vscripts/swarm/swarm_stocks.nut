@@ -81,9 +81,10 @@ else if (difficulty == 3)
 swarmTickInterval <- 1;				// In seconds
 swarmDamagePerTick <- 2;
 
-tankJumpVelocity <- 500;
-tankJumpExtraHeight <- 300;			// Max extra height from aiming up
+tankJumpVelocity <- 475;
+tankJumpExtraHeight <- 325;			// Max extra height from aiming up
 
+randomPct <- (RandomInt(1,100))
 spawnBoss <- (RandomFloat(0.1,0.9))
 spawnBreaker <- (RandomFloat(0.1,0.9))
 spawnOgre <- (RandomFloat(0.1,0.9))
@@ -104,7 +105,7 @@ tallboyPunchKnockback <- 350;		// Max knockback
 tallboyRunSpeed <- 210;
 
 // COMMON //
-acidCommonsMax <- 7;
+acidCommonsMax <- 4;
 acidCommonSpawnAmount <- 4;			// Size of group to spawn
 acidCommonSpawnRate <- 30;			// How often a group will be spawned in seconds
 
@@ -171,16 +172,6 @@ if (swarmMode == "hardcore" || swarmMode == "survival" || swarmMode == "vs")
 firstLeftCheckpoint <- false;
 cardHudTimeout <- 0;
 
-function DropItem(player, weaponClass)
-{
-	local activeWeapon = player.GetActiveWeapon();
-	if (activeWeapon!=null && activeWeapon.IsValid())
- 	{
-		local weaponClass = activeWeapon.GetClassname();
-		player.DropItem(weaponClass);
- 	}
-}
-
 function InterceptChat(message, speaker)
 {
 	// Remove player name from message
@@ -198,7 +189,14 @@ function InterceptChat(message, speaker)
 	}
 	else if ( command == "!drop" || command == "/drop") 
 	{
-		DropItem();
+		local activeWeapon = speaker.GetActiveWeapon();
+
+		if (activeWeapon!=null && speaker.IsSurvivor() && activeWeapon.IsValid())
+		{
+			local weaponClass = activeWeapon.GetClassname();
+			speaker.DropItem(weaponClass);
+		}
+		
 		return false;
 	}
 	else if (command == "!cards" || command == "/cards")
