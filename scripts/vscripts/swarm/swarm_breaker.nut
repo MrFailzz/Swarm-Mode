@@ -130,7 +130,6 @@ function SwarmCircleApplyDamage()
 	}
 }
 
-
 ///////////////////////////////////////////////
 //               BREAKER JUMP                //
 ///////////////////////////////////////////////
@@ -139,30 +138,33 @@ if (!IsSoundPrecached("player\\tank\\voice\\pain\\tank_fire_06.wav"))
 
 function BreakerJump(player)
 {
-	local eyeAngles = player.EyeAngles();
-	local verticalVelocity = sin(DegToRad(Clamp(eyeAngles.x, 0) * -1)) * tankJumpExtraHeight;
-	local verticalOffset = (1.15 - (verticalVelocity / tankJumpExtraHeight))
-
-	player.SetVelocity(Vector(
-		(tankJumpVelocity * sin(DegToRad(eyeAngles.y + 90))) * verticalOffset,
-		(tankJumpVelocity * sin(DegToRad(eyeAngles.y))) * verticalOffset,
-		300 + verticalVelocity));
-
-	// Stagger to stop the rock
-	
-	player.Stagger(Vector(0, 0, 0));
-	/*local rock = null;
-	while ((rock = Entities.FindByClassname(rock, "tank_rock")) != null)
+	if (bossBreakerEnable == true)
 	{
-		rock.Kill();
-	}*/
+		local eyeAngles = player.EyeAngles();
+		local verticalVelocity = sin(DegToRad(Clamp(eyeAngles.x, 0) * -1)) * tankJumpExtraHeight;
+		local verticalOffset = (1.15 - (verticalVelocity / tankJumpExtraHeight))
 
-	if (bSwarmCircleActive == false)
-	{
-		EmitSoundOn("player\\tank\\voice\\pain\\tank_fire_06.wav", player)
+		player.SetVelocity(Vector(
+			(tankJumpVelocity * sin(DegToRad(eyeAngles.y + 90))) * verticalOffset,
+			(tankJumpVelocity * sin(DegToRad(eyeAngles.y))) * verticalOffset,
+			300 + verticalVelocity));
+
+		// Stagger to stop the rock
+		
+		player.Stagger(Vector(0, 0, 0));
+		/*local rock = null;
+		while ((rock = Entities.FindByClassname(rock, "tank_rock")) != null)
+		{
+			rock.Kill();
+		}*/
+
+		if (bSwarmCircleActive == false)
+		{
+			EmitSoundOn("player\\tank\\voice\\pain\\tank_fire_06.wav", player)
+		}
+
+		CreateSwarmCircle(player);
 	}
-
-	CreateSwarmCircle(player);
 }
 
 function CancelRockAnimation()
@@ -191,7 +193,6 @@ function CancelRockAnimation()
 		}
 	}
 }
-
 
 ///////////////////////////////////////////////
 //                HEALTH HUD                 //

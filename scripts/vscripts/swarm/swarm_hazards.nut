@@ -646,40 +646,6 @@ function AlarmPoliceStopSound(carIndex)
 }
 ::AlarmPoliceStopSound <- AlarmPoliceStopSound;
 
-///////////////////////////////////////////////
-//                 BOSSES                    //
-///////////////////////////////////////////////
-function ApplyBossCard()
-{
-	switch(corruptionBoss)
-	{
-		case "None":
-			break;
-		case "hazardBreaker":
-			CorruptionCard_Breaker();
-			break;
-		case "hazardOgre":
-			CorruptionCard_Ogre();
-			break;
-	}
-}
-
-function CorruptionCard_Breaker()
-{
-	bossBreakerEnable = true;
-	Convars.SetValue("z_tank_health", 8000);
-	Convars.SetValue("z_tank_speed", 185);
-	Convars.SetValue("z_tank_speed_vs", 185)
-}
-
-function CorruptionCard_Ogre()
-{
-	bossOgreEnable = true;
-	Convars.SetValue("z_tank_health", 10000);
-	Convars.SetValue("z_tank_speed", 200);
-	Convars.SetValue("z_tank_speed_vs", 200)
-}
-
 function difficulty_RandomBoss()
 {
 	local progressPct = ( Director.GetFurthestSurvivorFlow() / GetMaxFlowDistance() )

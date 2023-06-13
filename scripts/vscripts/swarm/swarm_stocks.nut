@@ -81,8 +81,8 @@ else if (difficulty == 3)
 swarmTickInterval <- 1;				// In seconds
 swarmDamagePerTick <- 2;
 
-tankJumpVelocity <- 500;
-tankJumpExtraHeight <- 300;			// Max extra height from aiming up
+tankJumpVelocity <- 475;
+tankJumpExtraHeight <- 325;			// Max extra height from aiming up
 
 randomPct <- (RandomInt(1,100))
 spawnBoss <- (RandomFloat(0.1,0.9))
@@ -105,7 +105,7 @@ tallboyPunchKnockback <- 350;		// Max knockback
 tallboyRunSpeed <- 210;
 
 // COMMON //
-acidCommonsMax <- 7;
+acidCommonsMax <- 4;
 acidCommonSpawnAmount <- 4;			// Size of group to spawn
 acidCommonSpawnRate <- 30;			// How often a group will be spawned in seconds
 

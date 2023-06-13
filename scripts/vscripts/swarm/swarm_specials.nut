@@ -16,27 +16,27 @@ function MutationSpawn(player)
 			player.SetModel("models/infected/hunter_l4d1.mdl");
 			break;
 		}
-		case 2:
-		{
-			if (corruptionRetch == "Retch")	
-			{
-				local retchName = "__acid_retch_inst_" + player.GetEntityIndex();
-				DoEntFire("!self", "AddOutput", "targetname " + retchName, 0, player, player);
-
-				local spitTrail = SpawnEntityFromTable("info_particle_system",
-				{
-					targetname = retchName + "spitTrail",
-					origin = player.GetOrigin(),
-					angles = Vector(0, 0, 0),
-					effect_name = "spitter_slime_trail",
-					start_active = 1
-				});
-
-				EntFire(retchName + "spitTrail", "SetParent", retchName);
-				EntFire(retchName + "spitTrail", "SetParentAttachment", "mouth");
-				break;
-			}
+/*
+		case 2:	
+		{	
+			if (corruptionRetch == "Retch")		
+			{	
+				local retchName = "__acid_retch_inst_" + player.GetEntityIndex();	
+				DoEntFire("!self", "AddOutput", "targetname " + retchName, 0, player, player);	
+				local spitTrail = SpawnEntityFromTable("info_particle_system",	
+				{	
+					targetname = retchName + "spitTrail",	
+					origin = player.GetOrigin(),	
+					angles = Vector(0, 0, 0),	
+					effect_name = "spitter_slime_trail",	
+					start_active = 1	
+				});	
+				EntFire(retchName + "spitTrail", "SetParent", retchName);	
+				EntFire(retchName + "spitTrail", "SetParentAttachment", "mouth");	
+				break;	
+			}	
 		}
+*/
 		case 3:
 		{
 			//Make regular hunters always use L4D2 model so we can change texture
@@ -56,15 +56,6 @@ function MutationSpawn(player)
 			NetProps.SetPropFloat(player, "m_flLaggedMovementValue", (tallboyRunSpeed / z_speed))
 			break;
 		}
-		case 8:
-		{
-			if (bossOgreEnable == true)
-			{
-				player.SetModel("models/infected/jockey.mdl");
-				player.SetModelScale(3.0, 0.0);
-				break;
-			}
-		}
 		default:
 			break;
 	}
@@ -82,17 +73,11 @@ function OnGameEvent_ability_use(params)
 	switch(ability)
 	{
 		case "ability_throw":
-			if (bossBreakerEnable == true && player.GetZombieType == 8)
-			{
-				BreakerJump(player);
-				break;
-			}
+			BreakerJump(player);
+			break;
 		case "ability_vomit":
-			if (corruptionRetch == "Exploder" && player.GetZombieType == 2)	
-			{
-				ExploderAbility(player);
-				break;
-			}
+			ExploderAbility(player);
+			break;
 		case "ability_lunge":
 			SleeperLunge(player);
 			break;
@@ -161,7 +146,7 @@ function BoomerDeath(player)
 	if (corruptionRetch == "Retch")
 	{
 		DropSpit(boomerOrigin);
-		EntFire(retchName + "spitTrail", "Kill");
+//		EntFire(retchName + "spitTrail", "Kill");
 	}
 	if (corruptionRetch == "Exploder")
 	{
@@ -194,37 +179,39 @@ function SpitterDeath(player)
 
 function ExploderAbility(player)
 {
-	NetProps.SetPropInt(player, "m_clrRender", GetColorInt(Vector(255, 72, 72)));
-
-	local explodeThinker = SpawnEntityFromTable("info_target", { targetname = "explodeThinker" });
-	if (explodeThinker.ValidateScriptScope())
+	if (corruptionRetch == "Exploder")
 	{
-		const RETHINK_TIME_EXPLODER = 0.5;
-		local player_entityscript = explodeThinker.GetScriptScope();
-		player_entityscript["player"] <- player;
-		player_entityscript["damagePerTick"] <- (Convars.GetFloat("z_exploding_health") / boomerExplodeTime) * RETHINK_TIME_EXPLODER;
-		player_entityscript["ExploderSelfDamage"] <- function()
+		NetProps.SetPropInt(player, "m_clrRender", GetColorInt(Vector(255, 72, 72)));
+
+		local explodeThinker = SpawnEntityFromTable("info_target", { targetname = "explodeThinker" });
+		if (explodeThinker.ValidateScriptScope())
 		{
-			if (player_entityscript["player"].IsValid())
+			const RETHINK_TIME_EXPLODER = 0.5;
+			local player_entityscript = explodeThinker.GetScriptScope();
+			player_entityscript["player"] <- player;
+			player_entityscript["damagePerTick"] <- (Convars.GetFloat("z_exploding_health") / boomerExplodeTime) * RETHINK_TIME_EXPLODER;
+			player_entityscript["ExploderSelfDamage"] <- function()
 			{
-				if (player_entityscript["player"].GetHealth() > 1)
+				if (player_entityscript["player"].IsValid())
 				{
-					player_entityscript["player"].TakeDamage(player_entityscript["damagePerTick"], 0, null);
-					return RETHINK_TIME_EXPLODER;
+					if (player_entityscript["player"].GetHealth() > 1)
+					{
+						player_entityscript["player"].TakeDamage(player_entityscript["damagePerTick"], 0, null);
+						return RETHINK_TIME_EXPLODER;
+					}
+					else
+					{
+						player_entityscript["player"].TakeDamage(player_entityscript["damagePerTick"], 0, null);
+						self.Kill();
+					}
 				}
 				else
 				{
-					player_entityscript["player"].TakeDamage(player_entityscript["damagePerTick"], 0, null);
 					self.Kill();
 				}
 			}
-			else
-			{
-				self.Kill();
-			}
-		}
 
-		AddThinkToEnt(explodeThinker, "ExploderSelfDamage");
+			AddThinkToEnt(explodeThinker, "ExploderSelfDamage");}
 	}
 }
 
@@ -459,97 +446,4 @@ function OnGameEvent_player_now_it(params)
 			DropSpit(origin)
 		}
 	}
-}
-
-///////////////////////////////////////////////
-//              CORRUPTION CARDS             //
-///////////////////////////////////////////////
-
-// Tallboy
-function ApplyTallboyCard()
-{
-	switch(corruptionTallboy)
-	{
-		case "Tallboy":
-			CorruptionCard_Tallboy();
-			break;
-		case "Crusher":
-			CorruptionCard_Crusher();
-			break;
-		case "Bruiser":
-			CorruptionCard_Bruiser();
-			break;
-	}
-}
-
-function CorruptionCard_Tallboy()
-{
-	Convars.SetValue("z_charger_health", 1360);
-	tallboyRunSpeed = 250
-}
-
-function CorruptionCard_Crusher()
-{
-	Convars.SetValue("z_charger_health", 1120);
-	tallboyRunSpeed = 250
-}
-
-function CorruptionCard_Bruiser()
-{
-	Convars.SetValue("z_charger_health", 1600);
-	tallboyRunSpeed = 210
-}
-
-// Hocker
-function ApplyHockerCard()
-{
-	switch(corruptionHocker)
-	{
-		case "Hocker":
-			CorruptionCard_Hocker();
-			break;
-		case "Crusher":
-			CorruptionCard_Stalker();
-			break;
-	}
-}
-
-function CorruptionCard_Hocker()
-{
-	DirectorOptions.JockeyLimit = 0
-}
-
-function CorruptionCard_Stalker()
-{
-	DirectorOptions.SmokerLimit = 0
-}
-
-// Retches
-function ApplyRetchCard()
-{
-	switch(corruptionRetch)
-	{
-		case "Retch":
-			CorruptionCard_Retch();
-			break;
-		case "Exploder":
-			CorruptionCard_Exploder();
-			break;
-	}
-}
-
-function CorruptionCard_Retch()
-{
-	Convars.SetValue("z_exploding_speed", 210);
-	Convars.SetValue("z_vomit_duration", 2.5);
-	Convars.SetValue("z_vomit_range", 1600);
-	Convars.SetValue("z_female_boomer_spawn_chance", 0);
-}
-
-function CorruptionCard_Exploder()
-{
-	Convars.SetValue("z_exploding_speed", 240);
-	Convars.SetValue("z_vomit_duration", 0);
-	Convars.SetValue("z_vomit_range", 300);
-	Convars.SetValue("z_female_boomer_spawn_chance", 100);
 }
