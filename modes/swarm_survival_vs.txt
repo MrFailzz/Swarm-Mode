@@ -64,7 +64,6 @@
 		witch_force_wander 1
 		
 		z_tank_damage_slow_max_range 0
-		z_tank_throw_interval 15
 		tank_ground_pound_duration 3
 		tank_burn_duration 150
 		tank_burn_duration_hard 155

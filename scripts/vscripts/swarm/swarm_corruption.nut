@@ -1188,14 +1188,18 @@ function CorruptionCard_Breaker()
 {
 	bossBreakerEnable = true;
 	Convars.SetValue("z_tank_health", 8000);
-	Convars.SetValue("z_tank_speed", 185);
-	Convars.SetValue("z_tank_speed_vs", 185);
+	Convars.SetValue("z_tank_speed", 190);
+	Convars.SetValue("z_tank_speed_vs", 190);
+	Convars.SetValue("z_tank_throw_interval", 15);
+	Convars.SetValue("tank_throw_allow_range", 250);
 }
 
 function CorruptionCard_Ogre()
 {
 	bossOgreEnable = true;
 	Convars.SetValue("z_tank_health", 10000);
-	Convars.SetValue("z_tank_speed", 200);
-	Convars.SetValue("z_tank_speed_vs", 200);
+	Convars.SetValue("z_tank_speed", 205);
+	Convars.SetValue("z_tank_speed_vs", 205);
+	Convars.SetValue("z_tank_throw_interval", 8);
+	Convars.SetValue("tank_throw_allow_range", 125);
 }
