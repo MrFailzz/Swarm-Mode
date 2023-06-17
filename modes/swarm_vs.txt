@@ -23,10 +23,10 @@
 		z_jockey_ride_damage_interval 0.5
 		z_pounce_stumble_radius 180
 		z_jockey_control_variance 0
-		z_jockey_control_min 0.6
-		z_jockey_control_max 0.6
-		z_jockey_leap_range 350
-		z_leap_power 700
+		z_jockey_control_min 0.5
+		z_jockey_control_max 0.5
+		z_jockey_leap_range 500
+		z_leap_power 600
 		z_leap_interval_post_incap 10
 		jockey_pz_claw_dmg 4
 		
