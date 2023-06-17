@@ -16,27 +16,6 @@ function MutationSpawn(player)
 			player.SetModel("models/infected/hunter_l4d1.mdl");
 			break;
 		}
-/*
-		case 2:	
-		{	
-			if (corruptionRetch == "Retch")		
-			{	
-				local retchName = "__acid_retch_inst_" + player.GetEntityIndex();	
-				DoEntFire("!self", "AddOutput", "targetname " + retchName, 0, player, player);	
-				local spitTrail = SpawnEntityFromTable("info_particle_system",	
-				{	
-					targetname = retchName + "spitTrail",	
-					origin = player.GetOrigin(),	
-					angles = Vector(0, 0, 0),	
-					effect_name = "spitter_slime_trail",	
-					start_active = 1	
-				});	
-				EntFire(retchName + "spitTrail", "SetParent", retchName);	
-				EntFire(retchName + "spitTrail", "SetParentAttachment", "mouth");	
-				break;	
-			}	
-		}
-*/
 		case 3:
 		{
 			//Make regular hunters always use L4D2 model so we can change texture

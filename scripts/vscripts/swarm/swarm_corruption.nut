@@ -697,17 +697,18 @@ StalkerHordeEnabled <- false;
 HockerHordeEnabled <- false;
 ExploderHordeEnabled <- false;
 RetchHordeEnabled <- false;
-SpecialHordeTimer <- Time() + 90;
+SpecialHordeTimer <- null;
 
 function CorruptionCard_TallboyHordes()
 {
 	TallboyHordeEnabled = true
 	DirectorOptions.cm_AggressiveSpecials = 1
+	DirectorOptions.SpecialRespawnInterval = 45
 }
 
 function TallboyTimerFunc(count = 4, zType = 6)
 {
-	if (SpecialHordeTimer < Time())
+	if (SpecialHordeTimer < Time() && TallboyHordeEnabled == true)
 	{
 		local i = 0;
 		while (i < count)
@@ -727,11 +728,12 @@ function CorruptionCard_CrusherHordes()
 {
 	CrusherHordeEnabled = true
 	DirectorOptions.cm_AggressiveSpecials = 1
+	DirectorOptions.SpecialRespawnInterval = 45
 }
 
 function CrusherTimerFunc(count = 4, zType = 6)
 {
-	if (SpecialHordeTimer < Time())
+	if (SpecialHordeTimer < Time() && CrusherHordeEnabled == true)
 	{
 		local i = 0;
 		while (i < count)
@@ -751,11 +753,12 @@ function CorruptionCard_BruiserHordes()
 {
 	BruiserHordeEnabled = true
 	DirectorOptions.cm_AggressiveSpecials = 1
+	DirectorOptions.SpecialRespawnInterval = 45
 }
 
 function BruiserTimerFunc(count = 4, zType = 6)
 {
-	if (SpecialHordeTimer < Time())
+	if (SpecialHordeTimer < Time() && BruiserHordeEnabled == true)
 	{
 		local i = 0;
 		while (i < count)
@@ -775,11 +778,12 @@ function CorruptionCard_StalkerHordes()
 {
 	StalkerHordeEnabled = true
 	DirectorOptions.cm_AggressiveSpecials = 1
+	DirectorOptions.SpecialRespawnInterval = 45
 }
 
 function StalkerTimerFunc(count = 4, zType = 5)
 {
-	if (SpecialHordeTimer < Time())
+	if (SpecialHordeTimer < Time() && StalkerHordeEnabled == true)
 	{
 		local i = 0;
 		while (i < count)
@@ -799,11 +803,12 @@ function CorruptionCard_HockerHordes()
 {
 	HockerHordeEnabled = true
 	DirectorOptions.cm_AggressiveSpecials = 1
+	DirectorOptions.SpecialRespawnInterval = 45
 }
 
 function HockerTimerFunc(count = 4, zType = 1)
 {
-	if (SpecialHordeTimer < Time())
+	if (SpecialHordeTimer < Time() && HockerHordeEnabled == true)
 	{
 		local i = 0;
 		while (i < count)
@@ -823,11 +828,12 @@ function CorruptionCard_ExploderHordes()
 {
 	ExploderHordeEnabled = true
 	DirectorOptions.cm_AggressiveSpecials = 1
+	DirectorOptions.SpecialRespawnInterval = 45
 }
 
 function ExploderTimerFunc(count = 4, zType = 2)
 {
-	if (SpecialHordeTimer < Time())
+	if (SpecialHordeTimer < Time() && ExploderHordeEnabled == true)
 	{
 		local i = 0;
 		while (i < count)
@@ -848,11 +854,12 @@ function CorruptionCard_RetchHordes()
 {
 	RetchHordeEnabled = true
 	DirectorOptions.cm_AggressiveSpecials = 1
+	DirectorOptions.SpecialRespawnInterval = 45
 }
 
 function RetchTimerFunc(count = 4, zType = 2)
 {
-	if (SpecialHordeTimer < Time())
+	if (SpecialHordeTimer < Time() && RetchHordeEnabled == true)
 	{
 		local i = 0;
 		while (i < count)
@@ -1153,7 +1160,7 @@ function CorruptionCard_Retch()
 
 function CorruptionCard_Exploder()
 {
-	Convars.SetValue("z_exploding_speed", 240);
+	Convars.SetValue("z_exploding_speed", 250);
 	Convars.SetValue("z_vomit_duration", 0);
 	Convars.SetValue("z_vomit_range", 300);
 	Convars.SetValue("z_female_boomer_spawn_chance", 100);
@@ -1182,7 +1189,7 @@ function CorruptionCard_Breaker()
 	bossBreakerEnable = true;
 	Convars.SetValue("z_tank_health", 8000);
 	Convars.SetValue("z_tank_speed", 185);
-	Convars.SetValue("z_tank_speed_vs", 185)
+	Convars.SetValue("z_tank_speed_vs", 185);
 }
 
 function CorruptionCard_Ogre()
@@ -1190,5 +1197,5 @@ function CorruptionCard_Ogre()
 	bossOgreEnable = true;
 	Convars.SetValue("z_tank_health", 10000);
 	Convars.SetValue("z_tank_speed", 200);
-	Convars.SetValue("z_tank_speed_vs", 200)
+	Convars.SetValue("z_tank_speed_vs", 200);
 }

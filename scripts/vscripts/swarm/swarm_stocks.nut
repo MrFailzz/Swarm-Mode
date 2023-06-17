@@ -35,6 +35,7 @@ DirectorOptions <-
 	JockeyLimit = 2
 	SmokerLimit = 2
 	SpitterLimit = 0
+	BileMobSize = 0
 
 	TankHitDamageModifierCoop = 1
 	EscapeSpawnTanks = false
@@ -187,7 +188,7 @@ function InterceptChat(message, speaker)
 		TraceEye(speaker);
 		return false;
 	}
-	else if ( command == "!drop" || command == "/drop") 
+	else if (command == "!drop" || command == "/drop") 
 	{
 		local activeWeapon = speaker.GetActiveWeapon();
 
@@ -804,15 +805,44 @@ function OnGameEvent_player_left_safe_area(params)
 				// Print the number of continues left.
 				ClientPrint(null, 3, "\x04" + "Continues: " + "\x01"+ (3 - Director.GetMissionWipes()));
 			}
-	if (corruptionHordes == "hordeHunted")
+	switch(corruptionHordes)
 	{
-		HuntedEnabled = true;
-		HuntedTimer = Time() + 180 + 30;
-	}
-	if (corruptionHordes == "hordeOnslaught")
-	{
-		OnslaughtEnabled = true;
-		OnslaughtTimer = Time() + 90 + 30;
+		case "hordeHunted":
+			HuntedEnabled = true;
+			HuntedTimer = Time() + 180 + 30;
+			break;
+		case "hordeOnslaught":
+			OnslaughtEnabled = true;
+			OnslaughtTimer = Time() + 90 + 30;
+			break;
+		case "hordeTallboy":
+			TallboyHordeEnabled = true;
+			SpecialHordeTimer = Time() + 90 + 30;
+			break;
+		case "hordeCrusher":
+			CrusherHordeEnabled = true;
+			SpecialHordeTimer = Time() + 90 + 30;
+			break;
+		case "hordeBruiser":
+			BruiserHordeEnabled = true;
+			SpecialHordeTimer = Time() + 90 + 30;
+			break;
+		case "hordeStalker":
+			StalkerHordeEnabled = true;
+			SpecialHordeTimer = Time() + 90 + 30;
+			break;
+		case "hordeHocker":
+			HockerHordeEnabled = true;
+			SpecialHordeTimer = Time() + 90 + 30;
+			break;
+		case "hordeExploder":
+			ExploderHordeEnabled = true;
+			SpecialHordeTimer = Time() + 90 + 30;
+			break;
+		case "hordeRetch":
+			RetchHordeEnabled = true;
+			SpecialHordeTimer = Time() + 90 + 30;
+			break;
 	}
 
 			firstLeftCheckpoint = true;
