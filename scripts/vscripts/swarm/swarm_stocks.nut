@@ -292,7 +292,7 @@ function AllowTakeDamage(damageTable)
 	local attacker = damageTable.Attacker;
 	local victim = damageTable.Victim;
 	local victimPlayer = victim.IsPlayer();
-	//local victimType = victim.GetClassname();
+	local victimType = victim.GetClassname();
 	local inflictor = damageTable.Inflictor;
 	local inflictorClass = null;
 	if (inflictor.IsValid())
@@ -377,6 +377,10 @@ function AllowTakeDamage(damageTable)
 					{
 						Broken = PlayerHasCard(attacker, "Broken");
 					}
+				}
+				else if (victimType == "witch")
+				{
+					Broken = PlayerHasCard(attacker, "Broken");
 				}
 				
 				//Pyromaniac

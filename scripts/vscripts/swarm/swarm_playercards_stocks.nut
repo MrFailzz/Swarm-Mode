@@ -372,7 +372,7 @@ function GetPlayerCardName(cardID, type = "name")
 				return "Quickdraw";
 				break;
 			case "Broken":
-				return "Broken";
+				return "Boss Killer";
 				break;
 			case "Pyromaniac":
 				return "Pyromaniac";
@@ -630,7 +630,7 @@ function GetPlayerCardName(cardID, type = "name")
 				return "+50% Swap Speed";
 				break;
 			case "Broken":
-				return "+20% DMG vs Breakers";
+				return "+20% DMG vs Bosses";
 				break;
 			case "Pyromaniac":
 				return "+150% Fire DMG";
