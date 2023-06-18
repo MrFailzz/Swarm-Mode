@@ -74,6 +74,7 @@ disciplineCards <-
 	"ReloadDrills",
 	//"MagCoupler",
 	"Arsonist",
+	"NeedsOfTheMany"
 ];
 
 fortuneCards <-
@@ -535,6 +536,9 @@ function GetPlayerCardName(cardID, type = "name")
 			case "Arsonist":
 				return "Arsonist";
 				break;
+			case "NeedsOfTheMany":
+				return "Needs Of The Many";
+				break;
 			default:
 				return cardID;
 				break;
@@ -789,6 +793,9 @@ function GetPlayerCardName(cardID, type = "name")
 				break;
 			case "Arsonist":
 				return "+0.1 Temp HP per Fire DMG";
+				break;
+			case "NeedsOfTheMany":
+				return "+1 Team Life, -10 HP";
 				break;
 			default:
 				return cardID;

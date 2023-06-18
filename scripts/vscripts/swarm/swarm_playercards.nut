@@ -69,6 +69,7 @@ function ApplyCardEffects(player, heal = true)
 	CalcMaxAmmo();
 	EquipOptics(player);
 	ApplyLastLegs();
+	ApplyNeedsOfTheMany();
 }
 
 function AddCardToTable(cardTable, player, card)
@@ -322,9 +323,10 @@ function CalcMaxHealth(heal = true)
 			local SelflessTeam = TeamHasCard("Selfless") - SelflessPlayer;
 			local SelfishPlayer = PlayerHasCard(player, "Selfish");
 			local SelfishTeam = TeamHasCard("Selfish") - SelfishPlayer;
+			local NeedsOfTheMany = PlayerHasCard(player, "NeedsOfTheMany");
 
 			local currentMax = player.GetMaxHealth();
-			local newMax = 100 + (25 * CannedGoods) + (40 * SlowAndSteady) + (-10 * FleetOfFoot) + (5 * CrossTrainers) + (20 * Coach) + (-15 * SelflessPlayer) + (15 * SelflessTeam) + (30 * SelfishPlayer) + (-5 * SelfishTeam);
+			local newMax = 100 + (25 * CannedGoods) + (40 * SlowAndSteady) + (-10 * FleetOfFoot) + (5 * CrossTrainers) + (20 * Coach) + (-15 * SelflessPlayer) + (15 * SelflessTeam) + (30 * SelfishPlayer) + (-5 * SelfishTeam) + (-10 * NeedsOfTheMany);
 			local currentHealth = player.GetHealth();
 			local healthAdjustment = newMax - currentMax;
 
@@ -532,6 +534,14 @@ function ApplyInspiringSacrifice()
 				}
 			}
 		}
+	}
+}
+
+function ApplyNeedsOfTheMany()
+{
+	if (TeamHasCard("NeedsOfTheMany") > 0)
+	{
+		DirectorOptions.SurvivorMaxIncapacitatedCount += 1
 	}
 }
 
