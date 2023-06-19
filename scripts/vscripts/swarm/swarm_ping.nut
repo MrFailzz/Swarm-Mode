@@ -11,7 +11,7 @@ function TraceEye(player)
 	local traceStart = eyePosition;
 	local traceEnd = eyePosition + (eyeAngles.Forward() * pingRange);
 
-	traceTable <-
+	local traceTable =
 	{
 		start = eyePosition
 		end = traceEnd
@@ -94,7 +94,7 @@ function PingEntity(entity, player, tracepos)
 	else if (canGlow == "crows")
 	{
 		local nameArray = split(entityName, "_");
-		local crowGroupName = "__" + nameArray[0] + "_" + nameArray[1] + "_" + nameArray[2] + "_" + nameArray[3] + "*";
+		local crowGroupName = "__" + nameArray[0] + "_" + nameArray[1] + "_" + nameArray[2] + "*";
 
 		// Apply ping glow
 		EntFire(crowGroupName, "StartGlowing", "", 0);
@@ -181,7 +181,7 @@ function GetEntityType(entity)
 			return "Snitcher";
 			break;
 		case "prop_door_rotating":
-			if (targetname.find("__alarm_door_inst_") != null)
+			if (targetname.find("__alarm_door") != null)
 			{
 				return "Alarm Door";
 			}

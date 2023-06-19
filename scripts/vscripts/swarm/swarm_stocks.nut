@@ -1,178 +1,6 @@
 ///////////////////////////////////////////////
-//                  OPTIONS                  //
-///////////////////////////////////////////////
-difficulty <- GetDifficulty();
-survivorSet <- Director.GetSurvivorSet();
-z_speed <- Convars.GetFloat("z_speed");
-
-Convars.SetValue("z_versus_hunter_limit", 0);
-Convars.SetValue("z_versus_spitter_limit", 0);
-Convars.SetValue("z_ghost_delay_minspawn", 20);
-
-// DIRECTOR OPTIONS //
-DirectorOptions <-
-{
-	ActiveChallenge = 1
-
-	cm_AggressiveSpecials = 0
-	
-	cm_DominatorLimit = 4
-	cm_MaxSpecials = 13 //For sleepers, was 4. Game limits max players on server to 18?
-	cm_TankLimit = 1
-	cm_WitchLimit = -1
-	cm_CommonLimit = 30
-	cm_ProhibitBosses = true
-
-	MobSpawnMinTime = 9999
-	MobSpawnMaxTime = 9999
-
-	SpecialInitialSpawnDelayMax = 45
-	SpecialInitialSpawnDelayMin = 30
-	SpecialRespawnInterval = 25
-	BoomerLimit = 2
-	ChargerLimit = 1
-	HunterLimit = 0
-	JockeyLimit = 2
-	SmokerLimit = 2
-	SpitterLimit = 0
-	BileMobSize = 0
-
-	TankHitDamageModifierCoop = 1
-	EscapeSpawnTanks = false
-	SurvivorMaxIncapacitatedCount = 2
-}
-
-// EXPERT OPTIONS //
-// DIFFICULTY OPTIONS //
-if (difficulty == 0)
-{
-	Convars.SetValue("z_jockey_health", 361);
-	Convars.SetValue("z_gas_health", 297);
-	Convars.SetValue("z_exploding_health", 595);
-	Convars.SetValue("z_witch_health", 850);
-	DirectorOptions.SurvivorMaxIncapacitatedCount = 3
-}
-else if (difficulty == 1)
-{
-	Convars.SetValue("z_jockey_health", 361);
-	Convars.SetValue("z_gas_health", 297);
-	Convars.SetValue("z_exploding_health", 595);
-	Convars.SetValue("z_witch_health", 850);
-	DirectorOptions.SurvivorMaxIncapacitatedCount = 2
-}
-else if (difficulty == 2)
-{
-	Convars.SetValue("z_jockey_health", 425);
-	Convars.SetValue("z_gas_health", 350);
-	Convars.SetValue("z_exploding_health", 700);
-	Convars.SetValue("z_witch_health", 1000);
-	DirectorOptions.SurvivorMaxIncapacitatedCount = 2
-}
-else if (difficulty == 3)
-{
-	Convars.SetValue("z_jockey_health", 425);
-	Convars.SetValue("z_gas_health", 350);
-	Convars.SetValue("z_exploding_health", 700);
-	Convars.SetValue("z_witch_health", 1000);
-	DirectorOptions.SurvivorMaxIncapacitatedCount = 1
-	DirectorOptions.TankHitDamageModifierCoop = 0.48
-}
-
-// BOSSES //
-swarmTickInterval <- 1;				// In seconds
-swarmDamagePerTick <- 2;
-
-tankJumpVelocity <- 475;
-tankJumpExtraHeight <- 325;			// Max extra height from aiming up
-
-randomPct <- (RandomInt(1,100))
-spawnBoss <- (RandomFloat(0.1,0.9))
-spawnBreaker <- (RandomFloat(0.1,0.9))
-spawnOgre <- (RandomFloat(0.1,0.9))
-
-breakerSpawned <- false;
-ogreSpawned <- false;
-bossSpawned <- false;
-bossOgreEnable <- false;
-bossBreakerEnable <- false;
-
-// INFECTED //
-boomerExplosionRange <- 250;
-boomerExplosionDamage <- 45;		// Max damage
-boomerExplosionKnockback <- 275;	// Max knockback
-boomerExplodeTime <- 3;				// In seconds
-
-tallboyPunchKnockback <- 350;		// Max knockback
-tallboyRunSpeed <- 210;
-
-// COMMON //
-acidCommonsMax <- 4;
-acidCommonSpawnAmount <- 4;			// Size of group to spawn
-acidCommonSpawnRate <- 30;			// How often a group will be spawned in seconds
-
-fireCommonsMax <- 7;
-fireCommonSpawnAmount <- 4;			// Size of group to spawn
-fireCommonSpawnRate <- 30;			// How often a group will be spawned in seconds
-fireCommonDamage <- 2;				// Damage per tick from burning
-fireCommonRange <- 40;				// Size of fire damage hitbox
-
-explodingCommonsMax <- 7;
-explodingCommonSpawnAmount <- 4;	// Size of group to spawn
-explodingCommonSpawnRate <- 30;		// How often a group will be spawned in seconds
-::explodingCommonDamage <- 8;			// Max damage from explosion
-::explodingCommonRange <- 200;		// Explosion range
-::explodingCommonKnockback <- 275;	// Explosion force
-
-// UNCOMMON //
-uncommonMax <- 7;
-uncommonSpawnAmount <- 4;			// Size of group to spawn
-uncommonSpawnRate <- 30;			// How often a group will be spawned in seconds
-
-uncommonJimmyMax <- 3;
-uncommonJimmySpawnAmount <- 3;			// Size of group to spawn
-uncommonJimmySpawnRate <- 30;			// How often a group will be spawned in seconds
-
-// HAZARDS //
-hazardDifficultyScale <- (difficulty + 1) / 2;	// Number of hazards to be scaled with difficulty (Easy (0): 0.5x, Normal (1): 1x, Advanced (2): 1.5x, Expert (3): 2x)
-
-alarmDoorCountMin <- 2;				// Min number of alarm doors to spawn per map
-alarmDoorCountMax <- 2;				// Max number of alarm doors to spawn per map
-
-crowGroupCountMin <- 4;				// Mix number of crow groups to spawn
-crowGroupCountMax <- 4;				// Max number of crow groups to spawn
-
-sleeperCountMin <- 4;				// Mix number of sleepers to spawn
-sleeperCountMax <- 4;				// Max number of sleepers to spawn
-
-explosiveCarHealth <- 1000;			// HP of explosive cars
-
-spawnSnitch <- (RandomFloat(0.1,0.9))
-
-snitchSpawned <- false;
-
-// HEALING //
-medkitHealAmount <- 50;				// HP healed by first aid kits
-pillsHealAmount <- 50;				// HP healed by pain pills
-adrenalineHealAmount <- 25;			// HP healed by adrenaline
-
-// PINGING //
-pingRange <- 2000					// Max range for pinging an object
-pingDuration <- 8					// How many seconds do objects stay pinged
-
-
-//MODE SPECIFIC CHANGES
-if (swarmMode == "hardcore" || swarmMode == "survival" || swarmMode == "vs")
-{
-	DirectorOptions.cm_TankLimit = 2
-}
-
-
-///////////////////////////////////////////////
 //               SHARED EVENTS               //
 ///////////////////////////////////////////////
-firstLeftCheckpoint <- false;
-cardHudTimeout <- 0;
-
 function InterceptChat(message, speaker)
 {
 	// Remove player name from message
@@ -431,6 +259,7 @@ function AllowTakeDamage(damageTable)
 				if (RandomInt(1, 100) <= critChance)
 				{
 					LuckyShotRoll = 1;
+					CriticalHit(attacker, damageTable.Location);
 				}
 
 				//EyeOfTheSwarm
@@ -595,16 +424,45 @@ function AllowTakeDamage(damageTable)
 	return true;
 }
 
-/*pipeDuration <- Convars.GetFloat("pipe_bomb_timer_duration");
-function OnGameEvent_weapon_fire(params)
+function CriticalHit(player, location)
 {
-	ThrowPipeBomb(params);
-}*/
+	local id = location.Length();
 
-function OnGameEvent_player_spawn(params)
+	local target = SpawnEntityFromTable("info_particle_target",
+	{
+		targetname = "__critical_particle_target" + id,
+		origin = Vector(location.x, location.y, location.z + 16)
+	});
+	local particle = SpawnEntityFromTable("info_particle_system",
+	{
+		targetname = "__critical_particle" + id,
+		origin = Vector(location.x, location.y, location.z - 16),
+		cpoint1 = "__critical_particle_target" + id,
+		effect_name = "electrical_arc_01",
+		start_active = 1
+	});
+
+	local random = RandomInt(1, 3);
+	if (random == 1)
+	{
+		//EmitSoundOnClient("ambient.electrical_zap_1", player);
+		EmitAmbientSoundOn("ambient.electrical_zap_1", 0.75, RandomInt(95, 105), RandomInt(90, 110), target);
+	}
+	else if (random == 2)
+	{
+		//EmitSoundOnClient("ambient.electrical_zap_2", player);
+		EmitAmbientSoundOn("ambient.electrical_zap_2", 0.75, RandomInt(95, 105), RandomInt(90, 110), target);
+	}
+	else
+	{
+		//EmitSoundOnClient("ambient.electrical_zap_3", player);
+		EmitAmbientSoundOn("ambient.electrical_zap_2", 0.75, RandomInt(95, 105), RandomInt(90, 110), target);
+	}
+}
+
+function PlayerSpawn(params)
 {
 	local player = GetPlayerFromUserID(params["userid"]);
-
 	if (!player)
 	{
 		return;
@@ -620,12 +478,14 @@ function OnGameEvent_player_spawn(params)
 	else
 	{
 		MutationSpawn(player);
+		if (corruptionEnvironmental == "environmentSwarmStream" && RandomInt(0, 2) == 0)
+		{
+			CorruptionCard_SwarmStreamGlow(player);
+		}
 	}
 }
 
-ConfidentKillerCounter <- 0;
-MethHeadCounter <- [0, 0, 0, 0];
-function OnGameEvent_player_death(params)
+function PlayerDeath(params)
 {
 	local player = null;
 	local isSurvivorDeath = false;
@@ -762,15 +622,8 @@ function OnGameEvent_player_death(params)
 	}
 }
 
-function OnGameEvent_player_incapacitated_start(params)
-{
-	//AdrenalineRush
-	//InspiringSacrifice
-	ApplyAdrenalineRush();
-	ApplyInspiringSacrifice();
-}
 
-function OnGameEvent_round_start(params)
+function RoundStart(params)
 {
 	CreateCardHud();
 
@@ -791,12 +644,7 @@ function OnGameEvent_round_start(params)
 	}
 }
 
-function OnGameEvent_player_activate(params)
-{
-	CorruptionDropItems();
-}
-
-function OnGameEvent_player_left_safe_area(params)
+function PlayerLeftSafeArea(params)
 {
 	if (firstLeftCheckpoint == false)
 	{
@@ -809,104 +657,115 @@ function OnGameEvent_player_left_safe_area(params)
 				// Print the number of continues left.
 				ClientPrint(null, 3, "\x04" + "Continues: " + "\x01"+ (3 - Director.GetMissionWipes()));
 			}
-	switch(corruptionHordes)
-	{
-		case "hordeHunted":
-			HuntedEnabled = true;
-			HuntedTimer = Time() + 180 + 30;
-			break;
-		case "hordeOnslaught":
-			OnslaughtEnabled = true;
-			OnslaughtTimer = Time() + 90 + 30;
-			break;
-		case "hordeTallboy":
-			TallboyHordeEnabled = true;
-			SpecialHordeTimer = Time() + 90 + 30;
-			break;
-		case "hordeCrusher":
-			CrusherHordeEnabled = true;
-			SpecialHordeTimer = Time() + 90 + 30;
-			break;
-		case "hordeBruiser":
-			BruiserHordeEnabled = true;
-			SpecialHordeTimer = Time() + 90 + 30;
-			break;
-		case "hordeStalker":
-			StalkerHordeEnabled = true;
-			SpecialHordeTimer = Time() + 90 + 30;
-			break;
-		case "hordeHocker":
-			HockerHordeEnabled = true;
-			SpecialHordeTimer = Time() + 90 + 30;
-			break;
-		case "hordeExploder":
-			ExploderHordeEnabled = true;
-			SpecialHordeTimer = Time() + 90 + 30;
-			break;
-		case "hordeRetch":
-			RetchHordeEnabled = true;
-			SpecialHordeTimer = Time() + 90 + 30;
-			break;
-	}
+
+			switch(corruptionHordes)
+			{
+				case "hordeHunted":
+					HuntedEnabled = true;
+					HuntedTimer = Time() + 180 + 30;
+					break;
+				case "hordeOnslaught":
+					OnslaughtEnabled = true;
+					OnslaughtTimer = Time() + 90 + 30;
+					break;
+				case "hordeTallboy":
+					TallboyHordeEnabled = true;
+					SpecialHordeTimer = Time() + 90 + 30;
+					break;
+				case "hordeCrusher":
+					CrusherHordeEnabled = true;
+					SpecialHordeTimer = Time() + 90 + 30;
+					break;
+				case "hordeBruiser":
+					BruiserHordeEnabled = true;
+					SpecialHordeTimer = Time() + 90 + 30;
+					break;
+				case "hordeStalker":
+					StalkerHordeEnabled = true;
+					SpecialHordeTimer = Time() + 90 + 30;
+					break;
+				case "hordeHocker":
+					HockerHordeEnabled = true;
+					SpecialHordeTimer = Time() + 90 + 30;
+					break;
+				case "hordeExploder":
+					ExploderHordeEnabled = true;
+					SpecialHordeTimer = Time() + 90 + 30;
+					break;
+				case "hordeRetch":
+					RetchHordeEnabled = true;
+					SpecialHordeTimer = Time() + 90 + 30;
+					break;
+			}
 
 			firstLeftCheckpoint = true;
 			cardHudTimeout = 0;
 
-			InitAlarmDoors();
-			InitCrows();
 			ModifyHittables();
-			InitSleepers();
+			ApplyEnvironmentalCard();
+
+			if (corruptionHazards == "hazardLockdown")
+			{
+				InitAlarmDoors();
+			}
+			else if (corruptionHazards == "hazardBirds")
+			{
+				InitCrows();
+			}
+			else if (corruptionHazards == "hazardSleepers")
+			{
+				InitSleepers();
+			}
 		}
 	}
 }
 
-function OnGameEvent_player_hurt(params)
+function PlayerHurt(params)
 {
 	//Add FX when being hit by script spawned spit
 	local player = GetPlayerFromUserID(params.userid);
-	local attackerID = GetPlayerFromUserID(params.attacker);
 
-	if (player == attackerID || attackerID == null)
+	if (player.IsValid())
 	{
-		return;
-	}
+		//Survivor was hurt
+		if (player.GetZombieType() == 9)
+		{
+			if (params.type == 265216)
+			{
+				//Spit damage
+				ScreenFade(player, 0, 200, 0, 50, 0.5, 0, 1);
+				EmitSoundOnClient("PlayerZombie.AttackHit", player);
+			}
+			else if (params.type == 8)
+			{
+				//Fire damage
+				ScreenFade(player, 255, 70, 0, 50, 0.5, 0, 1);
+				EmitSoundOnClient("General.BurningObject", player);
+			}
 
-	//Survivor was hurt
-	if (player.GetZombieType() == 9)
-	{
-		if (params.type == 265216)
-		{
-			//Spit damage
-			ScreenFade(player, 0, 200, 0, 50, 0.5, 0, 1);
-			EmitSoundOnClient("PlayerZombie.AttackHit", player);
-		}
-		else if (params.type == 8)
-		{
-			ScreenFade(player, 255, 70, 0, 50, 0.5, 0, 1);
-			EmitSoundOnClient("General.BurningObject", player);
-		}
-
-		if (params.weapon == "charger_claw")
-		{
 			//Charger scratch
-			local attacker = GetPlayerFromUserID(params.attacker);
-			TallboyKnockback(attacker, player);
+			if (params.weapon == "charger_claw" && corruptionTallboy != "Crusher")
+			{
+				local attacker = GetPlayerFromUserID(params.attacker);
+				if (attacker.IsValid() && player != attacker)
+				{
+					TallboyKnockback(attacker, player);
+				}
+			}
 		}
 	}
 }
 
-//Store temp health at time of heal
-survivorHealthBuffer <- [0, 0, 0, 0];
 
 //Use heal begin because heal end is bugged, so restored temp health may not be accurate
-function OnGameEvent_heal_begin(params)
+function HealBegin(params)
 {
 	local player = GetPlayerFromUserID(params.subject);
 	local currentTempHealth = player.GetHealthBuffer();
-	survivorHealthBuffer[GetSurvivorID(player)] = currentTempHealth;
+	survivorHealthBuffer[GetSurvivorID(player)] = currentTempHealth; //Store temp health at time of heal
 }
 
-function OnGameEvent_heal_success(params)
+function HealSuccess(params)
 {
 	local healer = GetPlayerFromUserID(params.userid);
 	local player = GetPlayerFromUserID(params.subject);
@@ -930,7 +789,7 @@ function OnGameEvent_heal_success(params)
 	Heal_GroupTherapy(player, healAmount, false);
 }
 
-function OnGameEvent_pills_used(params)
+function PillsUsed(params)
 {
 	local player = GetPlayerFromUserID(params.subject);
 	local maxHealth = player.GetMaxHealth();
@@ -955,7 +814,7 @@ function OnGameEvent_pills_used(params)
 	Heal_GroupTherapy(player, healAmount, true);
 }
 
-function OnGameEvent_adrenaline_used(params)
+function AdrenalineUsed(params)
 {
 	local player = GetPlayerFromUserID(params.subject);
 	local maxHealth = player.GetMaxHealth();
@@ -1069,7 +928,7 @@ function Heal_GroupTherapy(healTarget, healAmount, isTempHealth)
 	}
 }
 
-function OnGameEvent_revive_success(params)
+function ReviveSuccess(params)
 {
 	local ledgeHang = params.ledge_hang;
 	if (ledgeHang == 0)
@@ -1098,69 +957,57 @@ function OnGameEvent_revive_success(params)
 	}
 }
 
-function OnGameEvent_triggered_car_alarm(params)
+function Heal_AmpedUp()
 {
 	local AmpedUp = TeamHasCard("AmpedUp");
 	if (AmpedUp > 0)
 	{
-		Heal_AmpedUp(AmpedUp);
-	}
-}
-
-::AmpedUpCooldown <- 0;
-function Heal_AmpedUp(AmpedUp)
-{
-	if (AmpedUpCooldown <= 0)
-	{
-		local player = null;
-		while ((player = Entities.FindByClassname(player, "player")) != null)
+		if (AmpedUpCooldown <= 0)
 		{
-			if (player.IsSurvivor())
+			local player = null;
+			while ((player = Entities.FindByClassname(player, "player")) != null)
 			{
-				local currentTempHealth = player.GetHealthBuffer();
-				local currentHealth = player.GetHealth();
-				local maxHealth = player.GetMaxHealth();
-
-				local healAmount = 20 * AmpedUp;
-
-				if (healAmount + currentHealth > maxHealth)
+				if (player.IsSurvivor())
 				{
-					player.SetHealth(maxHealth);
-				}
-				else
-				{
-					player.SetHealth(healAmount + currentHealth);
-				}
+					local currentTempHealth = player.GetHealthBuffer();
+					local currentHealth = player.GetHealth();
+					local maxHealth = player.GetMaxHealth();
 
-				local currentHealth = player.GetHealth();
-				if (currentHealth + currentTempHealth > maxHealth)
-				{
-					player.SetHealthBuffer(maxHealth - currentHealth)
+					local healAmount = 20 * AmpedUp;
+
+					if (healAmount + currentHealth > maxHealth)
+					{
+						player.SetHealth(maxHealth);
+					}
+					else
+					{
+						player.SetHealth(healAmount + currentHealth);
+					}
+
+					local currentHealth = player.GetHealth();
+					if (currentHealth + currentTempHealth > maxHealth)
+					{
+						player.SetHealthBuffer(maxHealth - currentHealth)
+					}
 				}
 			}
-		}
 
-		AmpedUpCooldown = 5;
+			AmpedUpCooldown = 5;
+		}
 	}
 }
 ::Heal_AmpedUp <- Heal_AmpedUp;
 
-function OnGameEvent_player_shoved(params)
+function CappedAlert()
 {
-	//Kill sleeper on shove
-	local hunter = GetPlayerFromUserID(params.userid);
-	local survivor = GetPlayerFromUserID(params.attacker);
-	if (hunter.GetZombieType() == 3)
+	local player = null;
+	while ((player = Entities.FindByClassname(player, "player")) != null)
 	{
-		hunter.TakeDamage(250, 2097152, survivor);
+		if (player.IsSurvivor())
+		{
+			EmitSoundOnClient("Instructor.ImportantLessonStart", player);
+		}
 	}
-}
-
-function OnGameEvent_item_pickup(params)
-{
-	TallboySpawn(params);
-	SurvivorPickupItem(params);
-	InitOptics(params);
 }
 
 ///////////////////////////////////////////////
@@ -1376,6 +1223,9 @@ function Update()
 	{
 		AmpedUpCooldown--;
 	}
+
+	//Remove critical particles
+	EntFire("__critical_particle*", "Kill");
 }
 
 function SpawnMob(count = 1, zType = 10)
@@ -1402,11 +1252,7 @@ function SpawnMob(count = 1, zType = 10)
 		i++;
 	}
 
-	local AmpedUp = TeamHasCard("AmpedUp");
-	if (AmpedUp > 0)
-	{
-		Heal_AmpedUp(AmpedUp);
-	}
+	Heal_AmpedUp();
 }
 ::ZSpawnMob <- SpawnMob;
 

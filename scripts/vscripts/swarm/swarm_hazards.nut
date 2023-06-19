@@ -36,15 +36,11 @@ function InitAlarmDoors()
 {
 	if (!IsModelPrecached("models/props_doors/emergency_exit_sign.mdl"))
 		PrecacheModel("models/props_doors/emergency_exit_sign.mdl");
-	if (!IsSoundPrecached("vehicles\\car_alarm\\car_alarm.wav"))
-		PrecacheSound("vehicles\\car_alarm\\car_alarm.wav");
 
 	local remainingDoors = null;
 	local door = null;
 	local doorList = array(1, null);
 	doorList.clear();
-
-	//CreateInfectedFilter();
 
 	while ((door = Entities.FindByClassname(door, "prop_door_rotating")) != null)
 	{
@@ -74,7 +70,7 @@ function InitAlarmDoors()
 function CreateAlarmDoor(door)
 {
 	local doorIndex = door.GetEntityIndex();
-	local doorName = "__alarm_door_inst_" + doorIndex;
+	local doorName = "__alarm_door" + doorIndex;
 	DoEntFire("!self", "AddOutput", "targetname " + doorName, 0, door, door);
 
 	local doorX = door.GetOrigin().x;
@@ -138,7 +134,7 @@ function CreateAlarmDoor(door)
 
 function AlarmDoorActivate(doorIndex)
 {
-	local doorEnt = Entities.FindByName(null, "__alarm_door_inst_" + doorIndex);
+	local doorEnt = Entities.FindByName(null, "__alarm_door" + doorIndex);
 	EmitSoundOn("Car.Alarm", doorEnt);
 	ZSpawnMob();
 }
@@ -146,7 +142,7 @@ function AlarmDoorActivate(doorIndex)
 
 function AlarmDoorStopSound(doorIndex)
 {
-	local doorEnt = Entities.FindByName(null, "__alarm_door_inst_" + doorIndex);
+	local doorEnt = Entities.FindByName(null, "__alarm_door" + doorIndex);
 	StopSoundOn("Car.Alarm", doorEnt)
 }
 ::AlarmDoorStopSound <- AlarmDoorStopSound;
@@ -157,13 +153,11 @@ function AlarmDoorStopSound(doorIndex)
 ///////////////////////////////////////////////
 crowsGroupsSpawned <- 0;
 
-if (!IsModelPrecached("models/swarm/jockey_crow.mdl"))
-	PrecacheModel("models/swarm/jockey_crow.mdl");
-//if (!IsSoundPrecached("animation\\crow_flock_farm_05.wav"))
-//	PrecacheSound("animation\\crow_flock_farm_05.wav");
-
 function InitCrows()
 {
+	if (!IsModelPrecached("models/swarm/jockey_crow.mdl"))
+		PrecacheModel("models/swarm/jockey_crow.mdl");
+
 	local crowGroupsToSpawn = null;
 	local crowOrigin = null;
 	local crowCount = 0;
@@ -182,7 +176,7 @@ function InitCrows()
 	{
 		crowOrigin = HazardGetRandomNavArea(hazardNavArray);
 		crowCount = 0;
-		crowGroupName = "__crow_group_inst_" + crowsGroupsSpawned;
+		crowGroupName = "__crow_group_" + crowsGroupsSpawned;
 
 		local crowTrigger = SpawnEntityFromTable("trigger_once",
 		{
@@ -224,7 +218,7 @@ function InitCrows()
 
 function SpawnCrows(groupID, crowID, crowOrigin)
 {
-	local crowName = "__crow_group_inst_" + groupID + "_" + crowID;
+	local crowName = "__crow_group_" + groupID + "_" + crowID;
 	local randomSpreadX = RandomInt(-32, 32);
 	local randomSpreadY = RandomInt(-32, 32);
 
@@ -243,19 +237,19 @@ function SpawnCrows(groupID, crowID, crowOrigin)
 	});
 
 	crow.SetModelScale(0.5, 0);
-	EntFire(crowName, "SetParent", "__crow_group_inst_" + groupID + "_move");
+	EntFire(crowName, "SetParent", "__crow_group_" + groupID + "_move");
 	EntFire(crowName, "AddOutput", "OnTakeDamage !self:RunScriptCode:CrowFlyAway(" + crowsGroupsSpawned + "):0:-1");
 }
 
 function CrowFlyAway(groupID)
 {
-	local crowGroupName = "__crow_group_inst_" + groupID;
+	local crowGroupName = "__crow_group_" + groupID;
 
 	// Animate crows flying
 	local i = 0;
 	while (i < 8)
 	{
-		local crowName = "__crow_group_inst_" + groupID + "_" + i;
+		local crowName = "__crow_group_" + groupID + "_" + i;
 		//local crowEnt = Entities.FindByName(null, crowName);
 		EntFire(crowName, "DisableCollision");
 		EntFire(crowName, "SetDefaultAnimation", "Pounce");
@@ -265,7 +259,7 @@ function CrowFlyAway(groupID)
 	}
 
 	// Get move object
-	local moveName = "__crow_group_inst_" + groupID + "_move";
+	local moveName = "__crow_group_" + groupID + "_move";
 	local moveEnt = Entities.FindByName(null, moveName);
 
 	// Fire events

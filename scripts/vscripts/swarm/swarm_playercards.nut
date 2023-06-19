@@ -1,42 +1,6 @@
 ///////////////////////////////////////////////
 //                PLAYER CARDS               //
 ///////////////////////////////////////////////
-IncludeScript("swarm/swarm_playercards_stocks");
-
-//Equipped Cards
-::p1Cards <- {};
-::p2Cards <- {};
-::p3Cards <- {};
-::p4Cards <- {};
-
-if (survivorSet == 1)
-{
-	p1Cards["Bill"] <- 1;
-	p2Cards["Zoey"] <- 1;
-	p3Cards["Louis"] <- 1;
-	p4Cards["Francis"] <- 1;
-}
-else
-{
-	p1Cards["Nick"] <- 1;
-	p2Cards["Rochelle"] <- 1;
-	p3Cards["Coach"] <- 1;
-	p4Cards["Ellis"] <- 1;
-}
-
-//Card Picking
-cardsPerCategory <- 2;
-
-//Can each player pick a card
-cardPickingAllowed <- [false, false, false, false];
-
-reflexCardsPick <- array(cardsPerCategory);
-brawnCardsPick <- array(cardsPerCategory);
-disciplineCardsPick <- array(cardsPerCategory);
-fortuneCardsPick <- array(cardsPerCategory);
-
-pickableCards <- array(cardsPerCategory * 4);
-
 function PickCard(player, cardID)
 {
 	local cardNumber = LetterToInt(cardID);
@@ -67,6 +31,8 @@ function ApplyCardEffects(player, heal = true)
 	CalcSpeedMultiplier(player);
 	CalcUseSpeed();
 	CalcMaxAmmo();
+	CalcChainsaw();
+	CalcGrenadeLauncher();
 	EquipOptics(player);
 	ApplyLastLegs();
 	ApplyNeedsOfTheMany();
@@ -157,7 +123,7 @@ function GetPickableCardsString(cardArray, cardCount, prefix, hudName, hudPlacem
 	return hudY;
 }
 
-function OnGameEvent_map_transition(params)
+function MapTransition(params)
 {
 	SavePlayerCards();
 
@@ -178,17 +144,20 @@ function OnGameEvent_map_transition(params)
 
 function SavePlayerCards()
 {
-	//End of map
-	printl("SAVED CARDS");
+	if (swarmMode != "vs" && swarmMode != "survival_vs")
+	{
+		//End of map
+		printl("SAVED CARDS");
 
-	//Save table for next map
-	SaveTable("p1Cards", p1Cards);
-	SaveTable("p2Cards", p2Cards);
-	SaveTable("p3Cards", p3Cards);
-	SaveTable("p4Cards", p4Cards);
+		//Save table for next map
+		SaveTable("p1Cards", p1Cards);
+		SaveTable("p2Cards", p2Cards);
+		SaveTable("p3Cards", p3Cards);
+		SaveTable("p4Cards", p4Cards);
+	}
 }
 
-function OnGameEvent_round_freeze_end(params)
+function RoundFreezeEnd(params)
 {
 	LoadPlayerCards();
 
@@ -201,28 +170,26 @@ function OnGameEvent_round_freeze_end(params)
 
 function LoadPlayerCards()
 {
-	//Start of a new map
-	printl("LOADED CARDS");
+	if (swarmMode != "vs" && swarmMode != "survival_vs")
+	{
+		//Start of a new map
+		printl("LOADED CARDS");
 
-	//Load table from memory
-	RestoreTable("p1Cards", p1Cards);
-	RestoreTable("p2Cards", p2Cards);
-	RestoreTable("p3Cards", p3Cards);
-	RestoreTable("p4Cards", p4Cards);
+		//Load table from memory
+		RestoreTable("p1Cards", p1Cards);
+		RestoreTable("p2Cards", p2Cards);
+		RestoreTable("p3Cards", p3Cards);
+		RestoreTable("p4Cards", p4Cards);
+	}
 }
 
-function OnGameEvent_round_start_post_nav(params)
+function RoundStartPostNav(params)
 {
 	//Clear saved cards on new session
 	if (Director.IsSessionStartMap() == true)
 	{
 		SavePlayerCards()
 	}
-}
-
-function OnGameEvent_player_first_spawn(params)
-{
-	GetAllPlayerCards();
 }
 
 function GetAllPlayerCards()
@@ -430,6 +397,24 @@ function CalcMaxAmmo()
 	Convars.SetValue("ammo_sniperrifle_max", (ammo_sniperrifle_max * ammoShortagePenalty) * (1 + PackMuleMultiplier));
 }
 
+function CalcChainsaw()
+{
+	local Lumberjack = TeamHasCard("Lumberjack");
+	local LumberjackMultiplier = 1 * Lumberjack;
+
+	Convars.SetValue("chainsaw_damage", chainsaw_damage * (1 + LumberjackMultiplier));
+	Convars.SetValue("chainsaw_attack_distance", chainsaw_attack_distance * (1 + LumberjackMultiplier));
+}
+
+function CalcGrenadeLauncher()
+{
+	local Cannoneer = TeamHasCard("Cannoneer");
+	local CannoneerMultiplier = 1 * Cannoneer;
+
+	Convars.SetValue("grenadelauncher_radius_stumble", grenadelauncher_radius_stumble * (1 + CannoneerMultiplier));
+	Convars.SetValue("grenadelauncher_radius_kill", grenadelauncher_radius_kill * (1 + CannoneerMultiplier));
+	Convars.SetValue("grenadelauncher_damage", grenadelauncher_damage * (1 + CannoneerMultiplier));
+}
 
 function InitOptics(params)
 {
@@ -458,19 +443,6 @@ function EquipOptics(player)
 		player.RemoveUpgrade(UPGRADE_LASER_SIGHT);
 	}
 }
-
-/*function OnGameEvent_weapon_drop(params)
-{
-	local player = GetPlayerFromUserID(params["userid"]);
-
-	if (player.IsValid())
-	{
-		if (player.IsSurvivor())
-		{
-			EquipOptics(player)
-		}
-	}
-}*/
 
 function ApplyLastLegs()
 {
@@ -565,7 +537,7 @@ function GetReloadSpeedModifier(player)
 }
 ::GetReloadSpeedModifier <- GetReloadSpeedModifier;
 
-function OnGameEvent_weapon_reload(params)
+function WeaponReload(params)
 {
 	local player = GetPlayerFromUserID(params["userid"]);
 
@@ -648,7 +620,8 @@ function SurvivorPickupItem(params)
 	}
 }
 
-/*function OnGameEvent_weapon_drop(params)
+/* Is this still needed?
+function OnGameEvent_weapon_drop(params)
 {
 	if ("propid" in params)
 	{
@@ -665,23 +638,6 @@ function SurvivorPickupItem(params)
 	}
 }*/
 
-/*pipeDuration <- Convars.GetFloat("pipe_bomb_timer_duration");
-function ThrowPipeBomb(params)
-{
-	local player = GetPlayerFromUserID(params["userid"]);
-	local weapon = params.weapon;
-
-	//BombSquad
-	if (weapon == "pipe_bomb")
-	{
-		if (PlayerHasCard(player, "BombSquad") != 0)
-		{
-			Convars.SetValue("pipe_bomb_timer_duration", 0.75);
-		}
-	}
-}*/
-
-addictPlaySound <- false;
 function Update_PlayerCards()
 {
 	//Runs every second
@@ -707,43 +663,45 @@ function Update_PlayerCards()
 					local AddictValue = AddictGetValue(player);
 					if (AddictValue < 0)
 					{
-						if (AddictValue == -0.2)
-						{
-							ScreenFade(player, 0, 0, 0, 140, 1, 1, 1 | 2);
-						}
-						else
-						{
-							ScreenFade(player, 0, 0, 0, 90, 1, 1, 1 | 2);
-						}
 						//ScreenShake(vecCenter, flAmplitude, flFrequency, flDuration, flRadius, eCommand, bAirShake)
 						local playerOrigin = player.GetOrigin();
-						if (AddictValue == -0.2)
+						if (AddictValue < -0.15)
 						{
+							//Strong effect
+							ScreenFade(player, 0, 0, 0, 140, 1, 1, 1 | 2);
 							ScreenShake(Vector(playerOrigin.x, playerOrigin.y, playerOrigin.z + 34), RandomInt(4, 7), 10, 2, 5, 0, true);
-						}
-						else
-						{
-							ScreenShake(Vector(playerOrigin.x, playerOrigin.y, playerOrigin.z + 34), RandomInt(2, 6), 10, 2, 5, 0, true);
-						}
-						if (addictPlaySound == false)
-						{
-							StopSoundOn("Player.Heartbeat", player);
-							StopSoundOn("Player.Heartbeat", player);
-							addictPlaySound = true;
-						}
-						else
-						{
-							EmitSoundOnClient("Player.Heartbeat", player);
-							/*if (AddictValue == -0.2)
+
+							local playerEyeAngles = player.EyeAngles();
+							player.SnapEyeAngles(QAngle(playerEyeAngles.x + RandomFloat(-2, 2), playerEyeAngles.y + RandomFloat(-2, 2), 0 + RandomFloat(-2, 2)));
+
+							if (addictPlaySound == false)
+							{
+								StopSoundOn("Player.Heartbeat", player);
+								StopSoundOn("Player.Heartbeat", player);
+								addictPlaySound = true;
+							}
+							else
 							{
 								EmitSoundOnClient("Player.Heartbeat", player);
-							}*/
-							addictPlaySound = false;
+								addictPlaySound = false;
+							}
+						}
+						else
+						{
+							//Weak effect
+							ScreenFade(player, 0, 0, 0, 90, 1, 1, 1 | 2);
+							ScreenShake(Vector(playerOrigin.x, playerOrigin.y, playerOrigin.z + 34), RandomInt(2, 6), 10, 2, 5, 0, true);
+
+							local playerEyeAngles = player.EyeAngles();
+							player.SnapEyeAngles(QAngle(playerEyeAngles.x, playerEyeAngles.y, 0))
 						}
 					}
 					else
 					{
 						StopSoundOn("Player.Heartbeat", player);
+
+						local playerEyeAngles = player.EyeAngles();
+						player.SnapEyeAngles(QAngle(playerEyeAngles.x, playerEyeAngles.y, 0))
 					}
 				}
 			}

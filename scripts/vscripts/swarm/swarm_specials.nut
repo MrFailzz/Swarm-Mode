@@ -32,7 +32,7 @@ function MutationSpawn(player)
 		case 6:
 		{
 			z_speed = Convars.GetFloat("z_speed");
-			NetProps.SetPropFloat(player, "m_flLaggedMovementValue", (tallboyRunSpeed / z_speed))
+			NetProps.SetPropFloat(player, "m_flLaggedMovementValue", (tallboyRunSpeed / z_speed));
 			break;
 		}
 		default:
@@ -40,36 +40,10 @@ function MutationSpawn(player)
 	}
 }
 
-
-///////////////////////////////////////////////
-//               SHARED EVENTS               //
-///////////////////////////////////////////////
-function OnGameEvent_ability_use(params)
-{
-	local player = GetPlayerFromUserID(params["userid"]);
-	local ability = params["ability"];
-
-	switch(ability)
-	{
-		case "ability_throw":
-			BreakerJump(player);
-			break;
-		case "ability_vomit":
-			ExploderAbility(player);
-			break;
-		case "ability_lunge":
-			SleeperLunge(player);
-			break;
-		default:
-			break;
-	}
-}
-
-
 ///////////////////////////////////////////////
 //             HOCKER KNOCKBACK              //
 ///////////////////////////////////////////////
-function OnGameEvent_tongue_grab(params)
+function TongueGrab(params)
 {
 	local player = GetPlayerFromUserID(params["userid"]);
 
@@ -115,7 +89,7 @@ function OnGameEvent_tongue_grab(params)
 
 
 ///////////////////////////////////////////////
-//           BOOMER CLASS EXPLOSION          //
+//                   BOOMER                  //
 ///////////////////////////////////////////////
 function BoomerDeath(player)
 {
@@ -160,6 +134,9 @@ function ExploderAbility(player)
 {
 	if (corruptionRetch == "Exploder")
 	{
+		local exploderSpeed = Convars.GetFloat("z_exploding_speed");
+		NetProps.SetPropFloat(player, "m_flLaggedMovementValue", (exploderRunSpeed / exploderSpeed));
+
 		NetProps.SetPropInt(player, "m_clrRender", GetColorInt(Vector(255, 72, 72)));
 
 		local explodeThinker = SpawnEntityFromTable("info_target", { targetname = "explodeThinker" });
@@ -222,12 +199,26 @@ function BoomerExplosion(boomerOrigin, isExploder)
 	}
 }
 
+///////////////////////////////////////////////
+//                  SPITTER                  //
+///////////////////////////////////////////////
+function RetchVomitHit(params)
+{
+	if (corruptionRetch == "Retch")	
+	{
+		local player = GetPlayerFromUserID(params["userid"]);
+		local origin = player.GetOrigin();
+
+		if (player.IsSurvivor())
+		{
+			DropSpit(origin)
+		}
+	}
+}
 
 ///////////////////////////////////////////////
 //                  TALLBOY                  //
 ///////////////////////////////////////////////
-bChargerSpawned <- false;
-
 function TallboySpawn(params)
 {
 	local item = params["item"];
@@ -245,7 +236,7 @@ function RemoveCharge()
 		NetProps.SetPropFloatArray(charger_ability, "m_nextActivationTimer", 99999, 0);
 		NetProps.SetPropFloatArray(charger_ability, "m_nextActivationTimer", Time() + 99999, 1);
 	}
-	bChargerSpawned <- false;
+	bChargerSpawned = false;
 }
 
 function TallboyKnockback(tallboy, survivor)
@@ -258,11 +249,10 @@ function TallboyKnockback(tallboy, survivor)
 	survivor.SetVelocity(Vector(sin(angle + 90) * tallboyPunchKnockback, sin(angle) * tallboyPunchKnockback, 180));
 }
 
-
 ///////////////////////////////////////////////
 //               SNITCH HORDE                //
 ///////////////////////////////////////////////
-function OnGameEvent_witch_harasser_set(params)
+function SnitchAlerted(params)
 {
 	local witch = params.witchid;
 	local witchEnt = EntIndexToHScript(witch);
@@ -317,7 +307,6 @@ function InitSleepers()
 			origin = sleeperOrigin,
 			spawnflags = 1,
 			filtername = "__swarm_filter_survivor"
-
 		});
 
 		// Set up trigger
@@ -334,13 +323,10 @@ function InitSleepers()
 
 function SleeperLunge(player)
 {
-	EmitAmbientSoundOn("Zombie.Rage", 1, 100, 100, player);
-	EmitAmbientSoundOn("Zombie.Rage", 1, 100, 100, player);
-	EmitAmbientSoundOn("Zombie.Rage", 1, 100, 100, player);
-	EmitAmbientSoundOn("Zombie.Rage", 1, 100, 100, player);
-	EmitAmbientSoundOn("Zombie.IgniteScream", 1, 100, 100, player);
-	EmitAmbientSoundOn("Zombie.IgniteScream", 1, 100, 100, player);
-	EmitAmbientSoundOn("Zombie.IgniteScream", 1, 100, 100, player);
+	if (!IsSoundPrecached("player/jockey/voice/attack/jockey_loudattack01_wet.wav"))
+		PrecacheSound("player/jockey/voice/attack/jockey_loudattack01_wet.wav");
+	
+	EmitSoundOn("JockeyZombie.Pounce", player);
 
 	local sleeperThinker = SpawnEntityFromTable("info_target", { targetname = "sleeperThinker" });
 	if (sleeperThinker.ValidateScriptScope())
@@ -377,7 +363,7 @@ function SleeperLunge(player)
 	}
 }
 
-function OnGameEvent_lunge_pounce(params)
+function SleeperLanded(params)
 {
 	local player = GetPlayerFromUserID(params.userid);
 	local sleeperLandedThinker = SpawnEntityFromTable("info_target", { targetname = "sleeperLandedThinker" });
@@ -413,16 +399,13 @@ function OnGameEvent_lunge_pounce(params)
 	}
 }
 
-function OnGameEvent_player_now_it(params)
+function SleeperShoved(params)
 {
-	if (corruptionRetch == "Retch")	
+	//Kill sleeper on shove
+	local hunter = GetPlayerFromUserID(params.userid);
+	local survivor = GetPlayerFromUserID(params.attacker);
+	if (hunter.GetZombieType() == 3)
 	{
-		local player = GetPlayerFromUserID(params["userid"]);
-		local origin = player.GetOrigin();
-
-		if (player.IsSurvivor())
-		{
-			DropSpit(origin)
-		}
+		hunter.TakeDamage(250, 2097152, survivor);
 	}
 }
