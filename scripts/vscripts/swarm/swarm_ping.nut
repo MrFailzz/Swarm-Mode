@@ -94,7 +94,7 @@ function PingEntity(entity, player, tracepos)
 	else if (canGlow == "crows")
 	{
 		local nameArray = split(entityName, "_");
-		local crowGroupName = "__" + nameArray[0] + "_" + nameArray[1] + nameArray[2] + "*";
+		local crowGroupName = "__" + nameArray[0] + "_" + nameArray[1] + "_" + nameArray[2] + "*";
 
 		// Apply ping glow
 		EntFire(crowGroupName, "StartGlowing", "", 0);

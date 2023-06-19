@@ -176,7 +176,7 @@ function InitCrows()
 	{
 		crowOrigin = HazardGetRandomNavArea(hazardNavArray);
 		crowCount = 0;
-		crowGroupName = "__crow_group" + crowsGroupsSpawned;
+		crowGroupName = "__crow_group_" + crowsGroupsSpawned;
 
 		local crowTrigger = SpawnEntityFromTable("trigger_once",
 		{
@@ -218,7 +218,7 @@ function InitCrows()
 
 function SpawnCrows(groupID, crowID, crowOrigin)
 {
-	local crowName = "__crow_group" + groupID + "_" + crowID;
+	local crowName = "__crow_group_" + groupID + "_" + crowID;
 	local randomSpreadX = RandomInt(-32, 32);
 	local randomSpreadY = RandomInt(-32, 32);
 
@@ -237,19 +237,19 @@ function SpawnCrows(groupID, crowID, crowOrigin)
 	});
 
 	crow.SetModelScale(0.5, 0);
-	EntFire(crowName, "SetParent", "__crow_group" + groupID + "_move");
+	EntFire(crowName, "SetParent", "__crow_group_" + groupID + "_move");
 	EntFire(crowName, "AddOutput", "OnTakeDamage !self:RunScriptCode:CrowFlyAway(" + crowsGroupsSpawned + "):0:-1");
 }
 
 function CrowFlyAway(groupID)
 {
-	local crowGroupName = "__crow_group" + groupID;
+	local crowGroupName = "__crow_group_" + groupID;
 
 	// Animate crows flying
 	local i = 0;
 	while (i < 8)
 	{
-		local crowName = "__crow_group" + groupID + "_" + i;
+		local crowName = "__crow_group_" + groupID + "_" + i;
 		//local crowEnt = Entities.FindByName(null, crowName);
 		EntFire(crowName, "DisableCollision");
 		EntFire(crowName, "SetDefaultAnimation", "Pounce");
@@ -259,7 +259,7 @@ function CrowFlyAway(groupID)
 	}
 
 	// Get move object
-	local moveName = "__crow_group" + groupID + "_move";
+	local moveName = "__crow_group_" + groupID + "_move";
 	local moveEnt = Entities.FindByName(null, moveName);
 
 	// Fire events
