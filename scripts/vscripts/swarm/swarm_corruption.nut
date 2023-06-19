@@ -68,7 +68,7 @@ function InitCorruptionCards()
 	// Retches
 	local cardsRetch = array(1, null);
 	cardsRetch.clear();
-	//cardsRetch.append("Retch");
+	cardsRetch.append("Retch");
 	cardsRetch.append("Exploder");
 	corruptionRetch = ChooseCorruptionCard(cardsRetch);
 	ApplyRetchCard();
