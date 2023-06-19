@@ -1,13 +1,7 @@
 ///////////////////////////////////////////////
 //            SHARED COMMON EVENTS           //
 ///////////////////////////////////////////////
-commonVarList <- array(50, null);
-acidCommonsCount <- 0;
-fireCommonsCount <- 0;
-explodingCommonsCount <- 0;
-uncommonsCount <- 0;
-
-function OnGameEvent_zombie_death(params)
+function ZombieDeath(params)
 {
 	if ("victim" in params)
 	{
@@ -17,17 +11,17 @@ function OnGameEvent_zombie_death(params)
 		{
 			local commonName = common.GetName();
 
-			if (commonName.find("__acid_common_inst_") != null)
+			if (commonName.find("__acid_common") != null)
 			{
 				DropSpit(common.GetOrigin());
 				EntFire(commonName + "spitTrail", "Kill");
 			}
-			else if (commonName.find("__fire_common_inst_") != null)
+			else if (commonName.find("__fire_common") != null)
 			{
 				EntFire(commonName + "fireTrail", "Kill");
 				EntFire(commonName + "fireDamage", "Kill");
 			}
-			else if (commonName.find("__expl_common_inst_") != null)
+			else if (commonName.find("__expl_common") != null)
 			{
 				EntFire(commonName + "explProp", "Kill");
 				EntFire(commonName + "explHitbox", "Kill");
@@ -72,15 +66,15 @@ function BuildCommonList()
 					commonVarList.append(common);
 				}
 			}
-			if (commonName.find("__acid_common_inst_") != null)
+			if (commonName.find("__acid_common") != null)
 			{
 				acidCommonsCount++;
 			}
-			else if (commonName.find("__fire_common_inst_") != null)
+			else if (commonName.find("__fire_common") != null)
 			{
 				fireCommonsCount++;
 			}
-			else if (commonName.find("__expl_common_inst_") != null)
+			else if (commonName.find("__expl_common") != null)
 			{
 				explodingCommonsCount++;
 			}
@@ -96,8 +90,6 @@ function BuildCommonList()
 ///////////////////////////////////////////////
 //                ACID COMMONS               //
 ///////////////////////////////////////////////
-acidCommonsTimer <- 0;
-
 function AcidCommonsCountdown()
 {
 	if ((Time() - acidCommonsTimer) >= acidCommonSpawnRate)
@@ -119,7 +111,7 @@ function AcidCommonsCountdown()
 
 function CreateAcidCommon(common)
 {
-	local commonName = "__acid_common_inst_" + common.GetEntityIndex();
+	local commonName = "__acid_common" + common.GetEntityIndex();
 	DoEntFire("!self", "AddOutput", "targetname " + commonName, 0, common, common);
 
 	local spitTrail = SpawnEntityFromTable("info_particle_system",
@@ -138,8 +130,6 @@ function CreateAcidCommon(common)
 ///////////////////////////////////////////////
 //                FIRE COMMONS               //
 ///////////////////////////////////////////////
-fireCommonsTimer <- 1;
-
 function FireCommonsCountdown()
 {
 	if ((Time() - fireCommonsTimer) >= fireCommonSpawnRate)
@@ -161,7 +151,7 @@ function FireCommonsCountdown()
 
 function CreateFireCommon(common)
 {
-	local commonName = "__fire_common_inst_" + common.GetEntityIndex();
+	local commonName = "__fire_common" + common.GetEntityIndex();
 	DoEntFire("!self", "AddOutput", "targetname " + commonName, 0, common, common);
 
 	local spitTrail = SpawnEntityFromTable("info_particle_system",
@@ -200,9 +190,6 @@ function CreateFireCommon(common)
 ///////////////////////////////////////////////
 if (!IsModelPrecached("models/swarm/propanecanister001a_head.mdl"))
 	PrecacheModel("models/swarm/propanecanister001a_head.mdl");
-
-explodingCommonsTimer <- 3;
-explodingCommonsFiltersExist <- false;
 
 function ExplodingCommonsFilters()
 {
@@ -255,7 +242,7 @@ function ExplodingCommonsCountdown()
 
 function CreateExplodingCommon(common)
 {
-	local commonName = "__expl_common_inst_" + common.GetEntityIndex();
+	local commonName = "__expl_common" + common.GetEntityIndex();
 	DoEntFire("!self", "AddOutput", "targetname " + commonName, 0, common, common);
 
 	local commonOrigin = common.GetOrigin();
@@ -349,8 +336,6 @@ function ExplodingCommonBoom(common)
 ///////////////////////////////////////////////
 //                 UNCOMMONS                 //
 ///////////////////////////////////////////////
-uncommonsTimer <- 0;
-
 function ClownCountdown()
 {
 	if ((Time() - uncommonsTimer) >= uncommonSpawnRate)

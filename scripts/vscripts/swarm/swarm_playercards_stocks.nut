@@ -49,6 +49,7 @@ brawnCards <-
 	//"Overcrowded",
 	"LastLegs",
 	"BuckshotBruiser",
+	"Lumberjack",
 ];
 
 disciplineCards <-
@@ -74,7 +75,8 @@ disciplineCards <-
 	"ReloadDrills",
 	//"MagCoupler",
 	"Arsonist",
-	"NeedsOfTheMany"
+	"NeedsOfTheMany",
+	"Cannoneer",
 ];
 
 fortuneCards <-
@@ -160,9 +162,9 @@ function AddictGetValue(player)
 	{
 		return 0.05;
 	}
-	else if (healthBuffer >= 10)
+	else if (healthBuffer >= 5)
 	{
-		return -0.10;
+		return -0.05;
 	}
 	else if (healthBuffer > 0)
 	{
@@ -539,6 +541,12 @@ function GetPlayerCardName(cardID, type = "name")
 			case "NeedsOfTheMany":
 				return "Needs Of The Many";
 				break;
+			case "Lumberjack":
+				return "Lumberjack";
+				break;
+			case "Cannoneer":
+				return "Cannoneer"
+				break;
 			default:
 				return cardID;
 				break;
@@ -796,6 +804,12 @@ function GetPlayerCardName(cardID, type = "name")
 				break;
 			case "NeedsOfTheMany":
 				return "+1 Team Life, -10 HP";
+				break;
+			case "Lumberjack":
+				return "+100% Team Chainsaw DMG / Range"
+				break;
+			case "Cannoneer":
+				return "+100% Team Grenade Launcher DMG / Range"
 				break;
 			default:
 				return cardID;

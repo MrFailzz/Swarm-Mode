@@ -1,20 +1,6 @@
 ///////////////////////////////////////////////
 //              CORRUPTION CARDS             //
 ///////////////////////////////////////////////
-corruptionCards <- array(1, null);
-corruptionCommons <- null;
-corruptionUncommons <- null;
-corruptionZSpeed <- null;
-corruptionTallboy <- null;
-corruptionHocker <- null;
-corruptionRetch <- null;
-corruptionHazards <- null;
-corruptionBoss <- null;
-corruptionEnvironmental <- null;
-corruptionHordes <- null;
-corruptionGameplay <- null;
-corruptionPlayer <- null;
-
 function InitCorruptionCards()
 {
 	corruptionCards.clear();
@@ -82,7 +68,7 @@ function InitCorruptionCards()
 	// Retches
 	local cardsRetch = array(1, null);
 	cardsRetch.clear();
-	cardsRetch.append("Retch");
+	//cardsRetch.append("Retch");
 	cardsRetch.append("Exploder");
 	corruptionRetch = ChooseCorruptionCard(cardsRetch);
 	ApplyRetchCard();
@@ -123,6 +109,7 @@ function InitCorruptionCards()
 	cardsEnvironmental.append("None");
 	cardsEnvironmental.append("None");
 	cardsEnvironmental.append("None");
+	cardsEnvironmental.append("environmentSwarmStream");
 
 	if ( Director.IsSinglePlayerGame() )
 	{
@@ -131,7 +118,7 @@ function InitCorruptionCards()
 		cardsEnvironmental.append("environmentFrozen");
 	}
 	corruptionEnvironmental = ChooseCorruptionCard(cardsEnvironmental);
-	ApplyEnvironmentalCard();
+	//ApplyEnvironmentalCard();
 
 	// Hordes
 	local cardsHordes = array(1, null);
@@ -299,6 +286,9 @@ function GetCorruptionCardName(cardID)
 		case "environmentFrozen":
 			return "Frigid Outskirts";
 			break;
+		case "environmentSwarmStream":
+			return "Swarm Stream";
+			break;
 		case "hordeHunted":
 			return "Hunted";
 			break;
@@ -405,11 +395,11 @@ function GetCorruptionCardName(cardID)
 			return "Ogre";
 			break;
 		default:
-			return "None";
+			return cardID;
 			break;
 	}
 	
-	return "None";
+	return cardID;
 }
 
 ///////////////////////////////////////////////
@@ -417,7 +407,10 @@ function GetCorruptionCardName(cardID)
 ///////////////////////////////////////////////
 function ApplyEnvironmentalCard()
 {
-	ResetFogCvars();
+	if ( Director.IsSinglePlayerGame() )
+	{
+		ResetFogCvars();
+	}
 	switch(corruptionEnvironmental)
 	{
 		case "None":
@@ -496,16 +489,10 @@ function CorruptionCard_TheFog()
 }
 
 // Frigid Outskirts
-frigidOutskirtsEnabled <- false;
-frigidOutskirtsStormActive <- false;
-frigidOutskirtsCalmTime <- 90;
-frigidOutskirtsStormTime <- 20;
-frigidOutskirtsTimer <- 0;
-
 function CorruptionCard_FrigidOutskirts()
 {
-	if (!IsSoundPrecached("ambient\\wind\\windgust.wav"))
-		PrecacheSound("ambient\\wind\\windgust.wav");
+	if (!IsSoundPrecached("ambient/wind/windgust.wav"))
+		PrecacheSound("ambient/wind/windgust.wav");
 
 	SetFogCvar("fog_color", "174 196 209");
 	SetFogCvar("fog_colorskybox", "174 196 209");
@@ -600,6 +587,32 @@ function FrigidOutskirtsTimer()
 	}
 }
 
+function CorruptionCard_SwarmStreamGlow(player)
+{
+	local playerIndex = player.GetEntityIndex();
+	local playerOrigin = player.GetOrigin();
+	local playerAngles = player.GetAngles();
+	local lightglow = SpawnEntityFromTable("env_lightglow",
+	{
+		targetname = "__swarm_stream_lightglow" + playerIndex,
+		origin = Vector(playerOrigin.x, playerOrigin.y, playerOrigin.z + 48),
+		angles = Vector(playerAngles.x, playerAngles.y, playerAngles.z),
+		GlowProxySize = 32,
+		HDRColorScale = 0.075,
+		HorizontalGlowSize = 175,
+		MaxDist = 0,
+		MinDist = 0,
+		OuterMaxDist = 65535,
+		rendercolor = Vector(255, 193, 159),
+		spawnflags = 0,
+		VerticalGlowSize = 125
+	});
+
+	lightglow.SetOrigin(Vector(playerOrigin.x, playerOrigin.y, playerOrigin.z + 48));
+	DoEntFire("!self", "AddOutput", "targetname " + "__swarm_stream" + playerIndex, 0, player, player);
+	EntFire("__swarm_stream_lightglow" + playerIndex, "SetParent", "__swarm_stream" + playerIndex);
+}
+
 ///////////////////////////////////////////////
 //                HORDE CARDS                //
 ///////////////////////////////////////////////
@@ -647,9 +660,6 @@ function ApplyHordeCard()
 }*/
 
 // Hunted
-HuntedEnabled <- false;
-HuntedTimer <- null;
-
 function CorruptionCard_Hunted()
 {
 	DirectorOptions.cm_CommonLimit = 30
@@ -669,9 +679,6 @@ function HuntedTimerFunc()
 }
 
 // Onslaught
-OnslaughtEnabled <- false;
-OnslaughtTimer <- null;
-
 function CorruptionCard_Onslaught()
 {
 	DirectorOptions.cm_CommonLimit = 50
@@ -690,15 +697,7 @@ function OnslaughtTimerFunc()
 	}
 }
 
-TallboyHordeEnabled <- false;
-CrusherHordeEnabled <- false;
-BruiserHordeEnabled <- false;
-StalkerHordeEnabled <- false;
-HockerHordeEnabled <- false;
-ExploderHordeEnabled <- false;
-RetchHordeEnabled <- false;
-SpecialHordeTimer <- null;
-
+// Specials
 function CorruptionCard_TallboyHordes()
 {
 	TallboyHordeEnabled = true
@@ -1002,22 +1001,6 @@ function ApplyPlayerCorruptionCard()
 	}
 }
 
-ammoShortageMultiplier <- 0.7;
-ammo_assaultrifle_max <- 360;
-ammo_autoshotgun_max <- 90;
-ammo_huntingrifle_max <- 150;
-ammo_shotgun_max <- 72;
-ammo_smg_max <- 650;
-ammo_sniperrifle_max <- 180;
-
-sluggishMultiplier <- 1.5;
-ammo_pack_use_duration <- 3;
-cola_bottles_use_duration <- 1.95;
-defibrillator_use_duration <- 3;
-first_aid_kit_use_duration <- 5;
-gas_can_use_duration <- 2;
-upgrade_pack_use_duration <- 2;
-survivor_revive_duration <- 5;
 function ResetPlayerCvars()
 {
 	//Ammo

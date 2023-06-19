@@ -1,10 +1,6 @@
 ///////////////////////////////////////////////
 //               SWARM CIRCLE                //
 ///////////////////////////////////////////////
-bSwarmCircleActive <- false;
-swarmTickTime <- 0;
-swarmOrigin <- null;
-
 if (!IsModelPrecached("models/swarm/swarmcircle.mdl"))
 	PrecacheModel("models/swarm/swarmcircle.mdl");
 
@@ -14,7 +10,7 @@ function TankDeath()
 	DestroyTankHud();
 }
 
-function OnGameEvent_player_team(params)
+function TankKicked(params)
 {
 	// Called when a tank is kicked
 	if (Director.IsTankInPlay() == false)
@@ -86,7 +82,6 @@ function KillSwarmCircle()
 	bSwarmCircleActive = false;
 }
 
-safeSurvivors <- array(4);
 function SwarmCircleApplyDamage()
 {
 	if ((Time() - swarmTickTime) >= swarmTickInterval || swarmTickTime == 0)
@@ -133,13 +128,14 @@ function SwarmCircleApplyDamage()
 ///////////////////////////////////////////////
 //               BREAKER JUMP                //
 ///////////////////////////////////////////////
-if (!IsSoundPrecached("player\\tank\\voice\\pain\\tank_fire_06.wav"))
-	PrecacheSound("player\\tank\\voice\\pain\\tank_fire_06.wav");
+if (!IsSoundPrecached("player/tank/voice/pain/tank_fire_06.wav"))
+	PrecacheSound("player/tank/voice/pain/tank_fire_06.wav");
 
 function BreakerJump(player)
 {
 	if (bossBreakerEnable == true)
 	{
+		//Apply the jump
 		local eyeAngles = player.EyeAngles();
 		local verticalVelocity = sin(DegToRad(Clamp(eyeAngles.x, 0) * -1)) * tankJumpExtraHeight;
 		local verticalOffset = (1.15 - (verticalVelocity / tankJumpExtraHeight))
@@ -149,18 +145,16 @@ function BreakerJump(player)
 			(tankJumpVelocity * sin(DegToRad(eyeAngles.y))) * verticalOffset,
 			300 + verticalVelocity));
 
-		// Stagger to stop the rock
-		
+		//Stagger to stop the rock
+		local staggerDuration = Convars.GetFloat("z_max_stagger_duration");
+		printl(staggerDuration)
+		Convars.SetValue("z_max_stagger_duration", 1);
 		player.Stagger(Vector(0, 0, 0));
-		/*local rock = null;
-		while ((rock = Entities.FindByClassname(rock, "tank_rock")) != null)
-		{
-			rock.Kill();
-		}*/
+		Convars.SetValue("z_max_stagger_duration", staggerDuration);
 
 		if (bSwarmCircleActive == false)
 		{
-			EmitSoundOn("player\\tank\\voice\\pain\\tank_fire_06.wav", player)
+			EmitSoundOn("player/tank/voice/pain/tank_fire_06.wav", player)
 		}
 
 		CreateSwarmCircle(player);
@@ -197,10 +191,7 @@ function CancelRockAnimation()
 ///////////////////////////////////////////////
 //                HEALTH HUD                 //
 ///////////////////////////////////////////////
-bTankHudExists <- false;
-tankHudTankID <- null;
-
-function OnGameEvent_tank_spawn(params)
+function TankSpawn(params)
 {
 	if (!bTankHudExists)
 	{
