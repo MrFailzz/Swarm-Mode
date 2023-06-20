@@ -539,7 +539,7 @@ function GetPlayerCardName(cardID, type = "name")
 				return "Arsonist";
 				break;
 			case "NeedsOfTheMany":
-				return "Needs Of The Many";
+				return "Needs of the Many";
 				break;
 			case "Lumberjack":
 				return "Lumberjack";
