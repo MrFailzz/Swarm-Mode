@@ -511,10 +511,7 @@ function ApplyInspiringSacrifice()
 
 function ApplyNeedsOfTheMany()
 {
-	if (TeamHasCard("NeedsOfTheMany") > 0)
-	{
-		DirectorOptions.SurvivorMaxIncapacitatedCount += 1
-	}
+	DirectorOptions.SurvivorMaxIncapacitatedCount = BaseMaxIncaps + TeamHasCard("NeedsOfTheMany");
 }
 
 function GetReloadSpeedModifier(player)

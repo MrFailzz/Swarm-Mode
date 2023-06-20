@@ -5,6 +5,7 @@
 difficulty <- GetDifficulty();
 survivorSet <- Director.GetSurvivorSet();
 z_speed <- Convars.GetFloat("z_speed");
+BaseMaxIncaps <- 2
 
 //Breaker
 bSwarmCircleActive <- false;
@@ -190,7 +191,7 @@ switch(difficulty)
 		Convars.SetValue("z_gas_health", 297);
 		Convars.SetValue("z_exploding_health", 595);
 		Convars.SetValue("z_witch_health", 850);
-		DirectorOptions.SurvivorMaxIncapacitatedCount = 3;
+		BaseMaxIncaps = 3;
 	break;
 
 	//Normal
@@ -199,7 +200,7 @@ switch(difficulty)
 		Convars.SetValue("z_gas_health", 297);
 		Convars.SetValue("z_exploding_health", 595);
 		Convars.SetValue("z_witch_health", 850);
-		DirectorOptions.SurvivorMaxIncapacitatedCount = 2;
+		BaseMaxIncaps = 2;
 	break;
 
 	//Advanced
@@ -208,7 +209,7 @@ switch(difficulty)
 		Convars.SetValue("z_gas_health", 350);
 		Convars.SetValue("z_exploding_health", 700);
 		Convars.SetValue("z_witch_health", 1000);
-		DirectorOptions.SurvivorMaxIncapacitatedCount = 2;
+		BaseMaxIncaps = 2;
 	break;
 
 	//Expert
@@ -217,10 +218,12 @@ switch(difficulty)
 		Convars.SetValue("z_gas_health", 350);
 		Convars.SetValue("z_exploding_health", 700);
 		Convars.SetValue("z_witch_health", 1000);
-		DirectorOptions.SurvivorMaxIncapacitatedCount = 1;
+		BaseMaxIncaps = 1;
 		DirectorOptions.TankHitDamageModifierCoop = 0.48;
 	break;
 }
+
+DirectorOptions.SurvivorMaxIncapacitatedCount = BaseMaxIncaps;
 
 ///////////////////////////////////////////////
 //              GAMEMODE OPTIONS             //

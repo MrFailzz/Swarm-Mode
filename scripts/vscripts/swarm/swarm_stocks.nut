@@ -730,26 +730,35 @@ function PlayerHurt(params)
 		//Survivor was hurt
 		if (player.GetZombieType() == 9)
 		{
-			if (params.type == 265216)
+			if ("type" in params)
 			{
-				//Spit damage
-				ScreenFade(player, 0, 200, 0, 50, 0.5, 0, 1);
-				EmitSoundOnClient("PlayerZombie.AttackHit", player);
-			}
-			else if (params.type == 8)
-			{
-				//Fire damage
-				ScreenFade(player, 255, 70, 0, 50, 0.5, 0, 1);
-				EmitSoundOnClient("General.BurningObject", player);
+				if (params.type == 265216)
+				{
+					//Spit damage
+					ScreenFade(player, 0, 200, 0, 50, 0.5, 0, 1);
+					EmitSoundOnClient("PlayerZombie.AttackHit", player);
+				}
+				else if (params.type == 8)
+				{
+					//Fire damage
+					ScreenFade(player, 255, 70, 0, 50, 0.5, 0, 1);
+					EmitSoundOnClient("General.BurningObject", player);
+				}
 			}
 
 			//Charger scratch
-			if (params.weapon == "charger_claw" && corruptionTallboy != "Crusher")
+			if ("weapon" in params)
 			{
-				local attacker = GetPlayerFromUserID(params.attacker);
-				if (attacker.IsValid() && player != attacker)
+				if (params.weapon == "charger_claw" && corruptionTallboy != "Crusher")
 				{
-					TallboyKnockback(attacker, player);
+					if ("attacker" in params)
+					{
+						local attacker = GetPlayerFromUserID(params.attacker);
+						if (attacker.IsValid() && player != attacker)
+						{
+							TallboyKnockback(attacker, player);
+						}
+					}
 				}
 			}
 		}
