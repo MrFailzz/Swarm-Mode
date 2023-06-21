@@ -644,9 +644,9 @@ function difficulty_RandomBoss()
 {
 	local progressPct = ( Director.GetFurthestSurvivorFlow() / GetMaxFlowDistance() )
 
-	if (corruptionBoss == "None")
+	if (corruptionBoss == "None" && difficulty > 1)
 	{
-		if (randomPct < 50)
+		if (randomPct < 50 )
 		{
 			bossBreakerEnable = true;
 			Convars.SetValue("z_tank_health", 8000);
