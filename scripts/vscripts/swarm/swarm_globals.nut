@@ -8,6 +8,11 @@ z_speed <- Convars.GetFloat("z_speed");
 BaseMaxIncaps <- 2
 
 //Breaker
+tankModel <- "models/infected/hulk.mdl"
+randomPct <- RandomInt(1,100)
+spawnBoss <- RandomFloat(0.1,0.9)
+spawnBreaker <- RandomFloat(0.1,0.9)
+spawnOgre <- RandomFloat(0.1,0.9)
 bSwarmCircleActive <- false;
 swarmTickTime <- 0;
 swarmOrigin <- null;
@@ -31,6 +36,8 @@ uncommonsTimer <- 0;
 
 //Corruption
 corruptionCards <- array(1, null);
+corruptionCards_List <- array(1, null);
+corruptionCards_ListInf <- array(1, null);
 corruptionCommons <- null;
 corruptionUncommons <- null;
 corruptionZSpeed <- null;
@@ -118,6 +125,18 @@ else
 	p4Cards["Ellis"] <- 1;
 }
 
+/*[0 - Max HP
+1 - RES
+2 - Trauma RES
+3 - Speed
+4 - DMG
+5 - Reload
+6 - Heal EFF]*/
+p1Gambler <- [RandomInt(-100, 100), RandomInt(-100, 100), RandomInt(-100, 100), RandomInt(-100, 100), RandomInt(-100, 100), RandomInt(-100, 100), RandomInt(-100, 100)];
+p2Gambler <- [RandomInt(-100, 100), RandomInt(-100, 100), RandomInt(-100, 100), RandomInt(-100, 100), RandomInt(-100, 100), RandomInt(-100, 100), RandomInt(-100, 100)];
+p3Gambler <- [RandomInt(-100, 100), RandomInt(-100, 100), RandomInt(-100, 100), RandomInt(-100, 100), RandomInt(-100, 100), RandomInt(-100, 100), RandomInt(-100, 100)];
+p4Gambler <- [RandomInt(-100, 100), RandomInt(-100, 100), RandomInt(-100, 100), RandomInt(-100, 100), RandomInt(-100, 100), RandomInt(-100, 100), RandomInt(-100, 100)];
+
 cardPickingAllowed <- [false, false, false, false];
 cardsPerCategory <- 2;
 reflexCardsPick <- array(cardsPerCategory);
@@ -130,6 +149,9 @@ ConfidentKillerCounter <- 0;
 MethHeadCounter <- [0, 0, 0, 0];
 cardHudTimeout <- 0;
 ::AmpedUpCooldown <- 0;
+BaseTempHealthDecayRate <- 0.27;
+BaseSurvivorIncapDecayRate <- 3;
+MaxTraumaDamage <- 20;
 
 //Specials
 bChargerSpawned <- false;
@@ -178,6 +200,8 @@ DirectorOptions <-
 	TankHitDamageModifierCoop = 1
 	EscapeSpawnTanks = false
 	SurvivorMaxIncapacitatedCount = 2
+	
+	TempHealthDecayRate = BaseTempHealthDecayRate
 }
 
 ///////////////////////////////////////////////
@@ -192,6 +216,7 @@ switch(difficulty)
 		Convars.SetValue("z_exploding_health", 595);
 		Convars.SetValue("z_witch_health", 850);
 		BaseMaxIncaps = 3;
+		MaxTraumaDamage = 0;
 	break;
 
 	//Normal
@@ -201,6 +226,7 @@ switch(difficulty)
 		Convars.SetValue("z_exploding_health", 595);
 		Convars.SetValue("z_witch_health", 850);
 		BaseMaxIncaps = 2;
+		MaxTraumaDamage = 20;
 	break;
 
 	//Advanced
@@ -210,6 +236,7 @@ switch(difficulty)
 		Convars.SetValue("z_exploding_health", 700);
 		Convars.SetValue("z_witch_health", 1000);
 		BaseMaxIncaps = 2;
+		MaxTraumaDamage = 30;
 	break;
 
 	//Expert
@@ -219,6 +246,7 @@ switch(difficulty)
 		Convars.SetValue("z_exploding_health", 700);
 		Convars.SetValue("z_witch_health", 1000);
 		BaseMaxIncaps = 1;
+		MaxTraumaDamage = 40;
 		DirectorOptions.TankHitDamageModifierCoop = 0.48;
 	break;
 }
@@ -241,11 +269,6 @@ swarmDamagePerTick <- 2;
 
 tankJumpVelocity <- 500;
 tankJumpExtraHeight <- 450;			// Max extra height from aiming up
-
-randomPct <- (RandomInt(1,100))
-spawnBoss <- (RandomFloat(0.1,0.9))
-spawnBreaker <- (RandomFloat(0.1,0.9))
-spawnOgre <- (RandomFloat(0.1,0.9))
 
 breakerSpawned <- false;
 ogreSpawned <- false;
@@ -285,10 +308,10 @@ explodingCommonSpawnRate <- 30;		// How often a group will be spawned in seconds
 uncommonMax <- 7;
 uncommonSpawnAmount <- 4;			// Size of group to spawn
 uncommonSpawnRate <- 30;			// How often a group will be spawned in seconds
-
 uncommonJimmyMax <- 3;
 uncommonJimmySpawnAmount <- 3;			// Size of group to spawn
-uncommonJimmySpawnRate <- 30;			// How often a group will be spawned in seconds
+uncommonFallenMax <- 3;
+uncommonFallenSpawnAmount <- 3;			// Size of group to spawn
 
 // HAZARDS //
 hazardDifficultyScale <- (difficulty + 1) / 2;	// Number of hazards to be scaled with difficulty (Easy (0): 0.5x, Normal (1): 1x, Advanced (2): 1.5x, Expert (3): 2x)
@@ -310,3 +333,6 @@ adrenalineHealAmount <- 25;			// HP healed by adrenaline
 // PINGING //
 pingRange <- 2000					// Max range for pinging an object
 pingDuration <- 8					// How many seconds do objects stay pinged
+
+// SURVIVOR //
+survivorCrawlSpeed <- 30			// Last Legs base crawl speed

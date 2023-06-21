@@ -22,6 +22,11 @@ function PickCard(player, cardID)
 			GetAllPlayerCards();
 			ApplyCardEffects(player);
 		}
+
+		if (card == "Gambler")
+		{
+			PrintGamblerValue(player);
+		}
 	}
 }
 
@@ -36,6 +41,7 @@ function ApplyCardEffects(player, heal = true)
 	EquipOptics(player);
 	ApplyLastLegs();
 	ApplyNeedsOfTheMany();
+	ApplyCauterized();
 }
 
 function AddCardToTable(cardTable, player, card)
@@ -272,6 +278,10 @@ function SurvivorSpawn(player)
 	//Change one time properties when a player spawns/respawns
 	//Some of these are preserved correctly on map transition (max health), but usually not if the player is dead
 	ApplyCardEffects(player, false);
+	if (PlayerHasCard(player, "Gambler") > 0)
+	{
+		PrintGamblerValue(player);
+	}
 }
 
 function CalcMaxHealth(heal = true)
@@ -281,6 +291,30 @@ function CalcMaxHealth(heal = true)
 	{
 		if (player.IsSurvivor())
 		{
+			local Gambler = PlayerHasCard(player, "Gambler");
+			local CombatMedic = TeamHasCard("CombatMedic");
+			local TraumaResistance = 1 + (-0.2 * CombatMedic);
+			if (Gambler > 0)
+			{
+				TraumaResistance += ApplyGamblerValue(GetSurvivorID(player), 2, Gambler, TraumaResistance);
+			}
+			if (TraumaResistance < 0)
+			{
+				TraumaResistance = 0;
+			}
+
+			local PlayerIncaps = NetProps.GetPropInt(player, "m_currentReviveCount");
+			local MaxIncaps = DirectorOptions.SurvivorMaxIncapacitatedCount;
+			local TraumaDamage = ((PlayerIncaps.tofloat() / MaxIncaps.tofloat()) * MaxTraumaDamage) * TraumaResistance;
+			
+			/*(if (!IsPlayerABot(player))
+			{
+				printl("incaps " + PlayerIncaps);
+				printl("max incaps " + MaxIncaps);
+				printl("trauma " + TraumaDamage);
+				printl("max dmg " + MaxTraumaDamage);
+			}*/
+
 			local CannedGoods = PlayerHasCard(player, "CannedGoods");
 			local SlowAndSteady = PlayerHasCard(player, "SlowAndSteady");
 			local FleetOfFoot = PlayerHasCard(player, "FleetOfFoot");
@@ -293,7 +327,11 @@ function CalcMaxHealth(heal = true)
 			local NeedsOfTheMany = PlayerHasCard(player, "NeedsOfTheMany");
 
 			local currentMax = player.GetMaxHealth();
-			local newMax = 100 + (25 * CannedGoods) + (40 * SlowAndSteady) + (-10 * FleetOfFoot) + (5 * CrossTrainers) + (20 * Coach) + (-15 * SelflessPlayer) + (15 * SelflessTeam) + (30 * SelfishPlayer) + (-5 * SelfishTeam) + (-10 * NeedsOfTheMany);
+			local newMax = (100 - TraumaDamage) + (25 * CannedGoods) + (40 * SlowAndSteady) + (-10 * FleetOfFoot) + (5 * CrossTrainers) + (10 * Coach) + (-15 * SelflessPlayer) + (15 * SelflessTeam) + (30 * SelfishPlayer) + (-5 * SelfishTeam) + (-10 * NeedsOfTheMany);
+			if (Gambler > 0)
+			{
+				newMax += ApplyGamblerValue(GetSurvivorID(player), 0, Gambler, newMax);
+			}
 			local currentHealth = player.GetHealth();
 			local healthAdjustment = newMax - currentMax;
 
@@ -323,6 +361,7 @@ function CalcMaxHealth(heal = true)
 
 function CalcSpeedMultiplier(player)
 {
+	local Gambler = PlayerHasCard(player, "Gambler");
 	local SlowAndSteady = PlayerHasCard(player, "SlowAndSteady");
 	local FleetOfFoot = PlayerHasCard(player, "FleetOfFoot");
 	local CrossTrainers = PlayerHasCard(player, "CrossTrainers");
@@ -339,6 +378,10 @@ function CalcSpeedMultiplier(player)
 							+ (0.01 * MethHead * MethHeadCounter[GetSurvivorID(player)])
 							+ (0.05 * Berserker) + (AddictMultiplier * Addict)
 							+ (0.1 * Louis));
+	if (Gambler > 0)
+	{
+		speedMultiplier += ApplyGamblerValue(GetSurvivorID(player), 3, Gambler, speedMultiplier);
+	}
 
 	if (speedMultiplier <= 0.1)
 	{
@@ -446,9 +489,11 @@ function EquipOptics(player)
 
 function ApplyLastLegs()
 {
-	if (TeamHasCard("LastLegs") > 0)
+	local LastLegs = TeamHasCard("LastLegs");
+	if (LastLegs > 0)
 	{
 		Convars.SetValue("survivor_allow_crawling", 1);
+		Convars.SetValue("survivor_crawl_speed", survivorCrawlSpeed * LastLegs);
 	}
 	else
 	{
@@ -514,9 +559,18 @@ function ApplyNeedsOfTheMany()
 	DirectorOptions.SurvivorMaxIncapacitatedCount = BaseMaxIncaps + TeamHasCard("NeedsOfTheMany");
 }
 
+function ApplyCauterized()
+{
+	local Cauterized = TeamHasCard("Cauterized") + 1;
+	local IncapDecay = BaseSurvivorIncapDecayRate - Cauterized
+	DirectorOptions.TempHealthDecayRate = BaseTempHealthDecayRate / (Cauterized + 1);
+	Convars.SetValue("survivor_incap_decay_rate", (IncapDecay < 1 ? 1 : IncapDecay));
+}
+
 function GetReloadSpeedModifier(player)
 {
 	//Modifiers
+	local Gambler = PlayerHasCard(player, "Gambler");
 	local ReloadDrills = PlayerHasCard(player, "ReloadDrills");
 	local Addict = PlayerHasCard(player, "Addict");
 	local AddictMultiplier = AddictGetValue(player);
@@ -524,6 +578,11 @@ function GetReloadSpeedModifier(player)
 	local Brazen = PlayerHasCard(player, "Brazen");
 
 	local reloadModifier = 1 + (0.25 * ReloadDrills) + (AddictMultiplier * Addict) + (0.1 * Bill) + (-0.25 * Brazen);
+
+	if (Gambler > 0)
+	{
+		reloadModifier += ApplyGamblerValue(GetSurvivorID(player), 5, Gambler, reloadModifier);
+	}
 
 	if (reloadModifier <= 0)
 	{
@@ -567,52 +626,58 @@ function SurvivorPickupItem(params)
 {
 	local player = GetPlayerFromUserID(params["userid"]);
 	local weapon = player.GetActiveWeapon();
-	local weaponClass = weapon.GetClassname();
-	local weaponID = weapon.GetEntityIndex();
-	if (weaponClass == "weapon_shotgun_chrome" || weaponClass == "weapon_pumpshotgun" || weaponClass == "weapon_autoshotgun" || weaponClass == "weapon_shotgun_spas")
+	local weaponClass = "";
+	local weaponID = null;
+	if (weapon.IsValid())
 	{
-		local shotgunThinker = SpawnEntityFromTable("info_target", { targetname = "shotgunThinker" + weaponID });
-		if (shotgunThinker.ValidateScriptScope())
+		weaponClass = weapon.GetClassname();
+		weaponID = weapon.GetEntityIndex();
+
+		if (weaponClass == "weapon_shotgun_chrome" || weaponClass == "weapon_pumpshotgun" || weaponClass == "weapon_autoshotgun" || weaponClass == "weapon_shotgun_spas")
 		{
-			local entityscript = shotgunThinker.GetScriptScope();
-			entityscript["player"] <- player;
-			entityscript["weapon"] <- weapon;
-			entityscript["weaponClass"] <- weaponClass;
-			entityscript["reloadModifier"] <- 1;
-			entityscript["reloadStartDuration"] <- NetProps.GetPropFloat(weapon, "m_reloadStartDuration");
-			entityscript["reloadInsertDuration"] <- NetProps.GetPropFloat(weapon, "m_reloadInsertDuration");
-			entityscript["reloadEndDuration"] <- NetProps.GetPropFloat(weapon, "m_reloadEndDuration");
-			entityscript["weaponSequence"] <- weapon.GetSequence();
-			entityscript["ShotgunReload"] <- function()
+			local shotgunThinker = SpawnEntityFromTable("info_target", { targetname = "shotgunThinker" + weaponID });
+			if (shotgunThinker.ValidateScriptScope())
 			{
-				if (entityscript["player"].IsValid() && entityscript["weapon"].IsValid())
+				local entityscript = shotgunThinker.GetScriptScope();
+				entityscript["player"] <- player;
+				entityscript["weapon"] <- weapon;
+				entityscript["weaponClass"] <- weaponClass;
+				entityscript["reloadModifier"] <- 1;
+				entityscript["reloadStartDuration"] <- NetProps.GetPropFloat(weapon, "m_reloadStartDuration");
+				entityscript["reloadInsertDuration"] <- NetProps.GetPropFloat(weapon, "m_reloadInsertDuration");
+				entityscript["reloadEndDuration"] <- NetProps.GetPropFloat(weapon, "m_reloadEndDuration");
+				entityscript["weaponSequence"] <- weapon.GetSequence();
+				entityscript["ShotgunReload"] <- function()
 				{
-					if (entityscript["player"].GetActiveWeapon() == entityscript["weapon"])
+					if (entityscript["player"].IsValid() && entityscript["weapon"].IsValid())
 					{
-						entityscript["reloadModifier"] = GetReloadSpeedModifier(entityscript["player"]);
-						entityscript["reloadStartDuration"] = GetShotgunReloadDuration(entityscript["weaponClass"], 0);
-						entityscript["reloadInsertDuration"] = GetShotgunReloadDuration(entityscript["weaponClass"], 1);
-						entityscript["reloadEndDuration"] = GetShotgunReloadDuration(entityscript["weaponClass"], 2);
-
-						NetProps.SetPropFloat(entityscript["weapon"], "m_reloadStartDuration", entityscript["reloadStartDuration"] / entityscript["reloadModifier"]);
-						NetProps.SetPropFloat(entityscript["weapon"], "m_reloadInsertDuration", entityscript["reloadInsertDuration"] / entityscript["reloadModifier"]);
-						NetProps.SetPropFloat(entityscript["weapon"], "m_reloadEndDuration", entityscript["reloadEndDuration"] / entityscript["reloadModifier"]);
-
-						entityscript["weaponSequence"] = entityscript["weapon"].GetSequence();
-						if (entityscript["weapon"].GetSequenceName(entityscript["weaponSequence"]) == "reload_end_layer")
+						if (entityscript["player"].GetActiveWeapon() == entityscript["weapon"])
 						{
-							if ((entityscript["player"].GetButtonMask() & 1) == 1)
+							entityscript["reloadModifier"] = GetReloadSpeedModifier(entityscript["player"]);
+							entityscript["reloadStartDuration"] = GetShotgunReloadDuration(entityscript["weaponClass"], 0);
+							entityscript["reloadInsertDuration"] = GetShotgunReloadDuration(entityscript["weaponClass"], 1);
+							entityscript["reloadEndDuration"] = GetShotgunReloadDuration(entityscript["weaponClass"], 2);
+
+							NetProps.SetPropFloat(entityscript["weapon"], "m_reloadStartDuration", entityscript["reloadStartDuration"] / entityscript["reloadModifier"]);
+							NetProps.SetPropFloat(entityscript["weapon"], "m_reloadInsertDuration", entityscript["reloadInsertDuration"] / entityscript["reloadModifier"]);
+							NetProps.SetPropFloat(entityscript["weapon"], "m_reloadEndDuration", entityscript["reloadEndDuration"] / entityscript["reloadModifier"]);
+
+							entityscript["weaponSequence"] = entityscript["weapon"].GetSequence();
+							if (entityscript["weapon"].GetSequenceName(entityscript["weaponSequence"]) == "reload_end_layer")
 							{
-								NetProps.SetPropFloat(entityscript["weapon"], "m_flNextPrimaryAttack", Time());
-								NetProps.SetPropFloat(entityscript["player"], "m_flNextAttack", Time());
+								if ((entityscript["player"].GetButtonMask() & 1) == 1)
+								{
+									NetProps.SetPropFloat(entityscript["weapon"], "m_flNextPrimaryAttack", Time());
+									NetProps.SetPropFloat(entityscript["player"], "m_flNextAttack", Time());
+								}
 							}
+							//printl("time " + Time() + " next " + NetProps.GetPropFloat(entityscript["weapon"], "m_flNextPrimaryAttack"));
 						}
-						//printl("time " + Time() + " next " + NetProps.GetPropFloat(entityscript["weapon"], "m_flNextPrimaryAttack"));
 					}
 				}
-			}
 
-			AddThinkToEnt(shotgunThinker, "ShotgunReload");
+				AddThinkToEnt(shotgunThinker, "ShotgunReload");
+			}
 		}
 	}
 }
@@ -638,12 +703,8 @@ function OnGameEvent_weapon_drop(params)
 function Update_PlayerCards()
 {
 	//Runs every second
-	
-	//Reset pipe bomb duration to default
-	/*if (Convars.GetFloat("pipe_bomb_timer_duration") != pipeDuration)
-	{
-		Convars.SetValue("pipe_bomb_timer_duration", pipeDuration);
-	}*/
+
+	CalcMaxHealth(false);
 
 	local player = null;
 	while ((player = Entities.FindByClassname(player, "player")) != null)

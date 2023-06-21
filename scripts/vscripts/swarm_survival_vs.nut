@@ -9,7 +9,7 @@ IncludeScript("swarm/swarm_globals");
 IncludeScript("swarm/swarm_stocks");
 IncludeScript("swarm/swarm_game_events");
 IncludeScript("swarm/swarm_corruption");
-IncludeScript("swarm/swarm_breaker");
+IncludeScript("swarm/swarm_bosses");
 IncludeScript("swarm/swarm_specials");
 IncludeScript("swarm/swarm_commons");
 IncludeScript("swarm/swarm_hazards");

@@ -1,13 +1,13 @@
 ///////////////////////////////////////////////
 //          PROPERTY / MODEL CHANGES         //
 ///////////////////////////////////////////////
-if (!IsModelPrecached("models/infected/hunter_l4d1.mdl"))
-	PrecacheModel("models/infected/hunter_l4d1.mdl");
-if (!IsModelPrecached("models/infected/hunter.mdl"))
-	PrecacheModel("models/infected/hunter.mdl");
-
 function MutationSpawn(player)
 {
+	if (!IsModelPrecached("models/infected/hunter_l4d1.mdl"))
+		PrecacheModel("models/infected/hunter_l4d1.mdl");
+	if (!IsModelPrecached("models/infected/hunter.mdl"))
+		PrecacheModel("models/infected/hunter.mdl");
+
 	//Smoker = 1, Boomer = 2, Hunter = 3, Spitter = 4, Jockey = 5, Charger = 6, Witch = 7, Tank = 8, Survivor = 9
 	switch(player.GetZombieType())
 	{
@@ -34,6 +34,13 @@ function MutationSpawn(player)
 			z_speed = Convars.GetFloat("z_speed");
 			NetProps.SetPropFloat(player, "m_flLaggedMovementValue", (tallboyRunSpeed / z_speed));
 			break;
+		}
+		case 8:
+		{
+			if (!IsModelPrecached(tankModel))
+				PrecacheModel(tankModel);
+
+			player.SetModel(tankModel);
 		}
 		default:
 			break;

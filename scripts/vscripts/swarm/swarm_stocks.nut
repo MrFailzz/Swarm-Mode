@@ -36,6 +36,10 @@ function InterceptChat(message, speaker)
 		{
 			ToggleHudElement("corruptionCards");
 		}
+		if (!IsHudElementVisible("corruptionCardsInfected"))
+		{
+			ToggleHudElement("corruptionCardsInfected");
+		}
 		if (!IsHudElementVisible("playerCardsP1"))
 		{
 			ToggleHudElement("playerCardsP1");
@@ -108,6 +112,10 @@ function InterceptChat(message, speaker)
 			AddCardToTable(GetSurvivorCardTable(GetSurvivorID(speaker)), speaker, textArgs[1]);
 			GetAllPlayerCards();
 			ApplyCardEffects(speaker);
+			if (textArgs[1] == "Gambler")
+			{
+				PrintGamblerValue(speaker);
+			}
 		}
 		return false;
 	}
@@ -142,6 +150,8 @@ function AllowTakeDamage(damageTable)
 	local Sharpshooter = 0;
 	local Outlaw = 0;
 	local Overconfident = 0;
+	local OverconfidentMultiplier = 0;
+	local OverconfidentHealth = 0;
 	local Broken = 0;
 	local Pyromaniac = 0;
 	local BombSquad = 0;
@@ -167,6 +177,10 @@ function AllowTakeDamage(damageTable)
 	local Francis = 0;
 	local ScarTissue = 0;
 	local Arsonist = 0;
+	local SwanSong = 0;
+	local ToughSkin = 0;
+	local GamblerAttacker = 0;
+	local GamblerVictim = 0;
 
 	//printl("Attacker: " + attacker);
 	//printl("Victim: " + victim);
@@ -180,8 +194,11 @@ function AllowTakeDamage(damageTable)
 			//Survivor dealing damage
 			if (attacker.IsSurvivor())
 			{
-				//Francis Perk
-				Francis = PlayerHasCard(attacker, "Francis");
+				//Gambler
+				local GamblerAttacker = PlayerHasCard(attacker, "Gambler");
+
+				//Nick Perk
+				Nick = PlayerHasCard(attacker, "Nick");
 
 				//Glass Cannon
 				GlassCannonAttacker = PlayerHasCard(attacker, "GlassCannon");
@@ -254,7 +271,9 @@ function AllowTakeDamage(damageTable)
 				//Ellis Perk
 				LuckyShot = TeamHasCard("LuckyShot");
 				Ellis = PlayerHasCard(attacker, "Ellis");
-				local critChance = (7 * LuckyShot) + (5 * Ellis);
+				SwanSong = PlayerHasCard(attacker, "SwanSong");
+				local SwanSongMultiplier = (attacker.IsIncapacitated() == true ? 1 : 0);
+				local critChance = (7 * LuckyShot) + (5 * Ellis) + (100 * SwanSongMultiplier * SwanSong);
 
 				if (RandomInt(1, 100) <= critChance)
 				{
@@ -324,7 +343,12 @@ function AllowTakeDamage(damageTable)
 								 + (0.25 * Berserker)
 								 + (AddictAttackerMultiplier * AddictAttacker)
 								 + (0.1 * Zoey)
-								 + (0.05 * Francis));
+								 + (0.05 * Nick));
+				if (GamblerAttacker > 0)
+				{
+					damageModifier += ApplyGamblerValue(GetSurvivorID(attacker), 4, GamblerAttacker, damageModifier);
+				}
+				GamblerAttacker
 				damageDone = damageDone * damageModifier;
 			}
 		}
@@ -338,20 +362,26 @@ function AllowTakeDamage(damageTable)
 		{
 			if (victim.IsSurvivor())
 			{
-				//Nick Perk
-				Nick = PlayerHasCard(victim, "Nick");
+				//Gambler
+				local GamblerVictim = PlayerHasCard(victim, "Gambler");
+
+				//Francis Perk
+				Francis = PlayerHasCard(victim, "Francis");
 
 				//Glass Cannon
 				GlassCannonVictim = PlayerHasCard(victim, "GlassCannon");
 
 				//Overconfident
 				Overconfident = PlayerHasCard(victim, "Overconfident");
-				local OverconfidentMultiplier = 0.1;
-				local OverconfidentHealth = (victim.GetHealth() + victim.GetHealthBuffer()) / victim.GetMaxHealth();
-
-				if (victim.IsIncapacitated() == false && OverconfidentHealth >= 0.6)
+				if (Overconfident > 0)
 				{
-					OverconfidentMultiplier = -0.25
+					OverconfidentMultiplier = 0.1;
+					OverconfidentHealth = (victim.GetHealth() + victim.GetHealthBuffer()) / victim.GetMaxHealth();
+
+					if (victim.IsIncapacitated() == false && OverconfidentHealth >= 0.6)
+					{
+						OverconfidentMultiplier = -0.25
+					}
 				}
 
 				if ((damageType & DMG_BURN) == DMG_BURN)
@@ -379,34 +409,33 @@ function AllowTakeDamage(damageTable)
 				//ScarTissue
 				ScarTissue = PlayerHasCard(victim, "ScarTissue");
 
+				//ToughSkin
+				if (attacker.IsValid())
+				{
+					local attackerClass = attacker.GetClassname();
+					if (attackerClass == "infected")
+					{
+						ToughSkin = PlayerHasCard(victim, "ToughSkin");
+					}
+				}
+
 				damageModifier = (damageModifier
-								 + (0.2 * GlassCannonVictim)
-								 + (OverconfidentMultiplier * Overconfident)
-								 + (-0.5 * FireProof)
-								 + (-0.2 * EyeOfTheSwarmVictim)
-								 + (-0.5 * ChemicalBarrier)
-								 + (-1 * AddictVictimMultiplier * AddictVictim)
-								 + (-0.1 * Nick)
-								 + (-0.3 * ScarTissue));
+								+ (0.2 * GlassCannonVictim)
+								+ (OverconfidentMultiplier * Overconfident)
+								+ (-0.5 * FireProof)
+								+ (-0.2 * EyeOfTheSwarmVictim)
+								+ (-0.5 * ChemicalBarrier)
+								+ (-1 * AddictVictimMultiplier * AddictVictim)
+								+ (-0.1 * Francis)
+								+ (-0.3 * ScarTissue)
+								+ (-0.4 * ToughSkin));
+				if (GamblerVictim > 0)
+				{
+					damageModifier += ApplyGamblerValue(GetSurvivorID(victim), 1, GamblerVictim, damageModifier);
+				}
 				damageDone = damageDone * damageModifier;
 			}
 		}
-
-		//Make custom CEDA zombies immune to fire - DOESNT STOP THEM FROM DYING
-		/*if (victim.GetClassname() == "infected")
-		{
-			local commonName = victim.GetName()
-			if (commonName.find("__uncommon_") != null)
-			{
-				if ((damageType & DMG_BURN) == DMG_BURN)
-				{
-					if (NetProps.GetPropInt(victim, "m_Gender") == 11)
-					{
-						damageDone = 0;
-					}
-				}
-			}
-		}*/
 	}
 
 	//Damage can't go below 1
@@ -531,65 +560,13 @@ function PlayerDeath(params)
 		}
 
 		//Piñata
-		local player = GetPlayerFromUserID(params["userid"]);
+		//local player = GetPlayerFromUserID(params["userid"]);
 		local origin = player.GetOrigin();
 		local Pinata = TeamHasCard("Pinata");
 
 		if (RandomInt(1, 100) <= Pinata * 15)
 		{
-			local randomItem = RandomInt(1,100);
-			local randomItemArray =
-			[
-				"weapon_molotov",
-				"weapon_molotov",
-				"weapon_molotov",
-				"weapon_molotov",
-				"weapon_pipe_bomb",
-				"weapon_pipe_bomb",
-				"weapon_pipe_bomb",
-				"weapon_pipe_bomb",
-				"weapon_vomitjar",
-				"weapon_vomitjar",
-				"weapon_pain_pills",
-				"weapon_pain_pills",
-				"weapon_pain_pills",
-				"weapon_pain_pills",
-				"weapon_adrenaline",
-				"weapon_adrenaline",
-				"weapon_adrenaline",
-				"weapon_adrenaline",
-				"weapon_first_aid_kit",
-				"weapon_first_aid_kit",
-				"weapon_defibrillator"
-			];
-
-			local randomItem = randomItemArray[RandomInt(0, randomItemArray.len() - 1)];
-			printl(randomItem);
-
-			switch(randomItem)
-			{
-				case "weapon_molotov":
-					SpawnEntityFromTable("weapon_molotov",{origin = Vector(origin.x, origin.y, origin.z + 16),angles = Vector(0, 0, 0),model = "models/w_models/weapons/w_eq_molotov.mdl"});
-					break;
-				case "weapon_pipe_bomb":
-					SpawnEntityFromTable("weapon_pipe_bomb",{origin = Vector(origin.x, origin.y, origin.z + 16),angles = Vector(0, 0, 0),model = "models/w_models/weapons/w_eq_pipebomb.mdl"});
-					break;
-				case "weapon_vomitjar":
-					SpawnEntityFromTable("weapon_vomitjar",{origin = Vector(origin.x, origin.y, origin.z + 16),angles = Vector(0, 0, 0),model = "models/w_models/weapons/w_eq_bile_flask.mdl"});
-					break;
-				case "weapon_pain_pills":
-					SpawnEntityFromTable("weapon_pain_pills",{origin = Vector(origin.x, origin.y, origin.z + 16),angles = Vector(0, 0, 0),model = "models/w_models/weapons/w_eq_painpills.mdl"});
-					break;
-				case "weapon_adrenaline":
-					SpawnEntityFromTable("weapon_adrenaline",{origin = Vector(origin.x, origin.y, origin.z + 16),angles = Vector(0, 0, 0),model = "models/w_models/weapons/w_eq_adrenaline.mdl"});
-					break;
-				case "weapon_first_aid_kit":
-					SpawnEntityFromTable("weapon_first_aid_kit",{origin = Vector(origin.x, origin.y, origin.z + 16),angles = Vector(0, 0, 0),model = "models/w_models/weapons/w_eq_Medkit.mdl"});
-					break;
-				case "weapon_defibrillator":
-					SpawnEntityFromTable("weapon_defibrillator",{origin = Vector(origin.x, origin.y, origin.z + 16),angles = Vector(0, 0, 0),model = "models/w_models/weapons/w_eq_defibrillator.mdl"});
-					break;
-			}
+			RandomItemDrop(origin);
 		}
 
 		//ConfidentKiller
@@ -622,6 +599,61 @@ function PlayerDeath(params)
 	}
 }
 
+function RandomItemDrop(origin)
+{
+	local randomItem = RandomInt(1,100);
+	local randomItemArray =
+	[
+		"weapon_molotov",
+		"weapon_molotov",
+		"weapon_molotov",
+		"weapon_molotov",
+		"weapon_pipe_bomb",
+		"weapon_pipe_bomb",
+		"weapon_pipe_bomb",
+		"weapon_pipe_bomb",
+		"weapon_vomitjar",
+		"weapon_vomitjar",
+		"weapon_pain_pills",
+		"weapon_pain_pills",
+		"weapon_pain_pills",
+		"weapon_pain_pills",
+		"weapon_adrenaline",
+		"weapon_adrenaline",
+		"weapon_adrenaline",
+		"weapon_adrenaline",
+		"weapon_first_aid_kit",
+		"weapon_first_aid_kit",
+		"weapon_defibrillator"
+	];
+
+	local randomItem = randomItemArray[RandomInt(0, randomItemArray.len() - 1)];
+
+	switch(randomItem)
+	{
+		case "weapon_molotov":
+			SpawnEntityFromTable("weapon_molotov",{origin = Vector(origin.x, origin.y, origin.z + 24),angles = Vector(0, 0, 0),model = "models/w_models/weapons/w_eq_molotov.mdl"});
+		break;
+		case "weapon_pipe_bomb":
+			SpawnEntityFromTable("weapon_pipe_bomb",{origin = Vector(origin.x, origin.y, origin.z + 24),angles = Vector(0, 0, 0),model = "models/w_models/weapons/w_eq_pipebomb.mdl"});
+		break;
+		case "weapon_vomitjar":
+			SpawnEntityFromTable("weapon_vomitjar",{origin = Vector(origin.x, origin.y, origin.z + 24),angles = Vector(0, 0, 0),model = "models/w_models/weapons/w_eq_bile_flask.mdl"});
+		break;
+		case "weapon_pain_pills":
+			SpawnEntityFromTable("weapon_pain_pills",{origin = Vector(origin.x, origin.y, origin.z + 24),angles = Vector(0, 0, 0),model = "models/w_models/weapons/w_eq_painpills.mdl"});
+		break;
+		case "weapon_adrenaline":
+			SpawnEntityFromTable("weapon_adrenaline",{origin = Vector(origin.x, origin.y, origin.z + 24),angles = Vector(0, 0, 0),model = "models/w_models/weapons/w_eq_adrenaline.mdl"});
+		break;
+		case "weapon_first_aid_kit":
+			SpawnEntityFromTable("weapon_first_aid_kit",{origin = Vector(origin.x, origin.y, origin.z + 24),angles = Vector(0, 0, 0),model = "models/w_models/weapons/w_eq_Medkit.mdl"});
+		break;
+		case "weapon_defibrillator":
+			SpawnEntityFromTable("weapon_defibrillator",{origin = Vector(origin.x, origin.y, origin.z + 24),angles = Vector(0, 0, 0),model = "models/w_models/weapons/w_eq_defibrillator.mdl"});
+		break;
+	}
+}
 
 function RoundStart(params)
 {
@@ -656,6 +688,11 @@ function PlayerLeftSafeArea(params)
 			{
 				// Print the number of continues left.
 				ClientPrint(null, 3, "\x04" + "Continues: " + "\x01"+ (3 - Director.GetMissionWipes()));
+			}
+
+			if (PlayerHasCard(player, "Gambler") > 0)
+			{
+				PrintGamblerValue(player);
 			}
 
 			switch(corruptionHordes)
@@ -779,12 +816,17 @@ function HealSuccess(params)
 	local healer = GetPlayerFromUserID(params.userid);
 	local player = GetPlayerFromUserID(params.subject);
 
+	local Gambler = PlayerHasCard(player, "Gambler");
 	local EMTBag = PlayerHasCard(healer, "EMTBag");
 	local AntibioticOintment = PlayerHasCard(healer, "AntibioticOintment");
 	local MedicalExpert = TeamHasCard("MedicalExpert");
 	local Rochelle = PlayerHasCard(healer, "Rochelle");
 	local ScarTissue = PlayerHasCard(healer, "ScarTissue");
 	local healMultiplier = 1 + ((0.5 * EMTBag) + (0.25 * AntibioticOintment) + (0.15 * MedicalExpert) + (0.1 * Rochelle) + (-0.5 * ScarTissue));
+	if (Gambler > 0)
+	{
+		healMultiplier += ApplyGamblerValue(GetSurvivorID(player), 6, Gambler, healMultiplier);
+	}
 	local healAmount = medkitHealAmount * healMultiplier;
 
 	Heal_PermaHealth(player, healAmount, survivorHealthBuffer[GetSurvivorID(player)]);
@@ -792,7 +834,8 @@ function HealSuccess(params)
 	if (AntibioticOintment > 0)
 	{
 		local healAmountAntibiotic = 10 * AntibioticOintment;
-		Heal_Antibiotic(healAmountAntibiotic, player)
+		Heal_TempHealth(player, healAmountAntibiotic);
+		Heal_GroupTherapy(player, healAmountAntibiotic, true);
 	}
 
 	Heal_GroupTherapy(player, healAmount, false);
@@ -803,6 +846,7 @@ function PillsUsed(params)
 	local player = GetPlayerFromUserID(params.subject);
 	local maxHealth = player.GetMaxHealth();
 
+	local Gambler = PlayerHasCard(player, "Gambler");
 	local EMTBag = PlayerHasCard(player, "EMTBag");
 	local AntibioticOintment = PlayerHasCard(player, "AntibioticOintment");
 	local MedicalExpert = TeamHasCard("MedicalExpert");
@@ -810,16 +854,13 @@ function PillsUsed(params)
 	local Rochelle = PlayerHasCard(player, "Rochelle");
 	local ScarTissue = PlayerHasCard(player, "ScarTissue");
 	local healMultiplier = 1 + ((0.5 * EMTBag) + (0.25 * AntibioticOintment) + (0.15 * MedicalExpert) + (0.5 * Addict) + (0.1 * Rochelle) + (-0.5 * ScarTissue));
-	local healAmount = pillsHealAmount * healMultiplier;
+	if (Gambler > 0)
+	{
+		healMultiplier += ApplyGamblerValue(GetSurvivorID(player), 6, Gambler, healMultiplier);
+	}
+	local healAmount = (pillsHealAmount * healMultiplier) + (10 * AntibioticOintment);
 
 	Heal_TempHealth(player, healAmount);
-
-	if (AntibioticOintment > 0)
-	{
-		local healAmountAntibiotic = 10 * AntibioticOintment;
-		Heal_Antibiotic(healAmountAntibiotic, player);
-	}
-
 	Heal_GroupTherapy(player, healAmount, true);
 }
 
@@ -828,6 +869,7 @@ function AdrenalineUsed(params)
 	local player = GetPlayerFromUserID(params.subject);
 	local maxHealth = player.GetMaxHealth();
 
+	local Gambler = PlayerHasCard(player, "Gambler");
 	local EMTBag = PlayerHasCard(player, "EMTBag");
 	local AntibioticOintment = PlayerHasCard(player, "AntibioticOintment");
 	local MedicalExpert = TeamHasCard("MedicalExpert");
@@ -835,16 +877,13 @@ function AdrenalineUsed(params)
 	local Rochelle = PlayerHasCard(player, "Rochelle");
 	local ScarTissue = PlayerHasCard(player, "ScarTissue");
 	local healMultiplier = 1 + ((0.5 * EMTBag) + (0.25 * AntibioticOintment) + (0.15 * MedicalExpert) + (0.75 * Addict) + (0.1 * Rochelle) + (-0.5 * ScarTissue));
-	local healAmount = adrenalineHealAmount * healMultiplier;
+	if (Gambler > 0)
+	{
+		healMultiplier += ApplyGamblerValue(GetSurvivorID(player), 6, Gambler, healMultiplier);
+	}
+	local healAmount = (adrenalineHealAmount * healMultiplier) + (10 * AntibioticOintment);
 
 	Heal_TempHealth(player, healAmount);
-
-	if (AntibioticOintment > 0)
-	{
-		local healAmountAntibiotic = 10 * AntibioticOintment;
-		Heal_Antibiotic(healAmountAntibiotic, player);
-	}
-
 	Heal_GroupTherapy(player, healAmount, true);
 }
 
@@ -874,22 +913,6 @@ function Heal_PermaHealth(player, healAmount, currentTempHealth)
 }
 
 function Heal_TempHealth(player, healAmount)
-{
-	local currentHealth = player.GetHealth();
-	local currentTempHealth = player.GetHealthBuffer();
-	local maxHealth = player.GetMaxHealth();
-
-	if (currentHealth + currentTempHealth + healAmount > maxHealth)
-	{
-		player.SetHealthBuffer(maxHealth - currentHealth);
-	}
-	else
-	{
-		player.SetHealthBuffer(healAmount + currentTempHealth);
-	}
-}
-
-function Heal_Antibiotic(healAmount, player)
 {
 	local currentHealth = player.GetHealth();
 	local currentTempHealth = player.GetHealthBuffer();
@@ -946,10 +969,8 @@ function ReviveSuccess(params)
 		local subject = GetPlayerFromUserID(params.subject);
 		local CombatMedic = PlayerHasCard(player, "CombatMedic");
 		local CombatMedicAmount = 30 * CombatMedic;
-
-		local currentTempHealth = subject.GetHealthBuffer();
+		//local currentTempHealth = subject.GetHealthBuffer();
 		local maxHealth = subject.GetMaxHealth();
-
 		local reviveHealth = Convars.GetFloat("survivor_revive_health");
 
 		if (CombatMedic > 0)
@@ -962,6 +983,28 @@ function ReviveSuccess(params)
 			{
 				subject.SetHealthBuffer(reviveHealth + CombatMedicAmount);
 			}
+		}
+	}
+}
+
+function DefibrillatorUsed(params)
+{
+	local player = GetPlayerFromUserID(params.userid);
+	local subject = GetPlayerFromUserID(params.subject);
+	local CombatMedic = PlayerHasCard(player, "CombatMedic");
+	local CombatMedicAmount = 30 * CombatMedic;
+	//local currentTempHealth = subject.GetHealthBuffer();
+	local maxHealth = subject.GetMaxHealth();
+
+	if (CombatMedic > 0)
+	{
+		if (CombatMedicAmount + 1 > maxHealth)
+		{
+			subject.SetHealthBuffer(maxHealth - 1);
+		}
+		else
+		{
+			subject.SetHealthBuffer(CombatMedicAmount);
 		}
 	}
 }
@@ -1035,6 +1078,7 @@ swarmHUD <-
 	Fields = 
 	{
 		corruptionCards = {name = "corruptionCards", slot = HUD_FAR_RIGHT, dataval = "", flags = HUD_FLAG_ALIGN_LEFT},
+		corruptionCardsInfected = {name = "corruptionCardsInfected", slot = HUD_SCORE_1, dataval = "", flags = HUD_FLAG_ALIGN_LEFT},
 		playerCardsP1 = {name = "playerCardsP1", slot = HUD_FAR_LEFT, dataval = "", flags = HUD_FLAG_ALIGN_LEFT},
 		playerCardsP2 = {name = "playerCardsP2", slot = HUD_LEFT_TOP, dataval = "", flags = HUD_FLAG_ALIGN_LEFT},
 		playerCardsP3 = {name = "playerCardsP3", slot = HUD_LEFT_BOT, dataval = "", flags = HUD_FLAG_ALIGN_LEFT},
@@ -1127,6 +1171,9 @@ function Update()
 			case "uncommonJimmy":
 				JimmyCountdown();
 				break;
+			case "uncommonFallen":
+				FallenCountdown();
+				break;
 		}
 	}
 
@@ -1135,10 +1182,7 @@ function Update()
 		FrigidOutskirtsTimer();
 	}
 
-	if (difficulty > 1)
-	{
-		difficulty_RandomBoss()
-	}
+	difficulty_RandomBoss()
 
 	if (corruptionHazards == "hazardSnitch" || corruptionBoss == "hazardBreaker" || corruptionBoss == "hazardOgre")
 	{
@@ -1191,6 +1235,10 @@ function Update()
 			if (IsHudElementVisible("corruptionCards"))
 			{
 				ToggleHudElement("corruptionCards");
+			}
+			if (IsHudElementVisible("corruptionCardsInfected"))
+			{
+				ToggleHudElement("corruptionCardsInfected");
 			}
 			if (IsHudElementVisible("playerCardsP1"))
 			{
