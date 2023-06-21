@@ -32,6 +32,10 @@ function ZombieDeath(params)
 					EntFire(commonName + "explEnt", "Explode");
 				}
 			}
+			else if (commonName.find("__uncommon_fallen_") != null)
+			{
+				RandomItemDrop(common.GetOrigin());
+			}
 		}
 	}
 }
@@ -523,7 +527,7 @@ function CreateConstruction(common)
 
 function JimmyCountdown()
 {
-	if ((Time() - uncommonsTimer) >= uncommonJimmySpawnRate)
+	if ((Time() - uncommonsTimer) >= uncommonSpawnRate)
 	{
 		if (uncommonsCount < uncommonJimmyMax)
 		{
@@ -555,6 +559,43 @@ function CreateJimmy(common)
 	common.SetHealth(1500);
 
 	local commonName = "__uncommon_" + common.GetEntityIndex();
+	DoEntFire("!self", "AddOutput", "targetname " + commonName, 0, common, common);
+}
+
+function FallenCountdown()
+{
+	if ((Time() - uncommonsTimer) >= uncommonSpawnRate)
+	{
+		if (uncommonsCount < uncommonFallenMax)
+		{
+			local remainingSpawns = uncommonFallenSpawnAmount;
+
+			while (remainingSpawns > 0 && commonVarList.len() - 1 >= 0)
+			{
+				CreateFallen(commonVarList.remove(RandomInt(0, commonVarList.len() - 1)));
+				remainingSpawns--;
+			}
+		}
+
+		uncommonsTimer = Time();
+	}
+}
+
+function CreateFallen(common)
+{
+	local uncommonModel = "models/infected/common_male_fallen_survivor.mdl";
+
+	if (!IsModelPrecached(uncommonModel))
+	{
+		PrecacheModel(uncommonModel);
+	}
+
+	NetProps.SetPropInt(common, "m_Gender", 14);
+	common.SetModel(uncommonModel);
+	common.SetMaxHealth(1000);
+	common.SetHealth(1000);
+
+	local commonName = "__uncommon_fallen_" + common.GetEntityIndex();
 	DoEntFire("!self", "AddOutput", "targetname " + commonName, 0, common, common);
 }
 

@@ -162,6 +162,11 @@ function OnGameEvent_revive_success(params)
 	ReviveSuccess(params);
 }
 
+function OnGameEvent_defibrillator_used(params)
+{
+	DefibrillatorUsed(params);
+}
+
 function OnGameEvent_triggered_car_alarm(params)
 {
 	Heal_AmpedUp();

@@ -33,7 +33,7 @@ brawnCards <-
 	"ConfidentKiller",
 	"CannedGoods",
 	"SlowAndSteady",
-	//"ToughSkin",
+	"ToughSkin",
 	"ScarTissue",
 	"ChemicalBarrier",
 	//"FaceYourFears",
@@ -45,7 +45,7 @@ brawnCards <-
 	"Berserker",
 	//"HeavyHitter",
 	//"Rampage",
-	//"SwanSong",
+	"SwanSong",
 	//"Overcrowded",
 	"LastLegs",
 	"BuckshotBruiser",
@@ -69,7 +69,7 @@ disciplineCards <-
 	"EMTBag",
 	"AntibioticOintment",
 	"MedicalExpert",
-	//"Cauterized",
+	"Cauterized",
 	"GroupTherapy",
 	"InspiringSacrifice",
 	"ReloadDrills",
@@ -93,6 +93,7 @@ fortuneCards <-
 	//"Stockpile",
 	//"LifeInsurance",
 	"WellRested",
+	"Gambler",
 ];
 
 
@@ -285,6 +286,93 @@ function GetSurvivorCardTable(player)
 }
 ::GetSurvivorCardTable <- GetSurvivorCardTable;
 
+function GetGamblerValue(player, index)
+{
+	switch(player)
+	{
+		case 0:
+			return p1Gambler[index];
+			break;
+		case 1:
+			return p2Gambler[index];
+			break;
+		case 2:
+			return p3Gambler[index];
+			break;
+		case 3:
+			return p4Gambler[index];
+			break;
+		default:
+			return -1;
+			break;
+	}
+}
+
+function ApplyGamblerValue(player, index, Gambler, affectedValue)
+{
+	local gambleValue = GetGamblerValue(player, index);
+
+	if (gambleValue != -1)
+	{
+		gambleValue = gambleValue.tofloat() / 100;
+		return affectedValue * (Gambler * gambleValue);
+	}
+	else
+	{
+		return 1;
+	}
+}
+
+function PrintGamblerValue(player)
+{
+	local maxHp = GetGamblerValue(GetSurvivorID(player), 0);
+	local maxHpString = GamblerColor(maxHp) + "Max HP: " + GamblerSign(maxHp) + ", ";
+
+	local res = GetGamblerValue(GetSurvivorID(player), 1);
+	local resString = GamblerColor(res) + "RES: " + GamblerSign(res) + ", ";
+
+	local traumaRes = GetGamblerValue(GetSurvivorID(player), 2);
+	local traumaResString = GamblerColor(traumaRes) + "Trauma RES: " + GamblerSign(traumaRes) + ", ";
+
+	local speed = GetGamblerValue(GetSurvivorID(player), 3);
+	local speedString = GamblerColor(speed) + "Speed, " + GamblerSign(speed) + ", ";
+
+	local damage = GetGamblerValue(GetSurvivorID(player), 4);
+	local damageString = GamblerColor(damage) + "DMG: " + GamblerSign(damage) + ", ";
+
+	local reload = GetGamblerValue(GetSurvivorID(player), 5);
+	local reloadString = GamblerColor(reload) + "Reload Speed: " + GamblerSign(reload) + ", ";
+
+	local healEff = GetGamblerValue(GetSurvivorID(player), 6);
+	local healEffString = GamblerColor(healEff) + "Heal EFF: " + GamblerSign(healEff);
+
+	ClientPrint(player, 3, "\x03Gambler: " + maxHpString + resString + traumaResString + speedString + damageString + reloadString + healEffString);
+}
+
+function GamblerSign(gambleValue)
+{
+	if (gambleValue >= 0)
+	{
+		return "+" + gambleValue + "%";
+	}
+	else
+	{
+		return "" + gambleValue + "%";
+	}
+}
+
+function GamblerColor(gambleValue)
+{
+	if (gambleValue >= 0)
+	{
+		return "\x03";
+	}
+	else
+	{
+		return "\x04";
+	}
+}
+
 function GetPlayerCardName(cardID, type = "name")
 {
 	//Type: name = Name, desc = Description
@@ -293,13 +381,13 @@ function GetPlayerCardName(cardID, type = "name")
 		switch(cardID)
 		{
 			case "Nick":
-				return "Nick (+10% RES)";
+				return "Nick (+5% DMG)";
 				break;
 			case "Rochelle":
 				return "Rochelle (+10% Heal EFF)";
 				break;
 			case "Coach":
-				return "Coach (+20 Max HP)";
+				return "Coach (+10 Max HP)";
 				break;
 			case "Ellis":
 				return "Ellis (+5% CRIT Chance)";
@@ -314,7 +402,7 @@ function GetPlayerCardName(cardID, type = "name")
 				return "Louis (+10% Move Speed)";
 				break;
 			case "Francis":
-				return "Francis (+5% DMG)";
+				return "Francis (+10% RES)";
 				break;
 			case "GlassCannon":
 				return "Glass Cannon";
@@ -547,6 +635,9 @@ function GetPlayerCardName(cardID, type = "name")
 			case "Cannoneer":
 				return "Cannoneer"
 				break;
+			case "Gambler":
+				return "Gambler";
+				break;
 			default:
 				return cardID;
 				break;
@@ -557,13 +648,13 @@ function GetPlayerCardName(cardID, type = "name")
 		switch(cardID)
 		{
 			case "Nick":
-				return "+10% RES";
+				return "+5% DMG";
 				break;
 			case "Rochelle":
 				return "+10% Heal EFF";
 				break;
 			case "Coach":
-				return "+20 Max HP";
+				return "+10 Max HP";
 				break;
 			case "Ellis":
 				return "+5% CRIT Chance";
@@ -578,7 +669,7 @@ function GetPlayerCardName(cardID, type = "name")
 				return "+10% Move Speed";
 				break;
 			case "Francis":
-				return "+5% DMG";
+				return "+10% RES";
 				break;
 			case "GlassCannon":
 				return "+30% DMG, -20% RES";
@@ -614,7 +705,7 @@ function GetPlayerCardName(cardID, type = "name")
 				return "+75% Team Revive Speed";
 				break;
 			case "CombatMedic":
-				return "Give +30 Temp HP on revive";
+				return "+30 Temp HP on revive, +20% Team Trauma RES";
 				break;
 			case "AmpedUp":
 				return "Non-event hordes heal +20 Team HP (5s CD)";
@@ -692,7 +783,7 @@ function GetPlayerCardName(cardID, type = "name")
 				return "Charge forwards, 100 Melee DMG, REPLACES: Shove (20s CD)";
 				break;
 			case "SwanSong":
-				return "Remain standing for 10s on incap";
+				return "+100% CRIT chance while incapped";
 				break;
 			case "Overcrowded":
 				return "+0.5% DMG / +1% RES per Ridden in 5m";
@@ -811,6 +902,8 @@ function GetPlayerCardName(cardID, type = "name")
 			case "Cannoneer":
 				return "+100% Team Grenade Launcher DMG / Range"
 				break;
+			case "Gambler":
+				return "Randomize stats each map!"
 			default:
 				return cardID;
 				break;

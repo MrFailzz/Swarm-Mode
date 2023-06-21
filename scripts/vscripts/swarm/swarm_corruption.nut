@@ -30,6 +30,7 @@ function InitCorruptionCards()
 	cardsUncommons.append("uncommonCeda");
 	cardsUncommons.append("uncommonConstruction");
 	cardsUncommons.append("uncommonJimmy");
+	cardsUncommons.append("uncommonFallen");
 	corruptionUncommons = ChooseCorruptionCard(cardsUncommons);
 
 	// ZSpeed
@@ -45,7 +46,7 @@ function InitCorruptionCards()
 	cardsZSpeed.append("commonRunning");
 	cardsZSpeed.append("commonRunning");
 	cardsZSpeed.append("commonBlitzing");
-	corruptionZSpeed = ChooseCorruptionCard(cardsZSpeed);
+	corruptionZSpeed = ChooseCorruptionCard(cardsZSpeed, true);
 	ApplyZSpeedCard ();
 
 	// Tallboys
@@ -54,7 +55,7 @@ function InitCorruptionCards()
 	cardsTallboy.append("Tallboy");
 	cardsTallboy.append("Crusher");
 	cardsTallboy.append("Bruiser");
-	corruptionTallboy = ChooseCorruptionCard(cardsTallboy);
+	corruptionTallboy = ChooseCorruptionCard(cardsTallboy, true);
 	ApplyTallboyCard();
 
 	// Hockers
@@ -62,7 +63,7 @@ function InitCorruptionCards()
 	cardsHocker.clear();
 	cardsHocker.append("Hocker");
 	cardsHocker.append("Stalker");
-	corruptionHocker = ChooseCorruptionCard(cardsHocker);
+	corruptionHocker = ChooseCorruptionCard(cardsHocker, true);
 	ApplyHockerCard();
 
 	// Retches
@@ -70,7 +71,7 @@ function InitCorruptionCards()
 	cardsRetch.clear();
 	cardsRetch.append("Retch");
 	cardsRetch.append("Exploder");
-	corruptionRetch = ChooseCorruptionCard(cardsRetch);
+	corruptionRetch = ChooseCorruptionCard(cardsRetch, true);
 	ApplyRetchCard();
 
 	// Hazards
@@ -97,7 +98,7 @@ function InitCorruptionCards()
 		cardsBoss.append("hazardBreaker");
 		cardsBoss.append("hazardOgre");
 	}
-	corruptionBoss = ChooseCorruptionCard(cardsBoss);
+	corruptionBoss = ChooseCorruptionCard(cardsBoss, true);
 	ApplyBossCard();
 
 	// Environmental
@@ -172,7 +173,7 @@ function InitCorruptionCards()
 			cardsHordes.append("hordeRetch");
 		}
 	}
-	corruptionHordes = ChooseCorruptionCard(cardsHordes);
+	corruptionHordes = ChooseCorruptionCard(cardsHordes, true);
 	ApplyHordeCard();
 
 	// Gameplay
@@ -206,39 +207,74 @@ function InitCorruptionCards()
 	corruptionPlayer = ChooseCorruptionCard(cardsPlayer);
 	ApplyPlayerCorruptionCard();
 
-	GetCorruptionCardsString();
+	UpdateCorruptionCardHUD();
 }
 
-function ChooseCorruptionCard(cardArray)
+function ChooseCorruptionCard(cardArray, infectedCard = false)
 {
 	local cardSlot = cardArray[RandomInt(0, cardArray.len() - 1)];
 	corruptionCards.append(cardSlot);
 
+	if (infectedCard == false)
+	{
+		corruptionCards_List.append(cardSlot);
+	}
+	else
+	{
+		corruptionCards_ListInf.append(cardSlot);
+	}
+
 	return cardSlot;
 }
 
-function GetCorruptionCardsString()
+function UpdateCorruptionCardHUD()
 {
 	local returnString = "CORRUPTION CARDS";
+	local returnStringInf = "";
 	local cardName = null;
 	local i = 0;
+	local iInf = 0;
 
-	foreach(cardID in corruptionCards)
+	foreach(cardID in corruptionCards_List)
 	{
 		cardName = GetCorruptionCardName(cardID);
 
-		if (cardName != "None")
+		if (cardName != "None" && cardName != null)
 		{
 			returnString = returnString + "\n" + cardName;
 			i++;
 		}
 	}
 
+	foreach(cardID in corruptionCards_ListInf)
+	{
+		cardName = GetCorruptionCardName(cardID);
+
+		if (cardName != "None" && cardName != null)
+		{
+			if (returnStringInf == "")
+			{
+				returnStringInf = cardName
+			}
+			else
+			{
+				returnStringInf = returnStringInf + "\n" + cardName;
+				iInf++;
+			}
+		}
+	}
+
 	swarmHUD.Fields["corruptionCards"].dataval = returnString;
-	HUDPlace(HUD_FAR_RIGHT, 1 - swarmHudW - swarmHudX, swarmHudY, swarmHudW, swarmHudH + (swarmHudLineH * (i == 0 ? 1 : i)));
+	swarmHUD.Fields["corruptionCardsInfected"].dataval = returnStringInf;
+
+	local hudY = swarmHudY;
+	local hudH = swarmHudH + (swarmHudLineH * (i == 0 ? 1 : i))
+	HUDPlace(HUD_FAR_RIGHT, 1 - swarmHudW - swarmHudX, hudY, swarmHudW, hudH);
+	hudY = hudY + hudH + swarmHudGapY;
+	HUDPlace(HUD_SCORE_1, 1 - swarmHudW - swarmHudX, hudY, swarmHudW, swarmHudH + (swarmHudLineH * (iInf == 0 ? 1 : iInf)));
 }
 
-function PrintCorruptionCards()
+/*function PrintCorruptionCards()
 {
 	local cardName = null;
 	foreach(cardID in corruptionCards)
@@ -250,7 +286,7 @@ function PrintCorruptionCards()
 			ClientPrint(null, 3, "\x04" + "Corruption Card: " + "\x01" + cardName);
 		}
 	}
-}
+}*/
 
 function GetCorruptionCardName(cardID)
 {
@@ -354,6 +390,9 @@ function GetCorruptionCardName(cardID)
 			break;
 		case "uncommonJimmy":
 			return "Jimmy Gibbs and Cousins";
+			break;
+		case "uncommonFallen":
+			return "Fallen Cleaners";
 			break;
 		case "commonShamble":
 			return "Shambling Commons";
@@ -1169,20 +1208,10 @@ function ApplyBossCard()
 
 function CorruptionCard_Breaker()
 {
-	bossBreakerEnable = true;
-	Convars.SetValue("z_tank_health", 8000);
-	Convars.SetValue("z_tank_speed", 190);
-	Convars.SetValue("z_tank_speed_vs", 190);
-	Convars.SetValue("z_tank_throw_interval", 15);
-	Convars.SetValue("tank_throw_allow_range", 250);
+	BossSettings_Breaker();
 }
 
 function CorruptionCard_Ogre()
 {
-	bossOgreEnable = true;
-	Convars.SetValue("z_tank_health", 10000);
-	Convars.SetValue("z_tank_speed", 205);
-	Convars.SetValue("z_tank_speed_vs", 205);
-	Convars.SetValue("z_tank_throw_interval", 8);
-	Convars.SetValue("tank_throw_allow_range", 125);
+	BossSettings_Ogre();
 }

@@ -1,9 +1,31 @@
 ///////////////////////////////////////////////
+//                  SETTINGS                 //
+///////////////////////////////////////////////
+function BossSettings_Breaker()
+{
+	tankModel = "models/infected/hulk.mdl"
+	bossBreakerEnable = true;
+	Convars.SetValue("z_tank_health", 8000);
+	Convars.SetValue("z_tank_speed", 190);
+	Convars.SetValue("z_tank_speed_vs", 190);
+	Convars.SetValue("z_tank_throw_interval", 15);
+	Convars.SetValue("tank_throw_allow_range", 250);
+}
+
+function BossSettings_Ogre()
+{
+	tankModel = "models/infected/hulk_dlc3.mdl"
+	bossOgreEnable = true;
+	Convars.SetValue("z_tank_health", 10000);
+	Convars.SetValue("z_tank_speed", 205);
+	Convars.SetValue("z_tank_speed_vs", 205);
+	Convars.SetValue("z_tank_throw_interval", 8);
+	Convars.SetValue("tank_throw_allow_range", 125);
+}
+
+///////////////////////////////////////////////
 //               SWARM CIRCLE                //
 ///////////////////////////////////////////////
-if (!IsModelPrecached("models/swarm/swarmcircle.mdl"))
-	PrecacheModel("models/swarm/swarmcircle.mdl");
-
 function TankDeath()
 {
 	KillSwarmCircle();
@@ -26,6 +48,9 @@ function TankKicked(params)
 
 function CreateSwarmCircle(tankID)
 {
+	if (!IsModelPrecached("models/swarm/swarmcircle.mdl"))
+		PrecacheModel("models/swarm/swarmcircle.mdl");
+
 	if (bSwarmCircleActive == false)
 	{
 		local tankOrigin = tankID.GetOrigin();

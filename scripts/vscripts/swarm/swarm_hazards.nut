@@ -642,34 +642,28 @@ function AlarmPoliceStopSound(carIndex)
 
 function difficulty_RandomBoss()
 {
-	local progressPct = ( Director.GetFurthestSurvivorFlow() / GetMaxFlowDistance() )
-
-	if (corruptionBoss == "None" && difficulty > 1)
+	//No boss card played, set tank to be Breaker or Ogre randomly
+	if (corruptionBoss == "None")
 	{
-		if (randomPct < 50 )
+		if (randomPct < 50)
 		{
-			bossBreakerEnable = true;
-			Convars.SetValue("z_tank_health", 8000);
-			Convars.SetValue("z_tank_speed", 190);
-			Convars.SetValue("z_tank_speed_vs", 190);
-			Convars.SetValue("z_tank_throw_interval", 15);
-			Convars.SetValue("tank_throw_allow_range", 250);
+			BossSettings_Breaker();
 		}
-	 else
+		else
 		{
-			bossOgreEnable = true;
-			Convars.SetValue("z_tank_health", 10000);
-			Convars.SetValue("z_tank_speed", 205);
-			Convars.SetValue("z_tank_speed_vs", 205);
-			Convars.SetValue("z_tank_throw_interval", 8);
-			Convars.SetValue("tank_throw_allow_range", 125);
+			BossSettings_Ogre();
 		}
 	}
-	    
-	if (progressPct > spawnBoss && !bossSpawned)
+
+	//Only spawn random bosses above Normal
+	if (difficulty > 1)
 	{
-		BreakerSpawn();
-		bossSpawned = true;
+		local progressPct = ( Director.GetFurthestSurvivorFlow() / GetMaxFlowDistance() )
+		if (progressPct > spawnBoss && !bossSpawned)
+		{
+			BreakerSpawn();
+			bossSpawned = true;
+		}
 	}
 }
 
