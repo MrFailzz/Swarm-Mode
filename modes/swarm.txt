@@ -43,7 +43,7 @@
 		z_exploding_outer_radius 0
 		z_exploding_splat_radius 0
 		boomer_pz_claw_dmg 4
-		z_vomit_velocity 3000
+		z_vomit_velocity 3500
 		z_vomit_velocityfadestart 1.8
 		z_vomit_velocityfadeend 2.4
 		z_vomit_lifetime 2.5

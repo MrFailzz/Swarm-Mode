@@ -799,6 +799,19 @@ function PlayerHurt(params)
 				}
 			}
 		}
+		//Tank was hurt
+		if (player.GetZombieType() == 8)
+		{
+			if ("type" in params)
+			{
+				local boss_health = player.GetMaxHealth();
+				if (params.type == 2 && params.dmg_health > boss_health/2)
+				{
+					//Stagger tank
+					player.Stagger(Vector(0, 0, 0));
+				}
+			}
+		}
 	}
 }
 
