@@ -104,6 +104,9 @@ grenadelauncher_radius_stumble <- 250;
 grenadelauncher_radius_kill <- 180;
 grenadelauncher_damage <- 400;
 
+//Infected Fire Timer
+extinguish_time <- 0
+
 //Player Cards
 ::p1Cards <- {};
 ::p2Cards <- {};
