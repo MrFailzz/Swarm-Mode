@@ -817,10 +817,10 @@ function PlayerHurt(params)
 		{
 			if ("type" in params)
 			{
-				if (params.type == 8 && player.IsSurvivor() == false)
+				if (params.type == 8)
 				{
 					local time = Time();
-					local extinguish_time = 5;
+					local extinguish_time = Time() + 5;
 					if (time > extinguish_time)
 					{
 						player.Extinguish()
