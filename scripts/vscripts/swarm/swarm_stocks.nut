@@ -819,11 +819,10 @@ function PlayerHurt(params)
 			{
 				if (params.type == 8)
 				{
-					local time = Time();
-					local extinguish_time = Time() + 5;
-					if (time > extinguish_time)
+					if (Time() > extinguish_time + 5)
 					{
 						player.Extinguish()
+						extinguish_time = Time();
 					}
 				}
 			}
