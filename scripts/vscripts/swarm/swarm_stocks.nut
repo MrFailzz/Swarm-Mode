@@ -1428,3 +1428,37 @@ function GetColor32( color32 )
 	t.alpha <- ((readColor >>> 24) & 0xFF);
 	return t;
 }
+
+function BarbedWire()
+{
+		local player = GetPlayerFromUserID(params.userid);
+		local wireX = player.GetOrigin().x;
+		local wireY = player.GetOrigin().y;
+		local wireZ = player.GetOrigin().z;
+		local wireAngleX = player.GetAngles().x;
+		local wireAngleY = player.GetAngles().y;
+		local wireName = "wire";
+		local wire = SpawnEntityFromTable("prop_dynamic",
+		{
+			targetname = wireName,
+			origin = Vector(wireX, wireY, wireZ+18),
+			angles = Vector(wireAngleX, wireAngleY, 0)
+			model = "models/props_street/concertinawire128_rusty.mdl",
+			solid = 0,
+			disableshadows = 1,
+		});
+		local wireTrigger = SpawnEntityFromTable("trigger_hurt",
+		{
+			targetname = wireName + "_trigger",
+			origin = Vector(wireX, wireY, wireZ+18),
+			angles = Vector(wireAngleX, wireAngleY, 0)
+			damagetype = 0,
+			damage = 25,
+			spawnflags = 3,
+			filtername = "__swarm_filter_infected"
+		});
+		// Set up trigger
+		DoEntFire("!self", "AddOutput", "mins -44 -44 0", 0, null, wireTrigger);
+		DoEntFire("!self", "AddOutput", "maxs 44 44 28", 0, null, wireTrigger);
+		DoEntFire("!self", "AddOutput", "solid 2", 0, null, wireTrigger);
+}
