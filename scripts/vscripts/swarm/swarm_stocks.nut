@@ -804,8 +804,8 @@ function PlayerHurt(params)
 		{
 			if ("type" in params)
 			{
-				local boss_health = player.GetMaxHealth();
-				if (params.type == 2 && params.dmg_health > boss_health/2)
+				local boss_health = player.GetMaxHealth() / 2;
+				if (params.type == 2 && params.health < boss_health)
 				{
 					//Stagger tank
 					player.Stagger(Vector(0, 0, 0));
