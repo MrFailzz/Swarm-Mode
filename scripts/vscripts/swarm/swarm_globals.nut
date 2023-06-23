@@ -104,6 +104,12 @@ grenadelauncher_radius_stumble <- 250;
 grenadelauncher_radius_kill <- 180;
 grenadelauncher_damage <- 400;
 
+//Infected Fire Timer
+extinguish_time <- null;
+
+//Ogre Stagger
+stagger_dmg <- null;
+
 //Player Cards
 ::p1Cards <- {};
 ::p2Cards <- {};
@@ -217,6 +223,7 @@ switch(difficulty)
 		Convars.SetValue("z_witch_health", 850);
 		BaseMaxIncaps = 3;
 		MaxTraumaDamage = 0;
+		stagger_dmg = 4000;
 	break;
 
 	//Normal
@@ -227,6 +234,7 @@ switch(difficulty)
 		Convars.SetValue("z_witch_health", 850);
 		BaseMaxIncaps = 2;
 		MaxTraumaDamage = 20;
+		stagger_dmg = 4000;
 	break;
 
 	//Advanced
@@ -237,6 +245,7 @@ switch(difficulty)
 		Convars.SetValue("z_witch_health", 1000);
 		BaseMaxIncaps = 2;
 		MaxTraumaDamage = 30;
+		stagger_dmg = 10000;
 	break;
 
 	//Expert
@@ -247,6 +256,7 @@ switch(difficulty)
 		Convars.SetValue("z_witch_health", 1000);
 		BaseMaxIncaps = 1;
 		MaxTraumaDamage = 40;
+		stagger_dmg = 10000;
 		DirectorOptions.TankHitDamageModifierCoop = 0.48;
 	break;
 }

@@ -804,11 +804,25 @@ function PlayerHurt(params)
 		{
 			if ("type" in params)
 			{
-				local boss_health = player.GetMaxHealth();
-				if (params.type == 2 && params.dmg_health > boss_health/2)
+				if (params.type == 2 && bossOgreEnable == true && params.health < stagger_dmg)
 				{
 					//Stagger tank
-					player.Stagger(Vector(0, 0, 0));
+					player.Stagger(Vector(-1, -1, -1));
+					stagger_dmg = stagger_dmg / 4;
+				}
+			}
+		}
+		if (player.IsSurvivor() == false)
+		{
+			if ("type" in params)
+			{
+				if (params.type == 8)
+				{
+					//if (Time() > extinguish_time + 5)
+					//{
+						player.Extinguish()
+						extinguish_time = Time();
+					//}
 				}
 			}
 		}
@@ -1401,7 +1415,7 @@ function CreateSurvivorFilter()
 }
 CreateSurvivorFilter();
 
-/*function CreateInfectedFilter()
+function CreateInfectedFilter()
 {
 	SpawnEntityFromTable("filter_activator_team",
 	{
@@ -1409,7 +1423,8 @@ CreateSurvivorFilter();
 		Negated = "Allow entities that match criteria",
 		filterteam = 3
 	});
-}*/
+}
+CreateInfectedFilter();
 
 // From VSLib - Get rendercolor of a prop
 /**
@@ -1428,3 +1443,87 @@ function GetColor32( color32 )
 	t.alpha <- ((readColor >>> 24) & 0xFF);
 	return t;
 }
+
+
+function BarbedWire(params)
+{
+	local ItemstoRemove_ModelPaths =
+	[
+		"models/props/terror/incendiary_ammo.mdl",
+		"models/props/terror/exploding_ammo.mdl",
+	];
+
+	local player = GetPlayerFromUserID(params.userid);
+	local wireX = player.GetOrigin().x;
+	local wireY = player.GetOrigin().y;
+	local wireZ = player.GetOrigin().z;
+	local wireAngleX = player.GetAngles().x;
+	local wireAngleY = player.GetAngles().y;
+	local wireName = "wire";
+	local wire = SpawnEntityFromTable("prop_dynamic",
+	{
+		targetname = wireName,
+		origin = Vector(wireX, wireY, wireZ+18),
+		angles = Vector(wireAngleX, wireAngleY, 0)
+		model = "models/props_street/concertinawire128_rusty.mdl",
+		solid = 0,
+		disableshadows = 1,
+	});
+	local wireTrigger = SpawnEntityFromTable("trigger_hurt",
+	{
+		targetname = wireName + "_trigger",
+		origin = Vector(wireX, wireY, wireZ),
+		damagetype = 0,
+		damage = 25,
+		spawnflags = 3,
+		filtername = "__swarm_filter_infected"
+	});
+
+	// Set up trigger
+	DoEntFire("!self", "AddOutput", "mins -44 -44 0", 0, null, wireTrigger);
+	DoEntFire("!self", "AddOutput", "maxs 44 44 28", 0, null, wireTrigger);
+	DoEntFire("!self", "AddOutput", "solid 2", 0, null, wireTrigger);
+	// Remove ammo pack model
+	foreach(modelpath in ItemstoRemove_ModelPaths)
+	{
+		local weapon_ent = null;
+		while(weapon_ent = Entities.FindByModel(weapon_ent, modelpath))
+			weapon_ent.Kill();
+	}
+}
+
+/*
+function AmmoPack(params)
+{
+	local ItemstoRemove_ModelPaths =
+	[
+		"models/props/terror/incendiary_ammo.mdl",
+		"models/props/terror/exploding_ammo.mdl",
+	];
+
+	local player = GetPlayerFromUserID(params.userid);
+	local ammoX = player.GetOrigin().x;
+	local ammoY = player.GetOrigin().y;
+	local ammoZ = player.GetOrigin().z;
+	local ammoAngleX = player.GetAngles().x;
+	local ammoAngleY = player.GetAngles().y;
+	local ammoName = "ammoPile";
+	local ammoPile = SpawnEntityFromTable("weapon_ammo_spawn",
+	{
+		targetname = ammoName,
+		origin = Vector(ammoX, ammoY, ammoZ),
+		angles = Vector(ammoAngleX, ammoAngleY, 0)
+		model = "models/props/terror/ammo_stack.mdl",
+		solid = 0,
+		disableshadows = 1,
+	});
+
+	// Remove ammo pack model
+	foreach(modelpath in ItemstoRemove_ModelPaths)
+	{
+		local weapon_ent = null;
+		while(weapon_ent = Entities.FindByModel(weapon_ent, modelpath))
+			weapon_ent.Kill();
+	}
+}
+*/
