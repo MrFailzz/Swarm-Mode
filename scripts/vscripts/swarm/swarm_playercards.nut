@@ -682,24 +682,6 @@ function SurvivorPickupItem(params)
 	}
 }
 
-/* Is this still needed?
-function OnGameEvent_weapon_drop(params)
-{
-	if ("propid" in params)
-	{
-		local weaponID = params.propid;
-		if (weaponID != null)
-		{
-			local weapon = null;
-			while ((weapon = Entities.FindByName(weapon, "shotgunThinker" + weaponID)) != null)
-			{
-				printl("kill " + weaponID)
-				weapon.Kill();
-			}
-		}
-	}
-}*/
-
 function Update_PlayerCards()
 {
 	//Runs every second
