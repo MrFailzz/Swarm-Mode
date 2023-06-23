@@ -804,11 +804,11 @@ function PlayerHurt(params)
 		{
 			if ("type" in params)
 			{
-				if (params.type == 2 && params.health < stagger_dmg)
+				if (params.type == 2 && bossOgreEnable == true && params.health < stagger_dmg)
 				{
 					//Stagger tank
 					player.Stagger(Vector(-1, -1, -1));
-					stagger_dmg = player.GetHealth() / 4;
+					stagger_dmg = stagger_dmg / 4;
 				}
 			}
 		}
