@@ -813,6 +813,21 @@ function PlayerHurt(params)
 				}
 			}
 		}
+		if (player.IsSurvivor() == false)
+		{
+			if ("type" in params)
+			{
+				if (params.type == 8 && player.IsSurvivor() == false)
+				{
+					local time = Time();
+					local extinguish_time = 5;
+					if (time > extinguish_time)
+					{
+						player.Extinguish()
+					}
+				}
+			}
+		}
 	}
 }
 
