@@ -105,7 +105,7 @@ grenadelauncher_radius_kill <- 180;
 grenadelauncher_damage <- 400;
 
 //Infected Fire Timer
-extinguish_time <- 0;
+extinguish_time <- null;
 
 //Ogre Stagger
 stagger_dmg <- null;

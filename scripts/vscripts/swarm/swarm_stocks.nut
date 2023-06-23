@@ -818,11 +818,11 @@ function PlayerHurt(params)
 			{
 				if (params.type == 8)
 				{
-					if (Time() > extinguish_time + 5)
-					{
+					//if (Time() > extinguish_time + 5)
+					//{
 						player.Extinguish()
 						extinguish_time = Time();
-					}
+					//}
 				}
 			}
 		}
@@ -1473,7 +1473,6 @@ function BarbedWire(params)
 	{
 		targetname = wireName + "_trigger",
 		origin = Vector(wireX, wireY, wireZ),
-		angles = Vector(wireAngleX, wireAngleY, 0)
 		damagetype = 0,
 		damage = 25,
 		spawnflags = 3,
@@ -1483,7 +1482,7 @@ function BarbedWire(params)
 	// Set up trigger
 	DoEntFire("!self", "AddOutput", "mins -44 -44 0", 0, null, wireTrigger);
 	DoEntFire("!self", "AddOutput", "maxs 44 44 28", 0, null, wireTrigger);
-	DoEntFire("!self", "AddOutput", "solid 0", 0, null, wireTrigger);
+	DoEntFire("!self", "AddOutput", "solid 2", 0, null, wireTrigger);
 	// Remove ammo pack model
 	foreach(modelpath in ItemstoRemove_ModelPaths)
 	{
@@ -1493,6 +1492,7 @@ function BarbedWire(params)
 	}
 }
 
+/*
 function AmmoPack(params)
 {
 	local ItemstoRemove_ModelPaths =
@@ -1526,3 +1526,4 @@ function AmmoPack(params)
 			weapon_ent.Kill();
 	}
 }
+*/
