@@ -65,9 +65,9 @@
 		
 		z_tank_damage_slow_max_range 0
 		tank_ground_pound_duration 3
-		tank_burn_duration 30
-		tank_burn_duration_hard 35
-		tank_burn_duration_expert 40
+		tank_burn_duration 130
+		tank_burn_duration_hard 140
+		tank_burn_duration_expert 150
 		tank_swing_physics_prop_force 0
 		vs_tank_damage 18
 		

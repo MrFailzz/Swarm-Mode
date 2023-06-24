@@ -657,6 +657,9 @@ function RandomItemDrop(origin)
 
 function RoundStart(params)
 {
+	if (!IsModelPrecached("models/swarm/barricade_razorwire001_128_reference.mdl"))
+		PrecacheModel("models/swarm/barricade_razorwire001_128_reference.mdl");
+
 	CreateCardHud();
 
 	difficulty = GetDifficulty();
@@ -674,6 +677,14 @@ function RoundStart(params)
 			Convars.SetValue("sv_permawipe", "0");
 		}
 	}
+
+	local expl_pack = null;
+	while (expl_pack = Entities.FindByModel(expl_pack, "models/w_models/weapons/w_eq_explosive_ammopack.mdl"))
+		expl_pack.SetModel("models/swarm/barricade_razorwire001_128_reference.mdl");
+
+	local ince_pack = null;
+	while (ince_pack = Entities.FindByModel(ince_pack, "models/w_models/weapons/w_eq_incendiary_ammopack.mdl"))
+		ince_pack.SetModel("models/swarm/barricade_razorwire001_128_reference.mdl")
 }
 
 function PlayerLeftSafeArea(params)
@@ -809,20 +820,6 @@ function PlayerHurt(params)
 					//Stagger tank
 					player.Stagger(Vector(-1, -1, -1));
 					stagger_dmg = stagger_dmg / 4;
-				}
-			}
-		}
-		if (player.IsSurvivor() == false)
-		{
-			if ("type" in params)
-			{
-				if (params.type == 8)
-				{
-					//if (Time() > extinguish_time + 5)
-					//{
-						player.Extinguish()
-						extinguish_time = Time();
-					//}
 				}
 			}
 		}
@@ -1209,7 +1206,7 @@ function Update()
 		FrigidOutskirtsTimer();
 	}
 
-	difficulty_RandomBoss()
+	difficulty_RandomBoss();
 
 	if (corruptionHazards == "hazardSnitch" || corruptionBoss == "hazardBreaker" || corruptionBoss == "hazardOgre")
 	{
@@ -1447,6 +1444,9 @@ function GetColor32( color32 )
 
 function BarbedWire(params)
 {
+	if (!IsModelPrecached("models/props_fortifications/barricade_razorwire001_128_reference.mdl"))
+		PrecacheModel("models/props_fortifications/barricade_razorwire001_128_reference.mdl");
+
 	local ItemstoRemove_ModelPaths =
 	[
 		"models/props/terror/incendiary_ammo.mdl",
@@ -1463,9 +1463,9 @@ function BarbedWire(params)
 	local wire = SpawnEntityFromTable("prop_dynamic",
 	{
 		targetname = wireName,
-		origin = Vector(wireX, wireY, wireZ+18),
+		origin = Vector(wireX, wireY, wireZ),
 		angles = Vector(wireAngleX, wireAngleY, 0)
-		model = "models/props_street/concertinawire128_rusty.mdl",
+		model = "models/props_fortifications/barricade_razorwire001_128_reference.mdl",
 		solid = 0,
 		disableshadows = 1,
 	});
@@ -1474,7 +1474,7 @@ function BarbedWire(params)
 		targetname = wireName + "_trigger",
 		origin = Vector(wireX, wireY, wireZ),
 		damagetype = 0,
-		damage = 25,
+		damage = 50,
 		spawnflags = 3,
 		filtername = "__swarm_filter_infected"
 	});
