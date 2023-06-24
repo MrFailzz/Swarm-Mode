@@ -814,16 +814,16 @@ function PlayerHurt(params)
 		}
 		if (player.IsSurvivor() == false)
 		{
-			if ("type" in params)
+			if (player.IsOnFire() == true)
 			{
-				if (params.type == 8)
+				if (Time() > extinguish_time + 5)
 				{
-					//if (Time() > extinguish_time + 5)
-					//{
-						player.Extinguish()
-						extinguish_time = Time();
-					//}
+					player.Extinguish();
 				}
+			}
+			else
+			{
+				extinguish_time = Time();
 			}
 		}
 	}
