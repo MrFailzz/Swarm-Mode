@@ -169,6 +169,12 @@ survivorHealthBuffer <- [0, 0, 0, 0];
 Convars.SetValue("z_versus_hunter_limit", 0);
 Convars.SetValue("z_versus_spitter_limit", 0);
 Convars.SetValue("z_ghost_delay_minspawn", 20);
+Convars.SetValue("z_witch_always_kills", 0);
+
+// Need to figure out how base/scale really work. Increase fire dmg = remove permanent fire?
+Convars.SetValue("fire_dmgbase", 100); 
+Convars.SetValue("fire_dmgscale", 100);
+Convars.SetValue("fire_dmginterval", 0.25);
 
 ///////////////////////////////////////////////
 //              DIRECTOR OPTIONS             //
@@ -301,7 +307,7 @@ acidCommonSpawnRate <- 30;			// How often a group will be spawned in seconds
 fireCommonsMax <- 7;
 fireCommonSpawnAmount <- 4;			// Size of group to spawn
 fireCommonSpawnRate <- 30;			// How often a group will be spawned in seconds
-fireCommonDamage <- 2;				// Damage per tick from burning
+fireCommonDamage <- 3;				// Damage per tick from burning
 fireCommonRange <- 40;				// Size of fire damage hitbox
 
 explodingCommonsMax <- 7;

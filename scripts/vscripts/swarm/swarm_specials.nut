@@ -272,7 +272,7 @@ function SnitchAlerted(params)
 		//witchEnt.SetSequence(8)
 
 		//Set witch on fire
-		witchEnt.TakeDamage(250, 8, null);
+		//witchEnt.TakeDamage(250, 8, null);
 	}
 }
 

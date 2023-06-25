@@ -54,7 +54,6 @@
 //		inferno_child_spawn_max_depth 2
 
 		z_witch_damage 0
-		z_witch_always_kills 0
 		z_witch_attack_range 0
 		z_witch_damage_per_kill_hit 0
 		z_witch_wander_personal_time 0
@@ -83,7 +82,9 @@
 		pain_pills_health_value 0
 		pain_pills_health_threshold 1000
 		adrenaline_health_buffer 0
-		z_use_tolerance 0.98
+		z_use_tolerance 1
+		player_use_radius 65
+		player_incap_use_radius 65
 		sb_separation_danger_min_range 50
 		sb_separation_danger_min_range 250
 		sv_infected_ceda_vomitjar_probability 0
@@ -118,5 +119,10 @@
 
 		z_witch_burn_time 1
 		z_witch_speed_inured 150
+
+		z_throttle_hit_interval_easy 0.5
+		z_throttle_hit_interval_normal 0.5
+		z_throttle_hit_interval_hard 0.5
+		z_throttle_hit_interval_expert 0.5
 	}
 }
