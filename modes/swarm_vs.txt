@@ -133,8 +133,11 @@
 		sb_friend_immobilized_reaction_time_expert 2
 		sb_friend_immobilized_reaction_time_vs 2
 
-		z_witch_burn_time 1
-		z_witch_speed_inured 150
+		inferno_damage 1500
+		survivor_burn_factor_easy 0.005
+		survivor_burn_factor_normal 0.005
+		survivor_burn_factor_hard 0.01
+		survivor_burn_factor_expert 0.015
 
 		z_throttle_hit_interval_easy 0.5
 		z_throttle_hit_interval_normal 0.5

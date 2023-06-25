@@ -823,6 +823,13 @@ function PlayerHurt(params)
 				}
 			}
 		}
+		if (player.IsSurvivor() == false)
+		{
+			if (player.IsOnFire() == true)
+			{
+				player.Extinguish();
+			}
+		}
 	}
 }
 
