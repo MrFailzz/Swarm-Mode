@@ -71,6 +71,7 @@
 		tank_burn_duration_expert 150
 		tank_swing_physics_prop_force 0
 		vs_tank_damage 18
+		z_max_survivor_damage 100
 		
 		z_ghost_delay_max 20
 		
@@ -85,9 +86,9 @@
 		pain_pills_health_value 0
 		pain_pills_health_threshold 1000
 		adrenaline_health_buffer 0
-		z_use_tolerance 1
-		player_use_radius 65
-		player_incap_use_radius 65
+		z_use_tolerance 0.99
+		player_use_radius 86
+		player_incap_use_radius 86
 		sb_separation_danger_min_range 50
 		sb_separation_danger_min_range 250
 		sv_infected_ceda_vomitjar_probability 0
@@ -129,19 +130,24 @@
 
 		survivor_pounce_victim_eye_height 64
 
-		sb_friend_immobilized_reaction_time_hard 2
-		sb_friend_immobilized_reaction_time_expert 2
-		sb_friend_immobilized_reaction_time_vs 2
-
-		inferno_damage 1500
-		survivor_burn_factor_easy 0.005
-		survivor_burn_factor_normal 0.005
-		survivor_burn_factor_hard 0.01
-		survivor_burn_factor_expert 0.015
+		inferno_damage 2000
+		survivor_burn_factor_easy 0.0025
+		survivor_burn_factor_normal 0.0025
+		survivor_burn_factor_hard 0.005
+		survivor_burn_factor_expert 0.01
 
 		z_throttle_hit_interval_easy 0.5
 		z_throttle_hit_interval_normal 0.5
 		z_throttle_hit_interval_hard 0.5
 		z_throttle_hit_interval_expert 0.5
+
+		z_mob_spawn_max_interval_easy 9999
+		z_mob_spawn_max_interval_expert 9999
+		z_mob_spawn_max_interval_hard 9999
+		z_mob_spawn_max_interval_normal 9999
+		z_mob_spawn_min_interval_easy 9999
+		z_mob_spawn_min_interval_expert 9999
+		z_mob_spawn_min_interval_hard 9999
+		z_mob_spawn_min_interval_normal 9999
 	}
 }

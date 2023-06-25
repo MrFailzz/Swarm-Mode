@@ -192,12 +192,9 @@ DirectorOptions <-
 	cm_CommonLimit = 30
 	cm_ProhibitBosses = true
 
-	MobSpawnMinTime = 9999
-	MobSpawnMaxTime = 9999
-
-	SpecialInitialSpawnDelayMax = 45
+	SpecialInitialSpawnDelayMax = 60
 	SpecialInitialSpawnDelayMin = 30
-	SpecialRespawnInterval = 25
+	SpecialRespawnInterval = 45
 	BoomerLimit = 2
 	ChargerLimit = 1
 	HunterLimit = 0
