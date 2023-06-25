@@ -149,26 +149,52 @@ function GetEntityType(entity)
 					return "Hocker";
 					break;
 				case 2:
-					return "Exploder";
-					break;
+					if (corruptionRetch == "Retch")
+					{
+						return "Retch";
+						break;
+					}
+					if (corruptionRetch == "Exploder")
+					{
+						return "Exploder";
+						break;
+					}
 				case 3:
 					return "Sleeper";
-					break;
-				case 4:
-					return "Retch";
 					break;
 				case 5:
 					return "Stalker";
 					break;
 				case 6:
-					return "Tallboy";
-					break;
+					if (corruptionTallboy == "Tallboy")
+					{
+						return "Tallboy";
+						break;
+					}
+					if (corruptionTallboy == "Crusher")
+					{
+						return "Crusher";
+						break;
+					}
+					if (corruptionTallboy == "Bruiser")
+					{
+						return "Bruiser";
+						break;
+					}
 				case 7:
 					return "Snitcher";
 					break;
 				case 8:
-					return "Breaker";
-					break;
+					if (bossBreakerEnable == true)
+					{
+						return "Breaker";
+						break;
+					}
+					if (bossOgreEnable == true)
+					{
+						return "Ogre";
+						break;
+					}
 				case 9:
 					return entity.GetPlayerName();
 					break;
@@ -352,12 +378,12 @@ function GetEntityType(entity)
 		case "weapon_upgradepack_explosive_spawn":
 		case "weapon_upgradepack_explosive":
 		case "upgrade_ammo_explosive":
-			return "Explosive Ammo";
+			return "Barbed Wire";
 			break;
 		case "weapon_upgradepack_incendiary_spawn":
 		case "weapon_upgradepack_incendiary":
 		case "upgrade_ammo_incendiary":
-			return "Incendiary Ammo";
+			return "Barbed Wire";
 			break;
 		case "upgrade_laser_sight":
 			return "Laser Sight";
