@@ -1476,7 +1476,7 @@ function BarbedWire(params)
 		solid = 0,
 		disableshadows = 1,
 	});
-	local wireTrigger = SpawnEntityFromTable("trigger_hurt",
+	local wireDmgTrigger = SpawnEntityFromTable("trigger_hurt",
 	{
 		targetname = wireName + "_trigger",
 		origin = Vector(wireX, wireY, wireZ),
@@ -1485,11 +1485,23 @@ function BarbedWire(params)
 		spawnflags = 3,
 		filtername = "__swarm_filter_infected"
 	});
+	local wireSlowTrigger = SpawnEntityFromTable("trigger_playermovement",
+	{
+		targetname = wireName + "_trigger",
+		origin = Vector(wireX, wireY, wireZ),
+		StartDisabled = false,
+		spawnflags = 4099,
+		filtername = "__swarm_filter_infected"
+	});
 
 	// Set up trigger
-	DoEntFire("!self", "AddOutput", "mins -44 -44 0", 0, null, wireTrigger);
-	DoEntFire("!self", "AddOutput", "maxs 44 44 28", 0, null, wireTrigger);
-	DoEntFire("!self", "AddOutput", "solid 2", 0, null, wireTrigger);
+	DoEntFire("!self", "AddOutput", "mins -44 -44 0", 0, null, wireDmgTrigger);
+	DoEntFire("!self", "AddOutput", "maxs 44 44 28", 0, null, wireDmgTrigger);
+	DoEntFire("!self", "AddOutput", "solid 2", 0, null, wireDmgTrigger);
+
+	DoEntFire("!self", "AddOutput", "mins -44 -44 0", 0, null, wireSlowTrigger);
+	DoEntFire("!self", "AddOutput", "maxs 44 44 28", 0, null, wireSlowTrigger);
+	DoEntFire("!self", "AddOutput", "solid 2", 0, null, wireSlowTrigger);
 	// Remove ammo pack model
 	foreach(modelpath in ItemstoRemove_ModelPaths)
 	{

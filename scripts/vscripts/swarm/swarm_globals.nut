@@ -5,7 +5,7 @@
 difficulty <- GetDifficulty();
 survivorSet <- Director.GetSurvivorSet();
 z_speed <- Convars.GetFloat("z_speed");
-BaseMaxIncaps <- 2
+BaseMaxIncaps <- 2;
 
 //Breaker
 tankModel <- "models/infected/hulk.mdl"
