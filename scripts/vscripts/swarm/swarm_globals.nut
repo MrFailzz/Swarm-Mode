@@ -232,7 +232,7 @@ switch(difficulty)
 		Convars.SetValue("z_gas_health", 297);
 		Convars.SetValue("z_exploding_health", 595);
 		Convars.SetValue("z_witch_health", 850);
-		BaseMaxIncaps = 2;
+		BaseMaxIncaps = 3;
 		MaxTraumaDamage = 20;
 		stagger_dmg = 4000;
 	break;
@@ -254,7 +254,7 @@ switch(difficulty)
 		Convars.SetValue("z_gas_health", 350);
 		Convars.SetValue("z_exploding_health", 700);
 		Convars.SetValue("z_witch_health", 1000);
-		BaseMaxIncaps = 1;
+		BaseMaxIncaps = 2;
 		MaxTraumaDamage = 40;
 		stagger_dmg = 10000;
 		DirectorOptions.TankHitDamageModifierCoop = 0.48;
@@ -277,7 +277,7 @@ if (swarmMode == "hardcore" || swarmMode == "survival" || swarmMode == "vs" || s
 swarmTickInterval <- 1;				// In seconds
 swarmDamagePerTick <- 2;
 
-tankJumpVelocity <- 500;
+tankJumpVelocity <- 475;
 tankJumpExtraHeight <- 450;			// Max extra height from aiming up
 
 breakerSpawned <- false;
@@ -304,7 +304,7 @@ acidCommonSpawnRate <- 30;			// How often a group will be spawned in seconds
 fireCommonsMax <- 7;
 fireCommonSpawnAmount <- 4;			// Size of group to spawn
 fireCommonSpawnRate <- 30;			// How often a group will be spawned in seconds
-fireCommonDamage <- 3;				// Damage per tick from burning
+fireCommonDamage <- 2;				// Damage per tick from burning
 fireCommonRange <- 40;				// Size of fire damage hitbox
 
 explodingCommonsMax <- 7;
