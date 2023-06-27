@@ -383,7 +383,7 @@ function GetEntityType(entity)
 		case "weapon_upgradepack_incendiary_spawn":
 		case "weapon_upgradepack_incendiary":
 		case "upgrade_ammo_incendiary":
-			return "Barbed Wire";
+			return "Ammo Pack";
 			break;
 		case "upgrade_laser_sight":
 			return "Laser Sight";
