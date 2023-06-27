@@ -1516,33 +1516,33 @@ function AmmoPack(params)
 {
 	local ItemstoRemove_ModelPaths =
 	[
-		"models/props/terror/incendiary_ammo.mdl",
-		"models/props/terror/exploding_ammo.mdl",
+		"models/props/terror/incendiary_ammo.mdl"
 	];
-
-	local player = GetPlayerFromUserID(params.userid);
-	local ammoX = player.GetOrigin().x;
-	local ammoY = player.GetOrigin().y;
-	local ammoZ = player.GetOrigin().z;
-	local ammoAngleX = player.GetAngles().x;
-	local ammoAngleY = player.GetAngles().y;
-	local ammoName = "ammoPile";
-	local ammoPile = SpawnEntityFromTable("weapon_ammo_spawn",
-	{
-		targetname = ammoName,
-		origin = Vector(ammoX, ammoY, ammoZ),
-		angles = Vector(ammoAngleX, ammoAngleY, 0)
-		model = "models/props/terror/ammo_stack.mdl",
-		solid = 0,
-		disableshadows = 1,
-	});
 
 	// Remove ammo pack model
 	foreach(modelpath in ItemstoRemove_ModelPaths)
 	{
 		local weapon_ent = null;
 		while(weapon_ent = Entities.FindByModel(weapon_ent, modelpath))
-			weapon_ent.Kill();
+                {
+		        weapon_ent.Kill();
+                        local player = GetPlayerFromUserID(params.userid);
+		        local ammoX = player.GetOrigin().x;
+                        local ammoY = player.GetOrigin().y;
+	                local ammoZ = player.GetOrigin().z;
+	                local ammoAngleX = player.GetAngles().x;
+	                local ammoAngleY = player.GetAngles().y;
+	                local ammoName = "ammoPile";
+	                local ammoPile = SpawnEntityFromTable("weapon_ammo_spawn",
+	                {
+		                targetname = ammoName,
+		                origin = Vector(ammoX, ammoY, ammoZ),
+		                angles = Vector(ammoAngleX, ammoAngleY, 0)
+		                model = "models/props/terror/ammo_stack.mdl",
+		                solid = 0,
+		                disableshadows = 1,
+	                });
+                }
 	}
 }
 */
