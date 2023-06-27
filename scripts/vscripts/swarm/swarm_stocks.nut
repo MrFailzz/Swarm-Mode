@@ -681,10 +681,6 @@ function RoundStart(params)
 	local expl_pack = null;
 	while (expl_pack = Entities.FindByModel(expl_pack, "models/w_models/weapons/w_eq_explosive_ammopack.mdl"))
 		expl_pack.SetModel("models/swarm/barricade_razorwire001_128_reference.mdl");
-
-	local ince_pack = null;
-	while (ince_pack = Entities.FindByModel(ince_pack, "models/w_models/weapons/w_eq_incendiary_ammopack.mdl"))
-		ince_pack.SetModel("models/swarm/barricade_razorwire001_128_reference.mdl")
 }
 
 function PlayerLeftSafeArea(params)
@@ -1456,93 +1452,97 @@ function BarbedWire(params)
 
 	local ItemstoRemove_ModelPaths =
 	[
-		"models/props/terror/incendiary_ammo.mdl",
 		"models/props/terror/exploding_ammo.mdl",
 	];
 
-	local player = GetPlayerFromUserID(params.userid);
-	local wireX = player.GetOrigin().x;
-	local wireY = player.GetOrigin().y;
-	local wireZ = player.GetOrigin().z;
-	local wireAngleX = player.GetAngles().x;
-	local wireAngleY = player.GetAngles().y;
-	local wireName = "wire";
-	local wire = SpawnEntityFromTable("prop_dynamic",
-	{
-		targetname = wireName,
-		origin = Vector(wireX, wireY, wireZ),
-		angles = Vector(wireAngleX, wireAngleY, 0)
-		model = "models/props_fortifications/barricade_razorwire001_128_reference.mdl",
-		solid = 0,
-		disableshadows = 1,
-	});
-	local wireDmgTrigger = SpawnEntityFromTable("trigger_hurt",
-	{
-		targetname = wireName + "_trigger",
-		origin = Vector(wireX, wireY, wireZ),
-		damagetype = 0,
-		damage = 50,
-		spawnflags = 3,
-		filtername = "__swarm_filter_infected"
-	});
-	local wireSlowTrigger = SpawnEntityFromTable("trigger_playermovement",
-	{
-		targetname = wireName + "_trigger",
-		origin = Vector(wireX, wireY, wireZ),
-		StartDisabled = false,
-		spawnflags = 4099,
-		filtername = "__swarm_filter_infected"
-	});
-
-	// Set up trigger
-	DoEntFire("!self", "AddOutput", "mins -44 -44 0", 0, null, wireDmgTrigger);
-	DoEntFire("!self", "AddOutput", "maxs 44 44 28", 0, null, wireDmgTrigger);
-	DoEntFire("!self", "AddOutput", "solid 2", 0, null, wireDmgTrigger);
-
-	DoEntFire("!self", "AddOutput", "mins -44 -44 0", 0, null, wireSlowTrigger);
-	DoEntFire("!self", "AddOutput", "maxs 44 44 28", 0, null, wireSlowTrigger);
-	DoEntFire("!self", "AddOutput", "solid 2", 0, null, wireSlowTrigger);
 	// Remove ammo pack model
 	foreach(modelpath in ItemstoRemove_ModelPaths)
 	{
 		local weapon_ent = null;
 		while(weapon_ent = Entities.FindByModel(weapon_ent, modelpath))
+		{
 			weapon_ent.Kill();
+
+			// Create barbed wire
+			local player = GetPlayerFromUserID(params.userid);
+			local wireX = player.GetOrigin().x;
+			local wireY = player.GetOrigin().y;
+			local wireZ = player.GetOrigin().z;
+			local wireAngleX = player.GetAngles().x;
+			local wireAngleY = player.GetAngles().y;
+			local wireName = "wire";
+			local wire = SpawnEntityFromTable("prop_dynamic",
+			{
+				targetname = wireName,
+				origin = Vector(wireX, wireY, wireZ),
+				angles = Vector(wireAngleX, wireAngleY, 0)
+				model = "models/props_fortifications/barricade_razorwire001_128_reference.mdl",
+				solid = 0,
+				disableshadows = 1,
+			});
+			local wireDmgTrigger = SpawnEntityFromTable("trigger_hurt",
+			{
+				targetname = wireName + "_trigger",
+				origin = Vector(wireX, wireY, wireZ),
+				damagetype = 0,
+				damage = 50,
+				spawnflags = 3,
+				filtername = "__swarm_filter_infected"
+			});
+			local wireSlowTrigger = SpawnEntityFromTable("trigger_playermovement",
+			{
+				targetname = wireName + "_trigger",
+				origin = Vector(wireX, wireY, wireZ),
+				StartDisabled = false,
+				spawnflags = 4099,
+				filtername = "__swarm_filter_infected"
+			});
+
+			// Set up trigger
+			DoEntFire("!self", "AddOutput", "mins -44 -44 0", 0, null, wireDmgTrigger);
+			DoEntFire("!self", "AddOutput", "maxs 44 44 24", 0, null, wireDmgTrigger);
+			DoEntFire("!self", "AddOutput", "solid 2", 0, null, wireDmgTrigger);
+
+			DoEntFire("!self", "AddOutput", "mins -44 -44 0", 0, null, wireSlowTrigger);
+			DoEntFire("!self", "AddOutput", "maxs 44 44 24", 0, null, wireSlowTrigger);
+			DoEntFire("!self", "AddOutput", "solid 2", 0, null, wireSlowTrigger);
+		}
 	}
 }
 
-/*
+
 function AmmoPack(params)
 {
 	local ItemstoRemove_ModelPaths =
 	[
-		"models/props/terror/incendiary_ammo.mdl",
-		"models/props/terror/exploding_ammo.mdl",
+		"models/props/terror/incendiary_ammo.mdl"
 	];
-
-	local player = GetPlayerFromUserID(params.userid);
-	local ammoX = player.GetOrigin().x;
-	local ammoY = player.GetOrigin().y;
-	local ammoZ = player.GetOrigin().z;
-	local ammoAngleX = player.GetAngles().x;
-	local ammoAngleY = player.GetAngles().y;
-	local ammoName = "ammoPile";
-	local ammoPile = SpawnEntityFromTable("weapon_ammo_spawn",
-	{
-		targetname = ammoName,
-		origin = Vector(ammoX, ammoY, ammoZ),
-		angles = Vector(ammoAngleX, ammoAngleY, 0)
-		model = "models/props/terror/ammo_stack.mdl",
-		solid = 0,
-		disableshadows = 1,
-	});
 
 	// Remove ammo pack model
 	foreach(modelpath in ItemstoRemove_ModelPaths)
 	{
 		local weapon_ent = null;
 		while(weapon_ent = Entities.FindByModel(weapon_ent, modelpath))
-			weapon_ent.Kill();
+            {
+		    	weapon_ent.Kill();
+
+				// Create ammo pile
+                local player = GetPlayerFromUserID(params.userid);
+		    	local ammoX = player.GetOrigin().x;
+                local ammoY = player.GetOrigin().y;
+	            local ammoZ = player.GetOrigin().z;
+	            local ammoAngleX = player.GetAngles().x;
+	            local ammoAngleY = player.GetAngles().y;
+	            local ammoName = "ammoPile";
+	            local ammoPile = SpawnEntityFromTable("weapon_ammo_spawn",
+	            {
+		            targetname = ammoName,
+		            origin = Vector(ammoX, ammoY, ammoZ),
+		            angles = Vector(ammoAngleX, ammoAngleY, 0)
+		            model = "models/props/terror/ammo_stack.mdl",
+		            solid = 0,
+		            disableshadows = 1,
+	            });
+            }
 	}
 }
-*/
