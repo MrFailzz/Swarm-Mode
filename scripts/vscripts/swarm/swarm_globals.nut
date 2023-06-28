@@ -170,10 +170,6 @@ Convars.SetValue("z_versus_hunter_limit", 0);
 Convars.SetValue("z_versus_spitter_limit", 0);
 Convars.SetValue("z_ghost_delay_minspawn", 20);
 Convars.SetValue("z_witch_always_kills", 0);
-
-// Need to figure out how base/scale really work. Increase fire dmg = remove permanent fire?
-//Convars.SetValue("fire_dmgbase", 100); 
-//Convars.SetValue("fire_dmgscale", 100);
 Convars.SetValue("fire_dmginterval", 0.5);
 
 ///////////////////////////////////////////////
@@ -213,52 +209,104 @@ DirectorOptions <-
 ///////////////////////////////////////////////
 //             DIFFICULTY OPTIONS            //
 ///////////////////////////////////////////////
-switch(difficulty)
+function SetDifficulty()
 {
-	//Easy
-	case 0:
-		Convars.SetValue("z_jockey_health", 361);
-		Convars.SetValue("z_gas_health", 297);
-		Convars.SetValue("z_exploding_health", 595);
-		Convars.SetValue("z_witch_health", 850);
-		BaseMaxIncaps = 3;
-		MaxTraumaDamage = 0;
-		stagger_dmg = 4000;
-	break;
+	difficulty = GetDifficulty();
+	switch(difficulty)
+	{
+		//Easy
+		case 0:
+			if (corruptionTallboy == "Tallboy")
+			{
+				Convars.SetValue("z_charger_health", 900);
+			}
+			else if (corruptionTallboy == "Crusher")
+			{
+				Convars.SetValue("z_charger_health", 1000);
+			}
+			else if (corruptionTallboy == "Bruiser")
+			{
+				Convars.SetValue("z_charger_health", 1250);
+			}
+			Convars.SetValue("z_jockey_health", 300);
+			Convars.SetValue("z_gas_health", 200);
+			Convars.SetValue("z_exploding_health", 550);
+			Convars.SetValue("z_witch_health", 600);
+			BaseMaxIncaps = 3;
+			MaxTraumaDamage = 0;
+			stagger_dmg = 4000;
+		break;
 
-	//Normal
-	case 1:
-		Convars.SetValue("z_jockey_health", 361);
-		Convars.SetValue("z_gas_health", 297);
-		Convars.SetValue("z_exploding_health", 595);
-		Convars.SetValue("z_witch_health", 850);
-		BaseMaxIncaps = 3;
-		MaxTraumaDamage = 20;
-		stagger_dmg = 4000;
-	break;
+		//Normal
+		case 1:
+			if (corruptionTallboy == "Tallboy")
+			{
+				Convars.SetValue("z_charger_health", 1000);
+			}
+			else if (corruptionTallboy == "Crusher")
+			{
+				Convars.SetValue("z_charger_health", 1200);
+			}
+			else if (corruptionTallboy == "Bruiser")
+			{
+				Convars.SetValue("z_charger_health", 1500);
+			}
+			Convars.SetValue("z_jockey_health", 350);
+			Convars.SetValue("z_gas_health", 250);
+			Convars.SetValue("z_exploding_health", 650);
+			Convars.SetValue("z_witch_health", 750);
+			BaseMaxIncaps = 3;
+			MaxTraumaDamage = 20;
+			stagger_dmg = 4000;
+		break;
 
-	//Advanced
-	case 2:
-		Convars.SetValue("z_jockey_health", 425);
-		Convars.SetValue("z_gas_health", 350);
-		Convars.SetValue("z_exploding_health", 700);
-		Convars.SetValue("z_witch_health", 1000);
-		BaseMaxIncaps = 2;
-		MaxTraumaDamage = 30;
-		stagger_dmg = 10000;
-	break;
+		//Advanced
+		case 2:
+			if (corruptionTallboy == "Tallboy")
+			{
+				Convars.SetValue("z_charger_health", 1400);
+			}
+			else if (corruptionTallboy == "Crusher")
+			{
+				Convars.SetValue("z_charger_health", 1500);
+			}
+			else if (corruptionTallboy == "Bruiser")
+			{
+				Convars.SetValue("z_charger_health", 1900);
+			}
+			Convars.SetValue("z_jockey_health", 450);
+			Convars.SetValue("z_gas_health", 300);
+			Convars.SetValue("z_exploding_health", 800);
+			Convars.SetValue("z_witch_health", 1000);
+			BaseMaxIncaps = 2;
+			MaxTraumaDamage = 30;
+			stagger_dmg = 10000;
+		break;
 
-	//Expert
-	case 3:
-		Convars.SetValue("z_jockey_health", 425);
-		Convars.SetValue("z_gas_health", 350);
-		Convars.SetValue("z_exploding_health", 700);
-		Convars.SetValue("z_witch_health", 1000);
-		BaseMaxIncaps = 2;
-		MaxTraumaDamage = 40;
-		stagger_dmg = 10000;
-		DirectorOptions.TankHitDamageModifierCoop = 0.48;
-	break;
+		//Expert
+		case 3:
+			if (corruptionTallboy == "Tallboy")
+			{
+				Convars.SetValue("z_charger_health", 1400);
+			}
+			else if (corruptionTallboy == "Crusher")
+			{
+				Convars.SetValue("z_charger_health", 1500);
+			}
+			else if (corruptionTallboy == "Bruiser")
+			{
+				Convars.SetValue("z_charger_health", 1900);
+			}
+			Convars.SetValue("z_jockey_health", 450);
+			Convars.SetValue("z_gas_health", 300);
+			Convars.SetValue("z_exploding_health", 800);
+			Convars.SetValue("z_witch_health", 1000);
+			BaseMaxIncaps = 2;
+			MaxTraumaDamage = 40;
+			stagger_dmg = 10000;
+			DirectorOptions.TankHitDamageModifierCoop = 0.48;
+		break;
+	}
 }
 
 DirectorOptions.SurvivorMaxIncapacitatedCount = BaseMaxIncaps;
@@ -274,8 +322,8 @@ if (swarmMode == "hardcore" || swarmMode == "survival" || swarmMode == "vs" || s
 ///////////////////////////////////////////////
 //             SETTINGS / OPTIONS            //
 ///////////////////////////////////////////////
-swarmTickInterval <- 1;				// In seconds
-swarmDamagePerTick <- 2;
+swarmTickInterval <- 0.5;				// In seconds
+swarmDamagePerTick <- 1;
 
 tankJumpVelocity <- 475;
 tankJumpExtraHeight <- 450;			// Max extra height from aiming up
@@ -294,7 +342,7 @@ boomerExplodeTime <- 3;				// In seconds
 exploderRunSpeed <- 320;			// Run speed while using explosion ability
 
 tallboyPunchKnockback <- 350;		// Max knockback
-tallboyRunSpeed <- 210;
+tallboyRunSpeed <- 250;
 
 // COMMON //
 acidCommonsMax <- 4;

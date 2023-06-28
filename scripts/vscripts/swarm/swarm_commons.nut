@@ -370,8 +370,8 @@ function CreateClown(common)
 
 	NetProps.SetPropInt(common, "m_Gender", 16);
 	common.SetModel(uncommonModel);
-	common.SetMaxHealth(150);
-	common.SetHealth(150);
+	common.SetMaxHealth(120);
+	common.SetHealth(120);
 
 	local commonName = "__uncommon_" + common.GetEntityIndex();
 	DoEntFire("!self", "AddOutput", "targetname " + commonName, 0, common, common);
@@ -407,8 +407,8 @@ function CreateRiot(common)
 
 	NetProps.SetPropInt(common, "m_Gender", 15);
 	common.SetModel(uncommonModel);
-	common.SetMaxHealth(500);
-	common.SetHealth(500);
+	common.SetMaxHealth(450);
+	common.SetHealth(450);
 
 	local commonName = "__uncommon_" + common.GetEntityIndex();
 	DoEntFire("!self", "AddOutput", "targetname " + commonName, 0, common, common);
@@ -444,8 +444,8 @@ function CreateMud(common)
 
 	NetProps.SetPropInt(common, "m_Gender", 12);
 	common.SetModel(uncommonModel);
-	common.SetMaxHealth(150);
-	common.SetHealth(150);
+	common.SetMaxHealth(120);
+	common.SetHealth(120);
 
 	local commonName = "__uncommon_" + common.GetEntityIndex();
 	DoEntFire("!self", "AddOutput", "targetname " + commonName, 0, common, common);
@@ -481,8 +481,8 @@ function CreateCeda(common)
 
 	NetProps.SetPropInt(common, "m_Gender", 11);
 	common.SetModel(uncommonModel);
-	common.SetMaxHealth(150);
-	common.SetHealth(150);
+	common.SetMaxHealth(120);
+	common.SetHealth(120);
 
 	local commonName = "__uncommon_" + common.GetEntityIndex();
 	DoEntFire("!self", "AddOutput", "targetname " + commonName, 0, common, common);
@@ -518,8 +518,8 @@ function CreateConstruction(common)
 
 	NetProps.SetPropInt(common, "m_Gender", 13);
 	common.SetModel(uncommonModel);
-	common.SetMaxHealth(150);
-	common.SetHealth(150);
+	common.SetMaxHealth(120);
+	common.SetHealth(120);
 
 	local commonName = "__uncommon_" + common.GetEntityIndex();
 	DoEntFire("!self", "AddOutput", "targetname " + commonName, 0, common, common);
@@ -555,8 +555,8 @@ function CreateJimmy(common)
 
 	NetProps.SetPropInt(common, "m_Gender", 17);
 	common.SetModel(uncommonModel);
-	common.SetMaxHealth(1500);
-	common.SetHealth(1500);
+	common.SetMaxHealth(450);
+	common.SetHealth(450);
 
 	local commonName = "__uncommon_" + common.GetEntityIndex();
 	DoEntFire("!self", "AddOutput", "targetname " + commonName, 0, common, common);
@@ -592,8 +592,8 @@ function CreateFallen(common)
 
 	NetProps.SetPropInt(common, "m_Gender", 14);
 	common.SetModel(uncommonModel);
-	common.SetMaxHealth(1000);
-	common.SetHealth(1000);
+	common.SetMaxHealth(450);
+	common.SetHealth(450);
 
 	local commonName = "__uncommon_fallen_" + common.GetEntityIndex();
 	DoEntFire("!self", "AddOutput", "targetname " + commonName, 0, common, common);

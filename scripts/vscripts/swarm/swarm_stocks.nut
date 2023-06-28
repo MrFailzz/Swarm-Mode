@@ -664,6 +664,7 @@ function RoundStart(params)
 
 	difficulty = GetDifficulty();
 	InitCorruptionCards();
+	SetDifficulty();
 
 	// Ends the game after the third wipe
 	if (swarmMode == "hardcore")

@@ -1118,20 +1118,17 @@ function ApplyTallboyCard()
 
 function CorruptionCard_Tallboy()
 {
-	Convars.SetValue("z_charger_health", 1360);
 	tallboyRunSpeed = 250
 }
 
 function CorruptionCard_Crusher()
 {
-	Convars.SetValue("z_charger_health", 1120);
-	tallboyRunSpeed = 250
+	tallboyRunSpeed = 220
 }
 
 function CorruptionCard_Bruiser()
 {
-	Convars.SetValue("z_charger_health", 1600);
-	tallboyRunSpeed = 210
+	tallboyRunSpeed = 190
 }
 
 // Hocker

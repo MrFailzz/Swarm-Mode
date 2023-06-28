@@ -189,3 +189,8 @@ function OnGameEvent_upgrade_pack_used(params)
 	BarbedWire(params);
 	AmmoPack(params);
 }
+
+function OnGameEvent_difficulty_changed(params)
+{
+	SetDifficulty();
+}
