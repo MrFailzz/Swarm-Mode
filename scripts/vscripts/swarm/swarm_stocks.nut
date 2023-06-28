@@ -768,6 +768,7 @@ function PlayerHurt(params)
 {
 	//Add FX when being hit by script spawned spit
 	local player = GetPlayerFromUserID(params.userid);
+	local attacker = GetPlayerFromUserID(params.attacker);
 
 	if (player.IsValid())
 	{
@@ -819,10 +820,11 @@ function PlayerHurt(params)
 				}
 			}
 		}
-		if (player.IsSurvivor() == false)
+		if (!player.IsSurvivor())
 		{
-			if (player.IsOnFire() == true)
+			while (player.IsOnFire())
 			{
+//				player.TakeDamage( 4, 8, attacker ); //Do cards effect this??
 				player.Extinguish();
 			}
 		}

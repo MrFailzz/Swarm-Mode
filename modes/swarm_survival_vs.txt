@@ -123,11 +123,11 @@
 		z_pounce_crouch_delay 0.2
 		survivor_pounce_victim_eye_height 64
 
-		inferno_damage 1500
-		survivor_burn_factor_easy 0.0025
-		survivor_burn_factor_normal 0.0025
-		survivor_burn_factor_hard 0.005
-		survivor_burn_factor_expert 0.01
+		inferno_damage 500
+		survivor_burn_factor_easy 0.025
+		survivor_burn_factor_normal 0.025
+		survivor_burn_factor_hard 0.05
+		survivor_burn_factor_expert 0.08
 
 		z_throttle_hit_interval_easy 0.5
 		z_throttle_hit_interval_normal 0.5

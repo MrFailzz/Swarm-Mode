@@ -174,7 +174,7 @@ Convars.SetValue("z_witch_always_kills", 0);
 // Need to figure out how base/scale really work. Increase fire dmg = remove permanent fire?
 //Convars.SetValue("fire_dmgbase", 100); 
 //Convars.SetValue("fire_dmgscale", 100);
-Convars.SetValue("fire_dmginterval", 0.25);
+Convars.SetValue("fire_dmginterval", 0.5);
 
 ///////////////////////////////////////////////
 //              DIRECTOR OPTIONS             //
