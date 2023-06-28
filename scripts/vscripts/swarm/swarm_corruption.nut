@@ -1177,7 +1177,6 @@ function CorruptionCard_Retch()
 	Convars.SetValue("z_exploding_speed", 210);
 	Convars.SetValue("z_vomit_duration", 2.5);
 	Convars.SetValue("z_vomit_range", 1600);
-	Convars.SetValue("z_female_boomer_spawn_chance", 0);
 }
 
 function CorruptionCard_Exploder()
@@ -1185,7 +1184,6 @@ function CorruptionCard_Exploder()
 	Convars.SetValue("z_exploding_speed", 250);
 	Convars.SetValue("z_vomit_duration", 0);
 	Convars.SetValue("z_vomit_range", 300);
-	Convars.SetValue("z_female_boomer_spawn_chance", 100);
 }
 
 ///////////////////////////////////////////////
