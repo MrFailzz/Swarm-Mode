@@ -231,7 +231,7 @@ function SetDifficulty()
 			Convars.SetValue("z_jockey_health", 300);
 			Convars.SetValue("z_gas_health", 200);
 			Convars.SetValue("z_exploding_health", 550);
-			Convars.SetValue("z_witch_health", 600);
+			Convars.SetValue("z_witch_health", 500);
 			BaseMaxIncaps = 3;
 			MaxTraumaDamage = 0;
 			stagger_dmg = 4000;
@@ -253,7 +253,7 @@ function SetDifficulty()
 			}
 			Convars.SetValue("z_jockey_health", 350);
 			Convars.SetValue("z_gas_health", 250);
-			Convars.SetValue("z_exploding_health", 650);
+			Convars.SetValue("z_exploding_health", 550);
 			Convars.SetValue("z_witch_health", 750);
 			BaseMaxIncaps = 3;
 			MaxTraumaDamage = 20;
@@ -276,7 +276,7 @@ function SetDifficulty()
 			}
 			Convars.SetValue("z_jockey_health", 450);
 			Convars.SetValue("z_gas_health", 300);
-			Convars.SetValue("z_exploding_health", 800);
+			Convars.SetValue("z_exploding_health", 700);
 			Convars.SetValue("z_witch_health", 1000);
 			BaseMaxIncaps = 2;
 			MaxTraumaDamage = 30;
@@ -299,7 +299,7 @@ function SetDifficulty()
 			}
 			Convars.SetValue("z_jockey_health", 450);
 			Convars.SetValue("z_gas_health", 300);
-			Convars.SetValue("z_exploding_health", 800);
+			Convars.SetValue("z_exploding_health", 700);
 			Convars.SetValue("z_witch_health", 1000);
 			BaseMaxIncaps = 2;
 			MaxTraumaDamage = 40;
