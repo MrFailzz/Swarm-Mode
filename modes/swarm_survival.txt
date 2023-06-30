@@ -48,11 +48,13 @@
 		z_vomit_velocityfadeend 2.4
 		z_vomit_lifetime 2.5
 		z_vomit_maxdamagedist 1600
-		z_notice_it_range 0
+		z_exploding_shove_max 99
+		z_exploding_shove_min 99
+		boomer_exposed_time_tolerance 0.1
 
 //		z_spit_interval 1
 //		spitter_pz_claw_dmg 3
-//		inferno_child_spawn_max_depth 2
+		inferno_child_spawn_max_depth 2
 
 		z_witch_damage 0
 		z_witch_attack_range 0

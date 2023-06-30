@@ -1128,7 +1128,7 @@ function CorruptionCard_Crusher()
 
 function CorruptionCard_Bruiser()
 {
-	tallboyRunSpeed = 190
+	tallboyRunSpeed = 200
 }
 
 // Hocker
@@ -1174,6 +1174,8 @@ function CorruptionCard_Retch()
 	Convars.SetValue("z_exploding_speed", 210);
 	Convars.SetValue("z_vomit_duration", 2.5);
 	Convars.SetValue("z_vomit_range", 1600);
+	Convars.SetValue("survivor_it_duration", 0.15);
+	Convars.SetValue("z_notice_it_range", 500);
 }
 
 function CorruptionCard_Exploder()
@@ -1181,6 +1183,8 @@ function CorruptionCard_Exploder()
 	Convars.SetValue("z_exploding_speed", 250);
 	Convars.SetValue("z_vomit_duration", 0);
 	Convars.SetValue("z_vomit_range", 300);
+	Convars.SetValue("survivor_it_duration", 0);
+	Convars.SetValue("z_notice_it_range", 500);
 }
 
 ///////////////////////////////////////////////
