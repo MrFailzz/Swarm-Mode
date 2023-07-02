@@ -34,7 +34,7 @@
 		tongue_bullet_radius 0
 		tongue_miss_delay 3
 		tongue_hit_delay 6
-		tongue_fly_speed 1250
+		tongue_fly_speed 1000
 		tongue_dropping_to_ground_time 0.5
 		tongue_los_forgiveness_time 1.5
 		tongue_no_progress_choke_early_delay 1.0
@@ -50,15 +50,15 @@
 		z_vomit_velocityfadeend 2.4
 		z_vomit_lifetime 2.5
 		z_vomit_maxdamagedist 1600
+		z_exploding_shove_max 99
+		z_exploding_shove_min 99
+		boomer_exposed_time_tolerance 0.1
 
 //		z_spit_interval 1
 //		spitter_pz_claw_dmg 3
-//		inferno_child_spawn_max_depth 2
-
-		z_witch_damage 0
-		z_witch_always_kills 0
+		inferno_child_spawn_max_depth 2
+		
 		z_witch_attack_range 0
-		z_witch_damage_per_kill_hit 0
 		z_witch_wander_personal_time 0
 		z_witch_wander_personal_space 180
 		z_witch_speed 180
@@ -66,13 +66,12 @@
 		
 		z_tank_damage_slow_max_range 0
 		tank_ground_pound_duration 3
-		tank_burn_duration 30
-		tank_burn_duration_hard 35
-		tank_burn_duration_expert 40
+		tank_burn_duration 130
+		tank_burn_duration_hard 140
+		tank_burn_duration_expert 150
 		tank_swing_physics_prop_force 0
 		vs_tank_damage 18
-		
-		z_ghost_delay_max 20
+		z_max_survivor_damage 100
 		
 		survivor_limp_health 15
 		survivor_incapacitated_cycle_time 0.3
@@ -85,14 +84,52 @@
 		pain_pills_health_value 0
 		pain_pills_health_threshold 1000
 		adrenaline_health_buffer 0
-		z_use_tolerance 0.98
+		z_use_tolerance 0.99
+		player_use_radius 86
+		player_incap_use_radius 86
 		sb_separation_danger_min_range 50
 		sb_separation_danger_min_range 250
+		sb_max_team_melee_weapons 2
+
+		//sleeper
+		z_lunge_power 700
+		hunter_pounce_loft_rate 0.015
+		hunter_pounce_max_loft_angle 20
+		z_hunter_health 50
+		z_pounce_damage_interrupt 50
+		z_pounce_delay 0.25
+		z_lunge_interval 100
+		hunter_pz_claw_dmg 0
+		hunter_leap_away_give_up_range 0
+		z_pounce_damage 1
+		z_hunter_max_pounce_bonus_damage 10
+		z_hunter_lunge_distance 400
+		hunter_pounce_ready_range 450
+		z_pounce_crouch_delay 0.2
+		survivor_pounce_victim_eye_height 64
+
+		inferno_damage 500
+		survivor_burn_factor_easy 0.025
+		survivor_burn_factor_normal 0.025
+		survivor_burn_factor_hard 0.05
+		survivor_burn_factor_expert 0.08
+
+		z_throttle_hit_interval_easy 0.5
+		z_throttle_hit_interval_normal 0.5
+		z_throttle_hit_interval_hard 0.5
+		z_throttle_hit_interval_expert 0.5
 		sv_infected_ceda_vomitjar_probability 0
 		sv_infected_police_tonfa_probability 0
 		sv_infected_riot_control_tonfa_probability 0
-		sb_max_team_melee_weapons 2
-		
+		z_mob_spawn_max_interval_easy 9999
+		z_mob_spawn_max_interval_expert 9999
+		z_mob_spawn_max_interval_hard 9999
+		z_mob_spawn_max_interval_normal 9999
+		z_mob_spawn_min_interval_easy 9999
+		z_mob_spawn_min_interval_expert 9999
+		z_mob_spawn_min_interval_hard 9999
+		z_mob_spawn_min_interval_normal 9999
+
 		// versus cvars
 		z_scrimmage_creep_delay 0
 		z_scrimmage_creep_rate 100
@@ -105,33 +142,5 @@
 		versus_tank_flow_team_variation 0
 		vomitjar_duration_infected_pz 15
 		z_frustration_spawn_delay 15
-
-		//sleeper
-		z_lunge_power 700
-		hunter_pounce_loft_rate 0.015
-		hunter_pounce_max_loft_angle 20
-
-		z_hunter_health 50
-		z_pounce_damage_interrupt 50
-		z_pounce_delay 0.25
-		z_lunge_interval 100
-		hunter_pz_claw_dmg 0
-		hunter_leap_away_give_up_range 0
-
-		z_pounce_damage 1
-		z_hunter_max_pounce_bonus_damage 10
-
-		z_hunter_lunge_distance 400
-		hunter_pounce_ready_range 450
-		z_pounce_crouch_delay 0.2
-
-		survivor_pounce_victim_eye_height 64
-
-		sb_friend_immobilized_reaction_time_hard 2
-		sb_friend_immobilized_reaction_time_expert 2
-		sb_friend_immobilized_reaction_time_vs 2
-
-		z_witch_burn_time 1
-		z_witch_speed_inured 150
 	}
 }

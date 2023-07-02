@@ -187,6 +187,10 @@ function OnGameEvent_item_pickup(params)
 function OnGameEvent_upgrade_pack_used(params)
 {
 	BarbedWire(params);
-// Need a way to distinguish these
-//	AmmoPack(params);
+	AmmoPack(params);
+}
+
+function OnGameEvent_difficulty_changed(params)
+{
+	SetDifficulty();
 }

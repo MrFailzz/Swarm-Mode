@@ -753,7 +753,7 @@ function TallboyTimerFunc(count = 4, zType = 6)
 		{
 			ZSpawn({type = zType});
 			i++;
-			SpecialHordeTimer = Time() + 90;
+			SpecialHordeTimer = Time() + 120 + 30;
 		}
 	}
 	else if (SpecialHordeTimer < Time() + 5)
@@ -778,7 +778,7 @@ function CrusherTimerFunc(count = 4, zType = 6)
 		{
 			ZSpawn({type = zType});
 			i++;
-			SpecialHordeTimer = Time() + 90;
+			SpecialHordeTimer = Time() + 120 + 30;
 		}
 	}
 	else if (SpecialHordeTimer < Time() + 5)
@@ -803,7 +803,7 @@ function BruiserTimerFunc(count = 4, zType = 6)
 		{
 			ZSpawn({type = zType});
 			i++;
-			SpecialHordeTimer = Time() + 90;
+			SpecialHordeTimer = Time() + 120 + 30;
 		}
 	}
 	else if (SpecialHordeTimer < Time() + 5)
@@ -828,7 +828,7 @@ function StalkerTimerFunc(count = 4, zType = 5)
 		{
 			ZSpawn({type = zType});
 			i++;
-			SpecialHordeTimer = Time() + 90;
+			SpecialHordeTimer = Time() + 120 + 30;
 		}
 	}
 	else if (SpecialHordeTimer < Time() + 5)
@@ -853,7 +853,7 @@ function HockerTimerFunc(count = 4, zType = 1)
 		{
 			ZSpawn({type = zType});
 			i++;
-			SpecialHordeTimer = Time() + 90;
+			SpecialHordeTimer = Time() + 120 + 30;
 		}
 	}
 	else if (SpecialHordeTimer < Time() + 5)
@@ -878,7 +878,7 @@ function ExploderTimerFunc(count = 4, zType = 2)
 		{
 			ZSpawn({type = zType});
 			i++;
-			SpecialHordeTimer = Time() + 90;
+			SpecialHordeTimer = Time() + 120 + 30;
 		}
 	}
 	else if (SpecialHordeTimer < Time() + 5)
@@ -904,7 +904,7 @@ function RetchTimerFunc(count = 4, zType = 2)
 		{
 			ZSpawn({type = zType});
 			i++;
-			SpecialHordeTimer = Time() + 90;
+			SpecialHordeTimer = Time() + 120 + 30;
 		}
 	}
 	else if (SpecialHordeTimer < Time() + 5)
@@ -1118,20 +1118,17 @@ function ApplyTallboyCard()
 
 function CorruptionCard_Tallboy()
 {
-	Convars.SetValue("z_charger_health", 1360);
 	tallboyRunSpeed = 250
 }
 
 function CorruptionCard_Crusher()
 {
-	Convars.SetValue("z_charger_health", 1120);
-	tallboyRunSpeed = 250
+	tallboyRunSpeed = 220
 }
 
 function CorruptionCard_Bruiser()
 {
-	Convars.SetValue("z_charger_health", 1600);
-	tallboyRunSpeed = 210
+	tallboyRunSpeed = 200
 }
 
 // Hocker
@@ -1177,7 +1174,8 @@ function CorruptionCard_Retch()
 	Convars.SetValue("z_exploding_speed", 210);
 	Convars.SetValue("z_vomit_duration", 2.5);
 	Convars.SetValue("z_vomit_range", 1600);
-	Convars.SetValue("z_female_boomer_spawn_chance", 0);
+	Convars.SetValue("survivor_it_duration", 0.33);
+	Convars.SetValue("z_notice_it_range", 500);
 }
 
 function CorruptionCard_Exploder()
@@ -1185,7 +1183,8 @@ function CorruptionCard_Exploder()
 	Convars.SetValue("z_exploding_speed", 250);
 	Convars.SetValue("z_vomit_duration", 0);
 	Convars.SetValue("z_vomit_range", 300);
-	Convars.SetValue("z_female_boomer_spawn_chance", 100);
+	Convars.SetValue("survivor_it_duration", 0);
+	Convars.SetValue("z_notice_it_range", 500);
 }
 
 ///////////////////////////////////////////////

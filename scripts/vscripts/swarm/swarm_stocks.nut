@@ -657,10 +657,14 @@ function RandomItemDrop(origin)
 
 function RoundStart(params)
 {
+	if (!IsModelPrecached("models/swarm/barricade_razorwire001_128_reference.mdl"))
+		PrecacheModel("models/swarm/barricade_razorwire001_128_reference.mdl");
+
 	CreateCardHud();
 
 	difficulty = GetDifficulty();
 	InitCorruptionCards();
+	SetDifficulty();
 
 	// Ends the game after the third wipe
 	if (swarmMode == "hardcore")
@@ -674,6 +678,10 @@ function RoundStart(params)
 			Convars.SetValue("sv_permawipe", "0");
 		}
 	}
+
+	local expl_pack = null;
+	while (expl_pack = Entities.FindByModel(expl_pack, "models/w_models/weapons/w_eq_explosive_ammopack.mdl"))
+		expl_pack.SetModel("models/swarm/barricade_razorwire001_128_reference.mdl");
 }
 
 function PlayerLeftSafeArea(params)
@@ -707,31 +715,31 @@ function PlayerLeftSafeArea(params)
 					break;
 				case "hordeTallboy":
 					TallboyHordeEnabled = true;
-					SpecialHordeTimer = Time() + 90 + 30;
+					SpecialHordeTimer = Time() + 120 + 30;
 					break;
 				case "hordeCrusher":
 					CrusherHordeEnabled = true;
-					SpecialHordeTimer = Time() + 90 + 30;
+					SpecialHordeTimer = Time() + 120 + 30;
 					break;
 				case "hordeBruiser":
 					BruiserHordeEnabled = true;
-					SpecialHordeTimer = Time() + 90 + 30;
+					SpecialHordeTimer = Time() + 120 + 30;
 					break;
 				case "hordeStalker":
 					StalkerHordeEnabled = true;
-					SpecialHordeTimer = Time() + 90 + 30;
+					SpecialHordeTimer = Time() + 120 + 30;
 					break;
 				case "hordeHocker":
 					HockerHordeEnabled = true;
-					SpecialHordeTimer = Time() + 90 + 30;
+					SpecialHordeTimer = Time() + 120 + 30;
 					break;
 				case "hordeExploder":
 					ExploderHordeEnabled = true;
-					SpecialHordeTimer = Time() + 90 + 30;
+					SpecialHordeTimer = Time() + 120 + 30;
 					break;
 				case "hordeRetch":
 					RetchHordeEnabled = true;
-					SpecialHordeTimer = Time() + 90 + 30;
+					SpecialHordeTimer = Time() + 120 + 30;
 					break;
 			}
 
@@ -761,6 +769,7 @@ function PlayerHurt(params)
 {
 	//Add FX when being hit by script spawned spit
 	local player = GetPlayerFromUserID(params.userid);
+	local attacker = GetPlayerFromUserID(params.attacker);
 
 	if (player.IsValid())
 	{
@@ -812,19 +821,9 @@ function PlayerHurt(params)
 				}
 			}
 		}
-		if (player.IsSurvivor() == false)
+		if (!player.IsSurvivor() && player.IsOnFire())
 		{
-			if ("type" in params)
-			{
-				if (params.type == 8)
-				{
-					//if (Time() > extinguish_time + 5)
-					//{
-						player.Extinguish()
-						extinguish_time = Time();
-					//}
-				}
-			}
+			player.Extinguish();
 		}
 	}
 }
@@ -1209,7 +1208,7 @@ function Update()
 		FrigidOutskirtsTimer();
 	}
 
-	difficulty_RandomBoss()
+	difficulty_RandomBoss();
 
 	if (corruptionHazards == "hazardSnitch" || corruptionBoss == "hazardBreaker" || corruptionBoss == "hazardOgre")
 	{
@@ -1447,83 +1446,117 @@ function GetColor32( color32 )
 
 function BarbedWire(params)
 {
+	if (!IsModelPrecached("models/props_fortifications/barricade_razorwire001_128_reference.mdl"))
+		PrecacheModel("models/props_fortifications/barricade_razorwire001_128_reference.mdl");
+
 	local ItemstoRemove_ModelPaths =
 	[
-		"models/props/terror/incendiary_ammo.mdl",
 		"models/props/terror/exploding_ammo.mdl",
 	];
 
-	local player = GetPlayerFromUserID(params.userid);
-	local wireX = player.GetOrigin().x;
-	local wireY = player.GetOrigin().y;
-	local wireZ = player.GetOrigin().z;
-	local wireAngleX = player.GetAngles().x;
-	local wireAngleY = player.GetAngles().y;
-	local wireName = "wire";
-	local wire = SpawnEntityFromTable("prop_dynamic",
-	{
-		targetname = wireName,
-		origin = Vector(wireX, wireY, wireZ+18),
-		angles = Vector(wireAngleX, wireAngleY, 0)
-		model = "models/props_street/concertinawire128_rusty.mdl",
-		solid = 0,
-		disableshadows = 1,
-	});
-	local wireTrigger = SpawnEntityFromTable("trigger_hurt",
-	{
-		targetname = wireName + "_trigger",
-		origin = Vector(wireX, wireY, wireZ),
-		damagetype = 0,
-		damage = 25,
-		spawnflags = 3,
-		filtername = "__swarm_filter_infected"
-	});
-
-	// Set up trigger
-	DoEntFire("!self", "AddOutput", "mins -44 -44 0", 0, null, wireTrigger);
-	DoEntFire("!self", "AddOutput", "maxs 44 44 28", 0, null, wireTrigger);
-	DoEntFire("!self", "AddOutput", "solid 2", 0, null, wireTrigger);
 	// Remove ammo pack model
 	foreach(modelpath in ItemstoRemove_ModelPaths)
 	{
 		local weapon_ent = null;
 		while(weapon_ent = Entities.FindByModel(weapon_ent, modelpath))
+		{
 			weapon_ent.Kill();
+
+			// Create barbed wire
+			local player = GetPlayerFromUserID(params.userid);
+			local wireX = player.GetOrigin().x;
+			local wireY = player.GetOrigin().y;
+			local wireZ = player.GetOrigin().z;
+			local wireAngleX = player.GetAngles().x;
+			local wireAngleY = player.GetAngles().y;
+			local wireName = "wire";
+			local wire = SpawnEntityFromTable("prop_dynamic",
+			{
+				targetname = wireName,
+				origin = Vector(wireX, wireY, wireZ),
+				angles = Vector(wireAngleX, wireAngleY, 0)
+				model = "models/props_fortifications/barricade_razorwire001_128_reference.mdl",
+				solid = 0,
+				disableshadows = 1,
+			});
+			local wireDmgTrigger = SpawnEntityFromTable("trigger_hurt",
+			{
+				targetname = wireName + "_trigger",
+				origin = Vector(wireX, wireY, wireZ),
+				damagetype = 0,
+				damage = 50,
+				spawnflags = 3,
+				filtername = "__swarm_filter_infected"
+			});
+			local wireSlowTrigger = SpawnEntityFromTable("trigger_playermovement",
+			{
+				targetname = wireName + "_trigger",
+				origin = Vector(wireX, wireY, wireZ),
+				StartDisabled = false,
+				spawnflags = 4099,
+				filtername = "__swarm_filter_infected"
+			});
+
+			// Set up trigger
+			DoEntFire("!self", "AddOutput", "mins -44 -44 0", 0, null, wireDmgTrigger);
+			DoEntFire("!self", "AddOutput", "maxs 44 44 24", 0, null, wireDmgTrigger);
+			DoEntFire("!self", "AddOutput", "solid 2", 0, null, wireDmgTrigger);
+
+			DoEntFire("!self", "AddOutput", "mins -44 -44 0", 0, null, wireSlowTrigger);
+			DoEntFire("!self", "AddOutput", "maxs 44 44 24", 0, null, wireSlowTrigger);
+			DoEntFire("!self", "AddOutput", "solid 2", 0, null, wireSlowTrigger);
+		}
 	}
 }
 
-/*
+
 function AmmoPack(params)
 {
 	local ItemstoRemove_ModelPaths =
 	[
-		"models/props/terror/incendiary_ammo.mdl",
-		"models/props/terror/exploding_ammo.mdl",
+		"models/props/terror/incendiary_ammo.mdl"
 	];
-
-	local player = GetPlayerFromUserID(params.userid);
-	local ammoX = player.GetOrigin().x;
-	local ammoY = player.GetOrigin().y;
-	local ammoZ = player.GetOrigin().z;
-	local ammoAngleX = player.GetAngles().x;
-	local ammoAngleY = player.GetAngles().y;
-	local ammoName = "ammoPile";
-	local ammoPile = SpawnEntityFromTable("weapon_ammo_spawn",
-	{
-		targetname = ammoName,
-		origin = Vector(ammoX, ammoY, ammoZ),
-		angles = Vector(ammoAngleX, ammoAngleY, 0)
-		model = "models/props/terror/ammo_stack.mdl",
-		solid = 0,
-		disableshadows = 1,
-	});
 
 	// Remove ammo pack model
 	foreach(modelpath in ItemstoRemove_ModelPaths)
 	{
 		local weapon_ent = null;
 		while(weapon_ent = Entities.FindByModel(weapon_ent, modelpath))
-			weapon_ent.Kill();
+            {
+		    	weapon_ent.Kill();
+
+				// Create ammo pile
+                local player = GetPlayerFromUserID(params.userid);
+		    	local ammoX = player.GetOrigin().x;
+                local ammoY = player.GetOrigin().y;
+	            local ammoZ = player.GetOrigin().z;
+	            local ammoAngleX = player.GetAngles().x;
+	            local ammoAngleY = player.GetAngles().y;
+	            local ammoName = "ammoPile";
+	            local ammoPile = SpawnEntityFromTable("weapon_ammo_spawn",
+	            {
+		            targetname = ammoName,
+		            origin = Vector(ammoX, ammoY, ammoZ),
+		            angles = Vector(ammoAngleX, ammoAngleY, 0)
+		            model = "models/props/terror/ammo_stack.mdl",
+		            solid = 0,
+		            disableshadows = 1,
+	            });
+            }
 	}
 }
-*/
+
+function AllowBash(basher, bashee)
+{
+    if (bashee.IsPlayer())
+    {
+        if (bashee.GetZombieType() == 2)
+        {
+            return ALLOW_BASH_NONE;
+        }
+        else
+        {
+            return ALLOW_BASH_ALL;
+        }
+    }
+}

@@ -3,23 +3,42 @@
 ///////////////////////////////////////////////
 function MutationSpawn(player)
 {
-	if (!IsModelPrecached("models/infected/hunter_l4d1.mdl"))
-		PrecacheModel("models/infected/hunter_l4d1.mdl");
-	if (!IsModelPrecached("models/infected/hunter.mdl"))
-		PrecacheModel("models/infected/hunter.mdl");
+	if (!IsModelPrecached("models/infected/smoker.mdl"))
+		PrecacheModel("models/infected/smoker.mdl");
+	if (!IsModelPrecached("models/swarm/infected/hunter.mdl"))
+		PrecacheModel("models/swarm/infected/hunter.mdl");
+	if (!IsModelPrecached("models/swarm/infected/boomer.mdl"))
+		PrecacheModel("models/swarm/infected/boomer.mdl");
+	if (!IsModelPrecached("models/swarm/infected/boomette.mdl"))
+		PrecacheModel("models/swarm/infected/boomette.mdl");
+	if (!IsModelPrecached("models/infected/limbs/exploded_boomette.mdl"));
+		PrecacheModel("models/infected/limbs/exploded_boomette.mdl");
 
 	//Smoker = 1, Boomer = 2, Hunter = 3, Spitter = 4, Jockey = 5, Charger = 6, Witch = 7, Tank = 8, Survivor = 9
 	switch(player.GetZombieType())
 	{
 		case 1:
 		{
-			player.SetModel("models/infected/hunter_l4d1.mdl");
+			player.SetModel("models/infected/smoker.mdl");
 			break;
+		}
+		case 2:
+		{
+			if (corruptionRetch == "Exploder")
+			{
+				player.SetModel("models/swarm/infected/boomer.mdl");
+				break;
+			}
+			else if (corruptionRetch == "Retch")
+			{
+				player.SetModel("models/swarm/infected/boomette.mdl");
+				break;
+			}
 		}
 		case 3:
 		{
 			//Make regular hunters always use L4D2 model so we can change texture
-			player.SetModel("models/infected/hunter.mdl");
+			player.SetModel("models/swarm/infected/hunter.mdl");
 			NetProps.SetPropInt(player, "m_fFlags", NetProps.GetPropInt(player, "m_fFlags") | (1 << 6)) //FL_ATCONTROLS			(1 << 6)	/**< Player can't move, but keeps key inputs for controlling another entity */
 			break;
 		}
@@ -272,7 +291,7 @@ function SnitchAlerted(params)
 		//witchEnt.SetSequence(8)
 
 		//Set witch on fire
-		witchEnt.TakeDamage(250, 8, null);
+		//witchEnt.TakeDamage(250, 8, null);
 	}
 }
 
