@@ -32,7 +32,7 @@
 		tongue_bullet_radius 0
 		tongue_miss_delay 3
 		tongue_hit_delay 6
-		tongue_fly_speed 1250
+		tongue_fly_speed 1000
 		tongue_dropping_to_ground_time 0.5
 		tongue_los_forgiveness_time 1.5
 		tongue_no_progress_choke_early_delay 1.0
@@ -55,10 +55,8 @@
 //		z_spit_interval 1
 //		spitter_pz_claw_dmg 3
 		inferno_child_spawn_max_depth 2
-
-		z_witch_damage 0
+		
 		z_witch_attack_range 0
-		z_witch_damage_per_kill_hit 0
 		z_witch_wander_personal_time 0
 		z_witch_wander_personal_space 180
 		z_witch_speed 180
@@ -89,13 +87,7 @@
 		player_incap_use_radius 86
 		sb_separation_danger_min_range 50
 		sb_separation_danger_min_range 250
-		sv_infected_ceda_vomitjar_probability 0
-		sv_infected_police_tonfa_probability 0
-		sv_infected_riot_control_tonfa_probability 0
 		sb_max_team_melee_weapons 2
-		
-		// survival cvars
-		director_convert_pills 0
 
 		//sleeper
 		z_lunge_power 700
@@ -124,7 +116,9 @@
 		z_throttle_hit_interval_normal 0.5
 		z_throttle_hit_interval_hard 0.5
 		z_throttle_hit_interval_expert 0.5
-
+		sv_infected_ceda_vomitjar_probability 0
+		sv_infected_police_tonfa_probability 0
+		sv_infected_riot_control_tonfa_probability 0
 		z_mob_spawn_max_interval_easy 9999
 		z_mob_spawn_max_interval_expert 9999
 		z_mob_spawn_max_interval_hard 9999
@@ -133,5 +127,8 @@
 		z_mob_spawn_min_interval_expert 9999
 		z_mob_spawn_min_interval_hard 9999
 		z_mob_spawn_min_interval_normal 9999
+		
+		// survival cvars
+		director_convert_pills 0
 	}
 }

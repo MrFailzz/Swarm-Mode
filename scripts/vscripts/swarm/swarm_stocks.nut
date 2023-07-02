@@ -821,13 +821,9 @@ function PlayerHurt(params)
 				}
 			}
 		}
-		if (!player.IsSurvivor())
+		if (!player.IsSurvivor() && player.IsOnFire())
 		{
-			while (player.IsOnFire())
-			{
-//				player.TakeDamage( 4, 8, attacker ); //Do cards effect this??
-				player.Extinguish();
-			}
+			player.Extinguish();
 		}
 	}
 }
