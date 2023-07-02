@@ -4,7 +4,7 @@
 	"maxplayers"    "8"
 	"playercontrolledzombies"	"1"
 	"Author"	"Failzz, Derpduck"
-	"DisplayTitle"	"Swarm Survival"
+	"DisplayTitle"	"Swarm Survival Vs"
 	"Description" "Advancing the genre"
 	"Image"		"maps/any"
 
