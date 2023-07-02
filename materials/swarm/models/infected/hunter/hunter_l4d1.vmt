@@ -1,6 +1,6 @@
 vertexlitgeneric
 {
-$baseTexture "models\infected\hunter/hunter_l4d1"
+$baseTexture "swarm\models\infected\hunter/hunter_l4d1"
 $shinyblood 1
 $shinybloodexponent 8
 $halflambert 1
@@ -12,7 +12,7 @@ $phongexponent 1
 
 $phongfresnelranges "[1 0 .25]"
 $allowdiffusemodulation 0
-$detail "models/infected/hunter/hunter_01_detail.vtf"
+$detail "swarm\models/infected/hunter/hunter_01_detail.vtf"
 $detailscale 2
 $detailblendfactor .001
 $detailblendmode 0

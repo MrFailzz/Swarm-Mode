@@ -1,7 +1,7 @@
 VertexLitGeneric
 {
-$baseTexture "models\infected\boomer/boomer_color"
-$bumpmap "models\infected\boomer/boomer_normal"
+$baseTexture "swarm\models\infected\boomer/boomer_color"
+$bumpmap "swarm\models\infected\boomer/boomer_normal"
 $allowdiffusemodulation 1
 $lightwarptexture "models\survivors\coach\coach_head_wrp"
 $halflambert 0

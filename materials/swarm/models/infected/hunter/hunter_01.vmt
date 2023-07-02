@@ -1,8 +1,8 @@
 vertexlitgeneric
 {
-$baseTexture "models\infected\hunter\hunter_01"
-$bumpmap "models\infected\hunter\hunter_normal"
-$phongexponenttexture "models\infected\hunter\hunter_exponent"
+$baseTexture "swarm\models\infected\hunter\hunter_01"
+$bumpmap "swarm\models\infected\hunter\hunter_normal"
+$phongexponenttexture "swarm\models\infected\hunter\hunter_exponent"
 $shinyblood 1
 $shinybloodexponent 10
 $halflambert 0
@@ -13,7 +13,7 @@ $phongfresnelranges "[1 .01 .1]"
 
 $allowdiffusemodulation 0
 $lightwarptexture "models\survivors\coach\coach_head_wrp"
-$detail "models/infected/hunter/hunter_01_detail.vtf"
+$detail "swarm\models/infected/hunter/hunter_01_detail.vtf"
 $detailscale 2
 $detailblendfactor .001
 $detailblendmode 0

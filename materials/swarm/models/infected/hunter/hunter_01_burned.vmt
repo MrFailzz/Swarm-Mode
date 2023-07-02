@@ -1,8 +1,8 @@
 vertexlitgeneric
 {
-$baseTexture "models\infected\hunter\hunter_01"
-$bumpmap "models\infected\hunter\hunter_normal"
-$phongexponenttexture "models\infected\hunter\hunter_exponent"
+$baseTexture "swarm\models\infected\hunter\hunter_01"
+$bumpmap "swarm\models\infected\hunter\hunter_normal"
+$phongexponenttexture "swarm\models\infected\hunter\hunter_exponent"
 $shinyblood 1
 $shinybloodexponent 10
 $halflambert 0

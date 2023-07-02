@@ -1,6 +1,6 @@
 VertexLitGeneric
 {
-$baseTexture "models\infected\boomer/Boomer_exploded_01"
+$baseTexture "swarm\models\infected\boomer/Boomer_exploded_01"
 $shinyblood 1
 $shinybloodexponent 10
 $halflambert 1
