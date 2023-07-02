@@ -715,31 +715,31 @@ function PlayerLeftSafeArea(params)
 					break;
 				case "hordeTallboy":
 					TallboyHordeEnabled = true;
-					SpecialHordeTimer = Time() + 90 + 30;
+					SpecialHordeTimer = Time() + 120 + 30;
 					break;
 				case "hordeCrusher":
 					CrusherHordeEnabled = true;
-					SpecialHordeTimer = Time() + 90 + 30;
+					SpecialHordeTimer = Time() + 120 + 30;
 					break;
 				case "hordeBruiser":
 					BruiserHordeEnabled = true;
-					SpecialHordeTimer = Time() + 90 + 30;
+					SpecialHordeTimer = Time() + 120 + 30;
 					break;
 				case "hordeStalker":
 					StalkerHordeEnabled = true;
-					SpecialHordeTimer = Time() + 90 + 30;
+					SpecialHordeTimer = Time() + 120 + 30;
 					break;
 				case "hordeHocker":
 					HockerHordeEnabled = true;
-					SpecialHordeTimer = Time() + 90 + 30;
+					SpecialHordeTimer = Time() + 120 + 30;
 					break;
 				case "hordeExploder":
 					ExploderHordeEnabled = true;
-					SpecialHordeTimer = Time() + 90 + 30;
+					SpecialHordeTimer = Time() + 120 + 30;
 					break;
 				case "hordeRetch":
 					RetchHordeEnabled = true;
-					SpecialHordeTimer = Time() + 90 + 30;
+					SpecialHordeTimer = Time() + 120 + 30;
 					break;
 			}
 
