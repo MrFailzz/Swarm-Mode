@@ -431,7 +431,7 @@ function AllowTakeDamage(damageTable)
 								+ (-0.4 * ToughSkin));
 				if (GamblerVictim > 0)
 				{
-					damageModifier += ApplyGamblerValue(GetSurvivorID(victim), 1, GamblerVictim, damageModifier);
+					damageModifier += ApplyGamblerValue(GetSurvivorID(victim), 1, GamblerVictim, damageModifier) * -1;
 				}
 				damageDone = damageDone * damageModifier;
 			}
