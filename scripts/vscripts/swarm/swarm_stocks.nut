@@ -1545,3 +1545,18 @@ function AmmoPack(params)
             }
 	}
 }
+
+function AllowBash(basher, bashee)
+{
+    if (bashee.IsPlayer())
+    {
+        if (bashee.GetZombieType() == 2)
+        {
+            return ALLOW_BASH_NONE;
+        }
+        else
+        {
+            return ALLOW_BASH_ALL;
+        }
+    }
+}
