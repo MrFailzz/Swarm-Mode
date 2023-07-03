@@ -657,9 +657,6 @@ function RandomItemDrop(origin)
 
 function RoundStart(params)
 {
-	if (!IsModelPrecached("models/swarm/barricade_razorwire001_128_reference.mdl"))
-		PrecacheModel("models/swarm/barricade_razorwire001_128_reference.mdl");
-
 	CreateCardHud();
 
 	difficulty = GetDifficulty();
@@ -678,10 +675,6 @@ function RoundStart(params)
 			Convars.SetValue("sv_permawipe", "0");
 		}
 	}
-
-	local expl_pack = null;
-	while (expl_pack = Entities.FindByModel(expl_pack, "models/w_models/weapons/w_eq_explosive_ammopack.mdl"))
-		expl_pack.SetModel("models/swarm/barricade_razorwire001_128_reference.mdl");
 }
 
 function PlayerLeftSafeArea(params)
@@ -748,6 +741,7 @@ function PlayerLeftSafeArea(params)
 
 			ModifyHittables();
 			ApplyEnvironmentalCard();
+			PropModels();
 
 			if (corruptionHazards == "hazardLockdown")
 			{
@@ -1443,7 +1437,6 @@ function GetColor32( color32 )
 	return t;
 }
 
-
 function BarbedWire(params)
 {
 	if (!IsModelPrecached("models/props_fortifications/barricade_razorwire001_128_reference.mdl"))
@@ -1509,7 +1502,6 @@ function BarbedWire(params)
 	}
 }
 
-
 function AmmoPack(params)
 {
 	local ItemstoRemove_ModelPaths =
@@ -1544,6 +1536,25 @@ function AmmoPack(params)
 	            });
             }
 	}
+}
+
+function PropModels()
+{
+	if (!IsModelPrecached("models/swarm/props/barricade_razorwire001_128_reference.mdl"))
+		PrecacheModel("models/swarm/props/barricade_razorwire001_128_reference.mdl");
+	if (!IsModelPrecached("models/swarm/props/w_eq_incendiary_ammopack.mdl"))
+		PrecacheModel("models/swarm/props/w_eq_incendiary_ammopack.mdl");
+
+	local expl_pack = null;
+	local ince_pack = null;
+	while (expl_pack = Entities.FindByModel(expl_pack, "models/w_models/weapons/w_eq_explosive_ammopack.mdl"))
+	{
+		expl_pack.SetModel("models/swarm/props/barricade_razorwire001_128_reference.mdl");
+	}
+	while (ince_pack = Entities.FindByModel(ince_pack, "models/w_models/weapons/w_eq_incendiary_ammopack.mdl"))
+	{
+		ince_pack.SetModel("models/swarm/props/w_eq_incendiary_ammopack.mdl");
+	}	
 }
 
 function AllowBash(basher, bashee)

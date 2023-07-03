@@ -90,6 +90,7 @@
 		sb_separation_danger_min_range 50
 		sb_separation_danger_min_range 250
 		sb_max_team_melee_weapons 2
+		car_alarm_distance 3000
 
 		//sleeper
 		z_lunge_power 700
