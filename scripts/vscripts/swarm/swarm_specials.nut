@@ -11,6 +11,8 @@ function MutationSpawn(player)
 		PrecacheModel("models/swarm/infected/boomer.mdl");
 	if (!IsModelPrecached("models/swarm/infected/boomette.mdl"))
 		PrecacheModel("models/swarm/infected/boomette.mdl");
+	if (!IsModelPrecached("models/swarm/infected/boomer_l4d1.mdl"))
+		PrecacheModel("models/swarm/infected/boomer_l4d1.mdl");
 	if (!IsModelPrecached("models/infected/limbs/exploded_boomette.mdl"));
 		PrecacheModel("models/infected/limbs/exploded_boomette.mdl");
 
@@ -32,6 +34,11 @@ function MutationSpawn(player)
 			else if (corruptionRetch == "Retch")
 			{
 				player.SetModel("models/swarm/infected/boomette.mdl");
+				break;
+			}
+			else if (corruptionRetch == "Reeker")
+			{
+				player.SetModel("models/swarm/infected/boomer_l4d1.mdl");
 				break;
 			}
 		}

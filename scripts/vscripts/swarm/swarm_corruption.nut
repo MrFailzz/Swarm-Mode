@@ -71,6 +71,7 @@ function InitCorruptionCards()
 	cardsRetch.clear();
 	cardsRetch.append("Retch");
 	cardsRetch.append("Exploder");
+	cardsRetch.append("Reeker");
 	corruptionRetch = ChooseCorruptionCard(cardsRetch, true);
 	ApplyRetchCard();
 
@@ -1166,6 +1167,9 @@ function ApplyRetchCard()
 		case "Exploder":
 			CorruptionCard_Exploder();
 			break;
+		case "Reeker":
+			CorruptionCard_Reeker();
+			break;
 	}
 }
 
@@ -1176,6 +1180,9 @@ function CorruptionCard_Retch()
 	Convars.SetValue("z_vomit_range", 1600);
 	Convars.SetValue("survivor_it_duration", 0.33);
 	Convars.SetValue("z_notice_it_range", 500);
+	Convars.SetValue("z_exploding_inner_radius", 0);
+	Convars.SetValue("z_exploding_outer_radius", 0);
+	Convars.SetValue("z_exploding_splat_radius", 0);
 }
 
 function CorruptionCard_Exploder()
@@ -1185,6 +1192,22 @@ function CorruptionCard_Exploder()
 	Convars.SetValue("z_vomit_range", 300);
 	Convars.SetValue("survivor_it_duration", 0);
 	Convars.SetValue("z_notice_it_range", 500);
+	Convars.SetValue("z_exploding_inner_radius", 0);
+	Convars.SetValue("z_exploding_outer_radius", 0);
+	Convars.SetValue("z_exploding_splat_radius", 0);
+}
+
+function CorruptionCard_Reeker()
+{
+	Convars.SetValue("z_exploding_speed", 250);
+	Convars.SetValue("z_vomit_duration", 0);
+	Convars.SetValue("z_vomit_range", 0);
+	Convars.SetValue("survivor_it_duration", 20);
+	Convars.SetValue("z_notice_it_range", 1500);
+	Convars.SetValue("z_exploding_inner_radius", 130);
+	Convars.SetValue("z_exploding_outer_radius", 200);
+	Convars.SetValue("z_exploding_splat_radius", 200);
+	DirectorOptions.BileMobSize = 20
 }
 
 ///////////////////////////////////////////////

@@ -40,18 +40,15 @@
 		tongue_choke_damage_amount 5
 		smoker_pz_claw_dmg 4
 
-		z_exploding_inner_radius 0
-		z_exploding_outer_radius 0
-		z_exploding_splat_radius 0
 		boomer_pz_claw_dmg 4
-		z_vomit_velocity 3500
+		z_vomit_velocity 4000
 		z_vomit_velocityfadestart 1.8
-		z_vomit_velocityfadeend 2.4
+		z_vomit_velocityfadeend 2.5
 		z_vomit_lifetime 2.5
-		z_vomit_maxdamagedist 1600
+		z_vomit_maxdamagedist 1800
 		z_exploding_shove_max 99
 		z_exploding_shove_min 99
-		boomer_exposed_time_tolerance 0.1
+		z_vomit_interval 8
 
 //		z_spit_interval 1
 //		spitter_pz_claw_dmg 3
