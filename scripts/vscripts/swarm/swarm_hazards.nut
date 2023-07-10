@@ -36,6 +36,8 @@ function InitAlarmDoors()
 {
 	if (!IsModelPrecached("models/props_doors/emergency_exit_sign.mdl"))
 		PrecacheModel("models/props_doors/emergency_exit_sign.mdl");
+	if (!IsSoundPrecached("vehicles\\car_alarm\\car_alarm.wav"))
+		PrecacheSound("vehicles\\car_alarm\\car_alarm.wav");
 
 	local remainingDoors = null;
 	local door = null;
