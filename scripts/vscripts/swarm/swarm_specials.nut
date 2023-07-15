@@ -22,6 +22,7 @@ function MutationSpawn(player)
 		case 1:
 		{
 			player.SetModel("models/infected/smoker.mdl");
+			DirectorOptions.SmokerLimit = RandomInt(1,4)
 			break;
 		}
 		case 2:
@@ -41,6 +42,8 @@ function MutationSpawn(player)
 				player.SetModel("models/swarm/infected/boomer_l4d1.mdl");
 				break;
 			}
+
+			DirectorOptions.BoomerLimit = RandomInt(1,4)
 		}
 		case 3:
 		{
@@ -53,12 +56,14 @@ function MutationSpawn(player)
 		{
 			player.SetModel("models/infected/jockey.mdl");
 			player.SetModelScale(1.25, 0.0);
+			DirectorOptions.JockeyLimit = RandomInt(1,4)
 			break;
 		}
 		case 6:
 		{
 			z_speed = Convars.GetFloat("z_speed");
 			NetProps.SetPropFloat(player, "m_flLaggedMovementValue", (tallboyRunSpeed / z_speed));
+			DirectorOptions.ChargerLimit = RandomInt(1,3)
 			break;
 		}
 		case 8:

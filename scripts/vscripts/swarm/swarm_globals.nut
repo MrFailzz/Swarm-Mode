@@ -191,11 +191,11 @@ DirectorOptions <-
 	SpecialInitialSpawnDelayMax = 60
 	SpecialInitialSpawnDelayMin = 30
 	SpecialRespawnInterval = 45
-	BoomerLimit = 2
-	ChargerLimit = 1
+	BoomerLimit = RandomInt(1,2)
+	ChargerLimit = RandomInt(1,2)
 	HunterLimit = 0
-	JockeyLimit = 2
-	SmokerLimit = 2
+	JockeyLimit = RandomInt(1,2)
+	SmokerLimit = RandomInt(1,2)
 	SpitterLimit = 0
 	BileMobSize = 0
 
