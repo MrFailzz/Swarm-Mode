@@ -1330,6 +1330,7 @@ function SpawnMob(count = 1, zType = 10)
 	}
 
 	Heal_AmpedUp();
+	Director.PlayMegaMobWarningSounds();
 }
 ::ZSpawnMob <- SpawnMob;
 
