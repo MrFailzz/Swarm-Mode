@@ -28,6 +28,15 @@ function InterceptChat(message, speaker)
 		
 		return false;
 	}
+	if (command == "!giveup" || command == "/giveup")
+	{
+		if (speaker.IsSurvivor() && speaker.IsIncapacitated())
+		{
+			speaker.TakeDamage(1000, 0, null);
+		}
+
+		return false;
+	}
 	else if (command == "!cards" || command == "/cards")
 	{
 		//PrintCorruptionCards();
@@ -181,6 +190,7 @@ function AllowTakeDamage(damageTable)
 	local ToughSkin = 0;
 	local GamblerAttacker = 0;
 	local GamblerVictim = 0;
+	local AcidMultiplier = 0;
 
 	//printl("Attacker: " + attacker);
 	//printl("Victim: " + victim);
@@ -399,6 +409,8 @@ function AllowTakeDamage(damageTable)
 				//DMG_RADIATION + DMG_ENERGYBEAM = Spitter Acid
 				if ((damageType & 262144) == 262144 && (damageType & 1024) == 1024)
 				{
+					AcidMultiplier = -0.5;
+					victim.OverrideFriction(1,2);
 					ChemicalBarrier = PlayerHasCard(victim, "ChemicalBarrier");
 				}
 
@@ -428,7 +440,8 @@ function AllowTakeDamage(damageTable)
 								+ (-1 * AddictVictimMultiplier * AddictVictim)
 								+ (-0.1 * Francis)
 								+ (-0.3 * ScarTissue)
-								+ (-0.4 * ToughSkin));
+								+ (-0.4 * ToughSkin)
+								+ (AcidMultiplier));
 				if (GamblerVictim > 0)
 				{
 					damageModifier += ApplyGamblerValue(GetSurvivorID(victim), 1, GamblerVictim, damageModifier) * -1;
@@ -507,9 +520,12 @@ function PlayerSpawn(params)
 	else
 	{
 		MutationSpawn(player);
-		if (corruptionEnvironmental == "environmentSwarmStream" && RandomInt(0, 2) == 0)
+		if (corruptionEnvironmental == "environmentSwarmStream" && RandomInt(0, 3) == 0)
 		{
-			CorruptionCard_SwarmStreamGlow(player);
+			if (player.GetZombieType != 8)
+			{
+				CorruptionCard_SwarmStreamGlow(player);
+			}
 		}
 	}
 }
@@ -536,12 +552,8 @@ function PlayerDeath(params)
 	{
 		BoomerDeath(GetPlayerFromUserID(params["userid"]));
 	}
-	else if (params.victimname == "Spitter")
-	{
-		SpitterDeath(GetPlayerFromUserID(params["userid"]));
-	}
 
-	if (params.victimname == "Tank" || params.victimname == "Smoker" || params.victimname == "Jockey" || params.victimname == "Boomer" || params.victimname == "Spitter" || params.victimname == "Charger")
+	if (params.victimname == "Tank" || params.victimname == "Smoker" || params.victimname == "Jockey" || params.victimname == "Boomer" || params.victimname == "Charger")
 	{
 		//HotShot
 		local survivor = null;

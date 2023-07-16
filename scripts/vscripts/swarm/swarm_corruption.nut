@@ -173,6 +173,10 @@ function InitCorruptionCards()
 		{
 			cardsHordes.append("hordeRetch");
 		}
+		if (corruptionRetch == "Reeker")
+		{
+			cardsHordes.append("hordeReeker");
+		}
 	}
 	corruptionHordes = ChooseCorruptionCard(cardsHordes, true);
 	ApplyHordeCard();
@@ -352,6 +356,9 @@ function GetCorruptionCardName(cardID)
 			break;
 		case "hordeRetch":
 			return "Retch Hordes";
+			break;
+		case "hordeReeker":
+			return "Reeker Hordes";
 			break;
 		case "hordeDuringBoss":
 			return "Raging Swarm";
@@ -690,6 +697,9 @@ function ApplyHordeCard()
 		case "hordeRetch":
 			CorruptionCard_RetchHordes();
 			break;
+		case "hordeReeker":
+			CorruptionCard_ReekerHordes();
+			break;
 	}
 }
 
@@ -756,6 +766,8 @@ function TallboyTimerFunc(count = 4, zType = 6)
 			i++;
 			SpecialHordeTimer = Time() + 120 + 30;
 		}
+
+		Heal_AmpedUp();
 	}
 	else if (SpecialHordeTimer < Time() + 5)
 	{
@@ -781,6 +793,8 @@ function CrusherTimerFunc(count = 4, zType = 6)
 			i++;
 			SpecialHordeTimer = Time() + 120 + 30;
 		}
+
+		Heal_AmpedUp();
 	}
 	else if (SpecialHordeTimer < Time() + 5)
 	{
@@ -806,6 +820,8 @@ function BruiserTimerFunc(count = 4, zType = 6)
 			i++;
 			SpecialHordeTimer = Time() + 120 + 30;
 		}
+
+		Heal_AmpedUp();
 	}
 	else if (SpecialHordeTimer < Time() + 5)
 	{
@@ -831,6 +847,8 @@ function StalkerTimerFunc(count = 4, zType = 5)
 			i++;
 			SpecialHordeTimer = Time() + 120 + 30;
 		}
+
+		Heal_AmpedUp();
 	}
 	else if (SpecialHordeTimer < Time() + 5)
 	{
@@ -856,6 +874,8 @@ function HockerTimerFunc(count = 4, zType = 1)
 			i++;
 			SpecialHordeTimer = Time() + 120 + 30;
 		}
+
+		Heal_AmpedUp();
 	}
 	else if (SpecialHordeTimer < Time() + 5)
 	{
@@ -881,6 +901,8 @@ function ExploderTimerFunc(count = 4, zType = 2)
 			i++;
 			SpecialHordeTimer = Time() + 120 + 30;
 		}
+
+		Heal_AmpedUp();
 	}
 	else if (SpecialHordeTimer < Time() + 5)
 	{
@@ -907,6 +929,35 @@ function RetchTimerFunc(count = 4, zType = 2)
 			i++;
 			SpecialHordeTimer = Time() + 120 + 30;
 		}
+
+		Heal_AmpedUp();
+	}
+	else if (SpecialHordeTimer < Time() + 5)
+	{
+		ClientPrint(null, 3, "\x01 Prepare for the horde in \x04" + ceil(SpecialHordeTimer - Time()) + "...");
+	}
+}
+
+function CorruptionCard_ReekerHordes()
+{
+	ReekerHordeEnabled = true
+	DirectorOptions.cm_AggressiveSpecials = 1
+	DirectorOptions.SpecialRespawnInterval = 45
+}
+
+function RetchTimerFunc(count = 4, zType = 2)
+{
+	if (SpecialHordeTimer < Time() && RetchHordeEnabled == true)
+	{
+		local i = 0;
+		while (i < count)
+		{
+			ZSpawn({type = zType});
+			i++;
+			SpecialHordeTimer = Time() + 120 + 30;
+		}
+
+		Heal_AmpedUp();
 	}
 	else if (SpecialHordeTimer < Time() + 5)
 	{

@@ -59,6 +59,7 @@ StalkerHordeEnabled <- false;
 HockerHordeEnabled <- false;
 ExploderHordeEnabled <- false;
 RetchHordeEnabled <- false;
+ReekerHordeEnabled <- false;
 SpecialHordeTimer <- null;
 
 //Corruption - Frigid Outskirts

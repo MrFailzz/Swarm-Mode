@@ -49,12 +49,17 @@
 		z_exploding_shove_max 99
 		z_exploding_shove_min 99
 		z_vomit_interval 8
+		z_vomit_hit_pitch_max 0
+		z_vomit_hit_pitch_min 0
+		z_vomit_hit_yaw_max 0
+		z_vomit_hit_yaw_min 0
 
 //		z_spit_interval 1
 //		spitter_pz_claw_dmg 3
 		inferno_child_spawn_max_depth 2
 		
 		z_witch_attack_range 0
+		z_witch_damage_per_kill_hit 0
 		z_witch_wander_personal_time 0
 		z_witch_wander_personal_space 180
 		z_witch_speed 180
