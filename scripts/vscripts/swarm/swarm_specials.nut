@@ -249,7 +249,7 @@ function RetchVomitHit(params)
 
 		if (player.IsSurvivor())
 		{
-			DropSpit(origin)
+			DropSpit(origin);
 		}
 	}
 }

@@ -74,7 +74,7 @@ function InitCardPicking()
 
 	cardPickingAllowed = [true, true, true, true];
 
-	ClientPrint(null, 3, "\x01" + "Use " + "\x03" + "!pick [A-Z]" + "\x01" + " to choose a card!");
+	ClientPrint(null, 3, "\x01" + "Type " + "\x03" + "!pick [A-Z]" + "\x01" + " to choose a card!");
 }
 
 function ReduceCardArray(pickArray, refArray)

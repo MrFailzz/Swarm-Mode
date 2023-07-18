@@ -48,8 +48,8 @@ function TankKicked(params)
 
 function CreateSwarmCircle(tankID)
 {
-	if (!IsModelPrecached("models/swarm/swarmcircle.mdl"))
-		PrecacheModel("models/swarm/swarmcircle.mdl");
+	if (!IsModelPrecached("models/swarm/props/swarmcircle.mdl"))
+		PrecacheModel("models/swarm/props/swarmcircle.mdl");
 
 	if (bSwarmCircleActive == false)
 	{
@@ -81,9 +81,9 @@ function CreateSwarmCircle(tankID)
 			local swarm_circle = SpawnEntityFromTable("prop_dynamic",
 			{
 				targetname = "swarm_circle",
-				origin = Vector(swarmOrigin.x, swarmOrigin.y, swarmOrigin.z + 496),
+				origin = Vector(swarmOrigin.x, swarmOrigin.y, swarmOrigin.z),
 				angles = Vector(0, 0, 0),
-				model = "models/swarm/swarmcircle.mdl",
+				model = "models/swarm/props/swarmcircle.mdl",
 				solid = 0,
 				disableshadows = 1
 			});
@@ -138,7 +138,7 @@ function SwarmCircleApplyDamage()
 						if (safeSurvivors.find(allSurvivors) == null)
 						{
 							allSurvivors.TakeDamage(swarmDamagePerTick, 0, null);
-							ScreenFade(allSurvivors, 0, 0, 200, 50, 0.5, 0, 1);
+							ScreenFade(allSurvivors, 255, 50, 0, 50, 0.5, 0, 1);
 							EmitSoundOnClient("PlayerZombie.AttackHit", allSurvivors);
 						}
 					}
@@ -223,6 +223,26 @@ function TankSpawn(params)
 		tankHudTankID = GetPlayerFromUserID(params["userid"]);
 		CreateTankHealthHud();
 	}
+/*
+	if (corruptionBoss == "hazardOgre")
+	{
+		local tankName = GetPlayerFromUserID(params["userid"]);
+		local tankDmgTrigger = SpawnEntityFromTable("trigger_hurt",
+		{
+			targetname = tankName + "_dmgtrigger",
+			origin = tankName.GetOrigin(),
+			damagetype = 0,
+			damage = 5,
+			spawnflags = 1,
+			filtername = "__swarm_filter_survivor"
+		});
+
+		EntFire(tankName + "_dmgtrigger", "SetParent", tankName);
+		DoEntFire(tankName + "_dmgtrigger", "AddOutput", "mins -44 -44 -44", 0, null, tankDmgTrigger);
+		DoEntFire(tankName + "_dmgtrigger", "AddOutput", "maxs 44 44 44", 0, null, tankDmgTrigger);
+		DoEntFire(tankName + "_dmgtrigger", "AddOutput", "solid 2", 0, null, tankDmgTrigger);
+	}
+*/
 }
 
 function CreateTankHealthHud(startStr = "FROM THE CREATORS OF BACK 4 BLOOD")

@@ -1,0 +1,32 @@
+UnlitTwoTexture
+{
+"%tooltexture" "swarm/models/props/swarmcircle/swarm"
+$basetexture "swarm/models/props/swarmcircle/swarm"
+$texture2 "swarm/models/props/swarmcircle/swarm_anim"
+$additive 1
+$nocull 1
+$no_fullbright 1
+$nofog 1
+$scale "[5 1]"
+$scroll "[1 1]"
+$translucent 1
+Proxies
+{
+LinearRamp
+{
+resultVar "$scroll[0]"
+rate -0.02
+}
+LinearRamp
+{
+resultVar "$scroll[1]"
+rate 0.005
+}
+TextureTransform
+{
+scaleVar $scale
+translateVar $scroll
+resultVar $basetexturetransform
+}
+}
+}

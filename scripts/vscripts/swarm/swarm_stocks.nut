@@ -191,6 +191,7 @@ function AllowTakeDamage(damageTable)
 	local GamblerAttacker = 0;
 	local GamblerVictim = 0;
 	local AcidMultiplier = 0;
+	local HeadMultiplier = 0;
 
 	//printl("Attacker: " + attacker);
 	//printl("Victim: " + victim);
@@ -313,6 +314,18 @@ function AllowTakeDamage(damageTable)
 					}
 				}
 
+				// Reeker Headshot DMG
+				if ((damageType & DMG_HEADSHOT) == DMG_HEADSHOT)
+				{
+					if (victimPlayer == true)
+					{
+						if (corruptionRetch == "Reeker" && victim.GetZombieType() == 2)
+						{
+							HeadMultiplier = -0.75;
+						}
+					}
+				}
+
 				//StrengthInNumbers
 				local survivorSIN = null;
 				while ((survivorSIN = Entities.FindByClassname(survivorSIN, "player")) != null)
@@ -353,7 +366,8 @@ function AllowTakeDamage(damageTable)
 								 + (0.25 * Berserker)
 								 + (AddictAttackerMultiplier * AddictAttacker)
 								 + (0.1 * Zoey)
-								 + (0.05 * Nick));
+								 + (0.05 * Nick)
+								 + (HeadMultiplier));
 				if (GamblerAttacker > 0)
 				{
 					damageModifier += ApplyGamblerValue(GetSurvivorID(attacker), 4, GamblerAttacker, damageModifier);
@@ -390,7 +404,7 @@ function AllowTakeDamage(damageTable)
 
 					if (victim.IsIncapacitated() == false && OverconfidentHealth >= 0.6)
 					{
-						OverconfidentMultiplier = -0.25
+						OverconfidentMultiplier = -0.25;
 					}
 				}
 
@@ -410,7 +424,7 @@ function AllowTakeDamage(damageTable)
 				if ((damageType & 262144) == 262144 && (damageType & 1024) == 1024)
 				{
 					AcidMultiplier = -0.5;
-					victim.OverrideFriction(1,2);
+					victim.OverrideFriction(0.5,1.5);
 					ChemicalBarrier = PlayerHasCard(victim, "ChemicalBarrier");
 				}
 
@@ -459,7 +473,7 @@ function AllowTakeDamage(damageTable)
 	}
 	else
 	{
-		damageTable.DamageDone = damageDone
+		damageTable.DamageDone = damageDone;
 	}
 	//printl("New DMG: " + damageTable.DamageDone);
 
@@ -522,7 +536,7 @@ function PlayerSpawn(params)
 		MutationSpawn(player);
 		if (corruptionEnvironmental == "environmentSwarmStream" && RandomInt(0, 3) == 0)
 		{
-			if (player.GetZombieType != 8)
+			if (player.GetZombieType() != 8)
 			{
 				CorruptionCard_SwarmStreamGlow(player);
 			}
