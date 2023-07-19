@@ -138,7 +138,7 @@ function SwarmCircleApplyDamage()
 						if (safeSurvivors.find(allSurvivors) == null)
 						{
 							allSurvivors.TakeDamage(swarmDamagePerTick, 0, null);
-							ScreenFade(allSurvivors, 255, 50, 0, 50, 0.5, 0, 1);
+							ScreenFade(allSurvivors, 255, 0, 0, 50, 0.5, 0, 1);
 							EmitSoundOnClient("PlayerZombie.AttackHit", allSurvivors);
 						}
 					}

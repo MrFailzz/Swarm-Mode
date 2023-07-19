@@ -768,6 +768,7 @@ function TallboyTimerFunc(count = 4, zType = 6)
 		}
 
 		Heal_AmpedUp();
+		Director.PlayMegaMobWarningSounds();
 	}
 	else if (SpecialHordeTimer < Time() + 5)
 	{
@@ -795,6 +796,7 @@ function CrusherTimerFunc(count = 4, zType = 6)
 		}
 
 		Heal_AmpedUp();
+		Director.PlayMegaMobWarningSounds();
 	}
 	else if (SpecialHordeTimer < Time() + 5)
 	{
@@ -822,6 +824,7 @@ function BruiserTimerFunc(count = 4, zType = 6)
 		}
 
 		Heal_AmpedUp();
+		Director.PlayMegaMobWarningSounds();
 	}
 	else if (SpecialHordeTimer < Time() + 5)
 	{
@@ -849,6 +852,7 @@ function StalkerTimerFunc(count = 4, zType = 5)
 		}
 
 		Heal_AmpedUp();
+		Director.PlayMegaMobWarningSounds();
 	}
 	else if (SpecialHordeTimer < Time() + 5)
 	{
@@ -876,6 +880,7 @@ function HockerTimerFunc(count = 4, zType = 1)
 		}
 
 		Heal_AmpedUp();
+		Director.PlayMegaMobWarningSounds();
 	}
 	else if (SpecialHordeTimer < Time() + 5)
 	{
@@ -903,6 +908,7 @@ function ExploderTimerFunc(count = 4, zType = 2)
 		}
 
 		Heal_AmpedUp();
+		Director.PlayMegaMobWarningSounds();
 	}
 	else if (SpecialHordeTimer < Time() + 5)
 	{
@@ -931,6 +937,7 @@ function RetchTimerFunc(count = 4, zType = 2)
 		}
 
 		Heal_AmpedUp();
+		Director.PlayMegaMobWarningSounds();
 	}
 	else if (SpecialHordeTimer < Time() + 5)
 	{
@@ -958,6 +965,7 @@ function RetchTimerFunc(count = 4, zType = 2)
 		}
 
 		Heal_AmpedUp();
+		Director.PlayMegaMobWarningSounds();
 	}
 	else if (SpecialHordeTimer < Time() + 5)
 	{

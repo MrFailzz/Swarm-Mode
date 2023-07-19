@@ -115,6 +115,7 @@ function OnGameEvent_player_incapacitated_start(params)
 {
 	ApplyAdrenalineRush();
 	ApplyInspiringSacrifice();
+	IncapMsg(params);
 }
 
 function OnGameEvent_round_start(params)

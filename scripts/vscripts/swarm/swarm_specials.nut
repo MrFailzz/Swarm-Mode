@@ -22,7 +22,7 @@ function MutationSpawn(player)
 		case 1:
 		{
 			player.SetModel("models/infected/smoker.mdl");
-			DirectorOptions.SmokerLimit = RandomInt(1,4)
+			DirectorOptions.SmokerLimit = RandomInt(1,3)
 			break;
 		}
 		case 2:
@@ -43,7 +43,7 @@ function MutationSpawn(player)
 				break;
 			}
 
-			DirectorOptions.BoomerLimit = RandomInt(1,4)
+			DirectorOptions.BoomerLimit = RandomInt(1,3)
 		}
 		case 3:
 		{
@@ -56,7 +56,7 @@ function MutationSpawn(player)
 		{
 			player.SetModel("models/infected/jockey.mdl");
 			player.SetModelScale(1.25, 0.0);
-			DirectorOptions.JockeyLimit = RandomInt(1,4)
+			DirectorOptions.JockeyLimit = RandomInt(1,3)
 			break;
 		}
 		case 6:
@@ -137,7 +137,6 @@ function BoomerDeath(player)
 	if (corruptionRetch == "Retch")
 	{
 		DropSpit(boomerOrigin);
-//		EntFire(retchName + "spitTrail", "Kill");
 	}
 	if (corruptionRetch == "Exploder")
 	{
@@ -146,27 +145,6 @@ function BoomerDeath(player)
 
 	NetProps.SetPropInt(player, "m_clrRender", GetColorInt(Vector(255, 255, 255)));
 }
-
-/*
-function SpitterDeath(player)
-{
-	local spitterOrigin = player.GetOrigin();
-	BoomerExplosion(spitterOrigin, false);
-
-	//Explosion particle
-	local randomNameID = RandomInt(0, 9999);
-	local spitExplosion = SpawnEntityFromTable("info_particle_system",
-	{
-		targetname = "spitExplosionPart" + randomNameID,
-		origin = Vector(spitterOrigin.x, spitterOrigin.y, spitterOrigin.z + 32),
-		angles = Vector(0, 0, 0),
-		effect_name = "boomer_explode",
-		start_active = 1
-	});
-
-	EntFire("spitExplosionPart" + randomNameID, "Kill", null, 5);
-}
-*/
 
 function ExploderAbility(player)
 {
@@ -298,12 +276,6 @@ function SnitchAlerted(params)
 	if (params.first == 1)
 	{
 		SpawnMob(2);
-
-		//Force witch to retreat
-		//witchEnt.SetSequence(8)
-
-		//Set witch on fire
-		//witchEnt.TakeDamage(250, 8, null);
 	}
 }
 

@@ -130,6 +130,13 @@ function InterceptChat(message, speaker)
 	}
 }
 
+function IncapMsg(params)
+{
+	local player = GetPlayerFromUserID(params["userid"]);
+
+	ClientPrint(player, 3, "\x01" + "Type " + "\x03" + "!giveup" + "\x01" + " to die...");
+}
+
 function AllowTakeDamage(damageTable)
 {
 	//Table values
@@ -314,7 +321,7 @@ function AllowTakeDamage(damageTable)
 					}
 				}
 
-				// Reeker Headshot DMG
+				// Headshot DMG
 				if ((damageType & DMG_HEADSHOT) == DMG_HEADSHOT)
 				{
 					if (victimPlayer == true)
@@ -322,6 +329,10 @@ function AllowTakeDamage(damageTable)
 						if (corruptionRetch == "Reeker" && victim.GetZombieType() == 2)
 						{
 							HeadMultiplier = -0.75;
+						}
+						else if (bossOgreEnable == true && victim.GetZombieType() == 8)
+						{
+							HeadMultiplier = 3;
 						}
 					}
 				}
@@ -536,7 +547,7 @@ function PlayerSpawn(params)
 		MutationSpawn(player);
 		if (corruptionEnvironmental == "environmentSwarmStream" && RandomInt(0, 3) == 0)
 		{
-			if (player.GetZombieType() != 8)
+			if (player.GetZombieType() != 8 && player.GetZombieType() != 7 && player.GetZombieType() != 3)
 			{
 				CorruptionCard_SwarmStreamGlow(player);
 			}

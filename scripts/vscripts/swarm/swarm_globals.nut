@@ -182,8 +182,7 @@ DirectorOptions <-
 
 	cm_AggressiveSpecials = 0
 	
-	cm_DominatorLimit = 3
-	cm_MaxSpecials = 13 //For sleepers, was 4 previously. Game limits max players on server to 18
+	cm_MaxSpecials = 8 //For sleepers, was 4 previously. Game limits max players on server to 18
 	cm_TankLimit = 1
 	cm_WitchLimit = -1
 	cm_CommonLimit = 30
