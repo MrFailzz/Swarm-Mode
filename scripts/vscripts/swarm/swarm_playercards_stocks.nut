@@ -307,6 +307,7 @@ function GetGamblerValue(player, index)
 			break;
 	}
 }
+::GetGamblerValue <- GetGamblerValue;
 
 function ApplyGamblerValue(player, index, Gambler, affectedValue)
 {
@@ -322,6 +323,7 @@ function ApplyGamblerValue(player, index, Gambler, affectedValue)
 		return 1;
 	}
 }
+::ApplyGamblerValue <- ApplyGamblerValue;
 
 function PrintGamblerValue(player)
 {
