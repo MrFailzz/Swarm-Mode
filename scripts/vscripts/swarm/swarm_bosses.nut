@@ -224,24 +224,26 @@ function TankSpawn(params)
 		CreateTankHealthHud();
 	}
 /*
-	if (corruptionBoss == "hazardOgre")
+	local tankName = GetPlayerFromUserID(params["userid"]);
+	local wkspotHitbox = SpawnEntityFromTable("func_breakable",
 	{
-		local tankName = GetPlayerFromUserID(params["userid"]);
-		local tankDmgTrigger = SpawnEntityFromTable("trigger_hurt",
-		{
-			targetname = tankName + "_dmgtrigger",
-			origin = tankName.GetOrigin(),
-			damagetype = 0,
-			damage = 5,
-			spawnflags = 1,
-			filtername = "__swarm_filter_survivor"
-		});
+		targetname = tankName + "wkspotHitbox",
+		origin = tankName.GetOrigin(),
+		angles = Vector(0, 0, 0),
+		spawnflags = 0,
+		health = 10,
+		BreakableType = 0,
+		damagefilter = "__swarm_filter_explHitbox",
+		material = 0
+	});
 
-		EntFire(tankName + "_dmgtrigger", "SetParent", tankName);
-		DoEntFire(tankName + "_dmgtrigger", "AddOutput", "mins -44 -44 -44", 0, null, tankDmgTrigger);
-		DoEntFire(tankName + "_dmgtrigger", "AddOutput", "maxs 44 44 44", 0, null, tankDmgTrigger);
-		DoEntFire(tankName + "_dmgtrigger", "AddOutput", "solid 2", 0, null, tankDmgTrigger);
-	}
+	// Set up hitbox
+	EntFire(tankName + "wkspotHitbox", "SetParent", tankName);
+	EntFire(tankName + "wkspotHitbox", "SetParentAttachment", "mouth");
+	DoEntFire("!self", "AddOutput", "mins -14 -7 -6", 0, null, wkspotHitbox);
+	DoEntFire("!self", "AddOutput", "maxs 1 8 14", 0, null, wkspotHitbox);
+	DoEntFire("!self", "AddOutput", "solid 2", 0, null, wkspotHitbox);
+	EntFire(tankName + "wkspotHitbox", "AddOutput", "OnBreak !self:RunScriptCode:tankName.Stagger()");
 */
 }
 

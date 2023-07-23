@@ -330,9 +330,13 @@ function AllowTakeDamage(damageTable)
 						{
 							HeadMultiplier = -0.75;
 						}
-						else if (bossOgreEnable == true && victim.GetZombieType() == 8)
+						else if (victim.GetZombieType() == 8)
 						{
-							HeadMultiplier = 3;
+							HeadMultiplier = 1.5;
+						}
+						else
+						{
+							HeadMultiplier = -0.25;
 						}
 					}
 				}
