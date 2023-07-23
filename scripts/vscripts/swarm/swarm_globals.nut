@@ -182,20 +182,21 @@ DirectorOptions <-
 
 	cm_AggressiveSpecials = 0
 	
-	cm_MaxSpecials = 8 //For sleepers, was 4 previously. Game limits max players on server to 18
+	cm_MaxSpecials = 13 //For sleepers, was 4 previously. Game limits max players on server to 18
+	cm_MaxDominators = 5
 	cm_TankLimit = 1
 	cm_WitchLimit = -1
 	cm_CommonLimit = 30
 	cm_ProhibitBosses = true
 
-	SpecialInitialSpawnDelayMax = 60
-	SpecialInitialSpawnDelayMin = 30
-	SpecialRespawnInterval = 45
-	BoomerLimit = RandomInt(1,2)
-	ChargerLimit = RandomInt(1,2)
+	SpecialInitialSpawnDelayMax = RandomInt(60,75)
+	SpecialInitialSpawnDelayMin = RandomInt(30,45)
+	SpecialRespawnInterval = RandomInt(45,60)
+	BoomerLimit = 2
+	ChargerLimit = 1
 	HunterLimit = 0
-	JockeyLimit = RandomInt(1,2)
-	SmokerLimit = RandomInt(1,2)
+	JockeyLimit = 2
+	SmokerLimit = 2
 	SpitterLimit = 0
 	BileMobSize = 0
 

@@ -731,7 +731,7 @@ function HuntedTimerFunc()
 // Onslaught
 function CorruptionCard_Onslaught()
 {
-	DirectorOptions.cm_CommonLimit = 50
+	DirectorOptions.cm_CommonLimit = 30
 }
 
 function OnslaughtTimerFunc()
@@ -752,7 +752,6 @@ function CorruptionCard_TallboyHordes()
 {
 	TallboyHordeEnabled = true
 	DirectorOptions.cm_AggressiveSpecials = 1
-	DirectorOptions.SpecialRespawnInterval = 45
 }
 
 function TallboyTimerFunc(count = 4, zType = 6)
@@ -780,7 +779,6 @@ function CorruptionCard_CrusherHordes()
 {
 	CrusherHordeEnabled = true
 	DirectorOptions.cm_AggressiveSpecials = 1
-	DirectorOptions.SpecialRespawnInterval = 45
 }
 
 function CrusherTimerFunc(count = 4, zType = 6)
@@ -808,7 +806,6 @@ function CorruptionCard_BruiserHordes()
 {
 	BruiserHordeEnabled = true
 	DirectorOptions.cm_AggressiveSpecials = 1
-	DirectorOptions.SpecialRespawnInterval = 45
 }
 
 function BruiserTimerFunc(count = 4, zType = 6)
@@ -836,7 +833,6 @@ function CorruptionCard_StalkerHordes()
 {
 	StalkerHordeEnabled = true
 	DirectorOptions.cm_AggressiveSpecials = 1
-	DirectorOptions.SpecialRespawnInterval = 45
 }
 
 function StalkerTimerFunc(count = 4, zType = 5)
@@ -864,7 +860,6 @@ function CorruptionCard_HockerHordes()
 {
 	HockerHordeEnabled = true
 	DirectorOptions.cm_AggressiveSpecials = 1
-	DirectorOptions.SpecialRespawnInterval = 45
 }
 
 function HockerTimerFunc(count = 4, zType = 1)
@@ -892,7 +887,6 @@ function CorruptionCard_ExploderHordes()
 {
 	ExploderHordeEnabled = true
 	DirectorOptions.cm_AggressiveSpecials = 1
-	DirectorOptions.SpecialRespawnInterval = 45
 }
 
 function ExploderTimerFunc(count = 4, zType = 2)
@@ -921,7 +915,6 @@ function CorruptionCard_RetchHordes()
 {
 	RetchHordeEnabled = true
 	DirectorOptions.cm_AggressiveSpecials = 1
-	DirectorOptions.SpecialRespawnInterval = 45
 }
 
 function RetchTimerFunc(count = 4, zType = 2)
@@ -949,7 +942,6 @@ function CorruptionCard_ReekerHordes()
 {
 	ReekerHordeEnabled = true
 	DirectorOptions.cm_AggressiveSpecials = 1
-	DirectorOptions.SpecialRespawnInterval = 45
 }
 
 function RetchTimerFunc(count = 4, zType = 2)
@@ -1178,17 +1170,17 @@ function ApplyTallboyCard()
 
 function CorruptionCard_Tallboy()
 {
-	tallboyRunSpeed = 250
+	tallboyRunSpeed = 240
 }
 
 function CorruptionCard_Crusher()
 {
-	tallboyRunSpeed = 220
+	tallboyRunSpeed = 210
 }
 
 function CorruptionCard_Bruiser()
 {
-	tallboyRunSpeed = 200
+	tallboyRunSpeed = 190
 }
 
 // Hocker
