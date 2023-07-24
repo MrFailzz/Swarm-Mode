@@ -752,26 +752,34 @@ function PlayerLeftSafeArea(params)
 					SpecialHordeTimer = Time() + 120 + 30;
 					break;
 				case "hordeCrusher":
-					CrusherHordeEnabled = true;
+					TallboyHordeEnabled = true;
 					SpecialHordeTimer = Time() + 120 + 30;
 					break;
 				case "hordeBruiser":
-					BruiserHordeEnabled = true;
-					SpecialHordeTimer = Time() + 120 + 30;
-					break;
-				case "hordeStalker":
-					StalkerHordeEnabled = true;
+					TallboyHordeEnabled = true;
 					SpecialHordeTimer = Time() + 120 + 30;
 					break;
 				case "hordeHocker":
 					HockerHordeEnabled = true;
 					SpecialHordeTimer = Time() + 120 + 30;
 					break;
-				case "hordeExploder":
-					ExploderHordeEnabled = true;
+				case "hordeStinger":
+					HockerHordeEnabled = true;
+					SpecialHordeTimer = Time() + 120 + 30;
+					break;
+				case "hordeStalker":
+					StalkerHordeEnabled = true;
 					SpecialHordeTimer = Time() + 120 + 30;
 					break;
 				case "hordeRetch":
+					RetchHordeEnabled = true;
+					SpecialHordeTimer = Time() + 120 + 30;
+					break;
+				case "hordeExploder":
+					RetchHordeEnabled = true;
+					SpecialHordeTimer = Time() + 120 + 30;
+					break;
+				case "hordeReeker":
 					RetchHordeEnabled = true;
 					SpecialHordeTimer = Time() + 120 + 30;
 					break;

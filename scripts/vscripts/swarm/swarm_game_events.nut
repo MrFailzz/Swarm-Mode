@@ -71,6 +71,7 @@ function OnGameEvent_ability_use(params)
 function OnGameEvent_tongue_grab(params)
 {
 	TongueGrab(params);
+	StingerProjectile(params);
 	CappedAlert();
 }
 

@@ -394,6 +394,8 @@ exploderRunSpeed <- 320;			// Run speed while using explosion ability
 tallboyPunchKnockback <- 350;		// Max knockback
 tallboyRunSpeed <- 250;
 
+difficultyDamageScale <- (difficulty + 1) / 2
+
 // COMMON //
 acidCommonsMax <- 4;
 acidCommonSpawnAmount <- 4;			// Size of group to spawn

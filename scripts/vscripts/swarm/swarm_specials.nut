@@ -5,6 +5,8 @@ function MutationSpawn(player)
 {
 	if (!IsModelPrecached("models/infected/smoker.mdl"))
 		PrecacheModel("models/infected/smoker.mdl");
+	if (!IsModelPrecached("models/infected/smoker_l4d1.mdl"))
+		PrecacheModel("models/infected/smoker_l4d1.mdl");
 	if (!IsModelPrecached("models/swarm/infected/hunter.mdl"))
 		PrecacheModel("models/swarm/infected/hunter.mdl");
 	if (!IsModelPrecached("models/swarm/infected/boomer.mdl"))
@@ -21,9 +23,18 @@ function MutationSpawn(player)
 	{
 		case 1:
 		{
-			player.SetModel("models/infected/smoker.mdl");
+			if (corruptionHocker == "Hocker")
+			{
+				player.SetModel("models/infected/smoker.mdl");
+				break;
+			}
+			else if (corruptionHocker == "Stinger")
+			{
+				player.SetModel("models/infected/smoker_l4d1.mdl");
+				break;
+			}
+
 			DirectorOptions.SmokerLimit = RandomInt(1,3)
-			break;
 		}
 		case 2:
 		{
@@ -78,50 +89,72 @@ function MutationSpawn(player)
 	}
 }
 
+
 ///////////////////////////////////////////////
 //             HOCKER KNOCKBACK              //
 ///////////////////////////////////////////////
 function TongueGrab(params)
 {
-	local player = GetPlayerFromUserID(params["userid"]);
-
-	// Make victim move backwards
-	Convars.SetValue("tongue_victim_acceleration", -450);
-	Convars.SetValue("tongue_victim_max_speed", 450);
-
-	if (player.ValidateScriptScope())
+	if (corruptionHocker == "Hocker")
 	{
-		local player_entityscript = player.GetScriptScope();
-		player_entityscript["TickCount"] <- 0;
-		player_entityscript["TongueSpeedReset"] <- function()
+		local player = GetPlayerFromUserID(params["userid"]);
+
+		// Make victim move backwards
+		Convars.SetValue("tongue_victim_acceleration", -450);
+		Convars.SetValue("tongue_victim_max_speed", 450);
+
+		if (player.ValidateScriptScope())
 		{
-			// Decelerate victim at specific ticks
-			if (player_entityscript["TickCount"] == 1)
+			local player_entityscript = player.GetScriptScope();
+			player_entityscript["TickCount"] <- 0;
+			player_entityscript["TongueSpeedReset"] <- function()
 			{
-				Convars.SetValue("tongue_victim_acceleration", -175);
-				Convars.SetValue("tongue_victim_max_speed", 175);
-			}
-			else if (player_entityscript["TickCount"] == 3)
-			{
-				Convars.SetValue("tongue_victim_acceleration", -80);
-				Convars.SetValue("tongue_victim_max_speed", 80);
-			}
-			else if (player_entityscript["TickCount"] == 5)
-			{
-				Convars.SetValue("tongue_victim_acceleration", -40);
-				Convars.SetValue("tongue_victim_max_speed", 40);
-			}
-			else if (player_entityscript["TickCount"] > 6)
-			{
-				Convars.SetValue("tongue_victim_acceleration", 0);
-				Convars.SetValue("tongue_victim_max_speed", 0);
+				// Decelerate victim at specific ticks
+				if (player_entityscript["TickCount"] == 1)
+				{
+					Convars.SetValue("tongue_victim_acceleration", -175);
+					Convars.SetValue("tongue_victim_max_speed", 175);
+				}
+				else if (player_entityscript["TickCount"] == 3)
+				{
+					Convars.SetValue("tongue_victim_acceleration", -80);
+					Convars.SetValue("tongue_victim_max_speed", 80);
+				}
+				else if (player_entityscript["TickCount"] == 5)
+				{
+					Convars.SetValue("tongue_victim_acceleration", -40);
+					Convars.SetValue("tongue_victim_max_speed", 40);
+				}
+				else if (player_entityscript["TickCount"] > 6)
+				{
+					Convars.SetValue("tongue_victim_acceleration", 0);
+					Convars.SetValue("tongue_victim_max_speed", 0);
+					return
+				}
+				player_entityscript["TickCount"]++;
 				return
 			}
-			player_entityscript["TickCount"]++;
-			return
-		}
 
-		AddThinkToEnt(player, "TongueSpeedReset");
+			AddThinkToEnt(player, "TongueSpeedReset");
+		}
+	}
+}
+
+///////////////////////////////////////////////
+//             STINGER PROJECTILE            //
+///////////////////////////////////////////////
+function StingerProjectile(params)
+{
+	if (corruptionHocker == "Stinger")
+	{
+		local player = GetPlayerFromUserID(params["victim"]);
+		local attacker = GetPlayerFromUserID(params["userid"]);
+
+		// DMG victim
+		player.TakeDamage(5 * difficultyDamageScale, 0, attacker)
+		
+		// Break Tongue
+		Convars.SetValue("tongue_force_break", 1);
 	}
 }
 

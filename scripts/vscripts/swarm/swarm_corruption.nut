@@ -62,6 +62,7 @@ function InitCorruptionCards()
 	local cardsHocker = array(1, null);
 	cardsHocker.clear();
 	cardsHocker.append("Hocker");
+	cardsHocker.append("Stinger");
 	cardsHocker.append("Stalker");
 	corruptionHocker = ChooseCorruptionCard(cardsHocker, true);
 	ApplyHockerCard();
@@ -157,21 +158,25 @@ function InitCorruptionCards()
 		{
 			cardsHordes.append("hordeBruiser");
 		}
-		if (corruptionHocker == "Stalker")
-		{
-			cardsHordes.append("hordeStalker");
-		}
 		if (corruptionHocker == "Hocker")
 		{
 			cardsHordes.append("hordeHocker");
 		}
-		if (corruptionRetch == "Exploder")
+		if (corruptionHocker == "Stinger")
 		{
-			cardsHordes.append("hordeExploder");
+			cardsHordes.append("hordeStinger");
+		}
+		if (corruptionHocker == "Stalker")
+		{
+			cardsHordes.append("hordeStalker");
 		}
 		if (corruptionRetch == "Retch")
 		{
 			cardsHordes.append("hordeRetch");
+		}
+		if (corruptionRetch == "Exploder")
+		{
+			cardsHordes.append("hordeExploder");
 		}
 		if (corruptionRetch == "Reeker")
 		{
@@ -345,11 +350,14 @@ function GetCorruptionCardName(cardID)
 		case "hordeBruiser":
 			return "Bruiser Hordes";
 			break;
-		case "hordeStalker":
-			return "Stalker Hordes";
-			break;
 		case "hordeHocker":
 			return "Hocker Hordes";
+			break;
+		case "hordeStinger":
+			return "Stinger Hordes";
+			break;
+		case "hordeStalker":
+			return "Stalker Hordes";
 			break;
 		case "hordeExploder":
 			return "Exploder Hordes";
@@ -423,6 +431,9 @@ function GetCorruptionCardName(cardID)
 		case "Hocker":
 			return "Hockers";
 			break;
+		case "Stinger":
+			return "Stinger";
+			break;
 		case "Stalker":
 			return "Stalkers";
 			break;
@@ -431,6 +442,9 @@ function GetCorruptionCardName(cardID)
 			break;
 		case "Exploder":
 			return "Exploders";
+			break;
+		case "Reeker":
+			return "Reeker";
 			break;
 		case "hazardSnitch":
 			return "Tattlers";
@@ -680,25 +694,28 @@ function ApplyHordeCard()
 			CorruptionCard_TallboyHordes();
 			break;
 		case "hordeCrusher":
-			CorruptionCard_CrusherHordes();
+			CorruptionCard_TallboyHordes();
 			break;
 		case "hordeBruiser":
-			CorruptionCard_BruiserHordes();
-			break;
-		case "hordeStalker":
-			CorruptionCard_StalkerHordes();
+			CorruptionCard_TallboyHordes();
 			break;
 		case "hordeHocker":
 			CorruptionCard_HockerHordes();
 			break;
-		case "hordeExploder":
-			CorruptionCard_ExploderHordes();
+		case "hordeStinger":
+			CorruptionCard_HockerHordes();
+			break;
+		case "hordeStalker":
+			CorruptionCard_StalkerHordes();
 			break;
 		case "hordeRetch":
 			CorruptionCard_RetchHordes();
 			break;
+		case "hordeExploder":
+			CorruptionCard_RetchHordes();
+			break;
 		case "hordeReeker":
-			CorruptionCard_ReekerHordes();
+			CorruptionCard_RetchHordes();
 			break;
 	}
 }
@@ -750,7 +767,6 @@ function OnslaughtTimerFunc()
 // Specials
 function CorruptionCard_TallboyHordes()
 {
-	TallboyHordeEnabled = true
 	DirectorOptions.cm_AggressiveSpecials = 1
 }
 
@@ -775,90 +791,8 @@ function TallboyTimerFunc(count = 4, zType = 6)
 	}
 }
 
-function CorruptionCard_CrusherHordes()
-{
-	CrusherHordeEnabled = true
-	DirectorOptions.cm_AggressiveSpecials = 1
-}
-
-function CrusherTimerFunc(count = 4, zType = 6)
-{
-	if (SpecialHordeTimer < Time() && CrusherHordeEnabled == true)
-	{
-		local i = 0;
-		while (i < count)
-		{
-			ZSpawn({type = zType});
-			i++;
-			SpecialHordeTimer = Time() + 120 + 30;
-		}
-
-		Heal_AmpedUp();
-		Director.PlayMegaMobWarningSounds();
-	}
-	else if (SpecialHordeTimer < Time() + 5)
-	{
-		ClientPrint(null, 3, "\x01 Prepare for the horde in \x04" + ceil(SpecialHordeTimer - Time()) + "...");
-	}
-}
-
-function CorruptionCard_BruiserHordes()
-{
-	BruiserHordeEnabled = true
-	DirectorOptions.cm_AggressiveSpecials = 1
-}
-
-function BruiserTimerFunc(count = 4, zType = 6)
-{
-	if (SpecialHordeTimer < Time() && BruiserHordeEnabled == true)
-	{
-		local i = 0;
-		while (i < count)
-		{
-			ZSpawn({type = zType});
-			i++;
-			SpecialHordeTimer = Time() + 120 + 30;
-		}
-
-		Heal_AmpedUp();
-		Director.PlayMegaMobWarningSounds();
-	}
-	else if (SpecialHordeTimer < Time() + 5)
-	{
-		ClientPrint(null, 3, "\x01 Prepare for the horde in \x04" + ceil(SpecialHordeTimer - Time()) + "...");
-	}
-}
-
-function CorruptionCard_StalkerHordes()
-{
-	StalkerHordeEnabled = true
-	DirectorOptions.cm_AggressiveSpecials = 1
-}
-
-function StalkerTimerFunc(count = 4, zType = 5)
-{
-	if (SpecialHordeTimer < Time() && StalkerHordeEnabled == true)
-	{
-		local i = 0;
-		while (i < count)
-		{
-			ZSpawn({type = zType});
-			i++;
-			SpecialHordeTimer = Time() + 120 + 30;
-		}
-
-		Heal_AmpedUp();
-		Director.PlayMegaMobWarningSounds();
-	}
-	else if (SpecialHordeTimer < Time() + 5)
-	{
-		ClientPrint(null, 3, "\x01 Prepare for the horde in \x04" + ceil(SpecialHordeTimer - Time()) + "...");
-	}
-}
-
 function CorruptionCard_HockerHordes()
 {
-	HockerHordeEnabled = true
 	DirectorOptions.cm_AggressiveSpecials = 1
 }
 
@@ -883,15 +817,14 @@ function HockerTimerFunc(count = 4, zType = 1)
 	}
 }
 
-function CorruptionCard_ExploderHordes()
+function CorruptionCard_StalkerHordes()
 {
-	ExploderHordeEnabled = true
 	DirectorOptions.cm_AggressiveSpecials = 1
 }
 
-function ExploderTimerFunc(count = 4, zType = 2)
+function StalkerTimerFunc(count = 4, zType = 5)
 {
-	if (SpecialHordeTimer < Time() && ExploderHordeEnabled == true)
+	if (SpecialHordeTimer < Time() && StalkerHordeEnabled == true)
 	{
 		local i = 0;
 		while (i < count)
@@ -909,38 +842,9 @@ function ExploderTimerFunc(count = 4, zType = 2)
 		ClientPrint(null, 3, "\x01 Prepare for the horde in \x04" + ceil(SpecialHordeTimer - Time()) + "...");
 	}
 }
-
 
 function CorruptionCard_RetchHordes()
 {
-	RetchHordeEnabled = true
-	DirectorOptions.cm_AggressiveSpecials = 1
-}
-
-function RetchTimerFunc(count = 4, zType = 2)
-{
-	if (SpecialHordeTimer < Time() && RetchHordeEnabled == true)
-	{
-		local i = 0;
-		while (i < count)
-		{
-			ZSpawn({type = zType});
-			i++;
-			SpecialHordeTimer = Time() + 120 + 30;
-		}
-
-		Heal_AmpedUp();
-		Director.PlayMegaMobWarningSounds();
-	}
-	else if (SpecialHordeTimer < Time() + 5)
-	{
-		ClientPrint(null, 3, "\x01 Prepare for the horde in \x04" + ceil(SpecialHordeTimer - Time()) + "...");
-	}
-}
-
-function CorruptionCard_ReekerHordes()
-{
-	ReekerHordeEnabled = true
 	DirectorOptions.cm_AggressiveSpecials = 1
 }
 
@@ -1191,7 +1095,10 @@ function ApplyHockerCard()
 		case "Hocker":
 			CorruptionCard_Hocker();
 			break;
-		case "Crusher":
+		case "Stinger":
+			CorruptionCard_Stinger();
+			break;
+		case "Stalker":
 			CorruptionCard_Stalker();
 			break;
 	}
@@ -1200,11 +1107,19 @@ function ApplyHockerCard()
 function CorruptionCard_Hocker()
 {
 	DirectorOptions.JockeyLimit = 0
+	Convars.SetValue("tongue_release_fatigue_penalty", 2500)
+}
+
+function CorruptionCard_Stinger()
+{
+	DirectorOptions.JockeyLimit = 0
+	Convars.SetValue("tongue_release_fatigue_penalty", 0)
 }
 
 function CorruptionCard_Stalker()
 {
 	DirectorOptions.SmokerLimit = 0
+	Convars.SetValue("tongue_release_fatigue_penalty", 2500)
 }
 
 // Retches
