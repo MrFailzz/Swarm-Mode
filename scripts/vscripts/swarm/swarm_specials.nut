@@ -155,6 +155,21 @@ function StingerProjectile(params)
 		
 		// Break Tongue
 		Convars.SetValue("tongue_force_break", 1);
+
+		if (player.ValidateScriptScope())
+		{
+			local player_entityscript = player.GetScriptScope();
+			player_entityscript["TickCount"] <- 0;
+			{
+				if (player_entityscript["TickCount"] > 1)
+				{
+					Convars.SetValue("tongue_force_break", 1);
+					return
+				}
+				player_entityscript["TickCount"]++;
+				return
+			}
+		}
 	}
 }
 
