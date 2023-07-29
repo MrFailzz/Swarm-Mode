@@ -15,9 +15,9 @@ function PickCard(player, cardID)
 		cardName = GetPlayerCardName(card);
 		survivorID = GetSurvivorID(player);
 
-		if (cardPickingAllowed[survivorID] == true)
+		if (cardPickingAllowed[survivorID] > 0)
 		{
-			cardPickingAllowed[survivorID] = false;
+			cardPickingAllowed[survivorID] -= 1;
 			AddCardToTable(GetSurvivorCardTable(survivorID), player, card);
 			GetAllPlayerCards();
 			ApplyCardEffects(player);
@@ -72,9 +72,10 @@ function InitCardPicking()
 	hudY = GetPickableCardsString(disciplineCardsPick, 1 + (cardsPerCategory * 2), "DISCIPLINE\n", "cardPickDiscipline", HUD_RIGHT_TOP, hudY);
 	hudY = GetPickableCardsString(fortuneCardsPick, 1 + (cardsPerCategory * 3), "FORTUNE\n", "cardPickFortune", HUD_RIGHT_BOT, hudY);
 
-	cardPickingAllowed = [true, true, true, true];
+	local cardPicks = 1 + missionsCompleted["completed"];
+	cardPickingAllowed = [cardPicks, cardPicks, cardPicks, cardPicks];
 
-	ClientPrint(null, 3, "\x01" + "Type " + "\x03" + "!pick [A-Z]" + "\x01" + " to choose a card!");
+	ClientPrint(null, 3, "\x01" + "Use " + "\x03" + "!pick [A-Z]" + "\x01" + " to choose a card!");
 }
 
 function ReduceCardArray(pickArray, refArray)
@@ -133,6 +134,9 @@ function MapTransition(params)
 {
 	SavePlayerCards();
 
+	missionsCompleted["completed"] = 0;
+	SaveMissions();
+
 	//WellRested
 	local WellRested = TeamHasCard("WellRested");
 	local player = null;
@@ -142,7 +146,8 @@ function MapTransition(params)
 		{
 			if (player.IsSurvivor())
 			{
-				Heal_PermaHealth(player, (25 * WellRested), player.GetHealthBuffer());
+				player.SetHealth(player.GetMaxHealth());
+				player.SetHealthBuffer(0);
 			}
 		}
 	}
@@ -163,9 +168,46 @@ function SavePlayerCards()
 	}
 }
 
+function SaveMissions()
+{
+	switch(corruptionMission)
+	{
+		case "None":
+			break;
+		case "missionSpeedrun":
+			if (MissionSpeedrun_Timer <= MissionSpeedrun_Goal)
+			{
+				CompletedMission(corruptionMission);
+			}
+			break;
+		case "missionAllAlive":
+			if (GetAliveCleaners() == GetTotalCleaners())
+			{
+				CompletedMission(corruptionMission);
+			}
+			break;
+		case "missionGnomeAlone":
+			if (true)
+			{
+				CompletedMission(corruptionMission);
+			}
+			break;
+	}
+
+	SaveTable("missionsCompleted", missionsCompleted);
+}
+
+function CompletedMission(cardID)
+{
+	missionsCompleted["completed"] = 1;
+	local cardName = GetCorruptionCardName(cardID);
+	ClientPrint(null, 3, "\x01" + "Objective: " + "\x03" + cardName + "\x01" + " completed!");
+}
+
 function RoundFreezeEnd(params)
 {
 	LoadPlayerCards();
+	LoadMissions();
 
 	//Save cards so they can be loaded if a wipe occurs, as loading the tables deletes the stored tables
 	SavePlayerCards();
@@ -189,12 +231,21 @@ function LoadPlayerCards()
 	}
 }
 
+function LoadMissions()
+{
+	RestoreTable("missionsCompleted", missionsCompleted);
+	SaveTable("missionsCompleted", missionsCompleted);
+}
+
 function RoundStartPostNav(params)
 {
 	//Clear saved cards on new session
 	if (Director.IsSessionStartMap() == true)
 	{
 		SavePlayerCards()
+
+		missionsCompleted["completed"] = 0;
+		SaveMissions();
 	}
 }
 
@@ -219,11 +270,15 @@ function GetAllPlayerCards()
 			{
 				survivorNameArray[survivorID] = player.GetPlayerName().toupper();
 			}
+		}
+	}
 
-			if (cardPickingAllowed[survivorID] == true)
-			{
-				canPickString[survivorID] = " - !pick [A-Z]";
-			}
+
+	for (local i = 0; i <= 3; i++)
+	{
+		if (cardPickingAllowed[i] > 0)
+		{
+			canPickString[i] = " (" + cardPickingAllowed[i] + " remaining)";
 		}
 	}
 
@@ -375,7 +430,7 @@ function CalcSpeedMultiplier(player)
 							+ (-0.1 * SlowAndSteady)
 							+ (0.125 * FleetOfFoot)
 							+ (0.07 * CrossTrainers)
-							+ (0.01 * MethHead * MethHeadCounter[GetSurvivorID(player)])
+							+ (0.025 * MethHead * MethHeadCounter[GetSurvivorID(player)])
 							+ (0.05 * Berserker) + (AddictMultiplier * Addict)
 							+ (0.1 * Louis));
 	if (Gambler > 0)
@@ -567,32 +622,6 @@ function ApplyCauterized()
 	Convars.SetValue("survivor_incap_decay_rate", (IncapDecay < 1 ? 1 : IncapDecay));
 }
 
-function GetReloadSpeedModifier(player)
-{
-	//Modifiers
-	local Gambler = PlayerHasCard(player, "Gambler");
-	local ReloadDrills = PlayerHasCard(player, "ReloadDrills");
-	local Addict = PlayerHasCard(player, "Addict");
-	local AddictMultiplier = AddictGetValue(player);
-	local Bill = PlayerHasCard(player, "Bill");
-	local Brazen = PlayerHasCard(player, "Brazen");
-
-	local reloadModifier = 1 + (0.25 * ReloadDrills) + (AddictMultiplier * Addict) + (0.1 * Bill) + (-0.25 * Brazen);
-
-	if (Gambler > 0)
-	{
-		reloadModifier += ApplyGamblerValue(GetSurvivorID(player), 5, Gambler, reloadModifier);
-	}
-
-	if (reloadModifier <= 0)
-	{
-		reloadModifier = 0.001
-	}
-
-	return reloadModifier;
-}
-::GetReloadSpeedModifier <- GetReloadSpeedModifier;
-
 function WeaponReload(params)
 {
 	local player = GetPlayerFromUserID(params["userid"]);
@@ -628,7 +657,7 @@ function SurvivorPickupItem(params)
 	local weapon = player.GetActiveWeapon();
 	local weaponClass = "";
 	local weaponID = null;
-	if (weapon.IsValid())
+	if (weapon.IsValid() && player.IsValid() && weapon != null)
 	{
 		weaponClass = weapon.GetClassname();
 		weaponID = weapon.GetEntityIndex();

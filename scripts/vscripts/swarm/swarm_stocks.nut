@@ -8,123 +8,163 @@ function InterceptChat(message, speaker)
 	local text = strip(message.slice(message.find(name) + name.len()));
 	local textArgs = [];
 	textArgs = split(text, " ");
-	local command = textArgs[0].tolower();
+	local command = textArgs[0].tolower().slice(1);
+	local commandPrefix = textArgs[0].slice(0, 1);
 
+	if (commandPrefix == "!" || commandPrefix == "/")
+	{
+		switch(command)
+		{
+			case "ping":
+				TraceEye(speaker);
+			break;
 
-	if (command == "!ping" || command == "/ping")
-	{
-		TraceEye(speaker);
-		return false;
-	}
-	else if (command == "!drop" || command == "/drop") 
-	{
-		local activeWeapon = speaker.GetActiveWeapon();
+			case "drop":
+				local activeWeapon = speaker.GetActiveWeapon();
 
-		if (activeWeapon!=null && speaker.IsSurvivor() && activeWeapon.IsValid())
-		{
-			local weaponClass = activeWeapon.GetClassname();
-			speaker.DropItem(weaponClass);
-		}
-		
-		return false;
-	}
-	if (command == "!giveup" || command == "/giveup")
-	{
-		if (speaker.IsSurvivor() && speaker.IsIncapacitated())
-		{
-			speaker.TakeDamage(1000, 0, null);
-		}
-
-		return false;
-	}
-	else if (command == "!cards" || command == "/cards")
-	{
-		//PrintCorruptionCards();
-
-		if (!IsHudElementVisible("corruptionCards"))
-		{
-			ToggleHudElement("corruptionCards");
-		}
-		if (!IsHudElementVisible("corruptionCardsInfected"))
-		{
-			ToggleHudElement("corruptionCardsInfected");
-		}
-		if (!IsHudElementVisible("playerCardsP1"))
-		{
-			ToggleHudElement("playerCardsP1");
-		}
-		if (!IsHudElementVisible("playerCardsP2"))
-		{
-			ToggleHudElement("playerCardsP2");
-		}
-		if (!IsHudElementVisible("playerCardsP3"))
-		{
-			ToggleHudElement("playerCardsP3");
-		}
-		if (!IsHudElementVisible("playerCardsP4"))
-		{
-			ToggleHudElement("playerCardsP4");
-		}
-		if (cardPickingAllowed[0] == true || cardPickingAllowed[1] == true || cardPickingAllowed[2] == true || cardPickingAllowed[3] == true)
-		{
-			if (!IsHudElementVisible("cardPickReflex"))
-			{
-				ToggleHudElement("cardPickReflex");
-			}
-			if (!IsHudElementVisible("cardPickBrawn"))
-			{
-				ToggleHudElement("cardPickBrawn");
-			}
-			if (!IsHudElementVisible("cardPickDiscipline"))
-			{
-				ToggleHudElement("cardPickDiscipline");
-			}
-			if (!IsHudElementVisible("cardPickFortune"))
-			{
-				ToggleHudElement("cardPickFortune");
-			}
-		}
-
-		cardHudTimeout = 0;
-		return false;
-	}
-	else if (command == "!pick" || command == "/pick" || command == "!card" || command == "/card")
-	{
-		if (textArgs[1].len() == 1 && speaker.IsSurvivor())
-		{
-			PickCard(speaker, textArgs[1].toupper())
-		}
-		return false;
-	}
-	else if (command == "!pickbot" || command == "/pickbot" || command == "!botpick" || command == "/botpick")
-	{
-		if (textArgs[1].len() == 1 && speaker.IsSurvivor())
-		{
-			local player = null;
-			while ((player = Entities.FindByClassname(player, "player")) != null)
-			{
-				if (player.IsSurvivor())
+				if (activeWeapon != null && speaker.IsSurvivor() && activeWeapon.IsValid())
 				{
-					if (IsPlayerABot(player))
+					local weaponClass = activeWeapon.GetClassname();
+					speaker.DropItem(weaponClass);
+				}
+			break;
+
+			case "giveup":
+				if (speaker.IsSurvivor() && speaker.IsIncapacitated())
+				{
+					speaker.TakeDamage(1000, 0, null);
+				}
+			break;
+
+			case "cards":
+				if (!IsHudElementVisible("corruptionCards"))
+				{
+					ToggleHudElement("corruptionCards");
+				}
+				if (!IsHudElementVisible("corruptionCardsInfected"))
+				{
+					ToggleHudElement("corruptionCardsInfected");
+				}
+				if (corruptionMission == "None")
+				{
+					if (!IsHudElementVisible("corruptionCardsMission"))
 					{
-						PickCard(player, textArgs[1].toupper())
+						ToggleHudElement("corruptionCardsMission");
 					}
 				}
-			}
-		}
-		return false;
-	}
-	else if (command == "!debugpick" || command == "/debugpick")
-	{
-		if (Convars.GetFloat("sv_cheats") == 1)
-		{
-			AddCardToTable(GetSurvivorCardTable(GetSurvivorID(speaker)), speaker, textArgs[1]);
-			GetAllPlayerCards();
-			ApplyCardEffects(speaker);
-			if (textArgs[1] == "Gambler")
-			{
-				PrintGamblerValue(speaker);
-			}
+				if (!IsHudElementVisible("playerCardsP1"))
+				{
+					ToggleHudElement("playerCardsP1");
+				}
+				if (!IsHudElementVisible("playerCardsP2"))
+				{
+					ToggleHudElement("playerCardsP2");
+				}
+				if (!IsHudElementVisible("playerCardsP3"))
+				{
+					ToggleHudElement("playerCardsP3");
+				}
+				if (!IsHudElementVisible("playerCardsP4"))
+				{
+					ToggleHudElement("playerCardsP4");
+				}
+				if (cardPickingAllowed[0] > 0 || cardPickingAllowed[1] > 0 || cardPickingAllowed[2] > 0 || cardPickingAllowed[3] > 0)
+				{
+					if (!IsHudElementVisible("cardPickReflex"))
+					{
+						ToggleHudElement("cardPickReflex");
+					}
+					if (!IsHudElementVisible("cardPickBrawn"))
+					{
+						ToggleHudElement("cardPickBrawn");
+					}
+					if (!IsHudElementVisible("cardPickDiscipline"))
+					{
+						ToggleHudElement("cardPickDiscipline");
+					}
+					if (!IsHudElementVisible("cardPickFortune"))
+					{
+						ToggleHudElement("cardPickFortune");
+					}
+				}
+				cardHudTimeout = 0;
+			break;
+
+			case "pick":
+			case "card":
+				if (textArgs[1].len() == 1 && speaker.IsSurvivor())
+				{
+					PickCard(speaker, textArgs[1].toupper())
+				}
+			break;
+
+			case "pickbot":
+			case "botpick":
+				if (textArgs[1].len() == 1 && speaker.IsSurvivor())
+				{
+					local player = null;
+					while ((player = Entities.FindByClassname(player, "player")) != null)
+					{
+						if (player.IsSurvivor())
+						{
+							if (IsPlayerABot(player))
+							{
+								PickCard(player, textArgs[1].toupper())
+							}
+						}
+					}
+				}
+			break;
+
+			case "lives":
+				local MaxIncaps = DirectorOptions.SurvivorMaxIncapacitatedCount;
+				local player = null;
+				while ((player = Entities.FindByClassname(player, "player")) != null)
+				{
+					if (player.IsSurvivor())
+					{
+						local PlayerIncaps = MaxIncaps - NetProps.GetPropInt(player, "m_currentReviveCount");
+						if (player.IsIncapacitated() && !player.IsHangingFromLedge())
+						{
+							PlayerIncaps -= 1;
+						}
+						else if (player.IsDead() || player.IsDying())
+						{
+							PlayerIncaps = "Dead";
+						}
+						ClientPrint(speaker, 3, "\x04" + player.GetPlayerName() + "\x01" + ": " + PlayerIncaps + " / " + MaxIncaps);
+					}
+				}
+			break;
+
+			case "debug":
+				if (GetListenServerHost() == speaker)
+				{
+					DebugMode = !DebugMode;
+
+					if (DebugMode)
+					{
+						ClientPrint(speaker, 3, "\x04" + "Debug mode enabled");
+					}
+					else
+					{
+						ClientPrint(speaker, 3, "\x04" + "Debug mode disabled");
+					}
+				}
+			break;
+
+			case "debugpick":
+				if (Convars.GetFloat("sv_cheats") == 1 || DebugMode)
+				{
+					AddCardToTable(GetSurvivorCardTable(GetSurvivorID(speaker)), speaker, textArgs[1]);
+					GetAllPlayerCards();
+					ApplyCardEffects(speaker);
+					if (textArgs[1] == "Gambler")
+					{
+						PrintGamblerValue(speaker);
+					}
+				}
+			break;
 		}
 		return false;
 	}
@@ -377,7 +417,7 @@ function AllowTakeDamage(damageTable)
 								 + (0.1 * EyeOfTheSwarmAttacker)
 								 + (0.4 * Brazen)
 								 + (0.025 * StrengthInNumbers * StrengthInNumbersSurvivors)
-								 + (0.01 * ConfidentKiller * ConfidentKillerCounter)
+								 + (0.025 * ConfidentKiller * ConfidentKillerCounter)
 								 + (0.25 * Berserker)
 								 + (AddictAttackerMultiplier * AddictAttacker)
 								 + (0.1 * Zoey)
@@ -792,6 +832,7 @@ function PlayerLeftSafeArea(params)
 			ApplyEnvironmentalCard();
 			PropModels();
 
+			//Spawn hazards
 			if (corruptionHazards == "hazardLockdown")
 			{
 				InitAlarmDoors();
@@ -803,6 +844,11 @@ function PlayerLeftSafeArea(params)
 			else if (corruptionHazards == "hazardSleepers")
 			{
 				InitSleepers();
+			}
+
+			//Spawn mission objectives
+			if (corruptionMission == "missionGnomeAlone")
+			{
 			}
 		}
 	}
@@ -1148,6 +1194,7 @@ swarmHUD <-
 	{
 		corruptionCards = {name = "corruptionCards", slot = HUD_FAR_RIGHT, dataval = "", flags = HUD_FLAG_ALIGN_LEFT},
 		corruptionCardsInfected = {name = "corruptionCardsInfected", slot = HUD_SCORE_1, dataval = "", flags = HUD_FLAG_ALIGN_LEFT},
+		corruptionCardsMission = {name = "corruptionCardsMission", slot = HUD_SCORE_2, dataval = "", flags = HUD_FLAG_ALIGN_LEFT},
 		playerCardsP1 = {name = "playerCardsP1", slot = HUD_FAR_LEFT, dataval = "", flags = HUD_FLAG_ALIGN_LEFT},
 		playerCardsP2 = {name = "playerCardsP2", slot = HUD_LEFT_TOP, dataval = "", flags = HUD_FLAG_ALIGN_LEFT},
 		playerCardsP3 = {name = "playerCardsP3", slot = HUD_LEFT_BOT, dataval = "", flags = HUD_FLAG_ALIGN_LEFT},
@@ -1309,6 +1356,13 @@ function Update()
 			{
 				ToggleHudElement("corruptionCardsInfected");
 			}
+			if (corruptionMission == "None")
+			{
+				if (IsHudElementVisible("corruptionCardsMission"))
+				{
+					ToggleHudElement("corruptionCardsMission");
+				}
+			}
 			if (IsHudElementVisible("playerCardsP1"))
 			{
 				ToggleHudElement("playerCardsP1");
@@ -1343,11 +1397,39 @@ function Update()
 			}
 		}
 		cardHudTimeout++;
+
+		if (corruptionMission == "missionSpeedrun")
+		{
+			MissionSpeedrun_Timer++;
+		}
+		UpdateCorruptionCardHUD();
 	}
 
 	if (AmpedUpCooldown > 0)
 	{
 		AmpedUpCooldown--;
+	}
+
+	if (cardReminderTimer > 0)
+	{
+		cardReminderTimer--;
+	}
+	else
+	{
+		local player = null;
+		while ((player = Entities.FindByClassname(player, "player")) != null)
+		{
+			local survivorID = GetSurvivorID(player);
+
+			if (player.IsSurvivor() && survivorID != -1)
+			{
+				if (cardPickingAllowed[survivorID] > 0)
+				{
+					ClientPrint(player, 3, "\x01" + "Use " + "\x03" + "!pick [A-Z]\x01" + " to choose a card (" + "\x03" + cardPickingAllowed[survivorID] + " remaining" + "\x01" + ")");
+				}
+			}
+		}
+		cardReminderTimer = cardReminderInterval;
 	}
 
 	//Remove critical particles
@@ -1487,6 +1569,15 @@ function GetColor32( color32 )
 	return t;
 }
 
+function IntToTime(integer)
+{
+	local minutes = floor(integer / 60);
+	minutes = format("%02i", minutes);
+	local seconds = integer % 60;
+	seconds = format("%02i", seconds);
+	return minutes + ":" + seconds;
+}
+
 function BarbedWire(params)
 {
 	if (!IsModelPrecached("models/props_fortifications/barricade_razorwire001_128_reference.mdl"))
@@ -1609,6 +1700,13 @@ function PropModels()
 
 function AllowBash(basher, bashee)
 {
+	local MagCoupler = PlayerHasCard(basher, "MagCoupler");
+
+	if (MagCoupler > 0)
+	{
+		return ALLOW_BASH_NONE;
+	}
+
     if (bashee.IsPlayer())
     {
         if (bashee.GetZombieType() == 2)
@@ -1620,4 +1718,6 @@ function AllowBash(basher, bashee)
             return ALLOW_BASH_ALL;
         }
     }
+
+    return ALLOW_BASH_ALL;
 }

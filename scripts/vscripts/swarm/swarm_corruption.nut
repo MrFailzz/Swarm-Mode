@@ -16,7 +16,7 @@ function InitCorruptionCards()
 	cardsCommons.append("commonAcid");
 	cardsCommons.append("commonFire");
 	cardsCommons.append("commonExplode");
-	corruptionCommons = ChooseCorruptionCard(cardsCommons);
+	corruptionCommons = ChooseCorruptionCard_List(cardsCommons);
 
 	// Uncommons
 	local cardsUncommons = array(1, null);
@@ -31,7 +31,7 @@ function InitCorruptionCards()
 	cardsUncommons.append("uncommonConstruction");
 	cardsUncommons.append("uncommonJimmy");
 	cardsUncommons.append("uncommonFallen");
-	corruptionUncommons = ChooseCorruptionCard(cardsUncommons);
+	corruptionUncommons = ChooseCorruptionCard_List(cardsUncommons);
 
 	// ZSpeed
 	local cardsZSpeed = array(1, null);
@@ -46,7 +46,7 @@ function InitCorruptionCards()
 	cardsZSpeed.append("commonRunning");
 	cardsZSpeed.append("commonRunning");
 	cardsZSpeed.append("commonBlitzing");
-	corruptionZSpeed = ChooseCorruptionCard(cardsZSpeed, true);
+	corruptionZSpeed = ChooseCorruptionCard_ListInf(cardsZSpeed);
 	ApplyZSpeedCard ();
 
 	// Tallboys
@@ -55,7 +55,7 @@ function InitCorruptionCards()
 	cardsTallboy.append("Tallboy");
 	cardsTallboy.append("Crusher");
 	cardsTallboy.append("Bruiser");
-	corruptionTallboy = ChooseCorruptionCard(cardsTallboy, true);
+	corruptionTallboy = ChooseCorruptionCard_ListInf(cardsTallboy);
 	ApplyTallboyCard();
 
 	// Hockers
@@ -64,7 +64,7 @@ function InitCorruptionCards()
 	cardsHocker.append("Hocker");
 	cardsHocker.append("Stinger");
 	cardsHocker.append("Stalker");
-	corruptionHocker = ChooseCorruptionCard(cardsHocker, true);
+	corruptionHocker = ChooseCorruptionCard_ListInf(cardsHocker);
 	ApplyHockerCard();
 
 	// Retches
@@ -73,7 +73,7 @@ function InitCorruptionCards()
 	cardsRetch.append("Retch");
 	cardsRetch.append("Exploder");
 	cardsRetch.append("Reeker");
-	corruptionRetch = ChooseCorruptionCard(cardsRetch, true);
+	corruptionRetch = ChooseCorruptionCard_ListInf(cardsRetch);
 	ApplyRetchCard();
 
 	// Hazards
@@ -88,7 +88,7 @@ function InitCorruptionCards()
 		cardsHazards.append("hazardSleepers");
 		cardsHazards.append("hazardSnitch");
 	}
-	corruptionHazards = ChooseCorruptionCard(cardsHazards);
+	corruptionHazards = ChooseCorruptionCard_List(cardsHazards);
 
 	// Boss
 	local cardsBoss = array(1, null);
@@ -100,7 +100,7 @@ function InitCorruptionCards()
 		cardsBoss.append("hazardBreaker");
 		cardsBoss.append("hazardOgre");
 	}
-	corruptionBoss = ChooseCorruptionCard(cardsBoss, true);
+	corruptionBoss = ChooseCorruptionCard_ListInf(cardsBoss);
 	ApplyBossCard();
 
 	// Environmental
@@ -120,7 +120,7 @@ function InitCorruptionCards()
 		cardsEnvironmental.append("environmentFog");
 		cardsEnvironmental.append("environmentFrozen");
 	}
-	corruptionEnvironmental = ChooseCorruptionCard(cardsEnvironmental);
+	corruptionEnvironmental = ChooseCorruptionCard_List(cardsEnvironmental);
 	//ApplyEnvironmentalCard();
 
 	// Hordes
@@ -183,7 +183,7 @@ function InitCorruptionCards()
 			cardsHordes.append("hordeReeker");
 		}
 	}
-	corruptionHordes = ChooseCorruptionCard(cardsHordes, true);
+	corruptionHordes = ChooseCorruptionCard_ListInf(cardsHordes);
 	ApplyHordeCard();
 
 	// Gameplay
@@ -200,7 +200,7 @@ function InitCorruptionCards()
 		cardsGameplay.append("gameplayNoSupport");
 		cardsGameplay.append("gameplayNoRespawn");
 	}
-	corruptionGameplay = ChooseCorruptionCard(cardsGameplay);
+	corruptionGameplay = ChooseCorruptionCard_List(cardsGameplay);
 	ApplyGameplayCard();
 
 	// Player
@@ -214,26 +214,44 @@ function InitCorruptionCards()
 		cardsPlayer.append("playerLessAmmo");
 		cardsPlayer.append("playerFatigue");
 	}
-	corruptionPlayer = ChooseCorruptionCard(cardsPlayer);
+	corruptionPlayer = ChooseCorruptionCard_List(cardsPlayer);
 	ApplyPlayerCorruptionCard();
+
+	// Missions
+	local cardsMission = array(1, null);
+	cardsMission.clear();
+	cardsMission.append("None");
+	cardsMission.append("None");
+	cardsMission.append("missionSpeedrun");
+	cardsMission.append("missionAllAlive");
+	//cardsMission.append("missionGnomeAlone");
+	corruptionMission = ChooseCorruptionCard_ListMission(cardsMission);
+	//ApplyMissionCorruptionCard();
 
 	UpdateCorruptionCardHUD();
 }
 
-function ChooseCorruptionCard(cardArray, infectedCard = false)
+function ChooseCorruptionCard_List(cardArray)
 {
 	local cardSlot = cardArray[RandomInt(0, cardArray.len() - 1)];
 	corruptionCards.append(cardSlot);
+	corruptionCards_List.append(cardSlot);
+	return cardSlot;
+}
 
-	if (infectedCard == false)
-	{
-		corruptionCards_List.append(cardSlot);
-	}
-	else
-	{
-		corruptionCards_ListInf.append(cardSlot);
-	}
+function ChooseCorruptionCard_ListInf(cardArray)
+{
+	local cardSlot = cardArray[RandomInt(0, cardArray.len() - 1)];
+	corruptionCards.append(cardSlot);
+	corruptionCards_ListInf.append(cardSlot);
+	return cardSlot;
+}
 
+function ChooseCorruptionCard_ListMission(cardArray)
+{
+	local cardSlot = cardArray[RandomInt(0, cardArray.len() - 1)];
+	corruptionCards.append(cardSlot);
+	corruptionCards_ListMission.append(cardSlot);
 	return cardSlot;
 }
 
@@ -241,9 +259,13 @@ function UpdateCorruptionCardHUD()
 {
 	local returnString = "CORRUPTION CARDS";
 	local returnStringInf = "";
+	local returnStringMission = "";
 	local cardName = null;
-	local i = 0;
+	local iList = 0;
 	local iInf = 0;
+	local iMission = 0;
+	local missionGoal = "";
+	local missionStatus = "";
 
 	foreach(cardID in corruptionCards_List)
 	{
@@ -252,7 +274,7 @@ function UpdateCorruptionCardHUD()
 		if (cardName != "None" && cardName != null)
 		{
 			returnString = returnString + "\n" + cardName;
-			i++;
+			iList++;
 		}
 	}
 
@@ -264,7 +286,7 @@ function UpdateCorruptionCardHUD()
 		{
 			if (returnStringInf == "")
 			{
-				returnStringInf = cardName
+				returnStringInf = cardName;
 			}
 			else
 			{
@@ -274,14 +296,58 @@ function UpdateCorruptionCardHUD()
 		}
 	}
 
+	foreach(cardID in corruptionCards_ListMission)
+	{
+		cardName = GetCorruptionCardName(cardID);
+
+		if (cardName != "None" && cardName != null)
+		{
+			if (returnStringMission == "")
+			{
+				returnStringMission = cardName;
+			}
+			else
+			{
+				returnStringMission = returnStringMission + "\n" + cardName;
+				iMission++;
+			}
+
+			missionGoal = GetMissionGoal();
+			missionStatus = GetMissionStatus();
+
+			if (missionGoal != "")
+			{
+				returnStringMission = returnStringMission + "\n" + missionGoal;
+				iMission++;
+			}
+
+			if (missionStatus != "")
+			{
+				returnStringMission = returnStringMission + "\n" + missionStatus;
+				iMission++;
+			}
+		}
+	}
+
+	if (returnStringMission == "")
+	{
+		returnStringMission = "No Objective";
+	}
+
 	swarmHUD.Fields["corruptionCards"].dataval = returnString;
 	swarmHUD.Fields["corruptionCardsInfected"].dataval = returnStringInf;
+	swarmHUD.Fields["corruptionCardsMission"].dataval = returnStringMission;
 
 	local hudY = swarmHudY;
-	local hudH = swarmHudH + (swarmHudLineH * (i == 0 ? 1 : i))
+	local hudH = swarmHudH + (swarmHudLineH * (iMission == 0 ? 1 : iMission))
+	HUDPlace(HUD_SCORE_2, 1 - swarmHudW - swarmHudX, hudY, swarmHudW, hudH);
+	hudY = hudY + hudH + swarmHudGapY;
+	hudH = swarmHudH + (swarmHudLineH * (iList == 0 ? 1 : iList))
 	HUDPlace(HUD_FAR_RIGHT, 1 - swarmHudW - swarmHudX, hudY, swarmHudW, hudH);
 	hudY = hudY + hudH + swarmHudGapY;
-	HUDPlace(HUD_SCORE_1, 1 - swarmHudW - swarmHudX, hudY, swarmHudW, swarmHudH + (swarmHudLineH * (iInf == 0 ? 1 : iInf)));
+	hudH = swarmHudH + (swarmHudLineH * (iInf == 0 ? 1 : iInf))
+	HUDPlace(HUD_SCORE_1, 1 - swarmHudW - swarmHudX, hudY, swarmHudW, hudH);
+	
 }
 
 /*function PrintCorruptionCards()
@@ -454,6 +520,15 @@ function GetCorruptionCardName(cardID)
 			break;
 		case "hazardOgre":
 			return "Ogre";
+			break;
+		case "missionSpeedrun":
+			return "Speed Run";
+			break;
+		case "missionAllAlive":
+			return "No One Left Behind";
+			break;
+		case "missionGnomeAlone":
+			return "Gnome Alone";
 			break;
 		default:
 			return cardID;
@@ -1202,4 +1277,117 @@ function CorruptionCard_Breaker()
 function CorruptionCard_Ogre()
 {
 	BossSettings_Ogre();
+}
+
+
+///////////////////////////////////////////////
+//               MISSION CARDS                //
+///////////////////////////////////////////////
+/*function ApplyMissionCorruptionCard()
+{
+	//ResetPlayerCvars();
+	switch(corruptionMission)
+	{
+		case "None":
+			break;
+		case "missionSpeedrun":
+			CorruptionCard_Speedrun();
+			break;
+	}
+}*/
+
+function GetMissionGoal()
+{
+	switch(corruptionMission)
+	{
+		case "None":
+			return "";
+			break;
+		case "missionSpeedrun":
+			return "Goal: " + IntToTime(MissionSpeedrun_Goal);
+			break;
+		case "missionAllAlive":
+			return "";
+			break;
+		case "missionGnomeAlone":
+			return "Find and rescue the Gnome";
+			break;
+		default:
+			return "";
+			break;
+	}
+}
+
+function GetMissionStatus()
+{
+	switch(corruptionMission)
+	{
+		case "None":
+			return "";
+			break;
+		case "missionSpeedrun":
+			return "Time: " + IntToTime(MissionSpeedrun_Timer);
+			break;
+		case "missionAllAlive":
+			return "Alive: " + GetAliveCleaners() + " / " + GetTotalCleaners();
+			break;
+		case "missionGnomeAlone":
+			return GnomeStatus();
+			break;
+		default:
+			return "";
+			break;
+	}
+}
+
+function GetTotalCleaners()
+{
+	local i = 0;
+	local player = null;
+	while ((player = Entities.FindByClassname(player, "player")) != null)
+	{
+		if (player.IsSurvivor())
+		{
+			i++;
+		}
+	}
+	return i;
+}
+
+function GetAliveCleaners()
+{
+	local i = 0;
+	local player = null;
+	while ((player = Entities.FindByClassname(player, "player")) != null)
+	{
+		if (!player.IsDead() && !player.IsDying())
+		{
+			i++;
+		}
+	}
+	return i;
+}
+
+function GnomeStatus()
+{
+	if (MissionGnomeAlone_Status == 0)
+	{
+		//Not picked up
+		return "Gnome Not Found";
+	}
+	else if (MissionGnomeAlone_Status == 1)
+	{
+		//Held, not in saferoom
+		return "Gnome Found";
+	}
+	else if (MissionGnomeAlone_Status == 2)
+	{
+		//Picked up and dropped
+		return "Gnome Dropped";
+	}
+	else if (MissionGnomeAlone_Status == 3)
+	{
+		//Held, in saferoom OR dropped in saferoom
+		return "Gnome Rescued";
+	}
 }
