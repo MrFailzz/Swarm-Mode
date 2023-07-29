@@ -654,58 +654,64 @@ function WeaponReload(params)
 function SurvivorPickupItem(params)
 {
 	local player = GetPlayerFromUserID(params["userid"]);
-	local weapon = player.GetActiveWeapon();
 	local weaponClass = "";
 	local weaponID = null;
-	if (weapon.IsValid() && player.IsValid() && weapon != null)
+	if (player.IsValid())
 	{
-		weaponClass = weapon.GetClassname();
-		weaponID = weapon.GetEntityIndex();
-
-		if (weaponClass == "weapon_shotgun_chrome" || weaponClass == "weapon_pumpshotgun" || weaponClass == "weapon_autoshotgun" || weaponClass == "weapon_shotgun_spas")
+		if (player.IsSurvivor())
 		{
-			local shotgunThinker = SpawnEntityFromTable("info_target", { targetname = "shotgunThinker" + weaponID });
-			if (shotgunThinker.ValidateScriptScope())
+			local weapon = player.GetActiveWeapon();
+			if (weapon.IsValid() && weapon != null)
 			{
-				local entityscript = shotgunThinker.GetScriptScope();
-				entityscript["player"] <- player;
-				entityscript["weapon"] <- weapon;
-				entityscript["weaponClass"] <- weaponClass;
-				entityscript["reloadModifier"] <- 1;
-				entityscript["reloadStartDuration"] <- NetProps.GetPropFloat(weapon, "m_reloadStartDuration");
-				entityscript["reloadInsertDuration"] <- NetProps.GetPropFloat(weapon, "m_reloadInsertDuration");
-				entityscript["reloadEndDuration"] <- NetProps.GetPropFloat(weapon, "m_reloadEndDuration");
-				entityscript["weaponSequence"] <- weapon.GetSequence();
-				entityscript["ShotgunReload"] <- function()
+				weaponClass = weapon.GetClassname();
+				weaponID = weapon.GetEntityIndex();
+
+				if (weaponClass == "weapon_shotgun_chrome" || weaponClass == "weapon_pumpshotgun" || weaponClass == "weapon_autoshotgun" || weaponClass == "weapon_shotgun_spas")
 				{
-					if (entityscript["player"].IsValid() && entityscript["weapon"].IsValid())
+					local shotgunThinker = SpawnEntityFromTable("info_target", { targetname = "shotgunThinker" + weaponID });
+					if (shotgunThinker.ValidateScriptScope())
 					{
-						if (entityscript["player"].GetActiveWeapon() == entityscript["weapon"])
+						local entityscript = shotgunThinker.GetScriptScope();
+						entityscript["player"] <- player;
+						entityscript["weapon"] <- weapon;
+						entityscript["weaponClass"] <- weaponClass;
+						entityscript["reloadModifier"] <- 1;
+						entityscript["reloadStartDuration"] <- NetProps.GetPropFloat(weapon, "m_reloadStartDuration");
+						entityscript["reloadInsertDuration"] <- NetProps.GetPropFloat(weapon, "m_reloadInsertDuration");
+						entityscript["reloadEndDuration"] <- NetProps.GetPropFloat(weapon, "m_reloadEndDuration");
+						entityscript["weaponSequence"] <- weapon.GetSequence();
+						entityscript["ShotgunReload"] <- function()
 						{
-							entityscript["reloadModifier"] = GetReloadSpeedModifier(entityscript["player"]);
-							entityscript["reloadStartDuration"] = GetShotgunReloadDuration(entityscript["weaponClass"], 0);
-							entityscript["reloadInsertDuration"] = GetShotgunReloadDuration(entityscript["weaponClass"], 1);
-							entityscript["reloadEndDuration"] = GetShotgunReloadDuration(entityscript["weaponClass"], 2);
-
-							NetProps.SetPropFloat(entityscript["weapon"], "m_reloadStartDuration", entityscript["reloadStartDuration"] / entityscript["reloadModifier"]);
-							NetProps.SetPropFloat(entityscript["weapon"], "m_reloadInsertDuration", entityscript["reloadInsertDuration"] / entityscript["reloadModifier"]);
-							NetProps.SetPropFloat(entityscript["weapon"], "m_reloadEndDuration", entityscript["reloadEndDuration"] / entityscript["reloadModifier"]);
-
-							entityscript["weaponSequence"] = entityscript["weapon"].GetSequence();
-							if (entityscript["weapon"].GetSequenceName(entityscript["weaponSequence"]) == "reload_end_layer")
+							if (entityscript["player"].IsValid() && entityscript["weapon"].IsValid())
 							{
-								if ((entityscript["player"].GetButtonMask() & 1) == 1)
+								if (entityscript["player"].GetActiveWeapon() == entityscript["weapon"])
 								{
-									NetProps.SetPropFloat(entityscript["weapon"], "m_flNextPrimaryAttack", Time());
-									NetProps.SetPropFloat(entityscript["player"], "m_flNextAttack", Time());
+									entityscript["reloadModifier"] = GetReloadSpeedModifier(entityscript["player"]);
+									entityscript["reloadStartDuration"] = GetShotgunReloadDuration(entityscript["weaponClass"], 0);
+									entityscript["reloadInsertDuration"] = GetShotgunReloadDuration(entityscript["weaponClass"], 1);
+									entityscript["reloadEndDuration"] = GetShotgunReloadDuration(entityscript["weaponClass"], 2);
+
+									NetProps.SetPropFloat(entityscript["weapon"], "m_reloadStartDuration", entityscript["reloadStartDuration"] / entityscript["reloadModifier"]);
+									NetProps.SetPropFloat(entityscript["weapon"], "m_reloadInsertDuration", entityscript["reloadInsertDuration"] / entityscript["reloadModifier"]);
+									NetProps.SetPropFloat(entityscript["weapon"], "m_reloadEndDuration", entityscript["reloadEndDuration"] / entityscript["reloadModifier"]);
+
+									entityscript["weaponSequence"] = entityscript["weapon"].GetSequence();
+									if (entityscript["weapon"].GetSequenceName(entityscript["weaponSequence"]) == "reload_end_layer")
+									{
+										if ((entityscript["player"].GetButtonMask() & 1) == 1)
+										{
+											NetProps.SetPropFloat(entityscript["weapon"], "m_flNextPrimaryAttack", Time());
+											NetProps.SetPropFloat(entityscript["player"], "m_flNextAttack", Time());
+										}
+									}
+									//printl("time " + Time() + " next " + NetProps.GetPropFloat(entityscript["weapon"], "m_flNextPrimaryAttack"));
 								}
 							}
-							//printl("time " + Time() + " next " + NetProps.GetPropFloat(entityscript["weapon"], "m_flNextPrimaryAttack"));
 						}
+
+						AddThinkToEnt(shotgunThinker, "ShotgunReload");
 					}
 				}
-
-				AddThinkToEnt(shotgunThinker, "ShotgunReload");
 			}
 		}
 	}
