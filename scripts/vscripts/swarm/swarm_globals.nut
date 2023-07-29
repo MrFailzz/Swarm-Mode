@@ -6,6 +6,7 @@ difficulty <- GetDifficulty();
 survivorSet <- Director.GetSurvivorSet();
 z_speed <- Convars.GetFloat("z_speed");
 BaseMaxIncaps <- 2;
+DebugMode <- false;
 
 //Breaker
 tankModel <- "models/infected/hulk.mdl"
@@ -38,6 +39,7 @@ uncommonsTimer <- 0;
 corruptionCards <- array(1, null);
 corruptionCards_List <- array(1, null);
 corruptionCards_ListInf <- array(1, null);
+corruptionCards_ListMission <- array(1, null);
 corruptionCommons <- null;
 corruptionUncommons <- null;
 corruptionZSpeed <- null;
@@ -50,6 +52,7 @@ corruptionEnvironmental <- null;
 corruptionHordes <- null;
 corruptionGameplay <- null;
 corruptionPlayer <- null;
+corruptionMission <- null;
 
 //Corruption - Specials
 TallboyHordeEnabled <- false;
@@ -76,6 +79,13 @@ HuntedTimer <- null;
 //Corruption - Onslaught
 OnslaughtEnabled <- false;
 OnslaughtTimer <- null;
+
+//Corruption - Missions
+missionsCompleted <- {};
+missionsCompleted["completed"] <- 0;
+MissionSpeedrun_Goal <- 8 * 60;
+MissionSpeedrun_Timer <- 0;
+MissionGnomeAlone_Status <- 0;
 
 //Ammo
 ammoShortageMultiplier <- 0.7;
@@ -141,7 +151,9 @@ p2Gambler <- [RandomInt(-100, 100), RandomInt(-100, 100), RandomInt(-100, 100), 
 p3Gambler <- [RandomInt(-100, 100), RandomInt(-100, 100), RandomInt(-100, 100), RandomInt(-100, 100), RandomInt(-100, 100), RandomInt(-100, 100), RandomInt(-100, 100)];
 p4Gambler <- [RandomInt(-100, 100), RandomInt(-100, 100), RandomInt(-100, 100), RandomInt(-100, 100), RandomInt(-100, 100), RandomInt(-100, 100), RandomInt(-100, 100)];
 
-cardPickingAllowed <- [false, false, false, false];
+cardPickingAllowed <- [0, 0, 0, 0];
+cardReminderInterval <- 20;
+cardReminderTimer <- cardReminderInterval;
 cardsPerCategory <- 2;
 reflexCardsPick <- array(cardsPerCategory);
 brawnCardsPick <- array(cardsPerCategory);
@@ -249,6 +261,7 @@ function SetDifficulty()
 			BaseMaxIncaps = 3;
 			MaxTraumaDamage = 0;
 			stagger_dmg = 4000;
+			MissionSpeedrun_Goal = 10 * 60;
 		break;
 
 		//Normal
@@ -285,6 +298,7 @@ function SetDifficulty()
 			BaseMaxIncaps = 3;
 			MaxTraumaDamage = 20;
 			stagger_dmg = 4000;
+			MissionSpeedrun_Goal = 8 * 60;
 		break;
 
 		//Advanced
@@ -321,6 +335,7 @@ function SetDifficulty()
 			BaseMaxIncaps = 2;
 			MaxTraumaDamage = 30;
 			stagger_dmg = 10000;
+			MissionSpeedrun_Goal = 7 * 60;
 		break;
 
 		//Expert
@@ -359,6 +374,7 @@ function SetDifficulty()
 			MaxTraumaDamage = 40;
 			stagger_dmg = 10000;
 			DirectorOptions.TankHitDamageModifierCoop = 0.48;
+			MissionSpeedrun_Goal = 5 * 60;
 		break;
 	}
 }

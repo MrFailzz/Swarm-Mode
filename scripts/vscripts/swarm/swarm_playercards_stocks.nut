@@ -73,7 +73,7 @@ disciplineCards <-
 	"GroupTherapy",
 	"InspiringSacrifice",
 	"ReloadDrills",
-	//"MagCoupler",
+	"MagCoupler",
 	"Arsonist",
 	"NeedsOfTheMany",
 	"Cannoneer",
@@ -285,6 +285,33 @@ function GetSurvivorCardTable(player)
 	}
 }
 ::GetSurvivorCardTable <- GetSurvivorCardTable;
+
+function GetReloadSpeedModifier(player)
+{
+	//Modifiers
+	local Gambler = PlayerHasCard(player, "Gambler");
+	local ReloadDrills = PlayerHasCard(player, "ReloadDrills");
+	local Addict = PlayerHasCard(player, "Addict");
+	local AddictMultiplier = AddictGetValue(player);
+	local Bill = PlayerHasCard(player, "Bill");
+	local Brazen = PlayerHasCard(player, "Brazen");
+	local MagCoupler = PlayerHasCard(player, "MagCoupler");
+
+	local reloadModifier = 1 + (0.25 * ReloadDrills) + (AddictMultiplier * Addict) + (0.1 * Bill) + (-0.25 * Brazen) + (0.75 * MagCoupler);
+
+	if (Gambler > 0)
+	{
+		reloadModifier += ApplyGamblerValue(GetSurvivorID(player), 5, Gambler, reloadModifier);
+	}
+
+	if (reloadModifier <= 0)
+	{
+		reloadModifier = 0.01
+	}
+
+	return reloadModifier;
+}
+::GetReloadSpeedModifier <- GetReloadSpeedModifier;
 
 function GetGamblerValue(player, index)
 {
@@ -692,7 +719,7 @@ function GetPlayerCardName(cardID, type = "name")
 				return "+30% Melee / Shove Range";
 				break;
 			case "MethHead":
-				return "+1% Move Speed per Mutation kill";
+				return "+2.5% Move Speed per Mutation kill";
 				break;
 			case "OpticsEnthusiast":
 				return "Gain laser sights (+60% ACC)";
@@ -740,7 +767,7 @@ function GetPlayerCardName(cardID, type = "name")
 				return "+150% Explosive DMG";
 				break;
 			case "ConfidentKiller":
-				return "+1% DMG per Mutation death";
+				return "+2.5% DMG per Mutation death";
 				break;
 			case "CannedGoods":
 				return "+25 Max HP";
@@ -794,7 +821,7 @@ function GetPlayerCardName(cardID, type = "name")
 				return "Team can crawl while incapped";
 				break;
 			case "StrengthInNumbers":
-				return "+2.5% Team DMG per Cleaner";
+				return "+2.5% Team DMG per alive Cleaner";
 				break;
 			case "NoHead":
 				return "Headshot kills cause an explosion";
@@ -851,7 +878,7 @@ function GetPlayerCardName(cardID, type = "name")
 				return "+25% Reload Speed";
 				break;
 			case "MagCoupler":
-				return "+50% Reload Speed, DISABLES: Offensive Slot";
+				return "+75% Reload Speed, DISABLES: Shove";
 				break;
 			case "LuckyShot":
 				return "+7% Team CRIT Chance (+400% DMG)";
@@ -887,7 +914,7 @@ function GetPlayerCardName(cardID, type = "name")
 				return "+1 Team Life";
 				break;
 			case "WellRested":
-				return "+25 Team HP each chapter";
+				return "Team fully heals each chapter";
 				break;
 			case "BuckshotBruiser":
 				return "+0.25 Temp HP per Shotgun pellet";
