@@ -1360,9 +1360,12 @@ function GetAliveCleaners()
 	local player = null;
 	while ((player = Entities.FindByClassname(player, "player")) != null)
 	{
-		if (!player.IsDead() && !player.IsDying())
+		if (player.IsSurvivor())
 		{
-			i++;
+			if (!player.IsDead() && !player.IsDying())
+			{
+				i++;
+			}
 		}
 	}
 	return i;
