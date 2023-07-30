@@ -196,3 +196,8 @@ function OnGameEvent_difficulty_changed(params)
 {
 	SetDifficulty();
 }
+
+function OnGameEvent_weapon_fire(params)
+{
+	WeaponFireM60(params);
+}

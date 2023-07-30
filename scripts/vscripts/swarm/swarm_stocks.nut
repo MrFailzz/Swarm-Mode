@@ -917,7 +917,6 @@ function PlayerHurt(params)
 	}
 }
 
-
 //Use heal begin because heal end is bugged, so restored temp health may not be accurate
 function HealBegin(params)
 {
@@ -1176,6 +1175,26 @@ function CappedAlert()
 		}
 	}
 }
+
+function WeaponFireM60(params)
+{
+	local player = GetPlayerFromUserID(params.userid);
+	if (player.IsValid())
+	{
+		if ("weapon" in params)
+		{
+			if (params.weapon == "rifle_m60")
+			{
+				local weaponEnt = player.GetActiveWeapon();
+				if (weaponEnt.Clip1() <= 1)
+				{
+					weaponEnt.SetClip1(-1);
+				}
+			}
+		}
+	}
+}
+
 
 ///////////////////////////////////////////////
 //                    HUD                    //
@@ -1460,6 +1479,9 @@ function SpawnMob(count = 1, zType = 10)
 		i++;
 	}
 
+	//HuntedTimer += 20;
+	//OnslaughtTimer += 20;
+
 	Heal_AmpedUp();
 	Director.PlayMegaMobWarningSounds();
 }
@@ -1481,6 +1503,27 @@ function GetVectorAngle(vec1, vec2)
 	return atan2(vec1.y - vec2.y, vec1.x - vec2.x);
 }
 ::zGetVectorAngle <- GetVectorAngle;
+
+function CheckLOS(vec1, vec2, originEntity)
+{
+	local traceTable =
+	{
+		start = vec1
+		end = vec2
+		mask = TRACE_MASK_VISION
+		ignore = originEntity
+	};
+
+	if(TraceLine(traceTable))
+	{
+		if(traceTable.hit)
+		{
+			return traceTable.enthit;
+		}
+	}
+}
+::CheckLOS <- CheckLOS;
+::TRACE_MASK_VISION <- TRACE_MASK_VISION;
 
 function Clamp(angle, clampTo)
 {

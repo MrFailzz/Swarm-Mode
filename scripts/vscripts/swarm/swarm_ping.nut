@@ -16,7 +16,7 @@ function TraceEye(player)
 		start = eyePosition
 		end = traceEnd
 		ignore = player
-	}
+	};
 
 	if(TraceLine(traceTable))
 	{
@@ -42,8 +42,8 @@ function TraceEye(player)
 function PingEntity(entity, player, tracepos)
 {
 	// Get entity info
-	local entityClassname = GetEntityType(entity);
-	if (entityClassname == false)
+	local entityReturnName = GetEntityType(entity);
+	if (entityReturnName == false)
 	{
 		PingWorld(tracepos, player);
 		return;
@@ -59,25 +59,33 @@ function PingEntity(entity, player, tracepos)
 		DoEntFire("!self", "AddOutput", "targetname " + entityName, 0, entity, entity);
 	}
 
-	local canGlow = CanGlow(entityClassname);
+	local canGlow = CanGlow(entityReturnName);
 	if (canGlow == false)
 	{
 		// Create fake prop for glow
 		local glow_name = "__pingtarget_" + entityIndex + "_glow_";
 		local entityAngles = entity.GetAngles();
+		local entityAnglesY = entityAngles.y;
+		if (entity.GetClassname() == "player")
+		{
+			entityAnglesY -= 90;
+		}
 		local glow_target = SpawnEntityFromTable("prop_dynamic_override",
 		{
 			targetname = glow_name,
 			origin = entity.GetOrigin(),
-			angles = Vector(entityAngles.x, entityAngles.y, entityAngles.z),
+			angles = Vector(entityAngles.x, entityAnglesY, entityAngles.z),
 			model = entity.GetModelName(),
 			solid = 0,
 			rendermode = 10
 		});
+		local entitySequence = entity.GetSequence();
+		local sequenceName = entity.GetSequenceName(entitySequence);
 
 		// Apply ping glow
 		DoEntFire("!self", "SetParent", entityName, 0, null, glow_target);
 		DoEntFire("!self", "StartGlowing", "", 0, null, glow_target);
+		DoEntFire("!self", "SetAnimation", sequenceName, 0, null, glow_target);
 
 		// Remove ping
 		DoEntFire("!self", "StopGlowing", "", pingDuration, null, glow_target);
@@ -104,7 +112,7 @@ function PingEntity(entity, player, tracepos)
 	}
 
 	// Notifications
-	ClientPrint(null, 3, "\x04" + player.GetPlayerName() + "\x01 pinged \x03" + entityClassname);
+	ClientPrint(null, 3, "\x04" + player.GetPlayerName() + "\x01 pinged \x03" + entityReturnName);
 	EmitSoundOn("ui\\beepclear.wav", player)
 }
 

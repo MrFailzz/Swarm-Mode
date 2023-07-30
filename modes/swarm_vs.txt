@@ -133,6 +133,8 @@
 		z_mob_spawn_min_interval_hard 9999
 		z_mob_spawn_min_interval_normal 9999
 		z_hear_gunfire_range 1250
+		
+		ammo_m60_max 150
 
 		// versus cvars
 		z_scrimmage_creep_delay 0

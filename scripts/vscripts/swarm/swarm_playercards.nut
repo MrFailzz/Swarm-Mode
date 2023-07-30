@@ -582,28 +582,13 @@ function ApplyInspiringSacrifice()
 	local InspiringSacrifice = TeamHasCard("InspiringSacrifice");
 
 	local player = null;
-	local healthBuffer = null;
-	local maxHealth = null;
-	local currentHealth = null;
-
 	while ((player = Entities.FindByClassname(player, "player")) != null)
 	{
 		if (player.IsSurvivor())
 		{
 			if (!player.IsDead() && !player.IsIncapacitated() && !player.IsHangingFromLedge())
 			{
-				healthBuffer = player.GetHealthBuffer();
-				maxHealth = player.GetMaxHealth();
-				currentHealth = player.GetHealth();
-
-				if ((25 * InspiringSacrifice) + (currentHealth + healthBuffer) > maxHealth)
-				{
-					player.SetHealthBuffer(maxHealth - currentHealth);
-				}
-				else
-				{
-					player.SetHealthBuffer((25 * InspiringSacrifice) + healthBuffer);
-				}
+				Heal_TempHealth(player, (25 * InspiringSacrifice));
 			}
 		}
 	}
@@ -661,58 +646,167 @@ function SurvivorPickupItem(params)
 		if (player.IsSurvivor())
 		{
 			local weapon = player.GetActiveWeapon();
-			if (weapon.IsValid() && weapon != null)
+			if (weapon != null)
 			{
-				weaponClass = weapon.GetClassname();
-				weaponID = weapon.GetEntityIndex();
-
-				if (weaponClass == "weapon_shotgun_chrome" || weaponClass == "weapon_pumpshotgun" || weaponClass == "weapon_autoshotgun" || weaponClass == "weapon_shotgun_spas")
+				if (weapon.IsValid())
 				{
-					local shotgunThinker = SpawnEntityFromTable("info_target", { targetname = "shotgunThinker" + weaponID });
-					if (shotgunThinker.ValidateScriptScope())
+					weaponClass = weapon.GetClassname();
+					weaponID = weapon.GetEntityIndex();
+
+					if (weaponClass == "weapon_shotgun_chrome" || weaponClass == "weapon_pumpshotgun" || weaponClass == "weapon_autoshotgun" || weaponClass == "weapon_shotgun_spas")
 					{
-						local entityscript = shotgunThinker.GetScriptScope();
-						entityscript["player"] <- player;
-						entityscript["weapon"] <- weapon;
-						entityscript["weaponClass"] <- weaponClass;
-						entityscript["reloadModifier"] <- 1;
-						entityscript["reloadStartDuration"] <- NetProps.GetPropFloat(weapon, "m_reloadStartDuration");
-						entityscript["reloadInsertDuration"] <- NetProps.GetPropFloat(weapon, "m_reloadInsertDuration");
-						entityscript["reloadEndDuration"] <- NetProps.GetPropFloat(weapon, "m_reloadEndDuration");
-						entityscript["weaponSequence"] <- weapon.GetSequence();
-						entityscript["ShotgunReload"] <- function()
+						local shotgunThinker = SpawnEntityFromTable("info_target", { targetname = "shotgunThinker" + weaponID });
+						if (shotgunThinker.ValidateScriptScope())
 						{
-							if (entityscript["player"].IsValid() && entityscript["weapon"].IsValid())
+							local entityscript = shotgunThinker.GetScriptScope();
+							entityscript["player"] <- player;
+							entityscript["weapon"] <- weapon;
+							entityscript["weaponClass"] <- weaponClass;
+							entityscript["reloadModifier"] <- 1;
+							entityscript["reloadStartDuration"] <- NetProps.GetPropFloat(weapon, "m_reloadStartDuration");
+							entityscript["reloadInsertDuration"] <- NetProps.GetPropFloat(weapon, "m_reloadInsertDuration");
+							entityscript["reloadEndDuration"] <- NetProps.GetPropFloat(weapon, "m_reloadEndDuration");
+							entityscript["weaponSequence"] <- weapon.GetSequence();
+							entityscript["ShotgunReload"] <- function()
 							{
-								if (entityscript["player"].GetActiveWeapon() == entityscript["weapon"])
+								if (entityscript["player"].IsValid() && entityscript["weapon"].IsValid())
 								{
-									entityscript["reloadModifier"] = GetReloadSpeedModifier(entityscript["player"]);
-									entityscript["reloadStartDuration"] = GetShotgunReloadDuration(entityscript["weaponClass"], 0);
-									entityscript["reloadInsertDuration"] = GetShotgunReloadDuration(entityscript["weaponClass"], 1);
-									entityscript["reloadEndDuration"] = GetShotgunReloadDuration(entityscript["weaponClass"], 2);
-
-									NetProps.SetPropFloat(entityscript["weapon"], "m_reloadStartDuration", entityscript["reloadStartDuration"] / entityscript["reloadModifier"]);
-									NetProps.SetPropFloat(entityscript["weapon"], "m_reloadInsertDuration", entityscript["reloadInsertDuration"] / entityscript["reloadModifier"]);
-									NetProps.SetPropFloat(entityscript["weapon"], "m_reloadEndDuration", entityscript["reloadEndDuration"] / entityscript["reloadModifier"]);
-
-									entityscript["weaponSequence"] = entityscript["weapon"].GetSequence();
-									if (entityscript["weapon"].GetSequenceName(entityscript["weaponSequence"]) == "reload_end_layer")
+									if (entityscript["player"].GetActiveWeapon() == entityscript["weapon"])
 									{
-										if ((entityscript["player"].GetButtonMask() & 1) == 1)
+										entityscript["reloadModifier"] = GetReloadSpeedModifier(entityscript["player"]);
+										entityscript["reloadStartDuration"] = GetShotgunReloadDuration(entityscript["weaponClass"], 0);
+										entityscript["reloadInsertDuration"] = GetShotgunReloadDuration(entityscript["weaponClass"], 1);
+										entityscript["reloadEndDuration"] = GetShotgunReloadDuration(entityscript["weaponClass"], 2);
+
+										NetProps.SetPropFloat(entityscript["weapon"], "m_reloadStartDuration", entityscript["reloadStartDuration"] / entityscript["reloadModifier"]);
+										NetProps.SetPropFloat(entityscript["weapon"], "m_reloadInsertDuration", entityscript["reloadInsertDuration"] / entityscript["reloadModifier"]);
+										NetProps.SetPropFloat(entityscript["weapon"], "m_reloadEndDuration", entityscript["reloadEndDuration"] / entityscript["reloadModifier"]);
+
+										entityscript["weaponSequence"] = entityscript["weapon"].GetSequence();
+										if (entityscript["weapon"].GetSequenceName(entityscript["weaponSequence"]) == "reload_end_layer")
 										{
-											NetProps.SetPropFloat(entityscript["weapon"], "m_flNextPrimaryAttack", Time());
-											NetProps.SetPropFloat(entityscript["player"], "m_flNextAttack", Time());
+											if ((entityscript["player"].GetButtonMask() & 1) == 1)
+											{
+												NetProps.SetPropFloat(entityscript["weapon"], "m_flNextPrimaryAttack", Time());
+												NetProps.SetPropFloat(entityscript["player"], "m_flNextAttack", Time());
+											}
 										}
+										//printl("time " + Time() + " next " + NetProps.GetPropFloat(entityscript["weapon"], "m_flNextPrimaryAttack"));
 									}
-									//printl("time " + Time() + " next " + NetProps.GetPropFloat(entityscript["weapon"], "m_flNextPrimaryAttack"));
 								}
 							}
-						}
 
-						AddThinkToEnt(shotgunThinker, "ShotgunReload");
+							AddThinkToEnt(shotgunThinker, "ShotgunReload");
+						}
 					}
 				}
 			}
+		}
+	}
+}
+
+function HeightendSensesPing(player)
+{
+	local autoPingDuration = 2;
+	local entity = null;
+	while ((entity = Entities.FindInSphere(entity, player.GetOrigin(), 300)) != null)
+	{
+		//Ignore invalid entities
+		local entityReturnName = GetEntityType(entity);
+		if (entityReturnName == false)
+		{
+			continue;
+		}
+
+		//Ignore survivors
+		if (entity.GetClassname() == "player")
+		{
+			if (entity.IsSurvivor())
+			{
+				continue;
+			}
+		}
+
+		//Ignore items in inventory
+		local player = null;
+		local skipInventory = false;
+		while ((player = Entities.FindByClassname(player, "player")) != null)
+		{
+			local invTable = {};
+			GetInvTable(player, invTable);
+			foreach(slot, weapon in invTable)
+			{
+				if (weapon == entity)
+				{
+					skipInventory = true;
+				}
+			}
+		}
+		if (skipInventory == true)
+		{
+			continue;
+		}
+
+		// Check if entity has a targetname
+		local entityName = entity.GetName();
+		local entityIndex = entity.GetEntityIndex();
+		if (entityName == "")
+		{
+			// Give it a name
+			entityName = "__pingtarget_" + entityIndex;
+			DoEntFire("!self", "AddOutput", "targetname " + entityName, 0, entity, entity);
+		}
+
+		local canGlow = CanGlow(entityReturnName);
+		if (canGlow == false)
+		{
+			// Create fake prop for glow
+			local glow_name = "__pingtarget_" + entityIndex + "_glow_";
+			local entityAngles = entity.GetAngles();
+			local entityAnglesY = entityAngles.y;
+			if (entity.GetClassname() == "player")
+			{
+				entityAnglesY -= 90;
+			}
+			local glow_target = SpawnEntityFromTable("prop_dynamic_override",
+			{
+				targetname = glow_name,
+				origin = entity.GetOrigin(),
+				angles = Vector(entityAngles.x, entityAnglesY, entityAngles.z),
+				model = entity.GetModelName(),
+				solid = 0,
+				rendermode = 10
+			});
+			local entitySequence = entity.GetSequence();
+			local sequenceName = entity.GetSequenceName(entitySequence);
+
+			// Apply ping glow
+			DoEntFire("!self", "SetParent", entityName, 0, null, glow_target);
+			DoEntFire("!self", "StartGlowing", "", 0, null, glow_target);
+			DoEntFire("!self", "SetAnimation", sequenceName, 0, null, glow_target);
+
+			// Remove ping
+			DoEntFire("!self", "StopGlowing", "", autoPingDuration, null, glow_target);
+			DoEntFire("!self", "Kill", "", autoPingDuration, null, glow_target);
+		}
+		else if (canGlow == true)
+		{
+			// Apply ping glow
+			DoEntFire("!self", "StartGlowing", "", 0, null, entityName);
+
+			// Remove ping
+			DoEntFire("!self", "StopGlowing", "", autoPingDuration, null, entityName);
+		}
+		else if (canGlow == "crows")
+		{
+			local nameArray = split(entityName, "_");
+			local crowGroupName = "__" + nameArray[0] + "_" + nameArray[1] + "_" + nameArray[2] + "*";
+
+			// Apply ping glow
+			EntFire(crowGroupName, "StartGlowing", "", 0);
+
+			// Remove ping
+			EntFire(crowGroupName, "StopGlowing", "", autoPingDuration);
 		}
 	}
 }
@@ -729,6 +823,12 @@ function Update_PlayerCards()
 		if (player.IsSurvivor())
 		{
 			CalcSpeedMultiplier(player);
+
+			local HeightendSenses = PlayerHasCard(player, "HeightendSenses");
+			if (HeightendSenses > 0)
+			{
+				HeightendSensesPing(player);
+			}
 
 			if (!player.IsDead() && !player.IsIncapacitated() && !player.IsHangingFromLedge())
 			{

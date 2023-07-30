@@ -85,7 +85,7 @@ fortuneCards <-
 	"Selfless",
 	"Selfish",
 	//"Decoy",
-	//"HeightendSenses",
+	"HeightendSenses",
 	//"ClusterBomb",
 	"HotShot",
 	"Pinata",
@@ -728,7 +728,7 @@ function GetPlayerCardName(cardID, type = "name")
 				return "Escape Grabs (60s CD) [+use]";
 				break;
 			case "AdrenalineRush":
-				return "Adrenaline Buff on Team incap";
+				return "Adrenaline on Team incap";
 				break;
 			case "HelpingHand":
 				return "+75% Team Revive Speed";
@@ -893,7 +893,7 @@ function GetPlayerCardName(cardID, type = "name")
 				return "Drop a Pipe Bomb on incap";
 				break;
 			case "HeightendSenses":
-				return "Ping Mutations, Hazards and Items in 10m";
+				return "Ping Mutations, Hazards and Items in 7.5m";
 				break;
 			case "ClusterBomb":
 				return "Pipe Bombs explode twice";
