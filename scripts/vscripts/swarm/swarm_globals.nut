@@ -74,13 +74,11 @@ frigidOutskirtsTimer <- 0;
 
 //Corruption - Hunted
 HuntedEnabled <- false;
-HuntedTimer <- null;
-::HuntedTimer <- HuntedTimer;
+::HuntedTimer <- null;
 
 //Corruption - Onslaught
 OnslaughtEnabled <- false;
-OnslaughtTimer <- null;
-::OnslaughtTimer <- OnslaughtTimer;
+::OnslaughtTimer <- null;
 
 //Corruption - Missions
 missionsCompleted <- {};
@@ -148,10 +146,10 @@ else
 4 - DMG
 5 - Reload
 6 - Heal EFF]*/
-p1Gambler <- [RandomInt(-100, 100), RandomInt(-100, 100), RandomInt(-100, 100), RandomInt(-100, 100), RandomInt(-100, 100), RandomInt(-100, 100), RandomInt(-100, 100)];
-p2Gambler <- [RandomInt(-100, 100), RandomInt(-100, 100), RandomInt(-100, 100), RandomInt(-100, 100), RandomInt(-100, 100), RandomInt(-100, 100), RandomInt(-100, 100)];
-p3Gambler <- [RandomInt(-100, 100), RandomInt(-100, 100), RandomInt(-100, 100), RandomInt(-100, 100), RandomInt(-100, 100), RandomInt(-100, 100), RandomInt(-100, 100)];
-p4Gambler <- [RandomInt(-100, 100), RandomInt(-100, 100), RandomInt(-100, 100), RandomInt(-100, 100), RandomInt(-100, 100), RandomInt(-100, 100), RandomInt(-100, 100)];
+::p1Gambler <- [RandomInt(-100, 100), RandomInt(-100, 100), RandomInt(-100, 100), RandomInt(-100, 100), RandomInt(-100, 100), RandomInt(-100, 100), RandomInt(-100, 100)];
+::p2Gambler <- [RandomInt(-100, 100), RandomInt(-100, 100), RandomInt(-100, 100), RandomInt(-100, 100), RandomInt(-100, 100), RandomInt(-100, 100), RandomInt(-100, 100)];
+::p3Gambler <- [RandomInt(-100, 100), RandomInt(-100, 100), RandomInt(-100, 100), RandomInt(-100, 100), RandomInt(-100, 100), RandomInt(-100, 100), RandomInt(-100, 100)];
+::p4Gambler <- [RandomInt(-100, 100), RandomInt(-100, 100), RandomInt(-100, 100), RandomInt(-100, 100), RandomInt(-100, 100), RandomInt(-100, 100), RandomInt(-100, 100)];
 
 cardPickingAllowed <- [0, 0, 0, 0];
 cardReminderInterval <- 20;
