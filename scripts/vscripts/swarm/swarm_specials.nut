@@ -152,6 +152,7 @@ function StingerProjectile(params)
 
 		// DMG victim
 		player.TakeDamage(5 * difficultyDamageScale, 0, attacker)
+		player.OverrideFriction(0.5,1.25);
 		
 		// Break Tongue
 		Convars.SetValue("tongue_force_break", 1);
