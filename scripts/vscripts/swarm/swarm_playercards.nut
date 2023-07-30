@@ -846,9 +846,6 @@ function Update_PlayerCards()
 							ScreenFade(player, 0, 0, 0, 140, 1, 1, 1 | 2);
 							ScreenShake(Vector(playerOrigin.x, playerOrigin.y, playerOrigin.z + 34), RandomInt(4, 7), 10, 2, 5, 0, true);
 
-							local playerEyeAngles = player.EyeAngles();
-							player.SnapEyeAngles(QAngle(playerEyeAngles.x + RandomFloat(-2, 2), playerEyeAngles.y + RandomFloat(-2, 2), 0 + RandomFloat(-2, 2)));
-
 							if (addictPlaySound == false)
 							{
 								StopSoundOn("Player.Heartbeat", player);
@@ -866,9 +863,6 @@ function Update_PlayerCards()
 							//Weak effect
 							ScreenFade(player, 0, 0, 0, 90, 1, 1, 1 | 2);
 							ScreenShake(Vector(playerOrigin.x, playerOrigin.y, playerOrigin.z + 34), RandomInt(2, 6), 10, 2, 5, 0, true);
-
-							local playerEyeAngles = player.EyeAngles();
-							player.SnapEyeAngles(QAngle(playerEyeAngles.x, playerEyeAngles.y, 0))
 						}
 					}
 					else
