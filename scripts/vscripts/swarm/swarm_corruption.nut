@@ -845,51 +845,9 @@ function CorruptionCard_TallboyHordes()
 	DirectorOptions.cm_AggressiveSpecials = 1
 }
 
-function TallboyTimerFunc(count = 4, zType = 6)
-{
-	if (SpecialHordeTimer < Time() && TallboyHordeEnabled == true)
-	{
-		local i = 0;
-		while (i < count)
-		{
-			ZSpawn({type = zType});
-			i++;
-			SpecialHordeTimer = Time() + 120 + 30;
-		}
-
-		Heal_AmpedUp();
-		Director.PlayMegaMobWarningSounds();
-	}
-	else if (SpecialHordeTimer < Time() + 5)
-	{
-		ClientPrint(null, 3, "\x01 Prepare for the horde in \x04" + ceil(SpecialHordeTimer - Time()) + "...");
-	}
-}
-
 function CorruptionCard_HockerHordes()
 {
 	DirectorOptions.cm_AggressiveSpecials = 1
-}
-
-function HockerTimerFunc(count = 4, zType = 1)
-{
-	if (SpecialHordeTimer < Time() && HockerHordeEnabled == true)
-	{
-		local i = 0;
-		while (i < count)
-		{
-			ZSpawn({type = zType});
-			i++;
-			SpecialHordeTimer = Time() + 120 + 30;
-		}
-
-		Heal_AmpedUp();
-		Director.PlayMegaMobWarningSounds();
-	}
-	else if (SpecialHordeTimer < Time() + 5)
-	{
-		ClientPrint(null, 3, "\x01 Prepare for the horde in \x04" + ceil(SpecialHordeTimer - Time()) + "...");
-	}
 }
 
 function CorruptionCard_StalkerHordes()
@@ -897,37 +855,36 @@ function CorruptionCard_StalkerHordes()
 	DirectorOptions.cm_AggressiveSpecials = 1
 }
 
-function StalkerTimerFunc(count = 4, zType = 5)
-{
-	if (SpecialHordeTimer < Time() && StalkerHordeEnabled == true)
-	{
-		local i = 0;
-		while (i < count)
-		{
-			ZSpawn({type = zType});
-			i++;
-			SpecialHordeTimer = Time() + 120 + 30;
-		}
-
-		Heal_AmpedUp();
-		Director.PlayMegaMobWarningSounds();
-	}
-	else if (SpecialHordeTimer < Time() + 5)
-	{
-		ClientPrint(null, 3, "\x01 Prepare for the horde in \x04" + ceil(SpecialHordeTimer - Time()) + "...");
-	}
-}
-
 function CorruptionCard_RetchHordes()
 {
 	DirectorOptions.cm_AggressiveSpecials = 1
 }
 
-function RetchTimerFunc(count = 4, zType = 2)
+function SpecialTimerFunc()
 {
-	if (SpecialHordeTimer < Time() && RetchHordeEnabled == true)
+	if (SpecialHordeTimer < Time() && SpecialHordeEnabled == true)
 	{
 		local i = 0;
+		local count = 6;
+		local zType = null;
+
+		if (corruptionHordes == "hordeTallboy" || corruptionHordes == "hordeCrusher" || corruptionHordes == "hordeCrusher")
+		{
+			zType = 6;
+		}
+		if (corruptionHordes == "hordeRetch" || corruptionHordes == "hordeExploder" || corruptionHordes == "hordeReeker")
+		{
+			zType = 2;
+		}
+		if (corruptionHordes == "hordeHocker" || corruptionHordes == "hordeStinger")
+		{
+			zType = 1;
+		}
+		if (corruptionHordes == "hordeStalker")
+		{
+			zType = 5;
+		}
+
 		while (i < count)
 		{
 			ZSpawn({type = zType});

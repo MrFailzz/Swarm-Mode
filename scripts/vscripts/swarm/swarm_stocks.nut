@@ -788,39 +788,39 @@ function PlayerLeftSafeArea(params)
 					OnslaughtTimer = Time() + 90 + 30;
 					break;
 				case "hordeTallboy":
-					TallboyHordeEnabled = true;
+					SpecialHordeEnabled = true;
 					SpecialHordeTimer = Time() + 120 + 30;
 					break;
 				case "hordeCrusher":
-					TallboyHordeEnabled = true;
+					SpecialHordeEnabled = true;
 					SpecialHordeTimer = Time() + 120 + 30;
 					break;
 				case "hordeBruiser":
-					TallboyHordeEnabled = true;
+					SpecialHordeEnabled = true;
 					SpecialHordeTimer = Time() + 120 + 30;
 					break;
 				case "hordeHocker":
-					HockerHordeEnabled = true;
+					SpecialHordeEnabled = true;
 					SpecialHordeTimer = Time() + 120 + 30;
 					break;
 				case "hordeStinger":
-					HockerHordeEnabled = true;
+					SpecialHordeEnabled = true;
 					SpecialHordeTimer = Time() + 120 + 30;
 					break;
 				case "hordeStalker":
-					StalkerHordeEnabled = true;
+					SpecialHordeEnabled = true;
 					SpecialHordeTimer = Time() + 120 + 30;
 					break;
 				case "hordeRetch":
-					RetchHordeEnabled = true;
+					SpecialHordeEnabled = true;
 					SpecialHordeTimer = Time() + 120 + 30;
 					break;
 				case "hordeExploder":
-					RetchHordeEnabled = true;
+					SpecialHordeEnabled = true;
 					SpecialHordeTimer = Time() + 120 + 30;
 					break;
 				case "hordeReeker":
-					RetchHordeEnabled = true;
+					SpecialHordeEnabled = true;
 					SpecialHordeTimer = Time() + 120 + 30;
 					break;
 			}
@@ -1335,25 +1335,25 @@ function Update()
 				OnslaughtTimerFunc();
 				break;
 			case "hordeTallboy":
-				TallboyTimerFunc();
+				SpecialTimerFunc();
 				break;
 			case "hordeCrusher":
-				CrusherTimerFunc();
+				SpecialTimerFunc();
 				break;
 			case "hordeBruiser":
-				BruiserTimerFunc();
+				SpecialTimerFunc();
 				break;
 			case "hordeStalker":
-				StalkerTimerFunc();
+				SpecialTimerFunc();
 				break;
 			case "hordeHocker":
-				HockerTimerFunc();
+				SpecialTimerFunc();
 				break;
 			case "hordeExploder":
-				ExploderTimerFunc();
+				SpecialTimerFunc();
 				break;
 			case "hordeRetch":
-				RetchTimerFunc();
+				SpecialTimerFunc();
 				break;
 		}
 	}

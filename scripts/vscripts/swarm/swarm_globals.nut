@@ -54,16 +54,9 @@ corruptionGameplay <- null;
 corruptionPlayer <- null;
 corruptionMission <- null;
 
-//Corruption - Specials
-TallboyHordeEnabled <- false;
-CrusherHordeEnabled <- false;
-BruiserHordeEnabled <- false;
-StalkerHordeEnabled <- false;
-HockerHordeEnabled <- false;
-ExploderHordeEnabled <- false;
-RetchHordeEnabled <- false;
-ReekerHordeEnabled <- false;
-SpecialHordeTimer <- null;
+//Corruption - Special Hordes
+SpecialHordeEnabled <- false;
+::SpecialHordeTimer <- null;
 
 //Corruption - Frigid Outskirts
 frigidOutskirtsEnabled <- false;
@@ -146,10 +139,10 @@ else
 4 - DMG
 5 - Reload
 6 - Heal EFF]*/
-::p1Gambler <- [RandomInt(-100, 100), RandomInt(-100, 100), RandomInt(-100, 100), RandomInt(-100, 100), RandomInt(-100, 100), RandomInt(-100, 100), RandomInt(-100, 100)];
-::p2Gambler <- [RandomInt(-100, 100), RandomInt(-100, 100), RandomInt(-100, 100), RandomInt(-100, 100), RandomInt(-100, 100), RandomInt(-100, 100), RandomInt(-100, 100)];
-::p3Gambler <- [RandomInt(-100, 100), RandomInt(-100, 100), RandomInt(-100, 100), RandomInt(-100, 100), RandomInt(-100, 100), RandomInt(-100, 100), RandomInt(-100, 100)];
-::p4Gambler <- [RandomInt(-100, 100), RandomInt(-100, 100), RandomInt(-100, 100), RandomInt(-100, 100), RandomInt(-100, 100), RandomInt(-100, 100), RandomInt(-100, 100)];
+::p1Gambler <- [RandomInt(-100, 100), RandomInt(-100, 100), RandomInt(-100, 100), RandomInt(-50, 80), RandomInt(-100, 100), RandomInt(-50, 80), RandomInt(-100, 100)];
+::p2Gambler <- [RandomInt(-100, 100), RandomInt(-100, 100), RandomInt(-100, 100), RandomInt(-50, 80), RandomInt(-100, 100), RandomInt(-50, 80), RandomInt(-100, 100)];
+::p3Gambler <- [RandomInt(-100, 100), RandomInt(-100, 100), RandomInt(-100, 100), RandomInt(-50, 80), RandomInt(-100, 100), RandomInt(-50, 80), RandomInt(-100, 100)];
+::p4Gambler <- [RandomInt(-100, 100), RandomInt(-100, 100), RandomInt(-100, 100), RandomInt(-50, 80), RandomInt(-100, 100), RandomInt(-50, 80), RandomInt(-100, 100)];
 
 cardPickingAllowed <- [0, 0, 0, 0];
 cardReminderInterval <- 20;
@@ -195,7 +188,7 @@ DirectorOptions <-
 	cm_AggressiveSpecials = 0
 	
 	cm_MaxSpecials = 6 //For sleepers, was 4 previously. Game limits max players on server to 18
-	cm_TankLimit = 1
+	cm_TankLimit = 2
 	cm_WitchLimit = -1
 	cm_CommonLimit = 30
 	cm_ProhibitBosses = true
@@ -256,7 +249,6 @@ function SetDifficulty()
 			Convars.SetValue("z_jockey_health", 300);
 			Convars.SetValue("z_gas_health", 200);
 			Convars.SetValue("z_witch_health", 500);
-			Convars.SetValue("director_panic_forever", 0);
 			BaseMaxIncaps = 3;
 			MaxTraumaDamage = 0;
 			stagger_dmg = 4000;
@@ -293,7 +285,6 @@ function SetDifficulty()
 			Convars.SetValue("z_jockey_health", 350);
 			Convars.SetValue("z_gas_health", 250);
 			Convars.SetValue("z_witch_health", 750);
-			Convars.SetValue("director_panic_forever", 0);
 			BaseMaxIncaps = 3;
 			MaxTraumaDamage = 20;
 			stagger_dmg = 4000;
@@ -330,7 +321,6 @@ function SetDifficulty()
 			Convars.SetValue("z_jockey_health", 450);
 			Convars.SetValue("z_gas_health", 300);
 			Convars.SetValue("z_witch_health", 1000);
-			Convars.SetValue("director_panic_forever", 1);
 			BaseMaxIncaps = 2;
 			MaxTraumaDamage = 30;
 			stagger_dmg = 10000;
@@ -368,7 +358,6 @@ function SetDifficulty()
 			Convars.SetValue("z_gas_health", 300);
 			Convars.SetValue("z_exploding_health", 700);
 			Convars.SetValue("z_witch_health", 1000);
-			Convars.SetValue("director_panic_forever", 1);
 			BaseMaxIncaps = 2;
 			MaxTraumaDamage = 40;
 			stagger_dmg = 10000;

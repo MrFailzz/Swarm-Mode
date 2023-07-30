@@ -154,8 +154,16 @@ function GetEntityType(entity)
 			switch(entity.GetZombieType())
 			{
 				case 1:
-					return "Hocker";
-					break;
+					if (corruptionHocker == "Hocker")
+					{
+						return "Hocker";
+						break;
+					}
+					if (corruptionHocker == "Stinger")
+					{
+						return "Stinger";
+						break;	
+					}
 				case 2:
 					if (corruptionRetch == "Retch")
 					{
