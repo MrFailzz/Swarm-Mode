@@ -312,12 +312,16 @@ function ExplodingCommonBoom(common)
 	while ((victim = Entities.FindByClassnameWithin(victim, "player", commonOrigin, explodingCommonRange)) != null)
 	{
 		victimOrigin = victim.GetOrigin();
-		distanceFactor = 1 - (zGetVectorDistance(victimOrigin, commonOrigin) / explodingCommonRange);
-		local angle = zGetVectorAngle(victimOrigin, commonOrigin);
 
-		victim.SetOrigin(Vector(victimOrigin.x, victimOrigin.y, victimOrigin.z + 1));
-		victim.SetVelocity(Vector(sin(angle + 90) * explodingCommonKnockback * (distanceFactor + 0.25), sin(angle) * explodingCommonKnockback * (distanceFactor + 0.25), 200));
-		victim.TakeDamage(distanceFactor * explodingCommonDamage, 134217728, null);
+		if (CheckLOS(Vector(commonOrigin.x,commonOrigin.y,commonOrigin.z+48), Vector(victimOrigin.x,victimOrigin.y,victimOrigin.z+48), commonHandle) == victim)
+		{
+			distanceFactor = 1 - (zGetVectorDistance(victimOrigin, commonOrigin) / explodingCommonRange);
+			local angle = zGetVectorAngle(victimOrigin, commonOrigin);
+
+			victim.SetOrigin(Vector(victimOrigin.x, victimOrigin.y, victimOrigin.z + 1));
+			victim.SetVelocity(Vector(sin(angle + 90) * explodingCommonKnockback * (distanceFactor + 0.25), sin(angle) * explodingCommonKnockback * (distanceFactor + 0.25), 200));
+			victim.TakeDamage(distanceFactor * explodingCommonDamage, DMG_BLAST_SURFACE, null);
+		}
 	}
 
 	local infected = null;
@@ -335,6 +339,7 @@ function ExplodingCommonBoom(common)
 	}
 }
 ::zExplodingCommonBoom <- ExplodingCommonBoom;
+::DMG_BLAST_SURFACE <- DMG_BLAST_SURFACE;
 
 
 ///////////////////////////////////////////////

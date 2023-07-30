@@ -145,5 +145,7 @@
 		versus_tank_flow_team_variation 0
 		vomitjar_duration_infected_pz 15
 		z_frustration_spawn_delay 15
+		
+		ammo_m60_max 150
 	}
 }

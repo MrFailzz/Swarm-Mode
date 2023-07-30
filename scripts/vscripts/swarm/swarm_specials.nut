@@ -188,7 +188,7 @@ function BoomerDeath(player)
 	}
 	if (corruptionRetch == "Exploder")
 	{
-		BoomerExplosion(boomerOrigin, true);
+		BoomerExplosion(boomerOrigin, true, player);
 	}
 
 	NetProps.SetPropInt(player, "m_clrRender", GetColorInt(Vector(255, 255, 255)));
@@ -235,7 +235,7 @@ function ExploderAbility(player)
 	}
 }
 
-function BoomerExplosion(boomerOrigin, isExploder)
+function BoomerExplosion(boomerOrigin, isExploder, exploder)
 {
 	local survivor = null;
 	local survivorOrigin = null;
@@ -248,16 +248,19 @@ function BoomerExplosion(boomerOrigin, isExploder)
 		{
 			survivorOrigin = survivor.GetOrigin();
 
-			local angle = GetVectorAngle(survivorOrigin, boomerOrigin);
-			survivor.SetOrigin(Vector(survivorOrigin.x, survivorOrigin.y, survivorOrigin.z + 1));
-			survivor.SetVelocity(Vector(sin(angle + 90) * boomerExplosionKnockback, sin(angle) * boomerExplosionKnockback, 300));
-
-			// Explosion damage
-			if (isExploder == true)
+			if (CheckLOS(Vector(boomerOrigin.x,boomerOrigin.y,boomerOrigin.z+48), Vector(survivorOrigin.x,survivorOrigin.y,survivorOrigin.z+48), exploder) == survivor)
 			{
-				distanceVector = GetVectorDistance(survivorOrigin, boomerOrigin);
-				damage = (1 - (distanceVector / boomerExplosionRange)) * boomerExplosionDamage;
-				survivor.TakeDamage(damage, DMG_BLAST_SURFACE, null);
+				local angle = GetVectorAngle(survivorOrigin, boomerOrigin);
+				survivor.SetOrigin(Vector(survivorOrigin.x, survivorOrigin.y, survivorOrigin.z + 1));
+				survivor.SetVelocity(Vector(sin(angle + 90) * boomerExplosionKnockback, sin(angle) * boomerExplosionKnockback, 300));
+
+				// Explosion damage
+				if (isExploder == true)
+				{
+					distanceVector = GetVectorDistance(survivorOrigin, boomerOrigin);
+					damage = (1 - (distanceVector / boomerExplosionRange)) * boomerExplosionDamage;
+					survivor.TakeDamage(damage, DMG_BLAST_SURFACE, null);
+				}
 			}
 		}
 	}

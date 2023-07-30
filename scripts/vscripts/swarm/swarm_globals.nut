@@ -75,10 +75,12 @@ frigidOutskirtsTimer <- 0;
 //Corruption - Hunted
 HuntedEnabled <- false;
 HuntedTimer <- null;
+::HuntedTimer <- HuntedTimer;
 
 //Corruption - Onslaught
 OnslaughtEnabled <- false;
 OnslaughtTimer <- null;
+::OnslaughtTimer <- OnslaughtTimer;
 
 //Corruption - Missions
 missionsCompleted <- {};
