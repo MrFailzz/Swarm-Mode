@@ -17,6 +17,8 @@ function MutationSpawn(player)
 		PrecacheModel("models/swarm/infected/boomer_l4d1.mdl");
 	if (!IsModelPrecached("models/infected/limbs/exploded_boomette.mdl"));
 		PrecacheModel("models/infected/limbs/exploded_boomette.mdl");
+	if (!IsModelPrecached("models/swarm/infected/charger.mdl"))
+		PrecacheModel("models/swarm/infected/charger.mdl");
 
 	//Smoker = 1, Boomer = 2, Hunter = 3, Spitter = 4, Jockey = 5, Charger = 6, Witch = 7, Tank = 8, Survivor = 9
 	switch(player.GetZombieType())
@@ -72,6 +74,7 @@ function MutationSpawn(player)
 		}
 		case 6:
 		{
+			player.SetModel("models/swarm/infected/charger.mdl");
 			z_speed = Convars.GetFloat("z_speed");
 			NetProps.SetPropFloat(player, "m_flLaggedMovementValue", (tallboyRunSpeed / z_speed));
 			DirectorOptions.ChargerLimit = RandomInt(1,3)
