@@ -75,7 +75,7 @@ function InitCardPicking()
 	local cardPicks = 1 + missionsCompleted["completed"];
 	cardPickingAllowed = [cardPicks, cardPicks, cardPicks, cardPicks];
 
-	ClientPrint(null, 3, "\x01" + "Use " + "\x03" + "!pick [A-Z]" + "\x01" + " to choose a card!");
+	ClientPrint(null, 3, "\x01" + "Use " + "\x03" + "!pick [A-Z]\x01" + " to choose a card (" + "\x03" + cardPicks + " remaining" + "\x01" + ")");
 }
 
 function ReduceCardArray(pickArray, refArray)
@@ -187,7 +187,7 @@ function SaveMissions()
 			}
 			break;
 		case "missionGnomeAlone":
-			if (true)
+			if (MissionGnomeAlone_Status == 3)
 			{
 				CompletedMission(corruptionMission);
 			}

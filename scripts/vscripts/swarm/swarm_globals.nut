@@ -40,6 +40,7 @@ corruptionCards <- array(1, null);
 corruptionCards_List <- array(1, null);
 corruptionCards_ListInf <- array(1, null);
 corruptionCards_ListMission <- array(1, null);
+corruptionCards_ListHorde <- array(1, null);
 corruptionCommons <- null;
 corruptionUncommons <- null;
 corruptionZSpeed <- null;
@@ -54,10 +55,6 @@ corruptionGameplay <- null;
 corruptionPlayer <- null;
 corruptionMission <- null;
 
-//Corruption - Special Hordes
-SpecialHordeEnabled <- false;
-::SpecialHordeTimer <- null;
-
 //Corruption - Frigid Outskirts
 frigidOutskirtsEnabled <- false;
 frigidOutskirtsStormActive <- false;
@@ -65,13 +62,19 @@ frigidOutskirtsCalmTime <- 90;
 frigidOutskirtsStormTime <- 20;
 frigidOutskirtsTimer <- 0;
 
-//Corruption - Hunted
+//Corruption - Hordes
+//Special Hordes
+::SpecialHordeTimer <- null;
+::SpecialHordeTimerDefault <- 120
+
+//Common Hordes
 HuntedEnabled <- false;
 ::HuntedTimer <- null;
+::HuntedTimerDefault <- 180;
 
-//Corruption - Onslaught
 OnslaughtEnabled <- false;
 ::OnslaughtTimer <- null;
+::OnslaughtTimerDefault <- 90;
 
 //Corruption - Missions
 missionsCompleted <- {};
@@ -79,6 +82,8 @@ missionsCompleted["completed"] <- 0;
 MissionSpeedrun_Goal <- 8 * 60;
 MissionSpeedrun_Timer <- 0;
 MissionGnomeAlone_Status <- 0;
+MissionGnomeAlone_CalloutTimerInterval <- 10;
+MissionGnomeAlone_CalloutTimer <- MissionGnomeAlone_CalloutTimerInterval;
 
 //Ammo
 ammoShortageMultiplier <- 0.7;
@@ -187,7 +192,7 @@ DirectorOptions <-
 
 	cm_AggressiveSpecials = 0
 	
-	cm_MaxSpecials = 6 //For sleepers, was 4 previously. Game limits max players on server to 18
+	cm_MaxSpecials = 6 //Game limits max players on server to 18 (Surviors + Infected)
 	cm_TankLimit = 2
 	cm_WitchLimit = -1
 	cm_CommonLimit = 30

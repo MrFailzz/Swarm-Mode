@@ -1,3 +1,6 @@
+if (!IsSoundPrecached("Car.Alarm"))
+	PrecacheSound("Car.Alarm");
+
 ///////////////////////////////////////////////
 //                HAZARD NAVS                //
 ///////////////////////////////////////////////
@@ -36,8 +39,6 @@ function InitAlarmDoors()
 {
 	if (!IsModelPrecached("models/props_doors/emergency_exit_sign.mdl"))
 		PrecacheModel("models/props_doors/emergency_exit_sign.mdl");
-	if (!IsSoundPrecached("vehicles\\car_alarm\\car_alarm.wav"))
-		PrecacheSound("vehicles\\car_alarm\\car_alarm.wav");
 
 	local remainingDoors = null;
 	local door = null;
@@ -632,6 +633,8 @@ function AlarmPoliceActivate(carIndex)
 {
 	local carEnt = Entities.FindByName(null, "__newCar" + carIndex);
 	EmitSoundOn("Car.Alarm", carEnt);
+	DelayHordeTimers();
+	Heal_AmpedUp();
 }
 ::AlarmPoliceActivate <- AlarmPoliceActivate;
 

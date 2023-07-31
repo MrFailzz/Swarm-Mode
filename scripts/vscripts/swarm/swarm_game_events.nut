@@ -38,7 +38,14 @@ function OnGameEvent_round_start_post_nav(params)
 
 function OnGameEvent_player_first_spawn(params)
 {
-	GetAllPlayerCards();
+	if ("userid" in params)
+	{
+		local player = GetPlayerFromUserID(params["userid"]);
+		if (player.IsSurvivor())
+		{
+			GetAllPlayerCards();
+		}
+	}
 }
 
 function OnGameEvent_weapon_reload(params)

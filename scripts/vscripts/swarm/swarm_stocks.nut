@@ -52,6 +52,13 @@ function InterceptChat(message, speaker)
 						ToggleHudElement("corruptionCardsMission");
 					}
 				}
+				if (corruptionHordes == "None")
+				{
+					if (!IsHudElementVisible("corruptionCardsHorde"))
+					{
+						ToggleHudElement("corruptionCardsHorde");
+					}
+				}
 				if (!IsHudElementVisible("playerCardsP1"))
 				{
 					ToggleHudElement("playerCardsP1");
@@ -304,9 +311,7 @@ function AllowTakeDamage(damageTable)
 					BombSquad = PlayerHasCard(attacker, "BombSquad");
 				}
 
-				/*if((damageType & DMG_BURN) == DMG_BURN){printl("DMG_BURN")}
-				if((damageType & DMG_BLAST) == DMG_BLAST){printl("DMG_BLAST")}
-				if((damageType & DMG_BLAST_SURFACE) == DMG_BLAST_SURFACE){printl("DMG_BLAST_SURFACE")}*/
+				/*if((damageType & DMG_BURN) == DMG_BURN){printl("DMG_BURN")}*/
 
 				//BombSquad
 				/*if (inflictorClass == "pipe_bomb_projectile")
@@ -781,47 +786,22 @@ function PlayerLeftSafeArea(params)
 			{
 				case "hordeHunted":
 					HuntedEnabled = true;
-					HuntedTimer = Time() + 180 + 30;
+					HuntedTimer = Time() + HuntedTimerDefault + 30;
 					break;
 				case "hordeOnslaught":
 					OnslaughtEnabled = true;
-					OnslaughtTimer = Time() + 90 + 30;
+					OnslaughtTimer = Time() + OnslaughtTimerDefault + 30;
 					break;
 				case "hordeTallboy":
-					SpecialHordeEnabled = true;
-					SpecialHordeTimer = Time() + 120 + 30;
-					break;
 				case "hordeCrusher":
-					SpecialHordeEnabled = true;
-					SpecialHordeTimer = Time() + 120 + 30;
-					break;
 				case "hordeBruiser":
-					SpecialHordeEnabled = true;
-					SpecialHordeTimer = Time() + 120 + 30;
-					break;
 				case "hordeHocker":
-					SpecialHordeEnabled = true;
-					SpecialHordeTimer = Time() + 120 + 30;
-					break;
 				case "hordeStinger":
-					SpecialHordeEnabled = true;
-					SpecialHordeTimer = Time() + 120 + 30;
-					break;
 				case "hordeStalker":
-					SpecialHordeEnabled = true;
-					SpecialHordeTimer = Time() + 120 + 30;
-					break;
 				case "hordeRetch":
-					SpecialHordeEnabled = true;
-					SpecialHordeTimer = Time() + 120 + 30;
-					break;
 				case "hordeExploder":
-					SpecialHordeEnabled = true;
-					SpecialHordeTimer = Time() + 120 + 30;
-					break;
 				case "hordeReeker":
-					SpecialHordeEnabled = true;
-					SpecialHordeTimer = Time() + 120 + 30;
+					SpecialHordeTimer = Time() + SpecialHordeTimerDefault;
 					break;
 			}
 
@@ -844,11 +824,6 @@ function PlayerLeftSafeArea(params)
 			else if (corruptionHazards == "hazardSleepers")
 			{
 				InitSleepers();
-			}
-
-			//Spawn mission objectives
-			if (corruptionMission == "missionGnomeAlone")
-			{
 			}
 		}
 	}
@@ -1214,6 +1189,7 @@ swarmHUD <-
 		corruptionCards = {name = "corruptionCards", slot = HUD_FAR_RIGHT, dataval = "", flags = HUD_FLAG_ALIGN_LEFT},
 		corruptionCardsInfected = {name = "corruptionCardsInfected", slot = HUD_SCORE_1, dataval = "", flags = HUD_FLAG_ALIGN_LEFT},
 		corruptionCardsMission = {name = "corruptionCardsMission", slot = HUD_SCORE_2, dataval = "", flags = HUD_FLAG_ALIGN_LEFT},
+		corruptionCardsHorde = {name = "corruptionCardsHorde", slot = HUD_SCORE_3, dataval = "", flags = HUD_FLAG_ALIGN_LEFT},
 		playerCardsP1 = {name = "playerCardsP1", slot = HUD_FAR_LEFT, dataval = "", flags = HUD_FLAG_ALIGN_LEFT},
 		playerCardsP2 = {name = "playerCardsP2", slot = HUD_LEFT_TOP, dataval = "", flags = HUD_FLAG_ALIGN_LEFT},
 		playerCardsP3 = {name = "playerCardsP3", slot = HUD_LEFT_BOT, dataval = "", flags = HUD_FLAG_ALIGN_LEFT},
@@ -1330,31 +1306,32 @@ function Update()
 		{
 			case "hordeHunted":
 				HuntedTimerFunc();
-				break;
+			break;
+
 			case "hordeOnslaught":
 				OnslaughtTimerFunc();
-				break;
+			break;
+
 			case "hordeTallboy":
-				SpecialTimerFunc();
-				break;
 			case "hordeCrusher":
-				SpecialTimerFunc();
-				break;
 			case "hordeBruiser":
-				SpecialTimerFunc();
-				break;
+				SpecialTimerFunc(6);
+			break;
+
 			case "hordeStalker":
-				SpecialTimerFunc();
-				break;
+				SpecialTimerFunc(5);
+			break;
+
 			case "hordeHocker":
-				SpecialTimerFunc();
-				break;
+			case "hordeStinger":
+				SpecialTimerFunc(1);
+			break;
+
 			case "hordeExploder":
-				SpecialTimerFunc();
-				break;
 			case "hordeRetch":
-				SpecialTimerFunc();
-				break;
+			case "hordeReeker":
+				SpecialTimerFunc(2);
+			break;
 		}
 	}
 
@@ -1380,6 +1357,13 @@ function Update()
 				if (IsHudElementVisible("corruptionCardsMission"))
 				{
 					ToggleHudElement("corruptionCardsMission");
+				}
+			}
+			if (corruptionHordes == "None")
+			{
+				if (IsHudElementVisible("corruptionCardsHorde"))
+				{
+					ToggleHudElement("corruptionCardsHorde");
 				}
 			}
 			if (IsHudElementVisible("playerCardsP1"))
@@ -1424,6 +1408,20 @@ function Update()
 		UpdateCorruptionCardHUD();
 	}
 
+	if (corruptionMission == "missionGnomeAlone")
+	{
+		if (MissionGnomeAlone_CalloutTimer > 0)
+		{
+			MissionGnomeAlone_CalloutTimer--;
+		}
+		else
+		{
+			MissionGnomeAlone_CalloutTimer = MissionGnomeAlone_CalloutTimerInterval
+		}
+
+		GetGnomeStatus();
+	}
+
 	if (AmpedUpCooldown > 0)
 	{
 		AmpedUpCooldown--;
@@ -1458,7 +1456,7 @@ function Update()
 function SpawnMob(count = 1, zType = 10)
 {
 	//count = Number of groups to spawn
-	//zType = Infected type to spawn, defaults to MOB
+	//zType = Infected type to spawn, defaults to MOB if zType is not specified
 	/*ZOMBIE_NORMAL = 0
 	ZOMBIE_SMOKER = 1
 	ZOMBIE_BOOMER = 2
@@ -1479,13 +1477,29 @@ function SpawnMob(count = 1, zType = 10)
 		i++;
 	}
 
-	//HuntedTimer += 20;
-	//OnslaughtTimer += 20;
+	DelayHordeTimers();
 
 	Heal_AmpedUp();
 	Director.PlayMegaMobWarningSounds();
 }
 ::ZSpawnMob <- SpawnMob;
+
+function DelayHordeTimers()
+{
+	if (HuntedTimer != null)
+	{
+		HuntedTimer += 20;
+	}
+	if (OnslaughtTimer != null)
+	{
+		OnslaughtTimer += 20;
+	}
+	if (SpecialHordeTimer != null)
+	{
+		SpecialHordeTimer += 20;
+	}
+}
+::DelayHordeTimers <- DelayHordeTimers;
 
 function DegToRad(angle)
 {
