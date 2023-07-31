@@ -145,45 +145,11 @@ function InitCorruptionCards()
 		cardsHordes.append("hordeOnslaught");
 		cardsHordes.append("hordeOnslaught");
 		cardsHordes.append("hordeDuringBoss");
-
-		if (corruptionTallboy == "Tallboy")
-		{
-			cardsHordes.append("hordeTallboy");
-		}
-		if (corruptionTallboy == "Crusher")
-		{
-			cardsHordes.append("hordeCrusher");
-		}
-		if (corruptionTallboy == "Bruiser")
-		{
-			cardsHordes.append("hordeBruiser");
-		}
-		if (corruptionHocker == "Hocker")
-		{
-			cardsHordes.append("hordeHocker");
-		}
-		if (corruptionHocker == "Stinger")
-		{
-			cardsHordes.append("hordeStinger");
-		}
-		if (corruptionHocker == "Stalker")
-		{
-			cardsHordes.append("hordeStalker");
-		}
-		if (corruptionRetch == "Retch")
-		{
-			cardsHordes.append("hordeRetch");
-		}
-		if (corruptionRetch == "Exploder")
-		{
-			cardsHordes.append("hordeExploder");
-		}
-		if (corruptionRetch == "Reeker")
-		{
-			cardsHordes.append("hordeReeker");
-		}
+		cardsHordes.append("horde" + corruptionTallboy);
+		cardsHordes.append("horde" + corruptionHocker);
+		cardsHordes.append("horde" + corruptionRetch);
 	}
-	corruptionHordes = ChooseCorruptionCard_ListInf(cardsHordes);
+	corruptionHordes = ChooseCorruptionCard_ListHorde(cardsHordes);
 	ApplyHordeCard();
 
 	// Gameplay
@@ -222,11 +188,14 @@ function InitCorruptionCards()
 	cardsMission.clear();
 	cardsMission.append("None");
 	cardsMission.append("None");
-	cardsMission.append("missionSpeedrun");
-	cardsMission.append("missionAllAlive");
-	//cardsMission.append("missionGnomeAlone");
+	if (IsMissionFinalMap() == false)
+	{
+		cardsMission.append("missionSpeedrun");
+		cardsMission.append("missionAllAlive");
+		cardsMission.append("missionGnomeAlone");
+	}
 	corruptionMission = ChooseCorruptionCard_ListMission(cardsMission);
-	//ApplyMissionCorruptionCard();
+	ApplyMissionCorruptionCard();
 
 	UpdateCorruptionCardHUD();
 }
@@ -255,17 +224,28 @@ function ChooseCorruptionCard_ListMission(cardArray)
 	return cardSlot;
 }
 
+function ChooseCorruptionCard_ListHorde(cardArray)
+{
+	local cardSlot = cardArray[RandomInt(0, cardArray.len() - 1)];
+	corruptionCards.append(cardSlot);
+	corruptionCards_ListHorde.append(cardSlot);
+	return cardSlot;
+}
+
 function UpdateCorruptionCardHUD()
 {
-	local returnString = "CORRUPTION CARDS";
+	local returnString = "";
 	local returnStringInf = "";
 	local returnStringMission = "";
+	local returnStringHorde = "";
 	local cardName = null;
 	local iList = 0;
 	local iInf = 0;
 	local iMission = 0;
+	local iHorde = 0;
 	local missionGoal = "";
 	local missionStatus = "";
+	local hordeTimer = "";
 
 	foreach(cardID in corruptionCards_List)
 	{
@@ -273,8 +253,15 @@ function UpdateCorruptionCardHUD()
 
 		if (cardName != "None" && cardName != null)
 		{
-			returnString = returnString + "\n" + cardName;
-			iList++;
+			if (returnString == "")
+			{
+				returnString = cardName;
+			}
+			else
+			{
+				returnString = returnString + "\n" + cardName;
+				iList++;
+			}
 		}
 	}
 
@@ -334,13 +321,48 @@ function UpdateCorruptionCardHUD()
 		returnStringMission = "No Objective";
 	}
 
+	foreach(cardID in corruptionCards_ListHorde)
+	{
+		cardName = GetCorruptionCardName(cardID);
+
+		if (cardName != "None" && cardName != null)
+		{
+			if (returnStringHorde == "")
+			{
+				returnStringHorde = cardName;
+			}
+			else
+			{
+				returnStringHorde = returnStringHorde + "\n" + cardName;
+				iHorde++;
+			}
+
+			hordeTimer = GetHordeTimer();
+
+			if (hordeTimer != "")
+			{
+				returnStringHorde = returnStringHorde + "\n" + hordeTimer;
+				iHorde++;
+			}
+		}
+	}
+
+	if (returnStringHorde == "")
+	{
+		returnStringHorde = "No Horde";
+	}
+
 	swarmHUD.Fields["corruptionCards"].dataval = returnString;
 	swarmHUD.Fields["corruptionCardsInfected"].dataval = returnStringInf;
 	swarmHUD.Fields["corruptionCardsMission"].dataval = returnStringMission;
+	swarmHUD.Fields["corruptionCardsHorde"].dataval = returnStringHorde;
 
 	local hudY = swarmHudY;
 	local hudH = swarmHudH + (swarmHudLineH * (iMission == 0 ? 1 : iMission))
 	HUDPlace(HUD_SCORE_2, 1 - swarmHudW - swarmHudX, hudY, swarmHudW, hudH);
+	hudY = hudY + hudH + swarmHudGapY;
+	hudH = swarmHudH + (swarmHudLineH * (iHorde == 0 ? 1 : iHorde))
+	HUDPlace(HUD_SCORE_3, 1 - swarmHudW - swarmHudX, hudY, swarmHudW, hudH);
 	hudY = hudY + hudH + swarmHudGapY;
 	hudH = swarmHudH + (swarmHudLineH * (iList == 0 ? 1 : iList))
 	HUDPlace(HUD_FAR_RIGHT, 1 - swarmHudW - swarmHudX, hudY, swarmHudW, hudH);
@@ -349,20 +371,6 @@ function UpdateCorruptionCardHUD()
 	HUDPlace(HUD_SCORE_1, 1 - swarmHudW - swarmHudX, hudY, swarmHudW, hudH);
 	
 }
-
-/*function PrintCorruptionCards()
-{
-	local cardName = null;
-	foreach(cardID in corruptionCards)
-	{
-		cardName = GetCorruptionCardName(cardID);
-
-		if (cardName != "None")
-		{
-			ClientPrint(null, 3, "\x04" + "Corruption Card: " + "\x01" + cardName);
-		}
-	}
-}*/
 
 function GetCorruptionCardName(cardID)
 {
@@ -754,7 +762,6 @@ function CorruptionCard_SwarmStreamGlow(player)
 ///////////////////////////////////////////////
 function ApplyHordeCard()
 {
-	//ResetHordeCvars();
 	switch(corruptionHordes)
 	{
 		case "None":
@@ -766,40 +773,18 @@ function ApplyHordeCard()
 			CorruptionCard_Onslaught();
 			break;
 		case "hordeTallboy":
-			CorruptionCard_TallboyHordes();
-			break;
 		case "hordeCrusher":
-			CorruptionCard_TallboyHordes();
-			break;
 		case "hordeBruiser":
-			CorruptionCard_TallboyHordes();
-			break;
 		case "hordeHocker":
-			CorruptionCard_HockerHordes();
-			break;
 		case "hordeStinger":
-			CorruptionCard_HockerHordes();
-			break;
 		case "hordeStalker":
-			CorruptionCard_StalkerHordes();
-			break;
 		case "hordeRetch":
-			CorruptionCard_RetchHordes();
-			break;
 		case "hordeExploder":
-			CorruptionCard_RetchHordes();
-			break;
 		case "hordeReeker":
-			CorruptionCard_RetchHordes();
+			CorruptionCard_SpecialHordes();
 			break;
 	}
 }
-
-/*function ResetHordeCvars()
-{
-	HuntedEnabled = false;
-	OnslaughtEnabled = false;
-}*/
 
 // Hunted
 function CorruptionCard_Hunted()
@@ -809,14 +794,15 @@ function CorruptionCard_Hunted()
 
 function HuntedTimerFunc()
 {
-	if (HuntedTimer < Time() && HuntedEnabled == true)
+	if (HuntedTimer < Time() && HuntedEnabled == true && HuntedTimer != null)
 	{
 		SpawnMob();
-		HuntedTimer = Time() + 180;
+		HuntedTimer = Time() + HuntedTimerDefault;
+		ClientPrint(null, 3, "\x04" + "Here comes the horde!");
 	}
-	else if (HuntedTimer < Time() + 5 && HuntedEnabled == true)
+	else if (HuntedTimer < Time() + 5 && HuntedEnabled == true && HuntedTimer != null)
 	{
-		ClientPrint(null, 3, "\x01 Prepare for the horde in \x04" + ceil(HuntedTimer - Time()) + "...");
+		ClientPrint(null, 3, "\x01" + "Prepare for the horde in \x04" + ceil(HuntedTimer - Time()) + "...");
 	}
 }
 
@@ -828,76 +814,102 @@ function CorruptionCard_Onslaught()
 
 function OnslaughtTimerFunc()
 {
-	if (OnslaughtTimer < Time() && OnslaughtEnabled == true)
+	if (OnslaughtTimer < Time() && OnslaughtEnabled == true && OnslaughtTimer != null)
 	{
 		SpawnMob();
-		OnslaughtTimer = Time() + 90;
+		OnslaughtTimer = Time() + OnslaughtTimerDefault;
+		ClientPrint(null, 3, "\x04" + "Here comes the horde!");
 	}
-	else if (OnslaughtTimer < Time() + 5 && OnslaughtEnabled == true)
+	else if (OnslaughtTimer < Time() + 5 && OnslaughtEnabled == true && OnslaughtTimer != null)
 	{
-		ClientPrint(null, 3, "\x01 Prepare for the horde in \x04" + ceil(OnslaughtTimer - Time()) + "...");
+		ClientPrint(null, 3, "\x01" + "Prepare for the horde in \x04" + ceil(OnslaughtTimer - Time()) + "...");
 	}
 }
 
 // Specials
-function CorruptionCard_TallboyHordes()
+function CorruptionCard_SpecialHordes()
 {
-	DirectorOptions.cm_AggressiveSpecials = 1
+	DirectorOptions.cm_AggressiveSpecials = 1;
 }
 
-function CorruptionCard_HockerHordes()
+function SpecialTimerFunc(zType)
 {
-	DirectorOptions.cm_AggressiveSpecials = 1
-}
-
-function CorruptionCard_StalkerHordes()
-{
-	DirectorOptions.cm_AggressiveSpecials = 1
-}
-
-function CorruptionCard_RetchHordes()
-{
-	DirectorOptions.cm_AggressiveSpecials = 1
-}
-
-function SpecialTimerFunc()
-{
-	if (SpecialHordeTimer < Time() && SpecialHordeEnabled == true)
+	if (SpecialHordeTimer < Time() && SpecialHordeTimer != null)
 	{
 		local i = 0;
 		local count = 6;
-		local zType = null;
-
-		if (corruptionHordes == "hordeTallboy" || corruptionHordes == "hordeCrusher" || corruptionHordes == "hordeCrusher")
-		{
-			zType = 6;
-		}
-		if (corruptionHordes == "hordeRetch" || corruptionHordes == "hordeExploder" || corruptionHordes == "hordeReeker")
-		{
-			zType = 2;
-		}
-		if (corruptionHordes == "hordeHocker" || corruptionHordes == "hordeStinger")
-		{
-			zType = 1;
-		}
-		if (corruptionHordes == "hordeStalker")
-		{
-			zType = 5;
-		}
 
 		while (i < count)
 		{
 			ZSpawn({type = zType});
 			i++;
-			SpecialHordeTimer = Time() + 120 + 30;
 		}
+		SpecialHordeTimer = Time() + SpecialHordeTimerDefault;
+		ClientPrint(null, 3, "\x04" + "Here comes the horde!");
 
 		Heal_AmpedUp();
 		Director.PlayMegaMobWarningSounds();
 	}
-	else if (SpecialHordeTimer < Time() + 5)
+	else if (SpecialHordeTimer < Time() + 5 && SpecialHordeTimer != null)
 	{
-		ClientPrint(null, 3, "\x01 Prepare for the horde in \x04" + ceil(SpecialHordeTimer - Time()) + "...");
+		ClientPrint(null, 3, "\x01" + "Prepare for the horde in \x04" + ceil(SpecialHordeTimer - Time()) + "...");
+	}
+}
+
+function GetHordeTimer()
+{
+	switch(corruptionHordes)
+	{
+		case "None":
+			return "";
+			break;
+		case "hordeHunted":
+			if (HuntedTimer == null)
+			{
+				return IntToTime(HuntedTimerDefault + 30);
+				break;
+			}
+			else
+			{
+				return IntToTime(HuntedTimer - Time());
+				break;
+			}
+			break;
+		case "hordeOnslaught":
+			if (OnslaughtTimer == null)
+			{
+				return IntToTime(OnslaughtTimerDefault + 30);
+				break;
+			}
+			else
+			{
+				return IntToTime(OnslaughtTimer - Time());
+				break;
+			}
+			break;
+		case "hordeTallboy":
+		case "hordeCrusher":
+		case "hordeBruiser":
+		case "hordeHocker":
+		case "hordeStinger":
+		case "hordeStalker":
+		case "hordeRetch":
+		case "hordeExploder":
+		case "hordeReeker":
+			if (SpecialHordeTimer == null)
+			{
+				return IntToTime(SpecialHordeTimerDefault + 30);
+				break;
+			}
+			else
+			{
+				return IntToTime(SpecialHordeTimer - Time());
+				break;
+			}
+			break;
+		default:
+			return "";
+			break;
 	}
 }
 
@@ -1240,18 +1252,18 @@ function CorruptionCard_Ogre()
 ///////////////////////////////////////////////
 //               MISSION CARDS                //
 ///////////////////////////////////////////////
-/*function ApplyMissionCorruptionCard()
+function ApplyMissionCorruptionCard()
 {
 	//ResetPlayerCvars();
 	switch(corruptionMission)
 	{
 		case "None":
 			break;
-		case "missionSpeedrun":
-			CorruptionCard_Speedrun();
+		case "missionGnomeAlone":
+			CorruptionCard_GnomeAlone();
 			break;
 	}
-}*/
+}
 
 function GetMissionGoal()
 {
@@ -1295,6 +1307,388 @@ function GetMissionStatus()
 			return "";
 			break;
 	}
+}
+
+function CorruptionCard_GnomeAlone()
+{
+	//Spawn the Gnome on a random nav
+	local gnomeOrigin = HazardGetRandomNavArea(hazardNavArray);
+
+	local gnome = SpawnEntityFromTable("prop_physics",
+	{
+		targetname = "__GnomeAlone",
+		origin = Vector(gnomeOrigin.x, gnomeOrigin.y, gnomeOrigin.z + 32),
+		angles = Vector(0, 0, 0),
+		model = "models/props_junk/gnome.mdl",
+		disableshadows = 1,
+		spawnflags = 256,
+		//glowrange = 512
+	});
+
+	//EntFire("__GnomeAlone", "StartGlowing"); //GLOW FOR TESTING
+}
+
+function GetGnomeStatus()
+{
+	local player = null;
+	local gnomeHeld = false;
+	//local heldGnomeEnt = null;
+	local heldGnomePlayer = null;
+
+	//Check if a player is carrying a gnome
+	while ((player = Entities.FindByClassname(player, "player")) != null)
+	{
+		local invTable = {};
+		GetInvTable(player, invTable);
+
+		if("slot5" in invTable)
+		{
+			if (invTable.slot5.GetClassname() == "weapon_gnome")
+			{
+				gnomeHeld = true;
+				//heldGnomeEnt = invTable.slot5;
+				heldGnomePlayer = player;
+			}
+		}
+	}
+
+	if (gnomeHeld == false)
+	{
+		//heldGnomeEnt = null;
+		heldGnomePlayer = null;
+
+		local looseGnome = null;
+
+		//Find loose gnomes in the map
+		local findGnomeName = null;
+		while ((findGnomeName = Entities.FindByName(findGnomeName, "__GnomeAlone")) != null)
+		{
+			looseGnome = findGnomeName;
+		}
+
+		if (looseGnome == null)
+		{
+			local findGnomeModel = null;
+			while ((findGnomeModel = Entities.FindByModel(findGnomeModel, "models/props_junk/gnome.mdl")) != null)
+			{
+				if (findGnomeModel.GetName() == "")
+				{
+					looseGnome = findGnomeModel;
+					break;
+				}
+			}
+		}
+
+		if (MissionGnomeAlone_Status != 0)
+		{
+			//Gnome has been found and then dropped
+			local navArea = NavMesh.GetNearestNavArea(looseGnome.GetOrigin(), 256, false, true);
+			if (navArea != null)
+			{
+				if (navArea.HasSpawnAttributes(2048))
+				{
+					//In saferoom
+					if (MissionGnomeAlone_Status != 3)
+					{
+						EmitAmbientSoundOn(GnomeCallGetLine("rescue"), 1, 60, 170, looseGnome);
+					}
+					MissionGnomeAlone_Status = 3;
+				}
+				else
+				{
+					//Not in saferoom
+					if (MissionGnomeAlone_Status != 2)
+					{
+						EmitAmbientSoundOn(GnomeCallGetLine("dropped"), 1, 60, 170, looseGnome);
+					}
+					MissionGnomeAlone_Status = 2;
+				}
+			}
+		}
+		else
+		{
+			//Gnome not yet found
+			if (MissionGnomeAlone_CalloutTimer == 0)
+			{
+				EmitAmbientSoundOn(GnomeCallGetLine("lost"), 1, 60, 170, looseGnome);
+			}
+		}
+	}
+	else
+	{
+		//Check if the player carrying the gnome is in a saferoom
+		local navArea = NavMesh.GetNearestNavArea(heldGnomePlayer.GetOrigin(), 256, false, true);
+		if (navArea != null)
+		{
+			if (navArea.HasSpawnAttributes(2048))
+			{
+				//Gnome held in saferoom
+				if (MissionGnomeAlone_Status != 3)
+				{
+					EmitAmbientSoundOn(GnomeCallGetLine("rescue"), 1, 60, 170, heldGnomePlayer);
+				}
+				MissionGnomeAlone_Status = 3;
+			}
+			else
+			{
+				//Gnome held not in saferoom
+				if (MissionGnomeAlone_Status != 1 && MissionGnomeAlone_Status != 3)
+				{
+					EmitAmbientSoundOn(GnomeCallGetLine("found"), 1, 60, 170, heldGnomePlayer);
+				}
+				MissionGnomeAlone_Status = 1;
+			}
+		}
+	}
+}
+
+function GnomeCallGetLine(soundType)
+{
+	local lineChosen = "";
+	local lineArray = [];
+
+	switch(soundType)
+	{
+		case "lost":
+			lineArray =
+			[
+				"player/survivor/voice/Manager/LostCall01.wav", //Hello
+				"player/survivor/voice/Manager/LostCall03.wav", //Where is everyone
+				"player/survivor/voice/Manager/LostCall04.wav", //Is anyone there
+				"player/survivor/voice/Manager/LostCall05.wav", //Where'd everybody get to
+				"player/survivor/voice/Manager/LostCall06.wav", //Can anyone hear me
+				"Player.Manager_LedgeHangStart02", //Could someone give me a hand over here
+				"Player.Manager_LedgeHangStart03", //Could someone give me a hand over here
+				"Player.Manager_LedgeHangStart04", //I could really use a hand over here
+				"Player.Manager_Help01", //HEEEELP
+				"Player.Manager_Help02", //I need some help over here
+				"Player.Manager_Help03", //Need a little help over here
+				"Player.Manager_Help05", //HELP ME
+				"Player.Manager_Help06", //HEEEEELP
+				"Player.Manager_Help08", //I NEED SOME HELP
+				"Player.Manager_Help09", //SOMEBODY HELP ME
+				"Player.Manager_Help10", //CAN YOU HEAR ME I NEED SOME HELP
+			];
+		break;
+
+		case "found":
+			lineArray =
+			[
+				"Manager_DLC1_C6M3_FinaleChat08", //Hey you made it
+				"Manager_DLC1_C6M3_FinaleChat10", //HEY YOU MADE IT
+				"Manager_DLC1_C6M3_FinaleChat11", //Where you guys heading
+				"Manager_DLC1_C6M3_FinaleChat14", //Hey you made it, where you heading
+				"Manager_DLC1_C6M3_FinaleChat15", //Hey you made it, where you heading
+				"Manager_DLC1_C6M3_FinaleChat16", //Hey you made it, where you heading
+				"Manager_DLC1_C6M3_FinaleChat20", //Francis said you werent gonna make it, but i said i had a good feeling about you
+				"Manager_DLC1_C6M3_FinaleChat33", //Yeah i stayed here, yeah im ok im just a little banged up, it wasnt easy getting up here, we lost a man
+				"Manager_DLC1_C6M3_FinaleChat38", //Okay :)
+				"Manager_DLC1_C6M3_L4D1FinaleBridgeRun02", //Get going GET GOING
+				"npc.Manager_AnswerReady02", //Lets do it
+				"npc.Manager_AnswerReady04", //Come on lets do it
+				"npc.Manager_GenericResponses09", //Alright then lets do it
+				"npc.Manager_GenericResponses16", //Hell yes
+				"npc.Manager_GenericResponses23", //Works for me
+				"npc.Manager_GenericResponses24", //Sounds good
+				"npc.Manager_GenericResponses40", //HELL YEAH
+				"npc.Manager_ReviveFriendB06", //Up we go
+				"npc.Manager_ReviveFriendB10", //Lets move
+				"npc.Manager_WorldAirportNPC07", //Ok lets do it
+				"npc.Manager_WorldHospital0415", //Lets go LETS GO
+				"npc.Manager_ZombieGenericLong03", //If i go down go on without me, actually wait no, save my ass
+				"npc.Manager_ZombieGenericLong11", //Any of you guys cub scouts [...]
+				"Player.Manager_C6DLC3INTRO21", //Oh thanks man
+				"Player.Manager_DLC2Recycling01", //We get outta this alive [...]
+				"Player.Manager_EmphaticRun01", //Lets get the hell outta here
+				"Player.Manager_Generic02", //Oh cool
+				"Player.Manager_HurryUp10", //Lets go, lets go lets go
+				"Player.Manager_ImWithYou03", //Im with you
+				"Player.Manager_LeadOn03", //You take the lead
+				"Player.Manager_ReactionPositive05", //ALL RIGHT
+				"Player.Manager_ReactionPositive06", //HOO heh heh hey
+				"Player.Manager_ReactionPositive09", //Sweet baby
+				"Player.Manager_revivefriend04", //Come on man, look at me, focus, you're gonna be ok lets get moving
+				"Player.Manager_ScenarioJoin01", //Im here
+				"Player.Manager_ScenarioJoin02", //Heeeello
+				"Player.Manager_ScenarioJoin03", //Hey im here
+				"npc.Manager_ViolenceAwe01", //Woah
+				"npc.Manager_ViolenceAwe05", //Holy shit
+				"Player.Manager_AskReady01", //Ready?
+				"Player.Manager_AskReady02", //Ready?
+				"Player.Manager_AskReady03", //Ready for this?
+				"Player.Manager_AskReady04", //Ready for this?
+				"Player.Manager_AskReady05", //Whaddya say, ready?
+				"Player.Manager_AskReady06", //You ready to bounce?
+				"Player.Manager_AskReady07", //You ready?
+				"Player.Manager_AskReady09", //Im ready, you ready?
+				"Player.Manager_Hurrah06", //WE ARE GONNA BE OK
+				"Player.Manager_Hurrah07", //Man I think we gonna make it
+				"Player.Manager_MoveOn01", //Alright lets go
+				"Player.Manager_MoveOn02", //Time to move
+				"Player.Manager_MoveOn03", //Lets go
+				"Player.Manager_MoveOn04", //Lets move lets move
+				"Player.Manager_MoveOn07", //Lets go
+				"Player.Manager_MoveOn08", //Time to move
+				"Player.Manager_NiceJob", //Nice
+				"Player.Manager_RadioUsedGeneric01", //Our ride outta here its on its way
+				"Player.Manager_RadioUsedGeneric02", //Help is on the way a few more minutes and we're outta here for good
+				"Player.Manager_RadioUsedGeneric03", //Help is on the way, I cant believe it [...]
+				"Player.Manager_Thanks01", //Thanks
+				"Player.Manager_Thanks03", //Thanks I owe you one
+				"Player.Manager_Thanks04", //Thanks :)
+				"Player.Manager_Thanks05", //Thanks man
+				"Player.Manager_Thanks06", //Thanks man :)
+				"Player.Manager_Thanks07", //Thank you
+				"Player.Manager_Thanks08", //Thanks I owe you a big one
+				"Player.Manager_Thanks09", //Thanks a lot
+				"Player.Manager_Thanks10", //Whoo thanks
+				"Player.Manager_Thanks11", //Hey thanks
+				"Player.Manager_Thanks12", //Thanks dawg
+				"Player.Manager_Thanks14", //Thanks playa
+				"Player.Manager_Yes01", //Alright
+				"Player.Manager_Yes05", //Okay :)
+				"Player.Manager_Yes07", //I'm cool with that
+				"Player.Manager_Yes09", //Cool
+			];
+		break;
+
+		case "dropped":
+			lineArray =
+			[
+				"Manager_DLC1_C6M3_FinaleChat39", // Okay :(
+				"Manager_DLC1_C6M3_L4D1FinaleBridgeRun03", //bye rochelle bye nick bye coach bye ellis (only use if on l4d2 survivor set)!!!!!!!
+				"Manager_DLC1_C6M3_L4D1FinaleCinematic05", //bye ro bye coach bye ellis bye whats your name (only use if on l4d2 survivor set)!!!!!!!!
+				"Manager_DLC1_C6M3_L4D1FinaleCinematic01", //Im gonna miss them
+				"Manager_DLC1_C6M3_L4D1FinaleCinematic02", //It was nice to see normal people again
+				"Manager_DLC1_C6M3_L4D1FinaleCinematic03", //It was nice to see normal people again, except for that nick guy (only use if on l4d2 survivor set)!!!!!!!!
+				"npc.Manager_Dying01", //GUYS I NEED HELP NOW
+				"npc.Manager_Dying02", //YO I NEED SOME HELP RIGHT NOW
+				"npc.Manager_Dying03", //YO I NEED HELP RIGHT THE HELL NOW
+				"npc.Manager_Dying04", //I NEED HELP RIGHT THE HELP NOW
+				"npc.Manager_GenericResponses03", //You're joking right
+				"npc.Manager_GenericResponses25", //Tell me you aint serious
+				"npc.Manager_GenericResponses39", //Oh no aint no damn way
+				"npc.Manager_GoingToDieLight16", //I dont wanna die [...]
+				"npc.Manager_IncapacitatedInitial01", //Ah im down
+				"npc.Manager_IncapacitatedInitial02", //Ah im down
+				"npc.Manager_IncapacitatedInitial03", //Jesus im down
+				"npc.Manager_IncapacitatedInitial04", //Shit im down
+				"npc.Manager_InsideSafeRoom05", //We cannot leave anyone behind
+				"npc.Manager_Manager_FriendlyFireFrancis07", //Go on, do it one more time fat man
+				"Player.Manager_C6DLC3INTRO16", //Yeah im really pissed
+				"Player.Manager_C6DLC3INTRO17", //Yeah im really pissed
+				"Player.Manager_C6DLC3JUMPINGOFFBRIDGE06", //Im gonna miss you guys
+				"Player.Manager_DLC2M2FinaleButtonPressLift01", //Im sure this will just take a second
+				"Player.Manager_FriendlyFire01", //Hey man that hurt
+				"Player.Manager_FriendlyFire06", //Hey man thats not cool
+				"Player.Manager_FriendlyFire13", //Aaaah motherf-
+				"Player.Manager_GoingToDie11", //At this rate im not gonna make it
+				"Player.Manager_GoingToDie20", //I shoulda stayed in the damn store
+				"Player.Manager_GoingToDie22", //AAAHH damn it
+				"Player.Manager_GoingToDie26", //Im not gonna make it man
+				"Player.Manager_GrabbedBySmoker01a", //No no no!
+				"Player.Manager_GrabbedBySmoker01b", //NOOO
+				"Player.Manager_GrabbedBySmoker02a", //NO NO
+				"Player.Manager_GrabbedBySmoker02b", //No NOOOO
+				"Player.Manager_GrabbedBySmoker03a", //Nono, no
+				"Player.Manager_GrabbedBySmoker03b", //NOOOOOOOOO
+				"Player.Manager_GrabbedBySmoker04", //NO NO, NO, NO
+				"Player.Manager_LedgeHangEnd04", //Somebody somebody OH SHIT IM FALLIN IM FALLIN
+				"Player.Manager_NegativeNoise03", //(buzzing lips sound)
+				"Player.Manager_ReactionNegative01", //Uh oh
+				"Player.Manager_StayTogether02", //Come on we've got to stay together
+				"Player.Manager_StayTogether05", //We've got to stick together
+				"Player.Manager_StayTogether06", //Nobody run off
+				"Player.Manager_WaitHere04", //Everybody hold up
+				"Player.Manager_WaitHere05", //Hold up hold up
+				"npc.Manager_GettingRevived08", //I'll live
+				"npc.Manager_GettingRevived09", //I can shake it off
+				"npc.Manager_Swears02", //Damn it
+				"npc.Manager_Swears03", //Aww hell
+				"npc.Manager_Swears05", //Ssshit
+				"npc.Manager_Swears06", //Aww shit
+				"npc.Manager_Swears07", //Shit shit shit
+				"npc.Manager_Swears10", //Damn it
+				"npc.Manager_Swears11", //Aww hell
+				"npc.Manager_Swears12", //Shit
+				"npc.Manager_Swears13", //Aww shit
+				"npc.Manager_ViolenceAwe08", //Jee-sus
+				"npc.Manager_GoingToDieLight15", //This is some real bullshit right here
+				"Player.Manager_Hurrah01", //ALL RIGHT
+				"Player.Manager_MoveOn05", //I really think we should keep moving
+				"Player.Manager_ReactionBoomerVomit01", //(spitting)
+				"Player.Manager_ReactionBoomerVomit02", //Eww eugh (spitting)
+				"Player.Manager_ReactionBoomerVomit03", //(gagging)
+				"Player.Manager_ReactionBoomerVomit04", //(spitting)
+				"Player.Manager_ReactionApprehensive01", //I got a bad feeling about this
+				"Player.Manager_ReactionApprehensive03", //Man I dont like this one damn bit
+				"Player.Manager_TeamKillAccident01", //Woah man you gotta be careful
+				"Player.Manager_TeamKillAccident02", //Woah man you gotta be careful
+				"Player.Manager_TeamKillAccident03", //What the hell man
+				"Player.Manager_TeamKillAccident04", //Be careful what are you doing
+			];
+		break;
+
+		case "rescue":
+			lineArray =
+			[
+				"npc.Manager_NiceShot09", //POW
+				"npc.Manager_NiceShot10", //Aw hell yes
+				"npc.Manager_PlayerTransitionClose03", //Well at least we're safe now
+				"npc.Manager_PlayerTransitionClose04", //Boom diyah
+				"npc.Manager_SafeSpotAheadReaction01", //Finally
+				"npc.Manager_SafeSpotAheadReaction02", //WE MADE IT
+				"npc.Manager_SafeSpotAheadReaction03", //I knew we'd make it
+				"npc.Manager_SafeSpotAheadReaction05", //Man i knew we were gonna make
+				"npc.Manager_ToTheRescueThanks01", //Thanks for getting me outta there
+				"npc.Manager_ToTheRescueThanks02", //Thanks man
+				"npc.Manager_ToTheRescueThanks03", //Yo thanks man
+				"Player.Manager_C6DLC3JUMPINGOFFBRIDGE14", //I love you guys
+				"Player.Manager_C6DLC3JUMPINGOFFBRIDGE15", //I love you guys
+				"Player.Manager_NiceShot03", //WOOOO nice baby
+				"Player.Manager_PositiveNoise02", //Ha ha yeah
+				"Player.Manager_PositiveNoise03", //WOOO
+				"Player.Manager_Taunt01", //Thats right
+				"Player.Manager_Taunt02", //HOO HOO Thats right
+				"Player.Manager_Taunt03", //YEAH BABY YEAH
+				"Player.Manager_Taunt04", //All right!
+				"Player.Manager_Taunt05", //Oh yeah whose yo momma whose your daddy
+				"Player.Manager_Taunt06", //Hell yeah, HELL yeah
+				"Player.Manager_Taunt07", //MWUHAHAHA HAHAHA
+				"Player.Manager_Taunt08", //MWHAHAHA
+				"Player.Manager_Taunt09", //AHAHAHAhahahaha
+				"Player.Manager_Taunt10", //NAHAHAHAHA Yeah
+				"Player.Manager_CloseTheDoor01", //Lock that door
+				"Player.Manager_CloseTheDoor02", //Lock the door
+				"Player.Manager_CloseTheDoor03", //Lock the damn door
+				"Player.Manager_CloseTheDoor04", //Go ahead and lock that door
+				"Player.Manager_CloseTheDoor05", //Lock the damn door
+				"Player.Manager_CloseTheDoor06", //Did you lock the door?
+				"Player.Manager_CloseTheDoor07", //Lock the door man
+				"Player.Manager_Hurrah02", //WOOO BABY alright
+				"Player.Manager_Hurrah03", //Hell yeah
+				"Player.Manager_Hurrah09", //Nothing can stop us
+				"Player.Manager_Hurrah10", //Nothing can stop us, do you hear me [...]
+				"Player.Manager_Hurrah11", //We are unstoppable
+				"Player.Manager_Hurrah12", //We should call ourselves the unstoppables
+				"Player.Manager_Hurrah13", //We are unstoppable
+				"Player.Manager_Hurrah14", //Yeah
+				"Player.Manager_Hurrah15", //YEAHHHH WOO
+				"Player.Manager_NiceJob04", //Damn man that was nice
+				"Player.Manager_NiceJob05", //That was great
+				"Player.Manager_NiceJob06", //That was cool
+			];
+		break;
+	}
+
+	lineChosen = lineArray[RandomInt(0, lineArray.len() - 1)];
+
+	if (!IsSoundPrecached(lineChosen))
+	{
+		PrecacheSound(lineChosen);
+	}
+
+	return lineChosen;
 }
 
 function GetTotalCleaners()

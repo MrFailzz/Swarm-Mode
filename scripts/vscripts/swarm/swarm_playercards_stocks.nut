@@ -147,33 +147,13 @@ function AddictGetValue(player)
 {
 	local healthBuffer = player.GetHealthBuffer();
 
-	if (healthBuffer >= 85)
-	{
-		return 0.25;
-	}
-	else if (healthBuffer >= 60)
-	{
-		return 0.2;
-	}
-	else if (healthBuffer >= 40)
-	{
-		return 0.1;
-	}
-	else if (healthBuffer >= 20)
-	{
-		return 0.05;
-	}
-	else if (healthBuffer >= 5)
-	{
-		return -0.05;
-	}
-	else if (healthBuffer > 0)
+	if (healthBuffer <= 0)
 	{
 		return -0.15;
 	}
 	else
 	{
-		return -0.25;
+		return floor(healthBuffer / 10) / 20;
 	}
 }
 ::AddictGetValue <- AddictGetValue;

@@ -172,7 +172,6 @@ function BreakerJump(player)
 
 		//Stagger to stop the rock
 		local staggerDuration = Convars.GetFloat("z_max_stagger_duration");
-		printl(staggerDuration)
 		Convars.SetValue("z_max_stagger_duration", 1);
 		player.Stagger(Vector(0, 0, 0));
 		Convars.SetValue("z_max_stagger_duration", staggerDuration);
