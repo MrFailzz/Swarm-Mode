@@ -201,12 +201,16 @@ DirectorOptions <-
 	SpecialInitialSpawnDelayMax = RandomInt(60,75)
 	SpecialInitialSpawnDelayMin = RandomInt(30,45)
 	SpecialRespawnInterval = RandomInt(45,60)
+
 	BoomerLimit = 2
 	ChargerLimit = 1
 	HunterLimit = 0
 	JockeyLimit = 2
 	SmokerLimit = 2
 	SpitterLimit = 0
+
+	MobSpawnSize = 30
+	MegaMobSize = 50
 	BileMobSize = 0
 
 	TankHitDamageModifierCoop = 1
@@ -257,6 +261,8 @@ function SetDifficulty()
 			BaseMaxIncaps = 3;
 			MaxTraumaDamage = 0;
 			stagger_dmg = 4000;
+			DirectorOptions.MobSpawnSize = 30;
+			DirectorOptions.MegaMobSize = 50;
 			MissionSpeedrun_Goal = 10 * 60;
 		break;
 
@@ -293,6 +299,8 @@ function SetDifficulty()
 			BaseMaxIncaps = 3;
 			MaxTraumaDamage = 20;
 			stagger_dmg = 4000;
+			DirectorOptions.MobSpawnSize = 30;
+			DirectorOptions.MegaMobSize = 50;
 			MissionSpeedrun_Goal = 8 * 60;
 		break;
 
@@ -329,6 +337,8 @@ function SetDifficulty()
 			BaseMaxIncaps = 2;
 			MaxTraumaDamage = 30;
 			stagger_dmg = 10000;
+			DirectorOptions.MobSpawnSize = 45;
+			DirectorOptions.MegaMobSize = 75;
 			MissionSpeedrun_Goal = 7 * 60;
 		break;
 
@@ -366,6 +376,8 @@ function SetDifficulty()
 			BaseMaxIncaps = 2;
 			MaxTraumaDamage = 40;
 			stagger_dmg = 10000;
+			DirectorOptions.MobSpawnSize = 45;
+			DirectorOptions.MegaMobSize = 75;
 			DirectorOptions.TankHitDamageModifierCoop = 0.48;
 			MissionSpeedrun_Goal = 5 * 60;
 		break;
