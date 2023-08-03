@@ -19,6 +19,8 @@ function MutationSpawn(player)
 		PrecacheModel("models/infected/limbs/exploded_boomette.mdl");
 	if (!IsModelPrecached("models/swarm/infected/charger.mdl"))
 		PrecacheModel("models/swarm/infected/charger.mdl");
+	if (!IsModelPrecached("models/swarm/infected/bruiser.mdl"))
+		PrecacheModel("models/swarm/infected/bruiser.mdl");
 
 	//Smoker = 1, Boomer = 2, Hunter = 3, Spitter = 4, Jockey = 5, Charger = 6, Witch = 7, Tank = 8, Survivor = 9
 	switch(player.GetZombieType())
@@ -67,14 +69,23 @@ function MutationSpawn(player)
 		}
 		case 5:
 		{
-			player.SetModel("models/infected/jockey.mdl");
 			player.SetModelScale(1.25, 0.0);
 			DirectorOptions.JockeyLimit = RandomInt(1,3)
 			break;
 		}
 		case 6:
 		{
-			player.SetModel("models/swarm/infected/charger.mdl");
+			if (corruptionTallboy == "Tallboy")
+			{
+				player.SetModel("models/swarm/infected/charger.mdl");
+				break;
+			}
+			else if (corruptionTallboy == "Bruiser")
+			{
+				player.SetModel("models/swarm/infected/bruiser.mdl");
+				break;
+			}
+
 			z_speed = Convars.GetFloat("z_speed");
 			NetProps.SetPropFloat(player, "m_flLaggedMovementValue", (tallboyRunSpeed / z_speed));
 			DirectorOptions.ChargerLimit = RandomInt(1,3)
