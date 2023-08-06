@@ -214,7 +214,6 @@ function AllowTakeDamage(damageTable)
 	local Outlaw = 0;
 	local Overconfident = 0;
 	local OverconfidentMultiplier = 0;
-	local OverconfidentHealth = 0;
 	local Broken = 0;
 	local Pyromaniac = 0;
 	local BombSquad = 0;
@@ -222,7 +221,6 @@ function AllowTakeDamage(damageTable)
 	local LuckyShotRoll = 0;
 	local FireProof = 0;
 	local EyeOfTheSwarmAttacker = 0;
-	local EyeOfTheSwarmVictim = 0;
 	local Brazen = 0;
 	local StrengthInNumbers = 0;
 	local StrengthInNumbersSurvivors = 0;
@@ -269,7 +267,7 @@ function AllowTakeDamage(damageTable)
 				GlassCannonAttacker = PlayerHasCard(attacker, "GlassCannon");
 
 				//Sharpshooter
-				if (GetVectorDistance(attacker.GetOrigin(), victim.GetOrigin()) > 600)
+				if (GetVectorDistance(attacker.GetOrigin(), victim.GetOrigin()) > 400)
 				{
 					Sharpshooter = PlayerHasCard(attacker, "Sharpshooter");
 				}
@@ -419,7 +417,7 @@ function AllowTakeDamage(damageTable)
 								 + (1.5 * Pyromaniac)
 								 + (1.5 * BombSquad)
 								 + (3 * LuckyShotRoll)
-								 + (0.1 * EyeOfTheSwarmAttacker)
+								 + (0.5 * EyeOfTheSwarmAttacker)
 								 + (0.4 * Brazen)
 								 + (0.025 * StrengthInNumbers * StrengthInNumbersSurvivors)
 								 + (0.025 * ConfidentKiller * ConfidentKillerCounter)
@@ -459,24 +457,19 @@ function AllowTakeDamage(damageTable)
 				Overconfident = PlayerHasCard(victim, "Overconfident");
 				if (Overconfident > 0)
 				{
-					OverconfidentMultiplier = 0.1;
-					OverconfidentHealth = (victim.GetHealth() + victim.GetHealthBuffer()) / victim.GetMaxHealth();
-
-					if (victim.IsIncapacitated() == false && OverconfidentHealth >= 0.6)
+					if (NetProps.GetPropInt(victim, "m_currentReviveCount") == 0)
 					{
 						OverconfidentMultiplier = -0.25;
+					}
+					else
+					{
+						OverconfidentMultiplier = 0;
 					}
 				}
 
 				if ((damageType & DMG_BURN) == DMG_BURN)
 				{
 					FireProof = PlayerHasCard(victim, "FireProof");
-				}
-
-				//EyeOfTheSwarm
-				if (safeSurvivors.find(victim) != null)
-				{
-					EyeOfTheSwarmVictim = PlayerHasCard(victim, "EyeOfTheSwarm");
 				}
 
 				//ChemicalBarrier
@@ -509,7 +502,6 @@ function AllowTakeDamage(damageTable)
 								+ (0.2 * GlassCannonVictim)
 								+ (OverconfidentMultiplier * Overconfident)
 								+ (-0.5 * FireProof)
-								+ (-0.2 * EyeOfTheSwarmVictim)
 								+ (-0.5 * ChemicalBarrier)
 								+ (-1 * AddictVictimMultiplier * AddictVictim)
 								+ (-0.1 * Francis)
@@ -911,7 +903,7 @@ function HealSuccess(params)
 	local MedicalExpert = TeamHasCard("MedicalExpert");
 	local Rochelle = PlayerHasCard(healer, "Rochelle");
 	local ScarTissue = PlayerHasCard(healer, "ScarTissue");
-	local healMultiplier = 1 + ((0.5 * EMTBag) + (0.25 * AntibioticOintment) + (0.15 * MedicalExpert) + (0.1 * Rochelle) + (-0.5 * ScarTissue));
+	local healMultiplier = 1 + ((0.5 * EMTBag) + (0.25 * AntibioticOintment) + (0.30 * MedicalExpert) + (0.1 * Rochelle) + (-0.5 * ScarTissue));
 	if (Gambler > 0)
 	{
 		healMultiplier += ApplyGamblerValue(GetSurvivorID(player), 6, Gambler, healMultiplier);
@@ -942,7 +934,7 @@ function PillsUsed(params)
 	local Addict = PlayerHasCard(player, "Addict");
 	local Rochelle = PlayerHasCard(player, "Rochelle");
 	local ScarTissue = PlayerHasCard(player, "ScarTissue");
-	local healMultiplier = 1 + ((0.5 * EMTBag) + (0.25 * AntibioticOintment) + (0.15 * MedicalExpert) + (0.5 * Addict) + (0.1 * Rochelle) + (-0.5 * ScarTissue));
+	local healMultiplier = 1 + ((0.5 * EMTBag) + (0.25 * AntibioticOintment) + (0.30 * MedicalExpert) + (0.5 * Addict) + (0.1 * Rochelle) + (-0.5 * ScarTissue));
 	if (Gambler > 0)
 	{
 		healMultiplier += ApplyGamblerValue(GetSurvivorID(player), 6, Gambler, healMultiplier);
@@ -965,7 +957,7 @@ function AdrenalineUsed(params)
 	local Addict = PlayerHasCard(player, "Addict");
 	local Rochelle = PlayerHasCard(player, "Rochelle");
 	local ScarTissue = PlayerHasCard(player, "ScarTissue");
-	local healMultiplier = 1 + ((0.5 * EMTBag) + (0.25 * AntibioticOintment) + (0.15 * MedicalExpert) + (0.75 * Addict) + (0.1 * Rochelle) + (-0.5 * ScarTissue));
+	local healMultiplier = 1 + ((0.5 * EMTBag) + (0.25 * AntibioticOintment) + (0.30 * MedicalExpert) + (0.75 * Addict) + (0.1 * Rochelle) + (-0.5 * ScarTissue));
 	if (Gambler > 0)
 	{
 		healMultiplier += ApplyGamblerValue(GetSurvivorID(player), 6, Gambler, healMultiplier);

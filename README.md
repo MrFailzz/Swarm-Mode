@@ -190,11 +190,11 @@
 #### Glass Cannon
 * +30% DMG, -20% RES
 #### Sharpshooter
-* +25% DMG past 15m
+* +25% DMG past 10m
 #### Outlaw
 * +100% Pistol / Magnum DMG
 #### Overconfident
-* +25% RES over 60% HP, -10% RES under 60% HP
+* +25% RES at max lives
 #### Meth Head
 * +2.5% Move Speed per Mutation kill
 #### Adrenaline Rush
@@ -224,9 +224,9 @@
 #### Confident Killer
 * +2.5% DMG per Mutation death
 #### Canned Goods
-* +25 Max HP
+* +30 Max HP
 #### Slow and Steady
-* +40 Max HP, -10% Move Speed
+* +50 Max HP, -10% Move Speed
 #### Tough Skin
 * +40% RES vs Commons
 #### Scar Tissue
@@ -242,7 +242,7 @@
 #### Buckshot Bruiser
 * +0.25 Temp HP per Shotgun pellet
 #### Lumberjack
-* +100% Team Chainsaw DMG / Range
+* +200% Team Chainsaw DMG
 
 ### Discipline
 #### Strength In Numbers
@@ -254,13 +254,13 @@
 #### Pack Mule
 * +40% Team Max Ammo
 #### Eye of the Swarm
-* +10% DMG / +20% RES in the Swarm
+* +50% DMG in the Swarm Circle
 #### EMT Bag
 * +50% Heal EFF
 #### Antibiotic Ointment
 * +25% Heal EFF, +10 Temp HP to target
 #### Medical Expert
-* +15% Team Heal EFF
+* +30% Team Heal EFF
 #### Cauterized
 * +50% Slower Team HP Decay
 #### Group Therapy
@@ -274,9 +274,9 @@
 #### Arsonist
 * +0.1 Temp HP per Fire DMG
 #### Needs of the Many
-* +1 Team Life, -10 HP
+* +1 Team Life, -10 Max HP
 #### Cannoneer
-* +100% Team Grenade Launcher DMG / Range
+* +200% Team Grenade Launcher DMG
 
 ### Fortune
 #### Lucky Shot
