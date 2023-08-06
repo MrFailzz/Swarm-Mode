@@ -684,13 +684,13 @@ function GetPlayerCardName(cardID, type = "name")
 				return "+30% DMG, -20% RES";
 				break;
 			case "Sharpshooter":
-				return "+25% DMG past 15m";
+				return "+25% DMG past 10m";
 				break;
 			case "Outlaw":
 				return "+100% Pistol / Magnum DMG";
 				break;
 			case "Overconfident":
-				return "+25% RES over 60% HP, -10% RES under 60% HP";
+				return "+25% RES at max lives";
 				break;
 			case "Slugger":
 				return "+25% Melee / Shove Rate";
@@ -750,10 +750,10 @@ function GetPlayerCardName(cardID, type = "name")
 				return "+2.5% DMG per Mutation death";
 				break;
 			case "CannedGoods":
-				return "+25 Max HP";
+				return "+30 Max HP";
 				break;
 			case "SlowAndSteady":
-				return "+40 Max HP, -10% Move Speed";
+				return "+50 Max HP, -10% Move Speed";
 				break;
 			case "ToughSkin":
 				return "+40% RES vs Commons";
@@ -834,7 +834,7 @@ function GetPlayerCardName(cardID, type = "name")
 				return "+100% bullet stopping power";
 				break;
 			case "EyeOfTheSwarm":
-				return "+10% DMG / +20% RES in the Swarm";
+				return "+50% DMG in the Swarm Circle";
 				break;
 			case "EMTBag":
 				return "+50% Heal EFF";
@@ -843,7 +843,7 @@ function GetPlayerCardName(cardID, type = "name")
 				return "+25% Heal EFF, +10 Temp HP to target";
 				break;
 			case "MedicalExpert":
-				return "+15% Team Heal EFF";
+				return "+30% Team Heal EFF";
 				break;
 			case "Cauterized":
 				return "+50% Slower Team HP Decay";
@@ -903,13 +903,13 @@ function GetPlayerCardName(cardID, type = "name")
 				return "+0.1 Temp HP per Fire DMG";
 				break;
 			case "NeedsOfTheMany":
-				return "+1 Team Life, -10 HP";
+				return "+1 Team Life, -10 Max HP";
 				break;
 			case "Lumberjack":
-				return "+100% Team Chainsaw DMG / Range"
+				return "+200% Team Chainsaw DMG"
 				break;
 			case "Cannoneer":
-				return "+100% Team Grenade Launcher DMG / Range"
+				return "+200% Team Grenade Launcher DMG"
 				break;
 			case "Gambler":
 				return "Randomize stats each map!"

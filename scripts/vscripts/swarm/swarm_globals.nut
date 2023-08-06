@@ -106,11 +106,8 @@ survivor_revive_duration <- 5;
 
 //Chainsaw
 chainsaw_damage <- 100;
-chainsaw_attack_distance <- 50;
 
 //Grenade Launcher
-grenadelauncher_radius_stumble <- 250;
-grenadelauncher_radius_kill <- 180;
 grenadelauncher_damage <- 400;
 
 //Ogre Stagger

@@ -382,7 +382,7 @@ function CalcMaxHealth(heal = true)
 			local NeedsOfTheMany = PlayerHasCard(player, "NeedsOfTheMany");
 
 			local currentMax = player.GetMaxHealth();
-			local newMax = (100 - TraumaDamage) + (25 * CannedGoods) + (40 * SlowAndSteady) + (-10 * FleetOfFoot) + (5 * CrossTrainers) + (10 * Coach) + (-15 * SelflessPlayer) + (15 * SelflessTeam) + (30 * SelfishPlayer) + (-5 * SelfishTeam) + (-10 * NeedsOfTheMany);
+			local newMax = (100 - TraumaDamage) + (30 * CannedGoods) + (50 * SlowAndSteady) + (-10 * FleetOfFoot) + (5 * CrossTrainers) + (10 * Coach) + (-15 * SelflessPlayer) + (15 * SelflessTeam) + (30 * SelfishPlayer) + (-5 * SelfishTeam) + (-10 * NeedsOfTheMany);
 			if (Gambler > 0)
 			{
 				newMax += ApplyGamblerValue(GetSurvivorID(player), 0, Gambler, newMax);
@@ -498,19 +498,16 @@ function CalcMaxAmmo()
 function CalcChainsaw()
 {
 	local Lumberjack = TeamHasCard("Lumberjack");
-	local LumberjackMultiplier = 1 * Lumberjack;
+	local LumberjackMultiplier = 2 * Lumberjack;
 
 	Convars.SetValue("chainsaw_damage", chainsaw_damage * (1 + LumberjackMultiplier));
-	Convars.SetValue("chainsaw_attack_distance", chainsaw_attack_distance * (1 + LumberjackMultiplier));
 }
 
 function CalcGrenadeLauncher()
 {
 	local Cannoneer = TeamHasCard("Cannoneer");
-	local CannoneerMultiplier = 1 * Cannoneer;
+	local CannoneerMultiplier = 2 * Cannoneer;
 
-	Convars.SetValue("grenadelauncher_radius_stumble", grenadelauncher_radius_stumble * (1 + CannoneerMultiplier));
-	Convars.SetValue("grenadelauncher_radius_kill", grenadelauncher_radius_kill * (1 + CannoneerMultiplier));
 	Convars.SetValue("grenadelauncher_damage", grenadelauncher_damage * (1 + CannoneerMultiplier));
 }
 
