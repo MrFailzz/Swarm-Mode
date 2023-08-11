@@ -60,16 +60,13 @@ function PingEntity(entity, player, tracepos)
 	}
 
 	local canGlow = CanGlow(entityReturnName);
-	if (canGlow == false)
+	if (canGlow == false && entity.GetClassname() != "player")
 	{
 		// Create fake prop for glow
 		local glow_name = "__pingtarget_" + entityIndex + "_glow_";
 		local entityAngles = entity.GetAngles();
 		local entityAnglesY = entityAngles.y;
-		if (entity.GetClassname() == "player")
-		{
-			entityAnglesY -= 90;
-		}
+
 		local glow_target = SpawnEntityFromTable("prop_dynamic_override",
 		{
 			targetname = glow_name,
@@ -90,6 +87,27 @@ function PingEntity(entity, player, tracepos)
 		// Remove ping
 		DoEntFire("!self", "StopGlowing", "", pingDuration, null, glow_target);
 		DoEntFire("!self", "Kill", "", pingDuration, null, glow_target);
+	}
+	else if (canGlow == false && entity.GetClassname() == "player")
+	{
+    	NetProps.SetPropInt(entity, "m_Glow.m_iGlowType", 3);
+
+		if (entity.ValidateScriptScope())
+			{
+				local player_entityscript = entity.GetScriptScope();
+				player_entityscript["TickCount"] <- 0;
+				player_entityscript["GlowKill"] <- function()
+				{
+					if (player_entityscript["TickCount"] >= 30)
+					{
+						NetProps.SetPropInt(entity, "m_Glow.m_iGlowType", 0);
+						return
+					}
+					player_entityscript["TickCount"]++;
+					return
+				}
+				AddThinkToEnt(entity, "GlowKill");
+			}
 	}
 	else if (canGlow == true)
 	{
