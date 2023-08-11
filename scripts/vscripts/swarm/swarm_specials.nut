@@ -175,6 +175,7 @@ function StingerProjectile(params)
 		{
 			local player_entityscript = player.GetScriptScope();
 			player_entityscript["TickCount"] <- 0;
+			player_entityscript["TongueKill"] <- function()
 			{
 				if (player_entityscript["TickCount"] > 1)
 				{
@@ -184,6 +185,7 @@ function StingerProjectile(params)
 				player_entityscript["TickCount"]++;
 				return
 			}
+			AddThinkToEnt(player, "TongueKill");
 		}
 	}
 }
