@@ -187,11 +187,13 @@ function InitCorruptionCards()
 	local cardsMission = array(1, null);
 	cardsMission.clear();
 	cardsMission.append("None");
-	cardsMission.append("None");
 	if (IsMissionFinalMap() == false)
 	{
 		cardsMission.append("missionSpeedrun");
+		cardsMission.append("missionSpeedrun");
 		cardsMission.append("missionAllAlive");
+		cardsMission.append("missionAllAlive");
+		cardsMission.append("missionGnomeAlone");
 		cardsMission.append("missionGnomeAlone");
 	}
 	corruptionMission = ChooseCorruptionCard_ListMission(cardsMission);
