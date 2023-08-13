@@ -175,7 +175,7 @@ function StingerProjectile(params)
 		{
 			local player_entityscript = player.GetScriptScope();
 			player_entityscript["TickCount"] <- 0;
-			player_entityscript["TongueKill"] <- function()
+			//player_entityscript["TongueKill"] <- function()
 			{
 				if (player_entityscript["TickCount"] > 1)
 				{
