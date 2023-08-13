@@ -865,9 +865,6 @@ function Update_PlayerCards()
 					else
 					{
 						StopSoundOn("Player.Heartbeat", player);
-
-						local playerEyeAngles = player.EyeAngles();
-						player.SnapEyeAngles(QAngle(playerEyeAngles.x, playerEyeAngles.y, 0))
 					}
 				}
 			}
