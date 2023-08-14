@@ -171,11 +171,11 @@ function StingerProjectile(params)
 		// Break Tongue
 		Convars.SetValue("tongue_force_break", 1);
 
-		if (player.ValidateScriptScope())
+		if (attacker.ValidateScriptScope())
 		{
-			local player_entityscript = player.GetScriptScope();
+			local player_entityscript = attacker.GetScriptScope();
 			player_entityscript["TickCount"] <- 0;
-			//player_entityscript["TongueKill"] <- function()
+			player_entityscript["TongueKill"] <- function()
 			{
 				if (player_entityscript["TickCount"] > 1)
 				{
@@ -185,7 +185,7 @@ function StingerProjectile(params)
 				player_entityscript["TickCount"]++;
 				return
 			}
-			AddThinkToEnt(player, "TongueKill");
+			AddThinkToEnt(attacker, "TongueKill");
 		}
 	}
 }
