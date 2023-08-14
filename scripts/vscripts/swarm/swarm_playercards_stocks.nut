@@ -77,6 +77,7 @@ disciplineCards <-
 	"Arsonist",
 	"NeedsOfTheMany",
 	"Cannoneer",
+	"DownInFront",
 ];
 
 fortuneCards <-
@@ -647,6 +648,9 @@ function GetPlayerCardName(cardID, type = "name")
 			case "Gambler":
 				return "Gambler";
 				break;
+			case "DownInFront":
+				return "Down In Front";
+				break;
 			default:
 				return cardID;
 				break;
@@ -913,6 +917,10 @@ function GetPlayerCardName(cardID, type = "name")
 				break;
 			case "Gambler":
 				return "Randomize stats each map!"
+				break;
+			case "DownInFront":
+				return "Player no longer receives nor deals friendly fire DMG";
+				break;
 			default:
 				return cardID;
 				break;

@@ -244,6 +244,7 @@ function AllowTakeDamage(damageTable)
 	local GamblerVictim = 0;
 	local AcidMultiplier = 0;
 	local HeadMultiplier = 0;
+	local DownInFront = PlayerHasCard(attacker, "DownInFront");
 
 	//printl("Attacker: " + attacker);
 	//printl("Victim: " + victim);
@@ -409,6 +410,18 @@ function AllowTakeDamage(damageTable)
 					Heal_TempHealth(attacker, 0.25 * BuckshotBruiser);
 				}
 
+				//Down In Front
+				if (victimPlayer == true)
+				{
+					if (victim.IsSurvivor() && DownInFront > 0)
+					{
+						if (attacker.GetButtonMask() & IN_DUCK)
+						{
+							return false;
+						}
+					}
+				}
+
 				damageModifier = (damageModifier
 								 + (0.3 * GlassCannonAttacker)
 								 + (0.25 * Sharpshooter)
@@ -495,6 +508,15 @@ function AllowTakeDamage(damageTable)
 					if (attackerClass == "infected")
 					{
 						ToughSkin = PlayerHasCard(victim, "ToughSkin");
+					}
+				}
+
+				//Down In Front
+				if (attacker.IsSurvivor() && DownInFront > 0)
+				{
+					if (attacker.GetButtonMask() & IN_DUCK)
+					{
+						return false;
 					}
 				}
 
