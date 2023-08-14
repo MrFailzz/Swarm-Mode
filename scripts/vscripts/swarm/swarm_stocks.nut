@@ -189,6 +189,8 @@ function AllowTakeDamage(damageTable)
 	//Table values
 	local damageDone = damageTable.DamageDone;
 	local attacker = damageTable.Attacker;
+	local attackerPlayer = attacker.IsPlayer();
+	local attackerType = attacker.GetClassname();
 	local victim = damageTable.Victim;
 	local victimPlayer = victim.IsPlayer();
 	local victimType = victim.GetClassname();
@@ -413,7 +415,7 @@ function AllowTakeDamage(damageTable)
 				//Down In Front
 				if (victimPlayer == true)
 				{
-					if (victim.IsSurvivor() && DownInFront > 0)
+					if (victim.IsSurvivor() == true && DownInFront > 0)
 					{
 						if (attacker.GetButtonMask() & IN_DUCK)
 						{
@@ -512,13 +514,17 @@ function AllowTakeDamage(damageTable)
 				}
 
 				//Down In Front
-				if (attacker.IsSurvivor() && DownInFront > 0)
+				if (attackerPlayer == true)
 				{
-					if (attacker.GetButtonMask() & IN_DUCK)
+					if (attacker.IsSurvivor() == true && DownInFront > 0)
 					{
-						return false;
+						if (attacker.GetButtonMask() & IN_DUCK)
+						{
+							return false;
+						}
 					}
 				}
+
 
 				damageModifier = (damageModifier
 								+ (0.2 * GlassCannonVictim)
