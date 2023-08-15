@@ -636,6 +636,7 @@ function PlayerDeath(params)
 		{
 			isSurvivorDeath = true;
 		}
+		NetProps.SetPropInt(player, "m_Glow.m_iGlowType", 0);
 	}
 
 	if (params.victimname == "Tank")
