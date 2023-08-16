@@ -3,7 +3,7 @@
 
 ### Common Ridden
 #### Acid Commons
-*Acid commons will drop acid pools after death
+* Acid commons will drop acid pools after death
 	
 #### Fire Commons
 * Fire commons will deal fire damage if when near
@@ -277,6 +277,8 @@
 * +1 Team Life, -10 Max HP
 #### Cannoneer
 * +200% Team Grenade Launcher DMG
+#### Down In Front
+* No longer receive nor deal FF DMG while crouched
 
 ### Fortune
 #### Lucky Shot

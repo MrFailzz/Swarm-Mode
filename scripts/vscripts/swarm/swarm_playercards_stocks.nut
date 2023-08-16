@@ -643,7 +643,7 @@ function GetPlayerCardName(cardID, type = "name")
 				return "Lumberjack";
 				break;
 			case "Cannoneer":
-				return "Cannoneer"
+				return "Cannoneer";
 				break;
 			case "Gambler":
 				return "Gambler";
@@ -910,16 +910,16 @@ function GetPlayerCardName(cardID, type = "name")
 				return "+1 Team Life, -10 Max HP";
 				break;
 			case "Lumberjack":
-				return "+200% Team Chainsaw DMG"
+				return "+200% Team Chainsaw DMG";
 				break;
 			case "Cannoneer":
-				return "+200% Team Grenade Launcher DMG"
+				return "+200% Team Grenade Launcher DMG";
 				break;
 			case "Gambler":
-				return "Randomize stats each map!"
+				return "Randomize stats each map!";
 				break;
 			case "DownInFront":
-				return "Player no longer receives nor deals friendly fire DMG";
+				return "No longer receive nor deal FF DMG while crouched";
 				break;
 			default:
 				return cardID;
