@@ -767,8 +767,19 @@ function RoundStart(params)
 	CreateCardHud();
 
 	difficulty = GetDifficulty();
+	flow = GetMaxFlowDistance();
 	InitCorruptionCards();
 	SetDifficulty();
+
+	// Multiplier for speedrun objective based on map length
+	if (flow < 25000)
+	{
+		MissionSpeedrun_Multi = 1
+	}
+	else
+	{
+		MissionSpeedrun_Multi = 1.5
+	}
 
 	// Ends the game after the third wipe
 	if (swarmMode == "hardcore")
