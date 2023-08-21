@@ -767,9 +767,10 @@ function RoundStart(params)
 	CreateCardHud();
 
 	difficulty = GetDifficulty();
-	flow = GetMaxFlowDistance();
 	InitCorruptionCards();
 	SetDifficulty();
+
+ local flow = GetMaxFlowDistance();
 
 	// Multiplier for speedrun objective based on map length
 	if (flow < 25000)
