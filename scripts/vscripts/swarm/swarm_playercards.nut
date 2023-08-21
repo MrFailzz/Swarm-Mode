@@ -760,21 +760,25 @@ function HeightendSensesPing(player)
 			NetProps.SetPropInt(entity, "m_Glow.m_iGlowType", 3);
 
 			if (entity.ValidateScriptScope())
+			{
+				local player_entityscript = entity.GetScriptScope();
+				player_entityscript["TickCount"] <- 0;
+				player_entityscript["GlowKill"] <- function()
 				{
-					local player_entityscript = entity.GetScriptScope();
-					player_entityscript["TickCount"] <- 0;
-					player_entityscript["GlowKill"] <- function()
+					if (player_entityscript["TickCount"] >= 20)
 					{
-						if (player_entityscript["TickCount"] >= 80)
-						{
-							NetProps.SetPropInt(entity, "m_Glow.m_iGlowType", 0);
-							return
-						}
-						player_entityscript["TickCount"]++;
+						NetProps.SetPropInt(entity, "m_Glow.m_iGlowType", 0);
 						return
 					}
-					AddThinkToEnt(entity, "GlowKill");
+					player_entityscript["TickCount"]++;
+					return
 				}
+				AddThinkToEnt(entity, "GlowKill");
+			}
+			else
+			{
+				NetProps.SetPropInt(entity, "m_Glow.m_iGlowType", 0);
+			}
 		}
 		else if (canGlow == true)
 		{
