@@ -766,6 +766,17 @@ function RoundStart(params)
 {
 	CreateCardHud();
 
+	// Multiplier for speedrun objective based on map length. Must be before InitCorruption
+	local flow = GetMaxFlowDistance();
+	if (flow < 25000)
+	{
+		MissionSpeedrun_Multi = 1
+	}
+	else
+	{
+		MissionSpeedrun_Multi = 1.5
+	}
+
 	difficulty = GetDifficulty();
 	InitCorruptionCards();
 	SetDifficulty();
