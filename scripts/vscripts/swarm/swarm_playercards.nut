@@ -755,7 +755,34 @@ function HeightendSensesPing(player)
 		}
 
 		local canGlow = CanGlow(entityReturnName);
-		if (canGlow == false)
+		if (canGlow == false && entity.GetClassname() != "player")
+		{
+			// Create fake prop for glow
+			local glow_name = "__pingtarget_" + entityIndex + "_glow_";
+			local entityAngles = entity.GetAngles();
+			local entityAnglesY = entityAngles.y;
+
+			local glow_target = SpawnEntityFromTable("prop_dynamic_override",
+			{
+				targetname = glow_name,
+				origin = entity.GetOrigin(),
+				angles = Vector(entityAngles.x, entityAnglesY, entityAngles.z),
+				model = entity.GetModelName(),
+				solid = 0,
+				rendermode = 10
+			});
+			local entitySequence = entity.GetSequence();
+			local sequenceName = entity.GetSequenceName(entitySequence);
+			// Apply ping glow
+			DoEntFire("!self", "SetParent", entityName, 0, null, glow_target);
+			DoEntFire("!self", "StartGlowing", "", 0, null, glow_target);
+			DoEntFire("!self", "SetAnimation", sequenceName, 0, null, glow_target);
+
+			// Remove ping
+			DoEntFire("!self", "StopGlowing", "", autoPingDuration, null, glow_target);
+			DoEntFire("!self", "Kill", "", autoPingDuration, null, glow_target);
+		}
+		else if (canGlow == false && entity.GetClassname() == "player")
 		{
 			NetProps.SetPropInt(entity, "m_Glow.m_iGlowType", 3);
 
@@ -765,7 +792,7 @@ function HeightendSensesPing(player)
 				player_entityscript["TickCount"] <- 0;
 				player_entityscript["GlowKill"] <- function()
 				{
-					if (player_entityscript["TickCount"] >= 20)
+					if (player_entityscript["TickCount"] >= 12)
 					{
 						NetProps.SetPropInt(entity, "m_Glow.m_iGlowType", 0);
 						return

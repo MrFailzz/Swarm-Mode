@@ -70,7 +70,7 @@ function PingEntity(entity, player, tracepos)
 			player_entityscript["TickCount"] <- 0;
 			player_entityscript["GlowKill"] <- function()
 			{
-				if (player_entityscript["TickCount"] >= 80)
+				if (player_entityscript["TickCount"] >= 48)
 				{
 					NetProps.SetPropInt(entity, "m_Glow.m_iGlowType", 0);
 					return
@@ -167,6 +167,11 @@ function GetEntityType(entity)
 					if (corruptionRetch == "Exploder")
 					{
 						return "Exploder";
+						break;
+					}
+					if (corruptionRetch == "Reeker")
+					{
+						return "Reeker";
 						break;
 					}
 				case 3:
