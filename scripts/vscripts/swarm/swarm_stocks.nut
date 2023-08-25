@@ -189,17 +189,11 @@ function AllowTakeDamage(damageTable)
 	//Table values
 	local damageDone = damageTable.DamageDone;
 	local attacker = damageTable.Attacker;
-	local attackerPlayer = attacker.IsPlayer();
-	local attackerType = attacker.GetClassname();
 	local victim = damageTable.Victim;
-	local victimPlayer = victim.IsPlayer();
-	local victimType = victim.GetClassname();
-	local inflictor = damageTable.Inflictor;
-	local inflictorClass = null;
-	if (inflictor.IsValid())
-	{
-		inflictorClass = inflictor.GetClassname();
-	}
+	local attackerPlayer = null;
+	local attackerClass = null;
+	local victimPlayer = null;
+	local victimType = null;
 	local weapon = damageTable.Weapon;
 	local weaponClass = null;
 	if (weapon != null)
@@ -246,7 +240,6 @@ function AllowTakeDamage(damageTable)
 	local GamblerVictim = 0;
 	local AcidMultiplier = 0;
 	local HeadMultiplier = 0;
-	local DownInFront = PlayerHasCard(attacker, "DownInFront");
 
 	//printl("Attacker: " + attacker);
 	//printl("Victim: " + victim);
@@ -260,6 +253,25 @@ function AllowTakeDamage(damageTable)
 			//Survivor dealing damage
 			if (attacker.IsSurvivor())
 			{
+				//Attack Specific Variables
+				if (victim.IsValid())
+				{
+					victimPlayer = victim.IsPlayer();
+					victimType = victim.GetClassname();
+				}
+
+				//DownInFront
+				if (victimPlayer == true)
+				{
+					if (victim.IsSurvivor())
+					{
+						if ((attacker.GetButtonMask() & IN_DUCK) && PlayerHasCard(attacker, "DownInFront"))
+						{
+							return false;
+						}
+					}
+				}
+
 				//Gambler
 				local GamblerAttacker = PlayerHasCard(attacker, "Gambler");
 
@@ -311,25 +323,6 @@ function AllowTakeDamage(damageTable)
 				{
 					BombSquad = PlayerHasCard(attacker, "BombSquad");
 				}
-
-				/*if((damageType & DMG_BURN) == DMG_BURN){printl("DMG_BURN")}*/
-
-				//BombSquad
-				/*if (inflictorClass == "pipe_bomb_projectile")
-				{
-					if (victimPlayer == true)
-					{
-						if (victim.IsSurvivor() == false)
-						{
-							BombSquad = PlayerHasCard(attacker, "BombSquad");
-						}
-					}
-					else
-					{
-						BombSquad = PlayerHasCard(attacker, "BombSquad");
-					}
-				}
-				BombSquadMultiplier = BombSquad == 0 ? 0 : (BombSquad - 1)*/
 
 				//LuckyShot
 				//Ellis Perk
@@ -412,18 +405,6 @@ function AllowTakeDamage(damageTable)
 					Heal_TempHealth(attacker, 0.25 * BuckshotBruiser);
 				}
 
-				//Down In Front
-				if (victimPlayer == true)
-				{
-					if (victim.IsSurvivor() == true && DownInFront > 0)
-					{
-						if (attacker.GetButtonMask() & IN_DUCK)
-						{
-							return false;
-						}
-					}
-				}
-
 				damageModifier = (damageModifier
 								 + (0.3 * GlassCannonAttacker)
 								 + (0.25 * Sharpshooter)
@@ -459,6 +440,24 @@ function AllowTakeDamage(damageTable)
 		{
 			if (victim.IsSurvivor())
 			{
+				//Victim Specific Variables
+				if (attacker.IsValid())
+				{
+					attackerPlayer = attacker.IsPlayer();
+				}
+
+				//DownInFront
+				if (attackerPlayer == true)
+				{
+					if (attacker.IsSurvivor())
+					{
+						if ((victim.GetButtonMask() & IN_DUCK) && PlayerHasCard(victim, "DownInFront"))
+						{
+							return false;
+						}
+					}
+				}
+
 				//Gambler
 				local GamblerVictim = PlayerHasCard(victim, "Gambler");
 
@@ -487,12 +486,15 @@ function AllowTakeDamage(damageTable)
 					FireProof = PlayerHasCard(victim, "FireProof");
 				}
 
+				//Spitter Acid damage modifiers
 				//ChemicalBarrier
 				//DMG_RADIATION + DMG_ENERGYBEAM = Spitter Acid
 				if ((damageType & 262144) == 262144 && (damageType & 1024) == 1024)
 				{
+					//Reduce acid damage globally and add a slowdown effect
 					AcidMultiplier = -0.5;
 					victim.OverrideFriction(0.5,1.5);
+
 					ChemicalBarrier = PlayerHasCard(victim, "ChemicalBarrier");
 				}
 
@@ -512,19 +514,6 @@ function AllowTakeDamage(damageTable)
 						ToughSkin = PlayerHasCard(victim, "ToughSkin");
 					}
 				}
-
-				//Down In Front
-				if (attackerPlayer == true)
-				{
-					if (attacker.IsSurvivor() == true && DownInFront > 0)
-					{
-						if (attacker.GetButtonMask() & IN_DUCK)
-						{
-							return false;
-						}
-					}
-				}
-
 
 				damageModifier = (damageModifier
 								+ (0.2 * GlassCannonVictim)
