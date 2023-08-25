@@ -88,9 +88,9 @@ function CreateSwarmCircle(tankID)
 				disableshadows = 1
 			});
 
-			if (corruptionHordes == "hordeDuringBoss")
+			if (corruptionBoss == "hazardBreakerRaging")
 			{
-				SpawnMob(2);
+				SpawnMob();
 			}
 
 			bSwarmCircleActive = true;
@@ -221,6 +221,11 @@ function TankSpawn(params)
 	{
 		tankHudTankID = GetPlayerFromUserID(params["userid"]);
 		CreateTankHealthHud();
+	}
+
+	if (corruptionBoss == "hazardOgreRaging")
+	{
+		ogreAggro = false;
 	}
 /*
 	local tankName = GetPlayerFromUserID(params["userid"]);

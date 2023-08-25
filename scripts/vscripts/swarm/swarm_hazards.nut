@@ -13,9 +13,12 @@ function HazardGetNavs()
 	{
 		// Attributes to exclude: 4096 (stairs), 32768 (cliff), 262144 (playerclip), 131072 (mob only) 1073741824 (has elevator)
 		// Spawn Attributes to exclude: 2 (empty), 128 (player start), 1024 (not clearable) 2048 (checkpoint), 4096 (obscured) 8192 (no mobs), 32768 (rescue vehicle), 65536 (rescue closet)
-		if (!area.HasAttributes(4096 | 32768 | 262144 | 131072 | 1073741824) || !area.HasSpawnAttributes(2 | 128 | 1024 | 2048 | 4096 | 8192 | 32768 | 65536))
+		if (!area.HasAttributes(4096 | 32768 | 262144 | 131072 | 1073741824) && !area.HasSpawnAttributes(2 | 128 | 1024 | 2048 | 4096 | 8192 | 32768 | 65536) && !area.IsUnderwater() && !area.IsDamaging())
 		{
 			navArray.append(area)
+
+			//Debug spawnable areas
+			//area.DebugDrawFilled(255, 0, 0, 128, 30, true)
 		}
 	}
 
@@ -681,15 +684,27 @@ function SpawnBoss()
 		SnitchSpawn();
 		snitchSpawned = true;
 	}
-	if (progressPct > spawnBreaker && !breakerSpawned && corruptionBoss == "hazardBreaker")
+	if (progressPct > spawnBreaker && !breakerSpawned && (corruptionBoss == "hazardBreaker" || corruptionBoss == "hazardBreakerRaging"))
 	{
 		BreakerSpawn();
 		breakerSpawned = true;
 	}
-	if (progressPct > spawnOgre && !ogreSpawned && corruptionBoss == "hazardOgre")
+	if (progressPct > spawnOgre && !ogreSpawned && (corruptionBoss == "hazardOgre" || corruptionBoss == "hazardOgreRaging"))
 	{
 		BreakerSpawn();
 		ogreSpawned = true;
+	}
+
+	if (corruptionBoss == "hazardOgreRaging")
+	{
+		if (ogreAggro == false)
+		{
+			ogreAggro = Director.IsTankInPlay();
+			if (ogreAggro == true)
+			{
+				SpawnMob();
+			}
+		}
 	}
 }
 

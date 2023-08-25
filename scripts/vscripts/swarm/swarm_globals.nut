@@ -148,6 +148,8 @@ else
 ::p4Gambler <- [RandomInt(-100, 100), RandomInt(-100, 100), RandomInt(-100, 100), RandomInt(-50, 80), RandomInt(-100, 100), RandomInt(-50, 80), RandomInt(-100, 100)];
 
 cardPickingAllowed <- [0, 0, 0, 0];
+cardShuffleVote <- [false, false, false, false];
+cardShuffled <- false
 cardReminderInterval <- 20;
 cardReminderTimer <- cardReminderInterval;
 cardsPerCategory <- 2;
@@ -406,6 +408,8 @@ ogreSpawned <- false;
 bossSpawned <- false;
 bossOgreEnable <- false;
 bossBreakerEnable <- false;
+
+ogreAggro <- false;
 
 // INFECTED //
 boomerExplosionRange <- 250;
