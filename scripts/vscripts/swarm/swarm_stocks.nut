@@ -144,6 +144,35 @@ function InterceptChat(message, speaker)
 				}
 			break;
 
+			case "shuffle":
+				if (cardShuffled == false)
+				{
+					local speakerID = GetSurvivorID(speaker);
+					if (cardPickingAllowed[speakerID] > 0)
+					{
+						cardShuffleVote[speakerID] = true;
+					}
+
+					//Check if all players that haven't picked a card have voted yes
+					local voteStatus = true;
+					foreach(vote in cardShuffleVote)
+					{
+						if (vote == false)
+						{
+							voteStatus = false;
+						}
+					}
+
+					//Vote passed, shuffle cards
+					if (voteStatus == true)
+					{
+						ClientPrint(null, 3, "\x04" + "Shuffle vote passed!");
+						InitCardPicking(true);
+						cardShuffled = true;
+					}
+				}
+			break;
+
 			case "debug":
 				if (GetListenServerHost() == speaker)
 				{
@@ -624,6 +653,11 @@ function PlayerDeath(params)
 		if (player.IsSurvivor())
 		{
 			isSurvivorDeath = true;
+		}
+		else
+		{
+			local playerIndex = player.GetEntityIndex();
+			EntFire("__swarm_stream_lightglow" + playerIndex, "Kill");
 		}
 		NetProps.SetPropInt(player, "m_Glow.m_iGlowType", 0);
 	}
@@ -1316,7 +1350,7 @@ function Update()
 
 	difficulty_RandomBoss();
 
-	if (corruptionHazards == "hazardSnitch" || corruptionBoss == "hazardBreaker" || corruptionBoss == "hazardOgre")
+	if (corruptionHazards == "hazardSnitch" || corruptionBoss == "hazardBreaker" || corruptionBoss == "hazardOgre" || corruptionBoss == "hazardBreakerRaging" || corruptionBoss == "hazardOgreRaging")
 	{
 		SpawnBoss();
 	}
@@ -1463,7 +1497,20 @@ function Update()
 			{
 				if (cardPickingAllowed[survivorID] > 0)
 				{
-					ClientPrint(player, 3, "\x01" + "Use " + "\x03" + "!pick [A-Z]\x01" + " to choose a card (" + "\x03" + cardPickingAllowed[survivorID] + " remaining" + "\x01" + ")");
+					ClientPrint(player, 3, "\x01" + "Use " + "\x03" + "!pick [A-H]\x01" + " to choose a card (" + "\x03" + cardPickingAllowed[survivorID] + " remaining" + "\x01" + ")");
+
+					local voteCount = 0;
+					foreach(vote in cardShuffleVote)
+					{
+						if (vote == true)
+						{
+							voteCount += 1;
+						}
+					}
+					if (voteCount < 4)
+					{
+						ClientPrint(player, 3, "\x01" + "Use " + "\x03" + "!shuffle\x01" + " to vote for a new set of cards (" + "\x03" + voteCount + "/4" + "\x01" + " votes"  + ")");
+					}
 				}
 			}
 		}

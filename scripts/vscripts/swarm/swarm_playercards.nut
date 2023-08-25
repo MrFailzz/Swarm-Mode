@@ -23,6 +23,11 @@ function PickCard(player, cardID)
 			ApplyCardEffects(player);
 		}
 
+		if (cardPickingAllowed[survivorID] == 0)
+		{
+			cardShuffleVote[survivorID] = true;
+		}
+
 		if (card == "Gambler")
 		{
 			PrintGamblerValue(player);
@@ -59,8 +64,15 @@ function AddCardToTable(cardTable, player, card)
 	ClientPrint(player, 3, "\x03" + "Card Played: " + "\x04" + GetPlayerCardName(card) + " \x01(" + GetPlayerCardName(card, "desc") + ")");
 }
 
-function InitCardPicking()
+function InitCardPicking(shuffle = false)
 {
+	if (shuffle == true)
+	{
+		reflexCardsPick = array(cardsPerCategory);
+		brawnCardsPick = array(cardsPerCategory);
+		disciplineCardsPick = array(cardsPerCategory);
+		fortuneCardsPick = array(cardsPerCategory);
+	}
 	reflexCardsPick = ReduceCardArray(reflexCardsPick, reflexCards);
 	brawnCardsPick = ReduceCardArray(brawnCardsPick, brawnCards);
 	disciplineCardsPick = ReduceCardArray(disciplineCardsPick, disciplineCards);
@@ -72,24 +84,27 @@ function InitCardPicking()
 	hudY = GetPickableCardsString(disciplineCardsPick, 1 + (cardsPerCategory * 2), "DISCIPLINE\n", "cardPickDiscipline", HUD_RIGHT_TOP, hudY);
 	hudY = GetPickableCardsString(fortuneCardsPick, 1 + (cardsPerCategory * 3), "FORTUNE\n", "cardPickFortune", HUD_RIGHT_BOT, hudY);
 
-	local cardPicks = 1 + missionsCompleted["completed"];
-	cardPickingAllowed = [cardPicks, cardPicks, cardPicks, cardPicks];
-
-	ClientPrint(null, 3, "\x01" + "Use " + "\x03" + "!pick [A-Z]\x01" + " to choose a card (" + "\x03" + cardPicks + " remaining" + "\x01" + ")");
+	if (shuffle == false)
+	{
+		local cardPicks = 1 + missionsCompleted["completed"];
+		cardPickingAllowed = [cardPicks, cardPicks, cardPicks, cardPicks];
+		ClientPrint(null, 3, "\x01" + "Use " + "\x03" + "!pick [A-H]\x01" + " to choose a card (" + "\x03" + cardPicks + " remaining" + "\x01" + ")");
+	}
 }
 
 function ReduceCardArray(pickArray, refArray)
 {
+	local cloneRefArray = refArray;
 	local iPick = 0;
 	local iRef = null;
-	local refLength = refArray.len();
+	local refLength = cloneRefArray.len();
 
 	while (iPick < cardsPerCategory)
 	{
 		iRef = RandomInt(0, (refLength - 1) - iPick);
-		pickArray[iPick] = refArray[iRef];
+		pickArray[iPick] = cloneRefArray[iRef];
 
-		refArray.remove(iRef);
+		cloneRefArray.remove(iRef);
 
 		iPick++;
 	}

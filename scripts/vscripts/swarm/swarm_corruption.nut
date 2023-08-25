@@ -5,6 +5,22 @@ function InitCorruptionCards()
 {
 	corruptionCards.clear();
 
+	// ZSpeed
+	local cardsZSpeed = array(1, null);
+	cardsZSpeed.clear();
+	if (difficulty < 1)
+	{
+		cardsZSpeed.append("commonShamble");
+		cardsZSpeed.append("commonShamble");
+		cardsZSpeed.append("commonShamble");
+		cardsZSpeed.append("commonShamble");
+	}
+	cardsZSpeed.append("commonRunning");
+	cardsZSpeed.append("commonRunning");
+	cardsZSpeed.append("commonBlitzing");
+	corruptionZSpeed = ChooseCorruptionCard_List(cardsZSpeed);
+	ApplyZSpeedCard();
+
 	// Special Commons
 	local cardsCommons = array(1, null);
 	cardsCommons.clear();
@@ -32,22 +48,6 @@ function InitCorruptionCards()
 	cardsUncommons.append("uncommonJimmy");
 	cardsUncommons.append("uncommonFallen");
 	corruptionUncommons = ChooseCorruptionCard_List(cardsUncommons);
-
-	// ZSpeed
-	local cardsZSpeed = array(1, null);
-	cardsZSpeed.clear();
-	if (difficulty < 1)
-	{
-		cardsZSpeed.append("commonShamble");
-		cardsZSpeed.append("commonShamble");
-		cardsZSpeed.append("commonShamble");
-		cardsZSpeed.append("commonShamble");
-	}
-	cardsZSpeed.append("commonRunning");
-	cardsZSpeed.append("commonRunning");
-	cardsZSpeed.append("commonBlitzing");
-	corruptionZSpeed = ChooseCorruptionCard_ListInf(cardsZSpeed);
-	ApplyZSpeedCard ();
 
 	// Tallboys
 	local cardsTallboy = array(1, null);
@@ -80,9 +80,9 @@ function InitCorruptionCards()
 	local cardsHazards = array(1, null);
 	cardsHazards.clear();
 	cardsHazards.append("None");
+	cardsHazards.append("None");
 	if (IsMissionFinalMap() == false)
 	{
-		cardsHazards.append("None");
 		cardsHazards.append("hazardBirds");
 		cardsHazards.append("hazardLockdown");
 		cardsHazards.append("hazardSleepers");
@@ -95,10 +95,18 @@ function InitCorruptionCards()
 	cardsBoss.clear();
 	cardsBoss.append("None");
 	cardsBoss.append("None");
+	cardsBoss.append("None");
+	cardsBoss.append("None");
+	cardsBoss.append("None");
+	cardsBoss.append("None");
 	if (IsMissionFinalMap() == false)
 	{
 		cardsBoss.append("hazardBreaker");
+		cardsBoss.append("hazardBreaker");
+		cardsBoss.append("hazardBreakerRaging");
 		cardsBoss.append("hazardOgre");
+		cardsBoss.append("hazardOgre");
+		cardsBoss.append("hazardOgreRaging");
 	}
 	corruptionBoss = ChooseCorruptionCard_ListInf(cardsBoss);
 	ApplyBossCard();
@@ -144,7 +152,7 @@ function InitCorruptionCards()
 		cardsHordes.append("hordeOnslaught");
 		cardsHordes.append("hordeOnslaught");
 		cardsHordes.append("hordeOnslaught");
-		cardsHordes.append("hordeDuringBoss");
+		//cardsHordes.append("hordeDuringBoss");
 		cardsHordes.append("horde" + corruptionTallboy);
 		cardsHordes.append("horde" + corruptionHocker);
 		cardsHordes.append("horde" + corruptionRetch);
@@ -528,8 +536,14 @@ function GetCorruptionCardName(cardID)
 		case "hazardBreaker":
 			return "Breaker";
 			break;
+		case "hazardBreakerRaging":
+			return "Raging Breaker";
+			break;
 		case "hazardOgre":
 			return "Ogre";
+			break;
+		case "hazardOgreRaging":
+			return "Raging Ogre";
 			break;
 		case "missionSpeedrun":
 			return "Speed Run";
@@ -745,13 +759,13 @@ function CorruptionCard_SwarmStreamGlow(player)
 		angles = Vector(playerAngles.x, playerAngles.y, playerAngles.z),
 		GlowProxySize = 32,
 		HDRColorScale = 0.075,
-		HorizontalGlowSize = 175,
+		HorizontalGlowSize = 100,
 		MaxDist = 0,
 		MinDist = 0,
-		OuterMaxDist = 65535,
+		OuterMaxDist = 4000,
 		rendercolor = Vector(255, 193, 159),
 		spawnflags = 0,
-		VerticalGlowSize = 125
+		VerticalGlowSize = 75
 	});
 
 	lightglow.SetOrigin(Vector(playerOrigin.x, playerOrigin.y, playerOrigin.z + 48));
@@ -1235,6 +1249,12 @@ function ApplyBossCard()
 			CorruptionCard_Breaker();
 			break;
 		case "hazardOgre":
+			CorruptionCard_Ogre();
+			break;
+		case "hazardBreakerRaging":
+			CorruptionCard_Breaker();
+			break;
+		case "hazardOgreRaging":
 			CorruptionCard_Ogre();
 			break;
 	}
