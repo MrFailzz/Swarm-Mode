@@ -217,6 +217,7 @@ function AllowTakeDamage(damageTable)
 {
 	//Table values
 	local damageDone = damageTable.DamageDone;
+	local originalDamageDone = damageTable.DamageDone;
 	local attacker = damageTable.Attacker;
 	local victim = damageTable.Victim;
 	local attackerPlayer = null;
@@ -230,9 +231,10 @@ function AllowTakeDamage(damageTable)
 		weaponClass = weapon.GetClassname();
 	}
 	local damageType = damageTable.DamageType;
+	//local victimOnTempHP = false;
 
 	//Modifiers
-	local damageModifier = 1;
+	local damageModifier = 1.00;
 	local GlassCannonAttacker = 0;
 	local GlassCannonVictim = 0;
 	local Sharpshooter = 0;
@@ -270,9 +272,9 @@ function AllowTakeDamage(damageTable)
 	local AcidMultiplier = 0;
 	local HeadMultiplier = 0;
 
-	//printl("Attacker: " + attacker);
-	//printl("Victim: " + victim);
-	//printl("Original DMG: " + damageDone);
+	/*printl("Attacker: " + attacker);
+	printl("Victim: " + victim);
+	printl("Original DMG: " + damageDone);*/
 
 	//Modify Attacker damage
 	if (attacker.IsValid())
@@ -455,8 +457,7 @@ function AllowTakeDamage(damageTable)
 				{
 					damageModifier += ApplyGamblerValue(GetSurvivorID(attacker), 4, GamblerAttacker, damageModifier);
 				}
-				GamblerAttacker
-				damageDone = damageDone * damageModifier;
+				damageDone = damageTable.DamageDone * damageModifier;
 			}
 		}
 	}
@@ -474,6 +475,11 @@ function AllowTakeDamage(damageTable)
 				{
 					attackerPlayer = attacker.IsPlayer();
 				}
+
+				/*if (victim.GetHealth() == 1 && victim.GetHealthBuffer() > 0)
+				{
+					victimOnTempHP = true
+				}*/
 
 				//DownInFront
 				if (attackerPlayer == true)
@@ -558,22 +564,26 @@ function AllowTakeDamage(damageTable)
 				{
 					damageModifier += ApplyGamblerValue(GetSurvivorID(victim), 1, GamblerVictim, damageModifier) * -1;
 				}
-				damageDone = damageDone * damageModifier;
+				damageDone = damageTable.DamageDone * damageModifier;
 			}
 		}
 	}
 
-	//Damage can't go below 1
-	//TODO: Add clause for = 0
-	if (damageDone < 1)
+	if (damageModifier == 0)
 	{
-		damageDone = 1;
+		damageDone = originalDamageDone;
 	}
-	else
+	else if (damageDone < 1)
 	{
-		damageTable.DamageDone = damageDone;
+		//Damage dealt can't go below 1
+		//if (victimOnTempHP == false)
+		//{
+			damageDone = 1;
+		//}
 	}
+	damageTable.DamageDone = damageDone;
 	//printl("New DMG: " + damageTable.DamageDone);
+	//printl("DMG Modifier: " + damageModifier);
 
 	return true;
 }

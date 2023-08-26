@@ -133,7 +133,7 @@ function OnGameEvent_round_start(params)
 
 function OnGameEvent_player_activate(params)
 {
-	CorruptionDropItems();
+	//CorruptionDropItems();
 }
 
 function OnGameEvent_player_left_safe_area(params)

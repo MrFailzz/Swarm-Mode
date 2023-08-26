@@ -187,6 +187,7 @@ function InitCorruptionCards()
 		cardsPlayer.append("None");
 		cardsPlayer.append("playerLessAmmo");
 		cardsPlayer.append("playerFatigue");
+		//cardsPlayer.append("playerWhiteWeapons");
 	}
 	corruptionPlayer = ChooseCorruptionCard_List(cardsPlayer);
 	ApplyPlayerCorruptionCard();
@@ -985,9 +986,31 @@ function CorruptionCard_NoOffense()
 
 	foreach(modelpath in ItemstoRemove_ModelPaths)
 	{
+		local OnMapItems = [];
 		local weapon_ent = null;
 		while(weapon_ent = Entities.FindByModel(weapon_ent, modelpath))
-			weapon_ent.Kill();
+		{
+			if (weapon_ent.IsValid())
+			{
+				if (weapon_ent.GetClassname().find("weapon_", 0) == 0)
+				{
+					OnMapItems.resize(OnMapItems.len() + 1, weapon_ent);
+				}
+			}
+		}
+		
+		local OnMapItemsLength = OnMapItems.len();
+		printl(modelpath + " " + OnMapItemsLength);
+		if (OnMapItems.len() > 0)
+		{
+			while(OnMapItems.len() >= OnMapItemsLength * 0.25)
+			{
+				local randomItemIndex = RandomInt(0, OnMapItems.len() - 1);
+				local randomItem = OnMapItems.remove(randomItemIndex);
+				printl(randomItem);
+				randomItem.Kill();
+			}
+		}
 	}
 }
 
@@ -1000,15 +1023,39 @@ function CorruptionCard_NoSupport()
 		"models/w_models/weapons/w_eq_adrenaline.mdl",
 		"models/w_models/weapons/w_eq_painpills.mdl",
 	];
+
 	foreach(modelpath in ItemstoRemove_ModelPaths)
 	{
+		local OnMapItems = [];
 		local weapon_ent = null;
 		while(weapon_ent = Entities.FindByModel(weapon_ent, modelpath))
-			weapon_ent.Kill();
+		{
+			if (weapon_ent.IsValid())
+			{
+				if (weapon_ent.GetClassname().find("weapon_", 0) == 0)
+				{
+					OnMapItems.resize(OnMapItems.len() + 1, weapon_ent);
+				}
+			}
+			//weapon_ent.Kill();
+		}
+		
+		local OnMapItemsLength = OnMapItems.len();
+		printl(modelpath + " " + OnMapItemsLength);
+		if (OnMapItems.len() > 0)
+		{
+			while(OnMapItems.len() >= OnMapItemsLength * 0.25)
+			{
+				local randomItemIndex = RandomInt(0, OnMapItems.len() - 1);
+				local randomItem = OnMapItems.remove(randomItemIndex);
+				printl(randomItem);
+				randomItem.Kill();
+			}
+		}
 	}
 }
 
-function CorruptionDropItems()
+/*function CorruptionDropItems()
 {
 	local player = null;
 	switch(corruptionGameplay)
@@ -1035,7 +1082,7 @@ function CorruptionDropItems()
 			CorruptionCard_NoSupport();
 			break;
 	}
-}
+}*/
 
 ///////////////////////////////////////////////
 //               PLAYER CARDS                //

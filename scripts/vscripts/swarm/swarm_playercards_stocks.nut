@@ -850,7 +850,7 @@ function GetPlayerCardName(cardID, type = "name")
 				return "+30% Team Heal EFF";
 				break;
 			case "Cauterized":
-				return "+50% Slower Team HP Decay";
+				return "+50% Slower Team Temp HP Decay";
 				break;
 			case "GroupTherapy":
 				return "Team shares 20% of health item uses";
