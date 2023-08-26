@@ -1,6 +1,9 @@
 ///////////////////////////////////////////////
 //                PLAYER CARDS               //
 ///////////////////////////////////////////////
+if (!IsSoundPrecached("Christmas.GiftPickup"))
+	PrecacheSound("Christmas.GiftPickup");
+
 function PickCard(player, cardID)
 {
 	local cardNumber = LetterToInt(cardID);
@@ -62,6 +65,8 @@ function AddCardToTable(cardTable, player, card)
 	}
 
 	ClientPrint(player, 3, "\x03" + "Card Played: " + "\x04" + GetPlayerCardName(card) + " \x01(" + GetPlayerCardName(card, "desc") + ")");
+	EmitSoundOnClient("Christmas.GiftPickup", player);
+
 }
 
 function InitCardPicking(shuffle = false)
@@ -613,10 +618,15 @@ function ApplyNeedsOfTheMany()
 
 function ApplyCauterized()
 {
-	local Cauterized = TeamHasCard("Cauterized") + 1;
-	local IncapDecay = BaseSurvivorIncapDecayRate - Cauterized
-	DirectorOptions.TempHealthDecayRate = BaseTempHealthDecayRate / (Cauterized + 1);
-	Convars.SetValue("survivor_incap_decay_rate", (IncapDecay < 1 ? 1 : IncapDecay));
+	local Cauterized = TeamHasCard("Cauterized");
+	if (Cauterized > 0)
+	{
+		DirectorOptions.TempHealthDecayRate = BaseTempHealthDecayRate * (0.5 / Cauterized);
+	}
+	else
+	{
+		DirectorOptions.TempHealthDecayRate = BaseTempHealthDecayRate
+	}
 }
 
 function WeaponReload(params)
