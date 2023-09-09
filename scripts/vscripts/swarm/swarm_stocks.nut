@@ -569,21 +569,17 @@ function AllowTakeDamage(damageTable)
 		}
 	}
 
-	if (damageModifier == 0)
+	//Damage can't go below 1
+	//TODO: Add clause for = 0
+	if (damageDone < 1)
 	{
-		damageDone = originalDamageDone;
+		damageDone = 1;
 	}
-	else if (damageDone < 1)
+	else
 	{
-		//Damage dealt can't go below 1
-		//if (victimOnTempHP == false)
-		//{
-			damageDone = 1;
-		//}
+		damageTable.DamageDone = damageDone;
 	}
-	damageTable.DamageDone = damageDone;
 	//printl("New DMG: " + damageTable.DamageDone);
-	//printl("DMG Modifier: " + damageModifier);
 
 	return true;
 }
