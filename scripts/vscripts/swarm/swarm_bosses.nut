@@ -16,7 +16,7 @@ function BossSettings_Ogre()
 {
 	tankModel = "models/infected/hulk_dlc3.mdl"
 	bossOgreEnable = true;
-	Convars.SetValue("z_tank_health", 9000);
+	Convars.SetValue("z_tank_health", 8500);
 	Convars.SetValue("z_tank_speed", 200);
 	Convars.SetValue("z_tank_speed_vs", 200);
 	Convars.SetValue("z_tank_throw_interval", 8);
