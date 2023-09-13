@@ -919,7 +919,7 @@ function GetPlayerCardName(cardID, type = "name")
 				return "Randomize stats each map!";
 				break;
 			case "DownInFront":
-				return "No longer receive nor deal FF DMG while crouched";
+				return "No FF DMG when crouched";
 				break;
 			default:
 				return cardID;
