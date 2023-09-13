@@ -32,7 +32,21 @@ function InterceptChat(message, speaker)
 			case "giveup":
 				if (speaker.IsSurvivor() && speaker.IsIncapacitated())
 				{
-					speaker.TakeDamage(1000, 0, null);
+					speaker.TakeDamage(9999, 0, null);
+				}
+				if (speaker.IsSurvivor())
+				{
+					local player = null;
+					while ((player = Entities.FindByClassname(player, "player")) != null)
+					{
+						if (player.IsSurvivor() && player.IsIncapacitated())
+						{
+							if (IsPlayerABot(player))
+							{
+								player.TakeDamage(9999, 0, null);
+							}
+						}
+					}
 				}
 			break;
 

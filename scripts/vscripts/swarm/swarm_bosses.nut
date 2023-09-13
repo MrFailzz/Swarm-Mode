@@ -5,10 +5,10 @@ function BossSettings_Breaker()
 {
 	tankModel = "models/infected/hulk.mdl"
 	bossBreakerEnable = true;
-	Convars.SetValue("z_tank_health", 8000);
+	Convars.SetValue("z_tank_health", 7500);
 	Convars.SetValue("z_tank_speed", 190);
 	Convars.SetValue("z_tank_speed_vs", 190);
-	Convars.SetValue("z_tank_throw_interval", 18);
+	Convars.SetValue("z_tank_throw_interval", 16);
 	Convars.SetValue("tank_throw_allow_range", 250);
 }
 
@@ -16,7 +16,7 @@ function BossSettings_Ogre()
 {
 	tankModel = "models/infected/hulk_dlc3.mdl"
 	bossOgreEnable = true;
-	Convars.SetValue("z_tank_health", 8500);
+	Convars.SetValue("z_tank_health", 8000);
 	Convars.SetValue("z_tank_speed", 200);
 	Convars.SetValue("z_tank_speed_vs", 200);
 	Convars.SetValue("z_tank_throw_interval", 8);
