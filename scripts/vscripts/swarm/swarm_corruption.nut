@@ -570,22 +570,22 @@ function GetCorruptionCardName(cardID)
 				return "None";
 				break;
 			case "commonAcid":
-				return "Кислотное сообщество";
+				return "Ацид Коммонс";
 				break;
 			case "commonFire":
-				return "Пожарная охрана";
+				return "Фире Коммонс";
 				break;
 			case "commonExplode":
-				return "Взрывные устройства";
+				return "Ехплодинг Коммонс";
 				break;
 			case "hazardBirds":
 				return "Птицы";
 				break;
 			case "hazardLockdown":
-				return "Блокировка";
+				return "Карантин";
 				break;
 			case "hazardSleepers":
-				return "Вечеринка на ночь";
+				return "Слумбер Парты";
 				break;
 			case "environmentDark":
 				return "Темнота";
@@ -594,7 +594,7 @@ function GetCorruptionCardName(cardID)
 				return "Туман";
 				break;
 			case "environmentFrozen":
-				return "Фригидные окраины";
+				return "Холодные окраины";
 				break;
 			case "environmentSwarmStream":
 				return "Роевой поток";
@@ -606,31 +606,31 @@ function GetCorruptionCardName(cardID)
 				return "Натиск";
 				break;
 			case "hordeTallboy":
-				return "Полчища танкистов";
+				return "Таллбоы Орды";
 				break;
 			case "hordeCrusher":
-				return "Полчища дробильщиков";
+				return "Црушер Орды";
 				break;
 			case "hordeBruiser":
-				return "Брузерские полчища";
+				return "Бруисер Орды";
 				break;
 			case "hordeHocker":
-				return "Табурет Орды";
+				return "Хоцкер Орды";
 				break;
 			case "hordeStinger":
-				return "Орды Стингера";
+				return "Стингер Орды";
 				break;
 			case "hordeStalker":
-				return "Полчища сталкеров";
+				return "Сталкер Орды";
 				break;
 			case "hordeExploder":
-				return "Полчища взрывников";
+				return "Ехплодер Орды";
 				break;
 			case "hordeRetch":
-				return "Ретивые полчища";
+				return "Ретч Орды";
 				break;
 			case "hordeReeker":
-				return "Полчища рикеров";
+				return "Реекер Орды";
 				break;
 			case "hordeDuringBoss":
 				return "Бушующий рой";
@@ -639,100 +639,100 @@ function GetCorruptionCardName(cardID)
 				return "Пустые карманы";
 				break;
 			case "gameplayNoOutlines":
-				return "Без конспектов";
+				return "Нет контуров";
 				break;
 			case "gameplayNoSupport":
-				return "Выживание сильнейших";
+				return "Выживает наиболее приспособленный";
 				break;
 			case "gameplayNoRespawn":
-				return "Сделать или умереть";
+				return "Сделай или умри";
 				break;
 			case "playerLessAmmo":
-				return "Дефицит боеприпасов";
+				return "Нехватка боеприпасов";
 				break;
 			case "playerFatigue":
 				return "Усталость";
 				break;
 			case "uncommonClown":
-				return "Шоу клоунов";
+				return "Клоун-шоу";
 				break;
 			case "uncommonRiot":
-				return "Управление толпой";
+				return "Сдерживание толпы";
 				break;
 			case "uncommonMud":
-				return "Грязеуловители";
+				return "Муд Цращлерс";
 				break;
 			case "uncommonCeda":
-				return "Операторы CEDA";
+				return "Оперативники CEDA";
 				break;
 			case "uncommonConstruction":
 				return "Строительная площадка";
 				break;
 			case "uncommonJimmy":
-				return "Джимми Гиббс и кузены";
+				return "Джимми Гиббс и Казинс";
 				break;
 			case "uncommonFallen":
 				return "Павшие уборщики";
 				break;
 			case "commonShamble":
-				return "Акустические сообщества";
+				return "Схамблинг Коммонс";
 				break;
 			case "commonRunning":
-				return "Бегущие строки";
+				return "Руннинг Коммонс";
 				break;
 			case "commonBlitzing":
-				return "Блиц-объявления";
+				return "Блицинг Коммонс";
 				break;
 			case "Tallboy":
-				return "Талбуки";
+				return "Таллбоы";
 				break;
 			case "Crusher":
-				return "Дробилки";
+				return "Црушер";
 				break;
 			case "Bruiser":
-				return "Брюзеры";
+				return "Бруисер";
 				break;
 			case "Hocker":
-				return "Хокеры";
+				return "Хоцкер";
 				break;
 			case "Stinger":
 				return "Стингер";
 				break;
 			case "Stalker":
-				return "Сталкеры";
+				return "Сталкер";
 				break;
 			case "Retch":
-				return "Ретчи";
+				return "Ретч";
 				break;
 			case "Exploder":
-				return "Взрывные устройства";
+				return "Ехплодер";
 				break;
 			case "Reeker":
-				return "Рикер";
+				return "Реекер";
 				break;
 			case "hazardSnitch":
-				return "Татлерс";
+				return "Таттлерс";
 				break;
 			case "hazardBreaker":
-				return "Прерыватель";
+				return "Бреакер";
 				break;
 			case "hazardBreakerRaging":
-				return "Яростный разрушитель";
+				return "Бушующий Бреакер";
 				break;
 			case "hazardOgre":
-				return "Людоед";
+				return "Огре";
 				break;
 			case "hazardOgreRaging":
-				return "Бешеный людоед";
+				return "Бушующий Огре";
 				break;
 			case "missionSpeedrun":
-				return "Скоростной бег";
+				return "Спеедрун";
 				break;
 			case "missionAllAlive":
-				return "Никто не останется в стороне";
+				return "Никто не остался позади";
 				break;
 			case "missionGnomeAlone":
-				return "Гном в одиночестве";
+				return "Гноме Алоне";
 				break;
 			default:
 				return cardID;

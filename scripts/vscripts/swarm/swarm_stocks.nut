@@ -24,7 +24,7 @@ function InterceptChat(message, speaker)
 				}
 			break;
 
-			case "russian":
+			case "русский":
 				if (GetListenServerHost() == speaker)
 				{
 					language = "Russian";
