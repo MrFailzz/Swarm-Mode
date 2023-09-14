@@ -2,6 +2,7 @@
 //            GLOBALS / CONSTANTS            //
 ///////////////////////////////////////////////
 //Globals
+language <- "English";
 difficulty <- GetDifficulty();
 survivorSet <- Director.GetSurvivorSet();
 z_speed <- Convars.GetFloat("z_speed");

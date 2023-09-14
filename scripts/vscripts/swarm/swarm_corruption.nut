@@ -385,179 +385,359 @@ function UpdateCorruptionCardHUD()
 
 function GetCorruptionCardName(cardID)
 {
-	switch(cardID)
+	if (language == "English")
 	{
-		case "None":
-			return "None";
-			break;
-		case "commonAcid":
-			return "Acid Commons";
-			break;
-		case "commonFire":
-			return "Fire Commons";
-			break;
-		case "commonExplode":
-			return "Exploding Commons";
-			break;
-		case "hazardBirds":
-			return "The Birds";
-			break;
-		case "hazardLockdown":
-			return "The Lockdown";
-			break;
-		case "hazardSleepers":
-			return "Slumber Party";
-			break;
-		case "environmentDark":
-			return "The Dark";
-			break;
-		case "environmentFog":
-			return "The Fog";
-			break;
-		case "environmentFrozen":
-			return "Frigid Outskirts";
-			break;
-		case "environmentSwarmStream":
-			return "Swarm Stream";
-			break;
-		case "hordeHunted":
-			return "Hunted";
-			break;
-		case "hordeOnslaught":
-			return "Onslaught";
-			break;
-		case "hordeTallboy":
-			return "Tallboy Hordes";
-			break;
-		case "hordeCrusher":
-			return "Crusher Hordes";
-			break;
-		case "hordeBruiser":
-			return "Bruiser Hordes";
-			break;
-		case "hordeHocker":
-			return "Hocker Hordes";
-			break;
-		case "hordeStinger":
-			return "Stinger Hordes";
-			break;
-		case "hordeStalker":
-			return "Stalker Hordes";
-			break;
-		case "hordeExploder":
-			return "Exploder Hordes";
-			break;
-		case "hordeRetch":
-			return "Retch Hordes";
-			break;
-		case "hordeReeker":
-			return "Reeker Hordes";
-			break;
-		case "hordeDuringBoss":
-			return "Raging Swarm";
-			break;
-		case "gameplayNoGrenades":
-			return "Empty Pockets";
-			break;
-		case "gameplayNoOutlines":
-			return "No Outlines";
-			break;
-		case "gameplayNoSupport":
-			return "Survival of the Fittest";
-			break;
-		case "gameplayNoRespawn":
-			return "Do or Die";
-			break;
-		case "playerLessAmmo":
-			return "Ammo Shortage";
-			break;
-		case "playerFatigue":
-			return "Fatigue";
-			break;
-		case "uncommonClown":
-			return "Clown Show";
-			break;
-		case "uncommonRiot":
-			return "Crowd Control";
-			break;
-		case "uncommonMud":
-			return "Mud Crawlers";
-			break;
-		case "uncommonCeda":
-			return "CEDA Operatives";
-			break;
-		case "uncommonConstruction":
-			return "Construction Site";
-			break;
-		case "uncommonJimmy":
-			return "Jimmy Gibbs and Cousins";
-			break;
-		case "uncommonFallen":
-			return "Fallen Cleaners";
-			break;
-		case "commonShamble":
-			return "Shambling Commons";
-			break;
-		case "commonRunning":
-			return "Running Commons";
-			break;
-		case "commonBlitzing":
-			return "Blitzing Commons";
-			break;
-		case "Tallboy":
-			return "Tallboys";
-			break;
-		case "Crusher":
-			return "Crushers";
-			break;
-		case "Bruiser":
-			return "Bruisers";
-			break;
-		case "Hocker":
-			return "Hockers";
-			break;
-		case "Stinger":
-			return "Stinger";
-			break;
-		case "Stalker":
-			return "Stalkers";
-			break;
-		case "Retch":
-			return "Retches";
-			break;
-		case "Exploder":
-			return "Exploders";
-			break;
-		case "Reeker":
-			return "Reeker";
-			break;
-		case "hazardSnitch":
-			return "Tattlers";
-			break;
-		case "hazardBreaker":
-			return "Breaker";
-			break;
-		case "hazardBreakerRaging":
-			return "Raging Breaker";
-			break;
-		case "hazardOgre":
-			return "Ogre";
-			break;
-		case "hazardOgreRaging":
-			return "Raging Ogre";
-			break;
-		case "missionSpeedrun":
-			return "Speed Run";
-			break;
-		case "missionAllAlive":
-			return "No One Left Behind";
-			break;
-		case "missionGnomeAlone":
-			return "Gnome Alone";
-			break;
-		default:
-			return cardID;
-			break;
+		switch(cardID)
+		{
+			case "None":
+				return "None";
+				break;
+			case "commonAcid":
+				return "Acid Commons";
+				break;
+			case "commonFire":
+				return "Fire Commons";
+				break;
+			case "commonExplode":
+				return "Exploding Commons";
+				break;
+			case "hazardBirds":
+				return "The Birds";
+				break;
+			case "hazardLockdown":
+				return "The Lockdown";
+				break;
+			case "hazardSleepers":
+				return "Slumber Party";
+				break;
+			case "environmentDark":
+				return "The Dark";
+				break;
+			case "environmentFog":
+				return "The Fog";
+				break;
+			case "environmentFrozen":
+				return "Frigid Outskirts";
+				break;
+			case "environmentSwarmStream":
+				return "Swarm Stream";
+				break;
+			case "hordeHunted":
+				return "Hunted";
+				break;
+			case "hordeOnslaught":
+				return "Onslaught";
+				break;
+			case "hordeTallboy":
+				return "Tallboy Hordes";
+				break;
+			case "hordeCrusher":
+				return "Crusher Hordes";
+				break;
+			case "hordeBruiser":
+				return "Bruiser Hordes";
+				break;
+			case "hordeHocker":
+				return "Hocker Hordes";
+				break;
+			case "hordeStinger":
+				return "Stinger Hordes";
+				break;
+			case "hordeStalker":
+				return "Stalker Hordes";
+				break;
+			case "hordeExploder":
+				return "Exploder Hordes";
+				break;
+			case "hordeRetch":
+				return "Retch Hordes";
+				break;
+			case "hordeReeker":
+				return "Reeker Hordes";
+				break;
+			case "hordeDuringBoss":
+				return "Raging Swarm";
+				break;
+			case "gameplayNoGrenades":
+				return "Empty Pockets";
+				break;
+			case "gameplayNoOutlines":
+				return "No Outlines";
+				break;
+			case "gameplayNoSupport":
+				return "Survival of the Fittest";
+				break;
+			case "gameplayNoRespawn":
+				return "Do or Die";
+				break;
+			case "playerLessAmmo":
+				return "Ammo Shortage";
+				break;
+			case "playerFatigue":
+				return "Fatigue";
+				break;
+			case "uncommonClown":
+				return "Clown Show";
+				break;
+			case "uncommonRiot":
+				return "Crowd Control";
+				break;
+			case "uncommonMud":
+				return "Mud Crawlers";
+				break;
+			case "uncommonCeda":
+				return "CEDA Operatives";
+				break;
+			case "uncommonConstruction":
+				return "Construction Site";
+				break;
+			case "uncommonJimmy":
+				return "Jimmy Gibbs and Cousins";
+				break;
+			case "uncommonFallen":
+				return "Fallen Cleaners";
+				break;
+			case "commonShamble":
+				return "Shambling Commons";
+				break;
+			case "commonRunning":
+				return "Running Commons";
+				break;
+			case "commonBlitzing":
+				return "Blitzing Commons";
+				break;
+			case "Tallboy":
+				return "Tallboys";
+				break;
+			case "Crusher":
+				return "Crushers";
+				break;
+			case "Bruiser":
+				return "Bruisers";
+				break;
+			case "Hocker":
+				return "Hockers";
+				break;
+			case "Stinger":
+				return "Stinger";
+				break;
+			case "Stalker":
+				return "Stalkers";
+				break;
+			case "Retch":
+				return "Retches";
+				break;
+			case "Exploder":
+				return "Exploders";
+				break;
+			case "Reeker":
+				return "Reeker";
+				break;
+			case "hazardSnitch":
+				return "Tattlers";
+				break;
+			case "hazardBreaker":
+				return "Breaker";
+				break;
+			case "hazardBreakerRaging":
+				return "Raging Breaker";
+				break;
+			case "hazardOgre":
+				return "Ogre";
+				break;
+			case "hazardOgreRaging":
+				return "Raging Ogre";
+				break;
+			case "missionSpeedrun":
+				return "Speed Run";
+				break;
+			case "missionAllAlive":
+				return "No One Left Behind";
+				break;
+			case "missionGnomeAlone":
+				return "Gnome Alone";
+				break;
+			default:
+				return cardID;
+				break;
+		}
+	}
+	else if (language == "Russian")
+	{
+		switch(cardID)
+		{
+			case "None":
+				return "None";
+				break;
+			case "commonAcid":
+				return "Кислотное сообщество";
+				break;
+			case "commonFire":
+				return "Пожарная охрана";
+				break;
+			case "commonExplode":
+				return "Взрывные устройства";
+				break;
+			case "hazardBirds":
+				return "Птицы";
+				break;
+			case "hazardLockdown":
+				return "Блокировка";
+				break;
+			case "hazardSleepers":
+				return "Вечеринка на ночь";
+				break;
+			case "environmentDark":
+				return "Темнота";
+				break;
+			case "environmentFog":
+				return "Туман";
+				break;
+			case "environmentFrozen":
+				return "Фригидные окраины";
+				break;
+			case "environmentSwarmStream":
+				return "Роевой поток";
+				break;
+			case "hordeHunted":
+				return "Охота";
+				break;
+			case "hordeOnslaught":
+				return "Натиск";
+				break;
+			case "hordeTallboy":
+				return "Полчища танкистов";
+				break;
+			case "hordeCrusher":
+				return "Полчища дробильщиков";
+				break;
+			case "hordeBruiser":
+				return "Брузерские полчища";
+				break;
+			case "hordeHocker":
+				return "Табурет Орды";
+				break;
+			case "hordeStinger":
+				return "Орды Стингера";
+				break;
+			case "hordeStalker":
+				return "Полчища сталкеров";
+				break;
+			case "hordeExploder":
+				return "Полчища взрывников";
+				break;
+			case "hordeRetch":
+				return "Ретивые полчища";
+				break;
+			case "hordeReeker":
+				return "Полчища рикеров";
+				break;
+			case "hordeDuringBoss":
+				return "Бушующий рой";
+				break;
+			case "gameplayNoGrenades":
+				return "Пустые карманы";
+				break;
+			case "gameplayNoOutlines":
+				return "Без конспектов";
+				break;
+			case "gameplayNoSupport":
+				return "Выживание сильнейших";
+				break;
+			case "gameplayNoRespawn":
+				return "Сделать или умереть";
+				break;
+			case "playerLessAmmo":
+				return "Дефицит боеприпасов";
+				break;
+			case "playerFatigue":
+				return "Усталость";
+				break;
+			case "uncommonClown":
+				return "Шоу клоунов";
+				break;
+			case "uncommonRiot":
+				return "Управление толпой";
+				break;
+			case "uncommonMud":
+				return "Грязеуловители";
+				break;
+			case "uncommonCeda":
+				return "Операторы CEDA";
+				break;
+			case "uncommonConstruction":
+				return "Строительная площадка";
+				break;
+			case "uncommonJimmy":
+				return "Джимми Гиббс и кузены";
+				break;
+			case "uncommonFallen":
+				return "Павшие уборщики";
+				break;
+			case "commonShamble":
+				return "Акустические сообщества";
+				break;
+			case "commonRunning":
+				return "Бегущие строки";
+				break;
+			case "commonBlitzing":
+				return "Блиц-объявления";
+				break;
+			case "Tallboy":
+				return "Талбуки";
+				break;
+			case "Crusher":
+				return "Дробилки";
+				break;
+			case "Bruiser":
+				return "Брюзеры";
+				break;
+			case "Hocker":
+				return "Хокеры";
+				break;
+			case "Stinger":
+				return "Стингер";
+				break;
+			case "Stalker":
+				return "Сталкеры";
+				break;
+			case "Retch":
+				return "Ретчи";
+				break;
+			case "Exploder":
+				return "Взрывные устройства";
+				break;
+			case "Reeker":
+				return "Рикер";
+				break;
+			case "hazardSnitch":
+				return "Татлерс";
+				break;
+			case "hazardBreaker":
+				return "Прерыватель";
+				break;
+			case "hazardBreakerRaging":
+				return "Яростный разрушитель";
+				break;
+			case "hazardOgre":
+				return "Людоед";
+				break;
+			case "hazardOgreRaging":
+				return "Бешеный людоед";
+				break;
+			case "missionSpeedrun":
+				return "Скоростной бег";
+				break;
+			case "missionAllAlive":
+				return "Никто не останется в стороне";
+				break;
+			case "missionGnomeAlone":
+				return "Гном в одиночестве";
+				break;
+			default:
+				return cardID;
+				break;
+		}
 	}
 	
 	return cardID;

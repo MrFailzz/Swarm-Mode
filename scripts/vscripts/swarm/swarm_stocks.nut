@@ -15,6 +15,24 @@ function InterceptChat(message, speaker)
 	{
 		switch(command)
 		{
+			case "english":
+				if (GetListenServerHost() == speaker)
+				{
+					language = "English";
+					UpdateCorruptionCardHUD();
+					ClientPrint(speaker, 3, "\x04" + "English localization");
+				}
+			break;
+
+			case "russian":
+				if (GetListenServerHost() == speaker)
+				{
+					language = "Russian";
+					UpdateCorruptionCardHUD();
+					ClientPrint(speaker, 3, "\x04" + "Russian localization");
+				}
+			break;
+
 			case "ping":
 				TraceEye(speaker);
 			break;
@@ -504,6 +522,11 @@ function AllowTakeDamage(damageTable)
 						{
 							return false;
 						}
+						// Remove bot FF dmg
+						if (IsPlayerABot(attacker))
+						{
+							return false;
+						}
 					}
 				}
 
@@ -583,17 +606,21 @@ function AllowTakeDamage(damageTable)
 		}
 	}
 
-	//Damage can't go below 1
-	//TODO: Add clause for = 0
-	if (damageDone < 1)
+	if (damageModifier == 0)
 	{
-		damageDone = 1;
+		damageDone = originalDamageDone;
 	}
-	else
+	else if (damageDone < 1)
 	{
-		damageTable.DamageDone = damageDone;
+		//Damage dealt can't go below 1
+		//if (victimOnTempHP == false)
+		//{
+			damageDone = 1;
+		//}
 	}
+	damageTable.DamageDone = damageDone;
 	//printl("New DMG: " + damageTable.DamageDone);
+	//printl("DMG Modifier: " + damageModifier);
 
 	return true;
 }
