@@ -20,7 +20,7 @@ function InterceptChat(message, speaker)
 				{
 					language = "English";
 					UpdateCorruptionCardHUD();
-					ClientPrint(speaker, 3, "\x04" + "English localization");
+					ClientPrint(null, 3, "\x04" + "English localization");
 				}
 			break;
 
@@ -29,14 +29,16 @@ function InterceptChat(message, speaker)
 				{
 					language = "Russian";
 					UpdateCorruptionCardHUD();
-					ClientPrint(speaker, 3, "\x04" + "Russian localization");
+					ClientPrint(null, 3, "\x04" + "Russian localization");
 				}
 			break;
 
+			case: "пинг":
 			case "ping":
 				TraceEye(speaker);
 			break;
 
+			case "дроп":
 			case "drop":
 				local activeWeapon = speaker.GetActiveWeapon();
 
@@ -47,6 +49,7 @@ function InterceptChat(message, speaker)
 				}
 			break;
 
+			case "гивеуп":
 			case "giveup":
 				if (speaker.IsSurvivor() && speaker.IsIncapacitated())
 				{
@@ -68,6 +71,7 @@ function InterceptChat(message, speaker)
 				}
 			break;
 
+			case "карты":
 			case "cards":
 				if (!IsHudElementVisible("corruptionCards"))
 				{
@@ -129,15 +133,15 @@ function InterceptChat(message, speaker)
 				cardHudTimeout = 0;
 			break;
 
+			case "нарвать":
 			case "pick":
-			case "card":
 				if (textArgs[1].len() == 1 && speaker.IsSurvivor())
 				{
 					PickCard(speaker, textArgs[1].toupper())
 				}
 			break;
 
-			case "pickbot":
+			case "ботнарвать":
 			case "botpick":
 				if (textArgs[1].len() == 1 && speaker.IsSurvivor())
 				{
@@ -155,6 +159,7 @@ function InterceptChat(message, speaker)
 				}
 			break;
 
+			case "ливес":
 			case "lives":
 				local MaxIncaps = DirectorOptions.SurvivorMaxIncapacitatedCount;
 				local player = null;
@@ -176,6 +181,7 @@ function InterceptChat(message, speaker)
 				}
 			break;
 
+			case "шаркать":
 			case "shuffle":
 				if (cardShuffled == false)
 				{

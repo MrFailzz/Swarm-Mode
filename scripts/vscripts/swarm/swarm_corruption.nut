@@ -633,7 +633,7 @@ function GetCorruptionCardName(cardID)
 				return "Реекер Орды";
 				break;
 			case "hordeDuringBoss":
-				return "Бушующий рой";
+				return "Бушующий Сщарм";
 				break;
 			case "gameplayNoGrenades":
 				return "Пустые карманы";
