@@ -276,7 +276,7 @@ function BoomerExplosion(boomerOrigin, isExploder, exploder)
 				{
 					distanceVector = GetVectorDistance(survivorOrigin, boomerOrigin);
 					damage = (1 - (distanceVector / boomerExplosionRange)) * boomerExplosionDamage;
-					survivor.TakeDamage(damage, DMG_BLAST_SURFACE, null);
+					survivor.TakeDamage(damage, DMG_BLAST_SURFACE, exploder);
 				}
 			}
 		}
