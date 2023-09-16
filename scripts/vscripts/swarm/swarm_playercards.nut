@@ -367,8 +367,8 @@ function CalcMaxHealth(heal = true)
 		if (player.IsSurvivor())
 		{
 			local Gambler = PlayerHasCard(player, "Gambler");
-			local CombatMedic = TeamHasCard("CombatMedic");
-			local TraumaResistance = 1 + (-0.2 * CombatMedic);
+			//local CombatMedic = TeamHasCard("CombatMedic");
+			local TraumaResistance = 1 //+ (-0.2 * CombatMedic);
 			if (Gambler > 0)
 			{
 				TraumaResistance += ApplyGamblerValue(GetSurvivorID(player), 2, Gambler, TraumaResistance);
@@ -480,21 +480,16 @@ function CalcUseSpeed()
 	local MultitoolMultiplier = 0.4 * Multitool;
 	local HelpingHand = TeamHasCard("HelpingHand");
 	local HelpingHandMultiplier = 0.75 * HelpingHand;
+	local CombatMedic = TeamHasCard("CombatMedic");
+	local CombatMedicMultiplier = 0.15 * CombatMedic;
 
 	Convars.SetValue("ammo_pack_use_duration", (ammo_pack_use_duration * fatiguePenalty) / (1 + MultitoolMultiplier));
 	Convars.SetValue("cola_bottles_use_duration", (cola_bottles_use_duration * fatiguePenalty) / (1 + MultitoolMultiplier));
-	Convars.SetValue("defibrillator_use_duration", (defibrillator_use_duration * fatiguePenalty) / (1 + MultitoolMultiplier));
+	Convars.SetValue("defibrillator_use_duration", (defibrillator_use_duration * fatiguePenalty) / (1 + MultitoolMultiplier + HelpingHandMultiplier + CombatMedicMultiplier));
 	Convars.SetValue("first_aid_kit_use_duration", (first_aid_kit_use_duration * fatiguePenalty) / (1 + MultitoolMultiplier));
 	Convars.SetValue("gas_can_use_duration", (gas_can_use_duration * fatiguePenalty) / (1 + MultitoolMultiplier));
 	Convars.SetValue("upgrade_pack_use_duration", (upgrade_pack_use_duration * fatiguePenalty) / (1 + MultitoolMultiplier));
-	Convars.SetValue("survivor_revive_duration", (survivor_revive_duration * fatiguePenalty) / (1 + MultitoolMultiplier + HelpingHandMultiplier));
-
-	//Modify hold to use buttons
-	/*local button = null;
-	while ((button = Entities.FindByClassname(button, "func_button_timed")) != null)
-	{
-		//printl(NetProps.GetPropFloat(button, ""))
-	}*/
+	Convars.SetValue("survivor_revive_duration", (survivor_revive_duration * fatiguePenalty) / (1 + MultitoolMultiplier + HelpingHandMultiplier + CombatMedicMultiplier));
 }
 
 function CalcMaxAmmo()

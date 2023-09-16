@@ -993,7 +993,7 @@ function GetPlayerCardName(cardID, type = "name")
 					return "+75% Team Revive Speed";
 					break;
 				case "CombatMedic":
-					return "+30 Temp HP on revive, +20% Team Trauma RES";
+					return "+15 HP on all revives, +15% Team Revive Speed";
 					break;
 				case "AmpedUp":
 					return "Non-event hordes heal +20 Team HP (5s CD)";
@@ -1263,7 +1263,7 @@ function GetPlayerCardName(cardID, type = "name")
 					return "+75% Team Revive Speed";
 					break;
 				case "CombatMedic":
-					return "+30 Temp HP on revive, +20% Team Trauma RES";
+					return "+15 HP on all revives, +15% Team Revive Speed";
 					break;
 				case "AmpedUp":
 					return "Non-event hordes heal +20 Team HP (5s CD)";

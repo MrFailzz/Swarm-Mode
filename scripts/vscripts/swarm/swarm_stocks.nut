@@ -1022,7 +1022,7 @@ function HealSuccess(params)
 	local healer = GetPlayerFromUserID(params.userid);
 	local player = GetPlayerFromUserID(params.subject);
 
-	local Gambler = PlayerHasCard(player, "Gambler");
+	local Gambler = PlayerHasCard(healer, "Gambler");
 	local EMTBag = PlayerHasCard(healer, "EMTBag");
 	local AntibioticOintment = PlayerHasCard(healer, "AntibioticOintment");
 	local MedicalExpert = TeamHasCard("MedicalExpert");
@@ -1031,7 +1031,7 @@ function HealSuccess(params)
 	local healMultiplier = 1 + ((0.5 * EMTBag) + (0.25 * AntibioticOintment) + (0.30 * MedicalExpert) + (0.1 * Rochelle) + (-0.5 * ScarTissue));
 	if (Gambler > 0)
 	{
-		healMultiplier += ApplyGamblerValue(GetSurvivorID(player), 6, Gambler, healMultiplier);
+		healMultiplier += ApplyGamblerValue(GetSurvivorID(healer), 6, Gambler, healMultiplier);
 	}
 	local healAmount = medkitHealAmount * healMultiplier;
 
@@ -1173,22 +1173,15 @@ function ReviveSuccess(params)
 	{
 		local player = GetPlayerFromUserID(params.userid);
 		local subject = GetPlayerFromUserID(params.subject);
-		local CombatMedic = PlayerHasCard(player, "CombatMedic");
-		local CombatMedicAmount = 30 * CombatMedic;
-		//local currentTempHealth = subject.GetHealthBuffer();
 		local maxHealth = subject.GetMaxHealth();
 		local reviveHealth = Convars.GetFloat("survivor_revive_health");
 
+		local CombatMedic = TeamHasCard("CombatMedic");
+
 		if (CombatMedic > 0)
 		{
-			if (reviveHealth + CombatMedicAmount + 1 > maxHealth)
-			{
-				subject.SetHealthBuffer(maxHealth - 1);
-			}
-			else
-			{
-				subject.SetHealthBuffer(reviveHealth + CombatMedicAmount);
-			}
+			local CombatMedicAmount = 15 * CombatMedic;
+			Heal_PermaHealth(subject, CombatMedicAmount, reviveHealth);
 		}
 	}
 }
@@ -1197,21 +1190,14 @@ function DefibrillatorUsed(params)
 {
 	local player = GetPlayerFromUserID(params.userid);
 	local subject = GetPlayerFromUserID(params.subject);
-	local CombatMedic = PlayerHasCard(player, "CombatMedic");
-	local CombatMedicAmount = 30 * CombatMedic;
-	//local currentTempHealth = subject.GetHealthBuffer();
 	local maxHealth = subject.GetMaxHealth();
+
+	local CombatMedic = TeamHasCard("CombatMedic");
 
 	if (CombatMedic > 0)
 	{
-		if (CombatMedicAmount + 1 > maxHealth)
-		{
-			subject.SetHealthBuffer(maxHealth - 1);
-		}
-		else
-		{
-			subject.SetHealthBuffer(CombatMedicAmount);
-		}
+		local CombatMedicAmount = 15 * CombatMedic;
+		Heal_PermaHealth(subject, CombatMedicAmount, reviveHealth);
 	}
 }
 
