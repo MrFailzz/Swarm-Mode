@@ -26,7 +26,6 @@ function MutationSpawn(player)
 	switch(player.GetZombieType())
 	{
 		case 1:
-		{
 			if (corruptionHocker == "Hocker")
 			{
 				player.SetModel("models/infected/smoker.mdl");
@@ -37,10 +36,9 @@ function MutationSpawn(player)
 			}
 
 			DirectorOptions.SmokerLimit = RandomInt(1,3)
-			break;
-		}
+		break;
+
 		case 2:
-		{
 			if (corruptionRetch == "Exploder")
 			{
 				player.SetModel("models/swarm/infected/boomer.mdl");
@@ -55,23 +53,20 @@ function MutationSpawn(player)
 			}
 
 			DirectorOptions.BoomerLimit = RandomInt(1,3)
-			break;
-		}
+		break;
+
 		case 3:
-		{
 			//Make regular hunters always use L4D2 model so we can change texture
 			player.SetModel("models/swarm/infected/hunter.mdl");
 			NetProps.SetPropInt(player, "m_fFlags", NetProps.GetPropInt(player, "m_fFlags") | (1 << 6)) //FL_ATCONTROLS			(1 << 6)	/**< Player can't move, but keeps key inputs for controlling another entity */
-			break;
-		}
+		break;
+
 		case 5:
-		{
 			player.SetModelScale(1.25, 0.0);
 			DirectorOptions.JockeyLimit = RandomInt(1,3)
-			break;
-		}
+		break;
+
 		case 6:
-		{
 			if (corruptionTallboy == "Tallboy")
 			{
 				player.SetModel("models/swarm/infected/charger.mdl");
@@ -84,17 +79,16 @@ function MutationSpawn(player)
 			z_speed = Convars.GetFloat("z_speed");
 			NetProps.SetPropFloat(player, "m_flLaggedMovementValue", (tallboyRunSpeed / z_speed));
 			DirectorOptions.ChargerLimit = RandomInt(1,3)
-			break;
-		}
+		break;
+
 		case 8:
-		{
 			if (!IsModelPrecached(tankModel))
+			{
 				PrecacheModel(tankModel);
+			}
 
 			player.SetModel(tankModel);
-		}
-		default:
-			break;
+		break;
 	}
 }
 
