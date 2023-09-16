@@ -132,7 +132,7 @@ function InterceptChat(message, speaker)
 						ToggleHudElement("cardPickFortune");
 					}
 				}
-				cardHudTimeout = 0;
+				cardHudTimeout = 8;
 			break;
 
 			case "нарвать":
@@ -269,6 +269,7 @@ function AllowTakeDamage(damageTable)
 	local victim = damageTable.Victim;
 	local attackerPlayer = null;
 	local attackerClass = null;
+	local attackerType = null;
 	local victimPlayer = null;
 	local victimType = null;
 	local weapon = damageTable.Weapon;
@@ -278,7 +279,6 @@ function AllowTakeDamage(damageTable)
 		weaponClass = weapon.GetClassname();
 	}
 	local damageType = damageTable.DamageType;
-	//local victimOnTempHP = false;
 
 	//Modifiers
 	local damageModifier = 1.00;
@@ -319,10 +319,6 @@ function AllowTakeDamage(damageTable)
 	local AcidMultiplier = 0;
 	local HeadMultiplier = 0;
 
-	/*printl("Attacker: " + attacker);
-	printl("Victim: " + victim);
-	printl("Original DMG: " + damageDone);*/
-
 	//Modify Attacker damage
 	if (attacker.IsValid())
 	{
@@ -337,6 +333,22 @@ function AllowTakeDamage(damageTable)
 					victimPlayer = victim.IsPlayer();
 					victimType = victim.GetClassname();
 				}
+
+				//Override melee weapon damage
+				/*if (weaponClass == "weapon_melee")
+				{
+					if (victimPlayer == true)
+					{
+						if (!victim.IsSurvivor())
+						{
+							//damageTable.DamageDone = 1;
+						}
+					}
+					else
+					{
+						//damageTable.DamageDone = 1;
+					}
+				}*/
 
 				//DownInFront
 				if (victimPlayer == true)
@@ -521,6 +533,7 @@ function AllowTakeDamage(damageTable)
 				if (attacker.IsValid())
 				{
 					attackerPlayer = attacker.IsPlayer();
+					attackerType = attacker.GetClassname();
 				}
 
 				/*if (victim.GetHealth() == 1 && victim.GetHealthBuffer() > 0)
@@ -528,17 +541,18 @@ function AllowTakeDamage(damageTable)
 					victimOnTempHP = true
 				}*/
 
+				//Prevent witch damage
+				if (attackerType == "witch")
+				{
+					return false;
+				}
+
 				//DownInFront
 				if (attackerPlayer == true)
 				{
 					if (attacker.IsSurvivor())
 					{
 						if ((victim.GetButtonMask() & IN_DUCK) && PlayerHasCard(victim, "DownInFront"))
-						{
-							return false;
-						}
-						// Remove bot FF dmg
-						if (IsPlayerABot(attacker))
 						{
 							return false;
 						}
@@ -621,21 +635,17 @@ function AllowTakeDamage(damageTable)
 		}
 	}
 
-	if (damageModifier == 0)
+	if (damageDone < 1 && originalDamageDone >= 1)
 	{
-		damageDone = originalDamageDone;
-	}
-	else if (damageDone < 1)
-	{
-		//Damage dealt can't go below 1
-		//if (victimOnTempHP == false)
-		//{
-			damageDone = 1;
-		//}
+		damageDone = 1;
 	}
 	damageTable.DamageDone = damageDone;
-	//printl("New DMG: " + damageTable.DamageDone);
-	//printl("DMG Modifier: " + damageModifier);
+	/*printl("Attacker: " + attacker);
+	printl("Victim: " + victim);
+	printl("Weapon: " + weaponClass);
+	printl("Original DMG: " + originalDamageDone);
+	printl("New DMG: " + damageTable.DamageDone);
+	printl("DMG Modifier: " + damageModifier);*/
 
 	return true;
 }
@@ -923,7 +933,6 @@ function PlayerLeftSafeArea(params)
 			}
 
 			firstLeftCheckpoint = true;
-			cardHudTimeout = 0;
 
 			ModifyHittables();
 			ApplyEnvironmentalCard();
@@ -1445,64 +1454,70 @@ function Update()
 
 	if (firstLeftCheckpoint == true)
 	{
-		if (cardHudTimeout == 8)
+		if (cardPickingAllowed[0] == 0 && cardPickingAllowed[1] == 0 && cardPickingAllowed[2] == 0 && cardPickingAllowed[3] == 0)
 		{
-			if (IsHudElementVisible("corruptionCards"))
+			if (cardHudTimeout == 0)
 			{
-				ToggleHudElement("corruptionCards");
-			}
-			if (IsHudElementVisible("corruptionCardsInfected"))
-			{
-				ToggleHudElement("corruptionCardsInfected");
-			}
-			if (corruptionMission == "None")
-			{
-				if (IsHudElementVisible("corruptionCardsMission"))
+				if (IsHudElementVisible("corruptionCards"))
 				{
-					ToggleHudElement("corruptionCardsMission");
+					ToggleHudElement("corruptionCards");
+				}
+				if (IsHudElementVisible("corruptionCardsInfected"))
+				{
+					ToggleHudElement("corruptionCardsInfected");
+				}
+				if (corruptionMission == "None")
+				{
+					if (IsHudElementVisible("corruptionCardsMission"))
+					{
+						ToggleHudElement("corruptionCardsMission");
+					}
+				}
+				if (corruptionHordes == "None")
+				{
+					if (IsHudElementVisible("corruptionCardsHorde"))
+					{
+						ToggleHudElement("corruptionCardsHorde");
+					}
+				}
+				if (IsHudElementVisible("playerCardsP1"))
+				{
+					ToggleHudElement("playerCardsP1");
+				}
+				if (IsHudElementVisible("playerCardsP2"))
+				{
+					ToggleHudElement("playerCardsP2");
+				}
+				if (IsHudElementVisible("playerCardsP3"))
+				{
+					ToggleHudElement("playerCardsP3");
+				}
+				if (IsHudElementVisible("playerCardsP4"))
+				{
+					ToggleHudElement("playerCardsP4");
+				}
+				if (IsHudElementVisible("cardPickReflex"))
+				{
+					ToggleHudElement("cardPickReflex");
+				}
+				if (IsHudElementVisible("cardPickBrawn"))
+				{
+					ToggleHudElement("cardPickBrawn");
+				}
+				if (IsHudElementVisible("cardPickDiscipline"))
+				{
+					ToggleHudElement("cardPickDiscipline");
+				}
+				if (IsHudElementVisible("cardPickFortune"))
+				{
+					ToggleHudElement("cardPickFortune");
 				}
 			}
-			if (corruptionHordes == "None")
+			if (cardHudTimeout >= 0)
 			{
-				if (IsHudElementVisible("corruptionCardsHorde"))
-				{
-					ToggleHudElement("corruptionCardsHorde");
-				}
-			}
-			if (IsHudElementVisible("playerCardsP1"))
-			{
-				ToggleHudElement("playerCardsP1");
-			}
-			if (IsHudElementVisible("playerCardsP2"))
-			{
-				ToggleHudElement("playerCardsP2");
-			}
-			if (IsHudElementVisible("playerCardsP3"))
-			{
-				ToggleHudElement("playerCardsP3");
-			}
-			if (IsHudElementVisible("playerCardsP4"))
-			{
-				ToggleHudElement("playerCardsP4");
-			}
-			if (IsHudElementVisible("cardPickReflex"))
-			{
-				ToggleHudElement("cardPickReflex");
-			}
-			if (IsHudElementVisible("cardPickBrawn"))
-			{
-				ToggleHudElement("cardPickBrawn");
-			}
-			if (IsHudElementVisible("cardPickDiscipline"))
-			{
-				ToggleHudElement("cardPickDiscipline");
-			}
-			if (IsHudElementVisible("cardPickFortune"))
-			{
-				ToggleHudElement("cardPickFortune");
+				cardHudTimeout--;
 			}
 		}
-		cardHudTimeout++;
 
 		if (corruptionMission == "missionSpeedrun")
 		{

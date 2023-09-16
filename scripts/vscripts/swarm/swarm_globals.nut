@@ -106,6 +106,9 @@ gas_can_use_duration <- 2;
 upgrade_pack_use_duration <- 2;
 survivor_revive_duration <- 5;
 
+//Melee
+melee_damage <- 400;
+
 //Chainsaw
 chainsaw_damage <- 100;
 
@@ -162,7 +165,7 @@ pickableCards <- array(cardsPerCategory * 4);
 addictPlaySound <- false;
 ConfidentKillerCounter <- 0;
 MethHeadCounter <- [0, 0, 0, 0];
-cardHudTimeout <- 0;
+cardHudTimeout <- 8;
 ::AmpedUpCooldown <- 0;
 BaseTempHealthDecayRate <- 0.27;
 BaseSurvivorIncapDecayRate <- 3;
