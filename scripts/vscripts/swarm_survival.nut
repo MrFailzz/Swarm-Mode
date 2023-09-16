@@ -16,3 +16,4 @@ IncludeScript("swarm/swarm_hazards");
 IncludeScript("swarm/swarm_ping");
 IncludeScript("swarm/swarm_playercards_stocks");
 IncludeScript("swarm/swarm_playercards");
+IncludeScript("swarm/swarm_localization");
