@@ -114,38 +114,40 @@ function TongueGrab(params)
 		local player = GetPlayerFromUserID(params["userid"]);
 
 		// Make victim move backwards
+		Convars.SetValue("tongue_force_break", 0);
 		Convars.SetValue("tongue_victim_acceleration", -450);
 		Convars.SetValue("tongue_victim_max_speed", 450);
 
 		if (player.ValidateScriptScope())
 		{
-			local player_entityscript = player.GetScriptScope();
-			player_entityscript["TickCount"] <- 0;
-			player_entityscript["TongueSpeedReset"] <- function()
+			local hocker_entityscript = player.GetScriptScope();
+			hocker_entityscript["TickCount"] <- 0;
+			hocker_entityscript["TongueSpeedReset"] <- function()
 			{
 				// Decelerate victim at specific ticks
-				if (player_entityscript["TickCount"] == 1)
+				if (hocker_entityscript["TickCount"] == 1)
 				{
+					Convars.SetValue("tongue_force_break", 0);
 					Convars.SetValue("tongue_victim_acceleration", -175);
 					Convars.SetValue("tongue_victim_max_speed", 175);
 				}
-				else if (player_entityscript["TickCount"] == 3)
+				else if (hocker_entityscript["TickCount"] == 3)
 				{
 					Convars.SetValue("tongue_victim_acceleration", -80);
 					Convars.SetValue("tongue_victim_max_speed", 80);
 				}
-				else if (player_entityscript["TickCount"] == 5)
+				else if (hocker_entityscript["TickCount"] == 5)
 				{
 					Convars.SetValue("tongue_victim_acceleration", -40);
 					Convars.SetValue("tongue_victim_max_speed", 40);
 				}
-				else if (player_entityscript["TickCount"] > 6)
+				else if (hocker_entityscript["TickCount"] > 6)
 				{
 					Convars.SetValue("tongue_victim_acceleration", 0);
 					Convars.SetValue("tongue_victim_max_speed", 0);
 					return
 				}
-				player_entityscript["TickCount"]++;
+				hocker_entityscript["TickCount"]++;
 				return
 			}
 
@@ -173,16 +175,16 @@ function StingerProjectile(params)
 
 		if (attacker.ValidateScriptScope())
 		{
-			local player_entityscript = attacker.GetScriptScope();
-			player_entityscript["TickCount"] <- 0;
-			//player_entityscript["TongueKill"] <- function()
+			local stinger_entityscript = attacker.GetScriptScope();
+			stinger_entityscript["TickCount"] <- 0;
+			stinger_entityscript["TongueKill"] <- function()
 			{
-				if (player_entityscript["TickCount"] > 1)
+				if (stinger_entityscript["TickCount"] > 1)
 				{
 					Convars.SetValue("tongue_force_break", 1);
 					return
 				}
-				player_entityscript["TickCount"]++;
+				stinger_entityscript["TickCount"]++;
 				return
 			}
 			AddThinkToEnt(attacker, "TongueKill");

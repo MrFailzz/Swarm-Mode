@@ -33,12 +33,12 @@ function InterceptChat(message, speaker)
 				}
 			break;
 
-			//case: "пинг":
+			case "пинг":
 			case "ping":
 				TraceEye(speaker);
 			break;
 
-			//case "дроп":
+			case "дроп":
 			case "drop":
 				local activeWeapon = speaker.GetActiveWeapon();
 
@@ -49,7 +49,7 @@ function InterceptChat(message, speaker)
 				}
 			break;
 
-			//case "гивеуп":
+			case "гивеуп":
 			case "giveup":
 				if (speaker.IsSurvivor() && speaker.IsIncapacitated())
 				{
@@ -71,7 +71,7 @@ function InterceptChat(message, speaker)
 				}
 			break;
 
-			//case "карты":
+			case "карты":
 			case "cards":
 				if (!IsHudElementVisible("corruptionCards"))
 				{
@@ -133,7 +133,7 @@ function InterceptChat(message, speaker)
 				cardHudTimeout = 0;
 			break;
 
-			//case "нарвать":
+			case "нарвать":
 			case "pick":
 				if (textArgs[1].len() == 1 && speaker.IsSurvivor())
 				{
@@ -141,7 +141,7 @@ function InterceptChat(message, speaker)
 				}
 			break;
 
-			//case "ботнарвать":
+			case "ботнарвать":
 			case "botpick":
 				if (textArgs[1].len() == 1 && speaker.IsSurvivor())
 				{
@@ -159,7 +159,7 @@ function InterceptChat(message, speaker)
 				}
 			break;
 
-			//case "ливес":
+			case "ливес":
 			case "lives":
 				local MaxIncaps = DirectorOptions.SurvivorMaxIncapacitatedCount;
 				local player = null;
@@ -181,7 +181,7 @@ function InterceptChat(message, speaker)
 				}
 			break;
 
-			//case "шаркать":
+			case "шаркать":
 			case "shuffle":
 				if (cardShuffled == false)
 				{

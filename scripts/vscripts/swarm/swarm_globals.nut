@@ -392,7 +392,7 @@ DirectorOptions.SurvivorMaxIncapacitatedCount = BaseMaxIncaps;
 ///////////////////////////////////////////////
 if (swarmMode == "hardcore" || swarmMode == "survival" || swarmMode == "vs" || swarmMode == "survival_vs")
 {
-	DirectorOptions.cm_TankLimit = 2
+	DirectorOptions.cm_TankLimit = 2;
 }
 
 ///////////////////////////////////////////////
