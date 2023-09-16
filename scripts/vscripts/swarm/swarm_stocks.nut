@@ -248,7 +248,14 @@ function IncapMsg(params)
 {
 	local player = GetPlayerFromUserID(params["userid"]);
 
-	ClientPrint(player, 3, "\x01" + "Type " + "\x03" + "!giveup" + "\x01" + " to die...");
+	if (language == "English")
+	{
+		ClientPrint(player, 3, "\x01" + "Type " + "\x03" + "!giveup" + "\x01" + " to die...");
+	}
+	else if (language == "Russian")
+	{
+		ClientPrint(player, 3, "\x01" + "Type " + "\x03" + "!giveup" + "\x01" + " to die...");
+	}
 }
 
 function AllowTakeDamage(damageTable)

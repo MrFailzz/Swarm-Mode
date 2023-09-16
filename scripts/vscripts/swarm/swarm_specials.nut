@@ -30,35 +30,32 @@ function MutationSpawn(player)
 			if (corruptionHocker == "Hocker")
 			{
 				player.SetModel("models/infected/smoker.mdl");
-				break;
 			}
 			else if (corruptionHocker == "Stinger")
 			{
 				player.SetModel("models/infected/smoker_l4d1.mdl");
-				break;
 			}
 
 			DirectorOptions.SmokerLimit = RandomInt(1,3)
+			break;
 		}
 		case 2:
 		{
 			if (corruptionRetch == "Exploder")
 			{
 				player.SetModel("models/swarm/infected/boomer.mdl");
-				break;
 			}
 			else if (corruptionRetch == "Retch")
 			{
 				player.SetModel("models/swarm/infected/boomette.mdl");
-				break;
 			}
 			else if (corruptionRetch == "Reeker")
 			{
 				player.SetModel("models/swarm/infected/boomer_l4d1.mdl");
-				break;
 			}
 
 			DirectorOptions.BoomerLimit = RandomInt(1,3)
+			break;
 		}
 		case 3:
 		{
@@ -78,12 +75,10 @@ function MutationSpawn(player)
 			if (corruptionTallboy == "Tallboy")
 			{
 				player.SetModel("models/swarm/infected/charger.mdl");
-				break;
 			}
 			else if (corruptionTallboy == "Bruiser")
 			{
 				player.SetModel("models/swarm/infected/bruiser.mdl");
-				break;
 			}
 
 			z_speed = Convars.GetFloat("z_speed");
