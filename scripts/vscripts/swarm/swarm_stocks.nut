@@ -16,20 +16,22 @@ function InterceptChat(message, speaker)
 		switch(command)
 		{
 			case "english":
+			case "en":
 				if (GetListenServerHost() == speaker)
 				{
 					language = "English";
 					UpdateCorruptionCardHUD();
-					ClientPrint(null, 3, "\x04" + "English localization");
+					ClientPrint(null, 3, "\x04" + Loc("#lang_localization"));
 				}
 			break;
 
 			case "русский":
+			case "ru":
 				if (GetListenServerHost() == speaker)
 				{
 					language = "Russian";
 					UpdateCorruptionCardHUD();
-					ClientPrint(null, 3, "\x04" + "Russian localization");
+					ClientPrint(null, 3, "\x04" + Loc("#lang_localization"));
 				}
 			break;
 
