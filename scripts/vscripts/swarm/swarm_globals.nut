@@ -184,7 +184,7 @@ survivorHealthBuffer <- [0, 0, 0, 0];
 Convars.SetValue("z_versus_hunter_limit", 0);
 Convars.SetValue("z_versus_spitter_limit", 0);
 Convars.SetValue("z_ghost_delay_minspawn", 20);
-Convars.SetValue("z_witch_always_kills", 0);
+//Convars.SetValue("z_witch_always_kills", 0);
 Convars.SetValue("fire_dmginterval", 0.5);
 
 ///////////////////////////////////////////////
