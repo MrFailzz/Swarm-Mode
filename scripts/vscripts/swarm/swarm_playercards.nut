@@ -647,6 +647,18 @@ function ApplyMagCoupler(player)
 			AddThinkToEnt(player, "ShoveCool");
 		}
 	}
+	else if (MagCoupler < 1)
+	{
+		if (player.ValidateScriptScope())
+		{
+			local shove_entityscript = player.GetScriptScope();
+			shove_entityscript["ShoveCool"] <- function()
+			{
+				return
+			}
+			AddThinkToEnt(player, "ShoveCool");
+		}
+	}
 }
 
 function WeaponReload(params)
