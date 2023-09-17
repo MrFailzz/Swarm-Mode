@@ -1888,13 +1888,6 @@ function PropModels()
 
 function AllowBash(basher, bashee)
 {
-	local MagCoupler = PlayerHasCard(basher, "MagCoupler");
-
-	if (MagCoupler > 0)
-	{
-		return ALLOW_BASH_NONE;
-	}
-
     if (bashee.IsPlayer())
     {
         if (bashee.GetZombieType() == 2)

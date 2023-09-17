@@ -50,6 +50,7 @@ function ApplyCardEffects(player, heal = true)
 	ApplyLastLegs();
 	ApplyNeedsOfTheMany();
 	ApplyCauterized();
+	ApplyMagCoupler(player);
 }
 
 function AddCardToTable(cardTable, player, card)
@@ -621,6 +622,30 @@ function ApplyCauterized()
 	else
 	{
 		DirectorOptions.TempHealthDecayRate = BaseTempHealthDecayRate
+	}
+}
+
+function ApplyMagCoupler(player)
+{
+	local MagCoupler = PlayerHasCard(player, "MagCoupler");
+	if (MagCoupler > 0)
+	{
+		if (player.ValidateScriptScope())
+		{
+			local shove_entityscript = player.GetScriptScope();
+			shove_entityscript["TickCount"] <- 0;
+			shove_entityscript["ShoveCool"] <- function()
+			{
+				if (shove_entityscript["TickCount"] > 1)
+				{
+					NetProps.SetPropInt(player, "m_iShovePenalty", 8);
+					return
+				}
+				shove_entityscript["TickCount"]++;
+				return
+			}
+			AddThinkToEnt(player, "ShoveCool");
+		}
 	}
 }
 

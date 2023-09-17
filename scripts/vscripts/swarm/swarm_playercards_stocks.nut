@@ -1137,7 +1137,7 @@ function GetPlayerCardName(cardID, type = "name")
 					return "+25% Reload Speed";
 					break;
 				case "MagCoupler":
-					return "+75% Reload Speed, DISABLES: Shove";
+					return "+75% Reload Speed, Increases Shove cooldown";
 					break;
 				case "LuckyShot":
 					return "+7% Team CRIT Chance (+400% DMG)";
@@ -1407,7 +1407,7 @@ function GetPlayerCardName(cardID, type = "name")
 					return "+25% Reload Speed";
 					break;
 				case "MagCoupler":
-					return "+75% Reload Speed, DISABLES: Shove";
+					return "+75% Reload Speed, Increases Shove cooldown";
 					break;
 				case "LuckyShot":
 					return "+7% Team CRIT Chance (+400% DMG)";
