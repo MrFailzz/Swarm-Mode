@@ -184,7 +184,6 @@ survivorHealthBuffer <- [0, 0, 0, 0];
 Convars.SetValue("z_versus_hunter_limit", 0);
 Convars.SetValue("z_versus_spitter_limit", 0);
 Convars.SetValue("z_ghost_delay_minspawn", 20);
-//Convars.SetValue("z_witch_always_kills", 0);
 Convars.SetValue("fire_dmginterval", 0.5);
 
 ///////////////////////////////////////////////
@@ -341,8 +340,8 @@ function SetDifficulty()
 			BaseMaxIncaps = 2;
 			MaxTraumaDamage = 30;
 			stagger_dmg = 10000;
-			DirectorOptions.MobSpawnSize = 45;
-			DirectorOptions.MegaMobSize = 75;
+			DirectorOptions.MobSpawnSize = 35;
+			DirectorOptions.MegaMobSize = 60;
 			MissionSpeedrun_Goal = 7 * MissionSpeedrun_Multi * 60;
 		break;
 
@@ -380,8 +379,8 @@ function SetDifficulty()
 			BaseMaxIncaps = 2;
 			MaxTraumaDamage = 40;
 			stagger_dmg = 10000;
-			DirectorOptions.MobSpawnSize = 45;
-			DirectorOptions.MegaMobSize = 75;
+			DirectorOptions.MobSpawnSize = 40;
+			DirectorOptions.MegaMobSize = 70;
 			DirectorOptions.TankHitDamageModifierCoop = 0.48;
 			MissionSpeedrun_Goal = 5 * MissionSpeedrun_Multi * 60;
 		break;
