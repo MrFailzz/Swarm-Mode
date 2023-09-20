@@ -1,6 +1,13 @@
 ///////////////////////////////////////////////
 //               SHARED EVENTS               //
 ///////////////////////////////////////////////
+if (!IsSoundPrecached("Vote.Cast.Yes"))
+	PrecacheSound("Vote.Cast.Yes");
+if (!IsSoundPrecached("Vote.Created"))
+	PrecacheSound("Vote.Created");
+if (!IsSoundPrecached("Vote.Passed"))
+	PrecacheSound("Vote.Passed");
+
 function InterceptChat(message, speaker)
 {
 	// Remove player name from message
@@ -195,13 +202,40 @@ function InterceptChat(message, speaker)
 
 					//Check if all players that haven't picked a card have voted yes
 					local voteStatus = true;
+					local voteCount = 0;
 					foreach(vote in cardShuffleVote)
 					{
 						if (vote == false)
 						{
 							voteStatus = false;
 						}
+						else
+						{
+							foreach(vote in cardShuffleVote)
+							{
+								if (vote == true)
+								{
+									voteCount += 1;
+								}
+							}
+							if (voteCount == 1)
+							{
+								EmitAmbientSoundOn("Vote.Created", 1, 100, 100, speaker);
+								//EmitSoundOnClient("Vote.Created", speaker);
+							}
+							else if (voteCount > 1 && voteCount < 4 )
+							{
+								EmitSoundOnClient("Vote.Cast.Yes", speaker);
+							}
+							else if (voteCount == 4)
+							{
+								EmitAmbientSoundOn("Vote.Passed", 1, 100, 100, speaker);
+								//EmitSoundOnClient("Vote.Passed", speaker);
+							}
+							ClientPrint(null, 3, "\x01" + "Use " + "\x03" + "!shuffle\x01" + " to vote for a new set of cards (" + "\x03" + voteCount + "/4" + "\x01" + " votes"  + ")");
+						}
 					}
+					
 
 					//Vote passed, shuffle cards
 					if (voteStatus == true)
