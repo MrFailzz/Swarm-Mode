@@ -841,27 +841,30 @@ function HeightendSensesPing(player)
 		}
 		else if (canGlow == false && entity.GetClassname() == "player")
 		{
-			NetProps.SetPropInt(entity, "m_Glow.m_iGlowType", 3);
-
-			if (entity.ValidateScriptScope())
+			if (entity.IsDying() == false)
 			{
-				local player_entityscript = entity.GetScriptScope();
-				player_entityscript["TickCount"] <- 0;
-				player_entityscript["GlowKill"] <- function()
+				NetProps.SetPropInt(entity, "m_Glow.m_iGlowType", 3);
+
+				if (entity.ValidateScriptScope())
 				{
-					if (player_entityscript["TickCount"] >= 12)
+					local ping_entityscript = entity.GetScriptScope();
+					ping_entityscript["TickCount"] <- 0;
+					ping_entityscript["AutoPingKill"] <- function()
 					{
-						NetProps.SetPropInt(entity, "m_Glow.m_iGlowType", 0);
+						if (ping_entityscript["TickCount"] >= 12)
+						{
+							NetProps.SetPropInt(entity, "m_Glow.m_iGlowType", 0);
+							return
+						}
+						ping_entityscript["TickCount"]++;
 						return
 					}
-					player_entityscript["TickCount"]++;
-					return
+					AddThinkToEnt(entity, "AutoPingKill");
 				}
-				AddThinkToEnt(entity, "GlowKill");
-			}
-			else
-			{
-				NetProps.SetPropInt(entity, "m_Glow.m_iGlowType", 0);
+				else
+				{
+					NetProps.SetPropInt(entity, "m_Glow.m_iGlowType", 0);
+				}
 			}
 		}
 		else if (canGlow == true)

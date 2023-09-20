@@ -66,19 +66,19 @@ function PingEntity(entity, player, tracepos)
 
 		if (entity.ValidateScriptScope())
 		{
-			local player_entityscript = entity.GetScriptScope();
-			player_entityscript["TickCount"] <- 0;
-			player_entityscript["GlowKill"] <- function()
+			local ping_entityscript = entity.GetScriptScope();
+			ping_entityscript["TickCount"] <- 0;
+			ping_entityscript["PingKill"] <- function()
 			{
-				if (player_entityscript["TickCount"] >= 48)
+				if (ping_entityscript["TickCount"] >= 48)
 				{
 					NetProps.SetPropInt(entity, "m_Glow.m_iGlowType", 0);
 					return
 				}
-				player_entityscript["TickCount"]++;
+				ping_entityscript["TickCount"]++;
 				return
 			}
-			AddThinkToEnt(entity, "GlowKill");
+			AddThinkToEnt(entity, "PingKill");
 		}
 		else
 		{
