@@ -227,11 +227,6 @@ function InterceptChat(message, speaker)
 							{
 								EmitSoundOnClient("Vote.Cast.Yes", speaker);
 							}
-							else if (voteCount == 4)
-							{
-								EmitAmbientSoundOn("Vote.Passed", 1, 100, 100, speaker);
-								//EmitSoundOnClient("Vote.Passed", speaker);
-							}
 							ClientPrint(null, 3, "\x01" + "Use " + "\x03" + "!shuffle\x01" + " to vote for a new set of cards (" + "\x03" + voteCount + "/4" + "\x01" + " votes"  + ")");
 						}
 					}
@@ -241,6 +236,8 @@ function InterceptChat(message, speaker)
 					if (voteStatus == true)
 					{
 						ClientPrint(null, 3, "\x04" + "Shuffle vote passed!");
+						EmitAmbientSoundOn("Vote.Passed", 1, 100, 100, speaker);
+						//EmitSoundOnClient("Vote.Passed", speaker);
 						InitCardPicking(true);
 						cardShuffled = true;
 					}
