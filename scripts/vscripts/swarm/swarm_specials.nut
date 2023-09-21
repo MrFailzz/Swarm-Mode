@@ -334,7 +334,7 @@ function SnitchAlerted(params)
 
 	if (params.first == 1)
 	{
-		SpawnMob(2);
+		SpawnMob();
 	}
 }
 
@@ -450,7 +450,7 @@ function SleeperLanded(params)
 				{
 					if (player_entityscript["player"].GetHealth() > 1)
 					{
-						ZSpawnMob();
+						SpawnMob();
 						self.Kill();
 					}
 				}

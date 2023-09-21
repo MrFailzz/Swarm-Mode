@@ -209,35 +209,32 @@ function InterceptChat(message, speaker)
 						{
 							voteStatus = false;
 						}
-						else
+						else if (vote == true)
 						{
-							foreach(vote in cardShuffleVote)
-							{
-								if (vote == true)
-								{
-									voteCount += 1;
-								}
-							}
-							if (voteCount == 1)
-							{
-								EmitAmbientSoundOn("Vote.Created", 1, 100, 100, speaker);
-								//EmitSoundOnClient("Vote.Created", speaker);
-							}
-							else if (voteCount > 1 && voteCount < 4 )
-							{
-								EmitSoundOnClient("Vote.Cast.Yes", speaker);
-							}
-							ClientPrint(null, 3, "\x01" + "Use " + "\x03" + "!shuffle\x01" + " to vote for a new set of cards (" + "\x03" + voteCount + "/4" + "\x01" + " votes"  + ")");
+							voteCount += 1;
 						}
 					}
-					
+
+					// Play voting sounds
+					/*
+					if (voteCount == 1)
+					{
+						EmitAmbientSoundOn("Vote.Created", 1, 100, 100, speaker);
+						//EmitSoundOnClient("Vote.Created", speaker);
+					}
+					else if (voteCount > 1 && voteCount < 4 )
+					{
+						EmitSoundOnClient("Vote.Cast.Yes", speaker);
+					}
+					*/
+					EmitSoundOnClient("Vote.Cast.Yes", speaker);
+					ClientPrint(null, 3, "\x01" + "Use " + "\x03" + "!shuffle\x01" + " to vote for a new set of cards (" + "\x03" + voteCount + "/4" + "\x01" + " votes"  + ")");
 
 					//Vote passed, shuffle cards
 					if (voteStatus == true)
 					{
 						ClientPrint(null, 3, "\x04" + "Shuffle vote passed!");
 						EmitAmbientSoundOn("Vote.Passed", 1, 100, 100, speaker);
-						//EmitSoundOnClient("Vote.Passed", speaker);
 						InitCardPicking(true);
 						cardShuffled = true;
 					}
