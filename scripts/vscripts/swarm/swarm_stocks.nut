@@ -963,7 +963,7 @@ function PlayerLeftSafeArea(params)
 			firstLeftCheckpoint = true;
 
 			ModifyHittables();
-			ApplyEnvironmentalCard();
+			//ApplyEnvironmentalCard();
 			PropModels();
 
 			//Spawn hazards

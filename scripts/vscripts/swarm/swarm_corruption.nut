@@ -121,15 +121,15 @@ function InitCorruptionCards()
 	cardsEnvironmental.append("None");
 	cardsEnvironmental.append("None");
 	cardsEnvironmental.append("environmentSwarmStream");
+	cardsEnvironmental.append("environmentDark");
+	cardsEnvironmental.append("environmentFog");
 
 	if ( Director.IsSinglePlayerGame() )
 	{
-		cardsEnvironmental.append("environmentDark");
-		cardsEnvironmental.append("environmentFog");
 		cardsEnvironmental.append("environmentFrozen");
 	}
 	corruptionEnvironmental = ChooseCorruptionCard_List(cardsEnvironmental);
-	//ApplyEnvironmentalCard();
+	ApplyEnvironmentalCard();
 
 	// Hordes
 	local cardsHordes = array(1, null);
@@ -748,10 +748,7 @@ function GetCorruptionCardName(cardID)
 ///////////////////////////////////////////////
 function ApplyEnvironmentalCard()
 {
-	if ( Director.IsSinglePlayerGame() )
-	{
-		ResetFogCvars();
-	}
+	ResetFogCvars();
 	switch(corruptionEnvironmental)
 	{
 		case "None":
@@ -776,25 +773,40 @@ function SetFogCvar(cvar, value)
 
 function ResetFogCvars()
 {
+	/*
 	SetFogCvar("fog_color", "-1 -1 -1");
 	SetFogCvar("fog_colorskybox", "-1 -1 -1");
 	SetFogCvar("fog_start", "1200");
 	SetFogCvar("fog_startskybox", "-10000");
 	SetFogCvar("fog_end", "2400");
 	SetFogCvar("fog_endskybox", "-10000");
+	*/
 	SetFogCvar("r_flashlightconstant", "0");
 	SetFogCvar("r_flashlightbrightness", "0.25");
 	SetFogCvar("mat_force_tonemap_scale", "0");
+
+	local fog = null;
+	while ((fog = Entities.FindByClassname(fog, "env_fog_controller")) != null)
+	{
+		DoEntFire("!self", "SetStartDistLerpTo", "300", 0, fog, fog);
+		DoEntFire("!self", "SetEndDistLerpTo", "3000", 0, fog, fog);
+		DoEntFire("!self", "SetColorLerpTo ", "20 25 25", 0, fog, fog); // Broken??
+		DoEntFire("!self", "SetMaxDensityLerpTo  ", "1", 0, fog, fog);
+		DoEntFire("!self", "Set2DSkyboxFogFactorLerpTo  ", "0", 0, fog, fog); // Broken??
+		DoEntFire("!self", "StartFogTransition", "", 0, fog, fog);
+	}
 }
 
 function CorruptionCard_TheDark()
 {
+	/*
 	SetFogCvar("fog_color", "1 1 1");
 	SetFogCvar("fog_colorskybox", "1 1 1");
 	SetFogCvar("fog_start", "242");
 	SetFogCvar("fog_startskybox", "-10000");
 	SetFogCvar("fog_end", "730");
 	SetFogCvar("fog_endskybox", "-10000");
+	*/
 	SetFogCvar("r_flashlightconstant", "0.25");
 	SetFogCvar("r_flashlightbrightness", "10");
 	SetFogCvar("mat_force_tonemap_scale", "0.8");
@@ -802,8 +814,12 @@ function CorruptionCard_TheDark()
 	local fog = null;
 	while ((fog = Entities.FindByClassname(fog, "env_fog_controller")) != null)
 	{
-		DoEntFire("!self", "SetStartDist", "242", 0, fog, fog);
-		DoEntFire("!self", "SetEndDist", "730", 0, fog, fog);
+		DoEntFire("!self", "SetStartDistLerpTo", "242", 0, fog, fog);
+		DoEntFire("!self", "SetEndDistLerpTo", "730", 0, fog, fog);
+		DoEntFire("!self", "SetColorLerpTo ", "1 1 1", 0, fog, fog);
+		DoEntFire("!self", "SetMaxDensityLerpTo  ", "1", 0, fog, fog);
+		DoEntFire("!self", "Set2DSkyboxFogFactorLerpTo  ", "1", 0, fog, fog);
+		DoEntFire("!self", "StartFogTransition", "", 0, fog, fog);
 	}
 
 	local sun = null;
@@ -815,17 +831,23 @@ function CorruptionCard_TheDark()
 
 function CorruptionCard_TheFog()
 {
+	/*
 	SetFogCvar("fog_start", "242");
 	SetFogCvar("fog_startskybox", "-10000");
 	SetFogCvar("fog_end", "730");
 	SetFogCvar("fog_endskybox", "-10000");
 	SetFogCvar("r_flashlightbrightness", "2");
+	*/
 
 	local fog = null;
 	while ((fog = Entities.FindByClassname(fog, "env_fog_controller")) != null)
 	{
-		DoEntFire("!self", "SetStartDist", "242", 0, fog, fog);
-		DoEntFire("!self", "SetEndDist", "730", 0, fog, fog);
+		DoEntFire("!self", "SetStartDistLerpTo", "242", 0, fog, fog);
+		DoEntFire("!self", "SetEndDistLerpTo", "730", 0, fog, fog);
+		DoEntFire("!self", "SetColorLerpTo ", "20 25 25", 0, fog, fog);
+		DoEntFire("!self", "SetMaxDensityLerpTo  ", "1", 0, fog, fog);
+		DoEntFire("!self", "Set2DSkyboxFogFactorLerpTo  ", "1", 0, fog, fog);
+		DoEntFire("!self", "StartFogTransition", "", 0, fog, fog);
 	}
 }
 
