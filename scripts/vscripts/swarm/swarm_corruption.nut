@@ -672,7 +672,7 @@ function GetCorruptionCardName(cardID)
 				return "Джимми Гиббс и его двоюродные братья";
 				break;
 			case "uncommonFallen":
-				return "Павшие очистители";
+				return "Павшие чистильщики";
 				break;
 			case "commonShamble":
 				return "Медленные заражённые";
