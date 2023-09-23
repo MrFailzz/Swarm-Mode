@@ -123,11 +123,7 @@ function InitCorruptionCards()
 	cardsEnvironmental.append("environmentSwarmStream");
 	cardsEnvironmental.append("environmentDark");
 	cardsEnvironmental.append("environmentFog");
-
-	if ( Director.IsSinglePlayerGame() )
-	{
-		cardsEnvironmental.append("environmentFrozen");
-	}
+	cardsEnvironmental.append("environmentFrozen");
 	corruptionEnvironmental = ChooseCorruptionCard_List(cardsEnvironmental);
 	ApplyEnvironmentalCard();
 
@@ -857,8 +853,8 @@ function CorruptionCard_FrigidOutskirts()
 	if (!IsSoundPrecached("ambient/wind/windgust.wav"))
 		PrecacheSound("ambient/wind/windgust.wav");
 
-	SetFogCvar("fog_color", "174 196 209");
-	SetFogCvar("fog_colorskybox", "174 196 209");
+	//SetFogCvar("fog_color", "174 196 209");
+	//SetFogCvar("fog_colorskybox", "174 196 209");
 	FrigidOutskirtsSetFog("0", "1400");
 	
 	local windSound = SpawnEntityFromTable("ambient_generic",
@@ -903,10 +899,19 @@ function CorruptionCard_FrigidOutskirts()
 
 function FrigidOutskirtsSetFog(fogStart, fogEnd)
 {
+	/*
 	SetFogCvar("fog_start", fogStart);
 	SetFogCvar("fog_startskybox", fogStart);
 	SetFogCvar("fog_end", fogEnd);
 	SetFogCvar("fog_endskybox", fogEnd);
+	*/
+
+	DoEntFire("!self", "SetStartDistLerpTo", "fogStart", 0, fog, fog);
+	DoEntFire("!self", "SetEndDistLerpTo", "fogEnd", 0, fog, fog);
+	DoEntFire("!self", "SetColorLerpTo ", "174 196 209", 0, fog, fog);
+	DoEntFire("!self", "SetMaxDensityLerpTo  ", "1", 0, fog, fog);
+	DoEntFire("!self", "Set2DSkyboxFogFactorLerpTo  ", "1", 0, fog, fog);
+	DoEntFire("!self", "StartFogTransition", "", 0, fog, fog);
 
 	if (frigidOutskirtsStormActive == true)
 	{
