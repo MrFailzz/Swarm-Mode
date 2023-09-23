@@ -41,99 +41,105 @@ function TraceEye(player)
 
 function PingEntity(entity, player, tracepos)
 {
-	// Get entity info
-	local entityReturnName = GetEntityType(entity);
-	if (entityReturnName == false)
+	if (corruptionEnvironmental == "None" || corruptionEnvironmental == "environmentSwarmStream")
 	{
-		PingWorld(tracepos, player);
-		return;
-	}
-
-	// Check if entity has a targetname
-	local entityName = entity.GetName();
-	local entityIndex = entity.GetEntityIndex();
-	if (entityName == "")
-	{
-		// Give it a name
-		entityName = "__pingtarget_" + entityIndex;
-		DoEntFire("!self", "AddOutput", "targetname " + entityName, 0, entity, entity);
-	}
-
-	local canGlow = CanGlow(entityReturnName);
-	if (canGlow == false)
-	{
-    	NetProps.SetPropInt(entity, "m_Glow.m_iGlowType", 3);
-
-		if (entity.ValidateScriptScope())
+		// Get entity info
+		local entityReturnName = GetEntityType(entity);
+		if (entityReturnName == false)
 		{
-			local ping_entityscript = entity.GetScriptScope();
-			ping_entityscript["TickCount"] <- 0;
-			ping_entityscript["PingKill"] <- function()
+			PingWorld(tracepos, player);
+			return;
+		}
+
+		// Check if entity has a targetname
+		local entityName = entity.GetName();
+		local entityIndex = entity.GetEntityIndex();
+		if (entityName == "")
+		{
+			// Give it a name
+			entityName = "__pingtarget_" + entityIndex;
+			DoEntFire("!self", "AddOutput", "targetname " + entityName, 0, entity, entity);
+		}
+
+		local canGlow = CanGlow(entityReturnName);
+		if (canGlow == false)
+		{
+			NetProps.SetPropInt(entity, "m_Glow.m_iGlowType", 3);
+
+			if (entity.ValidateScriptScope())
 			{
-				if (ping_entityscript["TickCount"] >= 48)
+				local ping_entityscript = entity.GetScriptScope();
+				ping_entityscript["TickCount"] <- 0;
+				ping_entityscript["PingKill"] <- function()
 				{
-					NetProps.SetPropInt(entity, "m_Glow.m_iGlowType", 0);
+					if (ping_entityscript["TickCount"] >= 48)
+					{
+						NetProps.SetPropInt(entity, "m_Glow.m_iGlowType", 0);
+						return
+					}
+					ping_entityscript["TickCount"]++;
 					return
 				}
-				ping_entityscript["TickCount"]++;
-				return
+				AddThinkToEnt(entity, "PingKill");
 			}
-			AddThinkToEnt(entity, "PingKill");
+			else
+			{
+				NetProps.SetPropInt(entity, "m_Glow.m_iGlowType", 0);
+			}
 		}
-		else
+		else if (canGlow == true)
 		{
-			NetProps.SetPropInt(entity, "m_Glow.m_iGlowType", 0);
+			// Apply ping glow
+			DoEntFire("!self", "StartGlowing", "", 0, null, entityName);
+
+			// Remove ping
+			DoEntFire("!self", "StopGlowing", "", pingDuration, null, entityName);
 		}
+		else if (canGlow == "crows")
+		{
+			local nameArray = split(entityName, "_");
+			local crowGroupName = "__" + nameArray[0] + "_" + nameArray[1] + "_" + nameArray[2] + "*";
+
+			// Apply ping glow
+			EntFire(crowGroupName, "StartGlowing", "", 0);
+
+			// Remove ping
+			EntFire(crowGroupName, "StopGlowing", "", pingDuration);
+		}
+
+		// Notifications
+		ClientPrint(null, 3, "\x04" + player.GetPlayerName() + "\x01 pinged \x03" + entityReturnName);
+		EmitSoundOn("ui\\beepclear.wav", player)
 	}
-	else if (canGlow == true)
-	{
-		// Apply ping glow
-		DoEntFire("!self", "StartGlowing", "", 0, null, entityName);
-
-		// Remove ping
-		DoEntFire("!self", "StopGlowing", "", pingDuration, null, entityName);
-	}
-	else if (canGlow == "crows")
-	{
-		local nameArray = split(entityName, "_");
-		local crowGroupName = "__" + nameArray[0] + "_" + nameArray[1] + "_" + nameArray[2] + "*";
-
-		// Apply ping glow
-		EntFire(crowGroupName, "StartGlowing", "", 0);
-
-		// Remove ping
-		EntFire(crowGroupName, "StopGlowing", "", pingDuration);
-	}
-
-	// Notifications
-	ClientPrint(null, 3, "\x04" + player.GetPlayerName() + "\x01 pinged \x03" + entityReturnName);
-	EmitSoundOn("ui\\beepclear.wav", player)
 }
 
 function PingWorld(pingOrigin, player)
 {
-	local playerID = player.GetEntityIndex();
-	local pingName = "pingWorld" + playerID;
-
-	// Create fake prop for glow
-	local pingWorld = SpawnEntityFromTable("prop_dynamic",
+	if (corruptionEnvironmental == "None" || corruptionEnvironmental == "environmentSwarmStream")
 	{
-		targetname = pingName,
-		origin = pingOrigin,
-		angles = Vector(0, 0, 0),
-		model = "models/props_fortifications/concrete_post001_48.mdl",
-		solid = 0,
-		rendermode = 10
-	});
+		local playerID = player.GetEntityIndex();
+		local pingName = "pingWorld" + playerID;
 
-	// Apply ping glow
-	DoEntFire("!self", "StartGlowing", "", 0, null, pingWorld);
+		// Create fake prop for glow
+		local pingWorld = SpawnEntityFromTable("prop_dynamic",
+		{
+			targetname = pingName,
+			origin = pingOrigin,
+			angles = Vector(0, 0, 0),
+			model = "models/props_fortifications/concrete_post001_48.mdl",
+			solid = 0,
+			rendermode = 10
+		});
 
-	// Remove ping
-	DoEntFire("!self", "StopGlowing", "", pingDuration, null, pingWorld);
-	DoEntFire("!self", "Kill", "", pingDuration, null, pingWorld);
+		// Apply ping glow
+		DoEntFire("!self", "StartGlowing", "", 0, null, pingWorld);
 
-	EmitSoundOn("ui\\beepclear.wav", player)
+		// Remove ping
+		DoEntFire("!self", "StopGlowing", "", pingDuration, null, pingWorld);
+		DoEntFire("!self", "Kill", "", pingDuration, null, pingWorld);
+
+		EmitSoundOn("ui\\beepclear.wav", player)
+	}
 }
 
 function GetEntityType(entity)

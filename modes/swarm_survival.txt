@@ -83,7 +83,7 @@
 		sb_separation_danger_min_range 50
 		sb_separation_danger_max_range 300
 		sb_max_team_melee_weapons 2
-		car_alarm_distance 3000
+		car_alarm_distance 1500
 
 		//sleeper
 		z_lunge_power 700
@@ -123,7 +123,9 @@
 		z_mob_spawn_min_interval_expert 9999
 		z_mob_spawn_min_interval_hard 9999
 		z_mob_spawn_min_interval_normal 9999
-		z_hear_gunfire_range 1000
+		z_hear_gunfire_range 500
+		z_hear_runner_far_range 1000
+		z_hear_runner_near_range 750
 		
 		ammo_m60_max 150
 		

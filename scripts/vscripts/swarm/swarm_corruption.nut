@@ -121,7 +121,7 @@ function InitCorruptionCards()
 	cardsEnvironmental.append("None");
 	cardsEnvironmental.append("None");
 	cardsEnvironmental.append("environmentSwarmStream");
-	//cardsEnvironmental.append("environmentDark");
+	cardsEnvironmental.append("environmentDark");
 	cardsEnvironmental.append("environmentFog");
 	cardsEnvironmental.append("environmentFrozen");
 	corruptionEnvironmental = ChooseCorruptionCard_List(cardsEnvironmental);
@@ -780,9 +780,10 @@ function ResetFogCvars()
 	{
 		DoEntFire("!self", "SetStartDistLerpTo", "300", 0, fog, fog);
 		DoEntFire("!self", "SetEndDistLerpTo", "3000", 0, fog, fog);
-		DoEntFire("!self", "SetColorLerpTo", "20 25 25", 0, fog, fog); // Broken??
+		DoEntFire("!self", "SetFarZ", "4000", 5, fog, fog);
+		DoEntFire("!self", "SetColorLerpTo", "-1 -1 -1", 0, fog, fog);
 		DoEntFire("!self", "SetMaxDensityLerpTo", "1", 0, fog, fog);
-		DoEntFire("!self", "Set2DSkyboxFogFactorLerpTo", "0", 0, fog, fog); // Broken??
+		DoEntFire("!self", "Set2DSkyboxFogFactorLerpTo", "0", 0, fog, fog);
 		DoEntFire("!self", "StartFogTransition", "", 0, fog, fog);
 	}
 }
@@ -791,7 +792,7 @@ function CorruptionCard_TheDark()
 {
 	SetFogCvar("r_flashlightconstant", "0.25");
 	SetFogCvar("r_flashlightbrightness", "10");
-	//SetFogCvar("mat_force_tonemap_scale", "0.8");
+	SetFogCvar("mat_force_tonemap_scale", "0.8");
 	Convars.SetValue("sv_disable_glow_survivors", 1);
 	Convars.SetValue("sv_disable_glow_faritems", 1);
 	
@@ -800,6 +801,7 @@ function CorruptionCard_TheDark()
 	{
 		DoEntFire("!self", "SetStartDistLerpTo", "242", 0, fog, fog);
 		DoEntFire("!self", "SetEndDistLerpTo", "730", 0, fog, fog);
+		DoEntFire("!self", "SetFarZ", "1500", 5, fog, fog);
 		DoEntFire("!self", "SetColorLerpTo", "1 1 1", 0, fog, fog);
 		DoEntFire("!self", "SetMaxDensityLerpTo", "1", 0, fog, fog);
 		DoEntFire("!self", "Set2DSkyboxFogFactorLerpTo", "1", 0, fog, fog);
@@ -809,10 +811,8 @@ function CorruptionCard_TheDark()
 	local tonemap = null;
 	while ((tonemap = Entities.FindByClassname(tonemap, "env_tonemap_controller")) != null)
 	{
-		DoEntFire("!self", "SetAutoExposureMin", "0", 0, tonemap, tonemap);
-		DoEntFire("!self", "SetAutoExposureMax", "0.25", 0, tonemap, tonemap);
-		DoEntFire("!self", "SetTonemapRate", "0.25", 0, tonemap, tonemap);
-		DoEntFire("!self", "SetTonemapScale", "0.25", 0, tonemap, tonemap);
+		DoEntFire("!self", "SetAutoExposureMin", "0.05", 1, tonemap, tonemap);
+		DoEntFire("!self", "SetAutoExposureMax", "0.5", 1, tonemap, tonemap);
 	}
 
 	local sun = null;
@@ -832,7 +832,8 @@ function CorruptionCard_TheFog()
 	{
 		DoEntFire("!self", "SetStartDistLerpTo", "242", 0, fog, fog);
 		DoEntFire("!self", "SetEndDistLerpTo", "730", 0, fog, fog);
-		DoEntFire("!self", "SetColorLerpTo", "20 25 25", 0, fog, fog);
+		DoEntFire("!self", "SetFarZ", "1500", 5, fog, fog);
+		DoEntFire("!self", "SetColorLerpTo", "-1 -1 -1", 0, fog, fog);
 		DoEntFire("!self", "SetMaxDensityLerpTo", "1", 0, fog, fog);
 		DoEntFire("!self", "Set2DSkyboxFogFactorLerpTo", "1", 0, fog, fog);
 		DoEntFire("!self", "StartFogTransition", "", 0, fog, fog);
@@ -850,6 +851,7 @@ function CorruptionCard_FrigidOutskirts()
 	{
 		DoEntFire("!self", "SetStartDistLerpTo", "0", 0, fog, fog);
 		DoEntFire("!self", "SetEndDistLerpTo", "1400", 0, fog, fog);
+		DoEntFire("!self", "SetFarZ", "1600", 5, fog, fog);
 		DoEntFire("!self", "SetColorLerpTo", "174 196 209", 0, fog, fog);
 		DoEntFire("!self", "SetMaxDensityLerpTo", "1", 0, fog, fog);
 		DoEntFire("!self", "Set2DSkyboxFogFactorLerpTo", "1", 0, fog, fog);
@@ -896,6 +898,7 @@ function CorruptionCard_FrigidOutskirts()
 	frigidOutskirtsEnabled = true;
 }
 
+/*
 function FrigidOutskirtsSetFog(fogStart, fogEnd)
 {
 	SetFogCvar("fog_start", fogStart);
@@ -927,6 +930,7 @@ function FrigidOutskirtsSetFog(fogStart, fogEnd)
 		SetFogCvar("r_flashlightbrightness", "0.5");
 	}
 }
+*/
 
 function FrigidOutskirtsTimer()
 {
@@ -948,6 +952,7 @@ function FrigidOutskirtsTimer()
 			{
 				DoEntFire("!self", "SetStartDistLerpTo", "-250", 0, fog, fog);
 				DoEntFire("!self", "SetEndDistLerpTo", "600", 0, fog, fog);
+				DoEntFire("!self", "SetFarZ", "1000", 5, fog, fog);
 				DoEntFire("!self", "SetColorLerpTo", "174 196 209", 0, fog, fog);
 				DoEntFire("!self", "SetMaxDensityLerpTo", "1", 0, fog, fog);
 				DoEntFire("!self", "Set2DSkyboxFogFactorLerpTo", "1", 0, fog, fog);
@@ -973,6 +978,7 @@ function FrigidOutskirtsTimer()
 			{
 				DoEntFire("!self", "SetStartDistLerpTo", "0", 0, fog, fog);
 				DoEntFire("!self", "SetEndDistLerpTo", "1400", 0, fog, fog);
+				DoEntFire("!self", "SetFarZ", "1600", 5, fog, fog);
 				DoEntFire("!self", "SetColorLerpTo", "174 196 209", 0, fog, fog);
 				DoEntFire("!self", "SetMaxDensityLerpTo", "1", 0, fog, fog);
 				DoEntFire("!self", "Set2DSkyboxFogFactorLerpTo", "1", 0, fog, fog);
