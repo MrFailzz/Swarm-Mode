@@ -234,7 +234,7 @@ function InterceptChat(message, speaker)
 					if (voteStatus == true)
 					{
 						ClientPrint(null, 3, "\x04" + "Shuffle vote passed!");
-						EmitAmbientSoundOn("Vote.Passed", 1, 100, 100, speaker);
+						EmitSoundOn("Vote.Passed", speaker);
 						InitCardPicking(true);
 						cardShuffled = true;
 					}

@@ -121,7 +121,7 @@ function InitCorruptionCards()
 	cardsEnvironmental.append("None");
 	cardsEnvironmental.append("None");
 	cardsEnvironmental.append("environmentSwarmStream");
-	cardsEnvironmental.append("environmentDark");
+	//cardsEnvironmental.append("environmentDark");
 	cardsEnvironmental.append("environmentFog");
 	cardsEnvironmental.append("environmentFrozen");
 	corruptionEnvironmental = ChooseCorruptionCard_List(cardsEnvironmental);
@@ -162,7 +162,7 @@ function InitCorruptionCards()
 	cardsGameplay.append("None");
 	cardsGameplay.append("None");
 	cardsGameplay.append("gameplayNoGrenades");
-	cardsGameplay.append("gameplayNoOutlines");
+	//cardsGameplay.append("gameplayNoOutlines");
 	if ( difficulty > 1 )
 	{
 		cardsGameplay.append("None");
@@ -545,7 +545,7 @@ function GetCorruptionCardName(cardID)
 				return "Raging Ogre";
 				break;
 			case "missionSpeedrun":
-				return "Speed Run";
+				return "Speedrun";
 				break;
 			case "missionAllAlive":
 				return "No One Left Behind";
@@ -769,53 +769,50 @@ function SetFogCvar(cvar, value)
 
 function ResetFogCvars()
 {
-	/*
-	SetFogCvar("fog_color", "-1 -1 -1");
-	SetFogCvar("fog_colorskybox", "-1 -1 -1");
-	SetFogCvar("fog_start", "1200");
-	SetFogCvar("fog_startskybox", "-10000");
-	SetFogCvar("fog_end", "2400");
-	SetFogCvar("fog_endskybox", "-10000");
-	*/
 	SetFogCvar("r_flashlightconstant", "0");
 	SetFogCvar("r_flashlightbrightness", "0.25");
 	SetFogCvar("mat_force_tonemap_scale", "0");
+	Convars.SetValue("sv_disable_glow_survivors", 0);
+	Convars.SetValue("sv_disable_glow_faritems", 0);
 
 	local fog = null;
 	while ((fog = Entities.FindByClassname(fog, "env_fog_controller")) != null)
 	{
 		DoEntFire("!self", "SetStartDistLerpTo", "300", 0, fog, fog);
 		DoEntFire("!self", "SetEndDistLerpTo", "3000", 0, fog, fog);
-		DoEntFire("!self", "SetColorLerpTo ", "20 25 25", 0, fog, fog); // Broken??
-		DoEntFire("!self", "SetMaxDensityLerpTo  ", "1", 0, fog, fog);
-		DoEntFire("!self", "Set2DSkyboxFogFactorLerpTo  ", "0", 0, fog, fog); // Broken??
+		DoEntFire("!self", "SetColorLerpTo", "20 25 25", 0, fog, fog); // Broken??
+		DoEntFire("!self", "SetMaxDensityLerpTo", "1", 0, fog, fog);
+		DoEntFire("!self", "Set2DSkyboxFogFactorLerpTo", "0", 0, fog, fog); // Broken??
 		DoEntFire("!self", "StartFogTransition", "", 0, fog, fog);
 	}
 }
 
 function CorruptionCard_TheDark()
 {
-	/*
-	SetFogCvar("fog_color", "1 1 1");
-	SetFogCvar("fog_colorskybox", "1 1 1");
-	SetFogCvar("fog_start", "242");
-	SetFogCvar("fog_startskybox", "-10000");
-	SetFogCvar("fog_end", "730");
-	SetFogCvar("fog_endskybox", "-10000");
-	*/
 	SetFogCvar("r_flashlightconstant", "0.25");
 	SetFogCvar("r_flashlightbrightness", "10");
-	SetFogCvar("mat_force_tonemap_scale", "0.8");
+	//SetFogCvar("mat_force_tonemap_scale", "0.8");
+	Convars.SetValue("sv_disable_glow_survivors", 1);
+	Convars.SetValue("sv_disable_glow_faritems", 1);
 	
 	local fog = null;
 	while ((fog = Entities.FindByClassname(fog, "env_fog_controller")) != null)
 	{
 		DoEntFire("!self", "SetStartDistLerpTo", "242", 0, fog, fog);
 		DoEntFire("!self", "SetEndDistLerpTo", "730", 0, fog, fog);
-		DoEntFire("!self", "SetColorLerpTo ", "1 1 1", 0, fog, fog);
-		DoEntFire("!self", "SetMaxDensityLerpTo  ", "1", 0, fog, fog);
-		DoEntFire("!self", "Set2DSkyboxFogFactorLerpTo  ", "1", 0, fog, fog);
+		DoEntFire("!self", "SetColorLerpTo", "1 1 1", 0, fog, fog);
+		DoEntFire("!self", "SetMaxDensityLerpTo", "1", 0, fog, fog);
+		DoEntFire("!self", "Set2DSkyboxFogFactorLerpTo", "1", 0, fog, fog);
 		DoEntFire("!self", "StartFogTransition", "", 0, fog, fog);
+	}
+
+	local tonemap = null;
+	while ((tonemap = Entities.FindByClassname(tonemap, "env_tonemap_controller")) != null)
+	{
+		DoEntFire("!self", "SetAutoExposureMin", "0", 0, tonemap, tonemap);
+		DoEntFire("!self", "SetAutoExposureMax", "0.25", 0, tonemap, tonemap);
+		DoEntFire("!self", "SetTonemapRate", "0.25", 0, tonemap, tonemap);
+		DoEntFire("!self", "SetTonemapScale", "0.25", 0, tonemap, tonemap);
 	}
 
 	local sun = null;
@@ -827,22 +824,17 @@ function CorruptionCard_TheDark()
 
 function CorruptionCard_TheFog()
 {
-	/*
-	SetFogCvar("fog_start", "242");
-	SetFogCvar("fog_startskybox", "-10000");
-	SetFogCvar("fog_end", "730");
-	SetFogCvar("fog_endskybox", "-10000");
-	SetFogCvar("r_flashlightbrightness", "2");
-	*/
+	Convars.SetValue("sv_disable_glow_survivors", 1);
+	Convars.SetValue("sv_disable_glow_faritems", 1);
 
 	local fog = null;
 	while ((fog = Entities.FindByClassname(fog, "env_fog_controller")) != null)
 	{
 		DoEntFire("!self", "SetStartDistLerpTo", "242", 0, fog, fog);
 		DoEntFire("!self", "SetEndDistLerpTo", "730", 0, fog, fog);
-		DoEntFire("!self", "SetColorLerpTo ", "20 25 25", 0, fog, fog);
-		DoEntFire("!self", "SetMaxDensityLerpTo  ", "1", 0, fog, fog);
-		DoEntFire("!self", "Set2DSkyboxFogFactorLerpTo  ", "1", 0, fog, fog);
+		DoEntFire("!self", "SetColorLerpTo", "20 25 25", 0, fog, fog);
+		DoEntFire("!self", "SetMaxDensityLerpTo", "1", 0, fog, fog);
+		DoEntFire("!self", "Set2DSkyboxFogFactorLerpTo", "1", 0, fog, fog);
 		DoEntFire("!self", "StartFogTransition", "", 0, fog, fog);
 	}
 }
@@ -853,9 +845,16 @@ function CorruptionCard_FrigidOutskirts()
 	if (!IsSoundPrecached("ambient/wind/windgust.wav"))
 		PrecacheSound("ambient/wind/windgust.wav");
 
-	//SetFogCvar("fog_color", "174 196 209");
-	//SetFogCvar("fog_colorskybox", "174 196 209");
-	FrigidOutskirtsSetFog("0", "1400");
+	local fog = null;
+	while ((fog = Entities.FindByClassname(fog, "env_fog_controller")) != null)
+	{
+		DoEntFire("!self", "SetStartDistLerpTo", "0", 0, fog, fog);
+		DoEntFire("!self", "SetEndDistLerpTo", "1400", 0, fog, fog);
+		DoEntFire("!self", "SetColorLerpTo", "174 196 209", 0, fog, fog);
+		DoEntFire("!self", "SetMaxDensityLerpTo", "1", 0, fog, fog);
+		DoEntFire("!self", "Set2DSkyboxFogFactorLerpTo", "1", 0, fog, fog);
+		DoEntFire("!self", "StartFogTransition", "", 0, fog, fog);
+	}
 	
 	local windSound = SpawnEntityFromTable("ambient_generic",
 	{
@@ -899,19 +898,21 @@ function CorruptionCard_FrigidOutskirts()
 
 function FrigidOutskirtsSetFog(fogStart, fogEnd)
 {
-	/*
 	SetFogCvar("fog_start", fogStart);
 	SetFogCvar("fog_startskybox", fogStart);
 	SetFogCvar("fog_end", fogEnd);
 	SetFogCvar("fog_endskybox", fogEnd);
-	*/
-
-	DoEntFire("!self", "SetStartDistLerpTo", "fogStart", 0, fog, fog);
-	DoEntFire("!self", "SetEndDistLerpTo", "fogEnd", 0, fog, fog);
-	DoEntFire("!self", "SetColorLerpTo ", "174 196 209", 0, fog, fog);
-	DoEntFire("!self", "SetMaxDensityLerpTo  ", "1", 0, fog, fog);
-	DoEntFire("!self", "Set2DSkyboxFogFactorLerpTo  ", "1", 0, fog, fog);
-	DoEntFire("!self", "StartFogTransition", "", 0, fog, fog);
+	
+	local fog = null;
+	while ((fog = Entities.FindByClassname(fog, "env_fog_controller")) != null)
+	{
+		DoEntFire("!self", "SetStartDistLerpTo", "fogStart", 0, fog, fog);
+		DoEntFire("!self", "SetEndDistLerpTo", "fogEnd", 0, fog, fog);
+		DoEntFire("!self", "SetColorLerpTo", "174 196 209", 0, fog, fog);
+		DoEntFire("!self", "SetMaxDensityLerpTo", "1", 0, fog, fog);
+		DoEntFire("!self", "Set2DSkyboxFogFactorLerpTo", "1", 0, fog, fog);
+		DoEntFire("!self", "StartFogTransition", "", 0, fog, fog);
+	}
 
 	if (frigidOutskirtsStormActive == true)
 	{
@@ -940,8 +941,24 @@ function FrigidOutskirtsTimer()
 		if ((Time() - frigidOutskirtsTimer) >= frigidOutskirtsCalmTime)
 		{
 			frigidOutskirtsStormActive = true;
-			FrigidOutskirtsSetFog("-250", "600");
 			frigidOutskirtsTimer = Time();
+
+			local fog = null;
+			while ((fog = Entities.FindByClassname(fog, "env_fog_controller")) != null)
+			{
+				DoEntFire("!self", "SetStartDistLerpTo", "-250", 0, fog, fog);
+				DoEntFire("!self", "SetEndDistLerpTo", "600", 0, fog, fog);
+				DoEntFire("!self", "SetColorLerpTo", "174 196 209", 0, fog, fog);
+				DoEntFire("!self", "SetMaxDensityLerpTo", "1", 0, fog, fog);
+				DoEntFire("!self", "Set2DSkyboxFogFactorLerpTo", "1", 0, fog, fog);
+				DoEntFire("!self", "StartFogTransition", "", 0, fog, fog);
+			}
+
+			EntFire("__frigid_outskirts_wind_snd", "PlaySound", "", 3);
+			EntFire("__frigid_outskirts_wind_snd2", "PlaySound", "", 10);
+			SetFogCvar("r_flashlightbrightness", "2");
+			Convars.SetValue("sv_disable_glow_survivors", 1);
+			Convars.SetValue("sv_disable_glow_faritems", 1);
 		}
 	}
 	else
@@ -949,8 +966,24 @@ function FrigidOutskirtsTimer()
 		if ((Time() - frigidOutskirtsTimer) >= frigidOutskirtsStormTime)
 		{
 			frigidOutskirtsStormActive = false;
-			FrigidOutskirtsSetFog("0", "1400");
 			frigidOutskirtsTimer = Time();
+
+			local fog = null;
+			while ((fog = Entities.FindByClassname(fog, "env_fog_controller")) != null)
+			{
+				DoEntFire("!self", "SetStartDistLerpTo", "0", 0, fog, fog);
+				DoEntFire("!self", "SetEndDistLerpTo", "1400", 0, fog, fog);
+				DoEntFire("!self", "SetColorLerpTo", "174 196 209", 0, fog, fog);
+				DoEntFire("!self", "SetMaxDensityLerpTo", "1", 0, fog, fog);
+				DoEntFire("!self", "Set2DSkyboxFogFactorLerpTo", "1", 0, fog, fog);
+				DoEntFire("!self", "StartFogTransition", "", 0, fog, fog);
+			}
+
+			EntFire("__frigid_outskirts_wind_snd", "StopSound");
+			EntFire("__frigid_outskirts_wind_snd2", "StopSound");
+			SetFogCvar("r_flashlightbrightness", "0.5");
+			Convars.SetValue("sv_disable_glow_survivors", 0);
+			Convars.SetValue("sv_disable_glow_faritems", 0);
 		}
 	}
 }

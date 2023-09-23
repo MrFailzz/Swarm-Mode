@@ -450,7 +450,7 @@ function SleeperLanded(params)
 				{
 					if (player_entityscript["player"].GetHealth() > 1)
 					{
-						SpawnMob();
+						ZSpawnMob();
 						self.Kill();
 					}
 				}
