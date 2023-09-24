@@ -778,13 +778,26 @@ function ResetFogCvars()
 	local fog = null;
 	while ((fog = Entities.FindByClassname(fog, "env_fog_controller")) != null)
 	{
+		/*
+		NetProps.SetPropInt(fog, "m_fog.colorPrimary", fogColor);
+		NetProps.SetPropFloat(fog, "m_fog.maxdensity", fogDensity);
+		NetProps.SetPropFloat(fog, "m_fog.start", fogStart);
+		NetProps.SetPropFloat(fog, "m_fog.end", fogEnd);
+		NetProps.SetPropFloat(fog, "m_fog.farz", fogZ);
+		*/
 		DoEntFire("!self", "SetStartDistLerpTo", "300", 0, fog, fog);
 		DoEntFire("!self", "SetEndDistLerpTo", "3000", 0, fog, fog);
-		DoEntFire("!self", "SetFarZ", "4000", 5, fog, fog);
-		DoEntFire("!self", "SetColorLerpTo", "-1 -1 -1", 0, fog, fog);
+		DoEntFire("!self", "SetFarZ", "3500", 5, fog, fog);
+		DoEntFire("!self", "SetColorLerpTo", "18 29 33", 0, fog, fog);
 		DoEntFire("!self", "SetMaxDensityLerpTo", "1", 0, fog, fog);
 		DoEntFire("!self", "Set2DSkyboxFogFactorLerpTo", "0", 0, fog, fog);
 		DoEntFire("!self", "StartFogTransition", "", 0, fog, fog);
+	}
+
+	local player = null;
+	while ((player = Entities.FindByClassname(player, "player")) != null)
+	{
+		NetProps.SetPropInt(player, "m_Local.m_skybox3d.fog.colorPrimary", GetColorInt(Vector(18, 29, 33)));
 	}
 }
 
@@ -792,15 +805,21 @@ function CorruptionCard_TheDark()
 {
 	SetFogCvar("r_flashlightconstant", "0.25");
 	SetFogCvar("r_flashlightbrightness", "10");
-	SetFogCvar("mat_force_tonemap_scale", "0.8");
 	Convars.SetValue("sv_disable_glow_survivors", 1);
 	Convars.SetValue("sv_disable_glow_faritems", 1);
 	
 	local fog = null;
 	while ((fog = Entities.FindByClassname(fog, "env_fog_controller")) != null)
 	{
-		DoEntFire("!self", "SetStartDistLerpTo", "242", 0, fog, fog);
-		DoEntFire("!self", "SetEndDistLerpTo", "730", 0, fog, fog);
+		/*
+		NetProps.SetPropInt(fog, "m_fog.colorPrimary", GetColorInt(Vector(1, 1, 1)));
+		NetProps.SetPropFloat(fog, "m_fog.maxdensity", 1);
+		NetProps.SetPropFloat(fog, "m_fog.start", 242);
+		NetProps.SetPropFloat(fog, "m_fog.end", 730);
+		NetProps.SetPropFloat(fog, "m_fog.farz", 1200);
+		*/
+		DoEntFire("!self", "SetStartDistLerpTo", "0", 0, fog, fog);
+		DoEntFire("!self", "SetEndDistLerpTo", "512", 0, fog, fog);
 		DoEntFire("!self", "SetFarZ", "1500", 5, fog, fog);
 		DoEntFire("!self", "SetColorLerpTo", "1 1 1", 0, fog, fog);
 		DoEntFire("!self", "SetMaxDensityLerpTo", "1", 0, fog, fog);
@@ -808,10 +827,16 @@ function CorruptionCard_TheDark()
 		DoEntFire("!self", "StartFogTransition", "", 0, fog, fog);
 	}
 
+	local player = null;
+	while ((player = Entities.FindByClassname(player, "player")) != null)
+	{
+		NetProps.SetPropInt(player, "m_Local.m_skybox3d.fog.colorPrimary", GetColorInt(Vector(1, 1, 1)));
+	}
+
 	local tonemap = null;
 	while ((tonemap = Entities.FindByClassname(tonemap, "env_tonemap_controller")) != null)
 	{
-		DoEntFire("!self", "SetAutoExposureMin", "0.05", 1, tonemap, tonemap);
+		DoEntFire("!self", "SetAutoExposureMin", "0.1", 1, tonemap, tonemap);
 		DoEntFire("!self", "SetAutoExposureMax", "0.5", 1, tonemap, tonemap);
 	}
 
@@ -830,13 +855,26 @@ function CorruptionCard_TheFog()
 	local fog = null;
 	while ((fog = Entities.FindByClassname(fog, "env_fog_controller")) != null)
 	{
+		/*
+		NetProps.SetPropInt(fog, "m_fog.colorPrimary", GetColorInt(Vector(255, 255, 255)));
+		NetProps.SetPropFloat(fog, "m_fog.maxdensity", 1);
+		NetProps.SetPropFloat(fog, "m_fog.start", 242);
+		NetProps.SetPropFloat(fog, "m_fog.end", 730);
+		NetProps.SetPropFloat(fog, "m_fog.farz", 1200);
+		*/
 		DoEntFire("!self", "SetStartDistLerpTo", "242", 0, fog, fog);
 		DoEntFire("!self", "SetEndDistLerpTo", "730", 0, fog, fog);
 		DoEntFire("!self", "SetFarZ", "1500", 5, fog, fog);
-		DoEntFire("!self", "SetColorLerpTo", "-1 -1 -1", 0, fog, fog);
+		DoEntFire("!self", "SetColorLerpTo", "255 255 255", 0, fog, fog);
 		DoEntFire("!self", "SetMaxDensityLerpTo", "1", 0, fog, fog);
 		DoEntFire("!self", "Set2DSkyboxFogFactorLerpTo", "1", 0, fog, fog);
 		DoEntFire("!self", "StartFogTransition", "", 0, fog, fog);
+	}
+
+	local player = null;
+	while ((player = Entities.FindByClassname(player, "player")) != null)
+	{
+		NetProps.SetPropInt(player, "m_Local.m_skybox3d.fog.colorPrimary", GetColorInt(Vector(255, 255, 255)));
 	}
 }
 
@@ -856,6 +894,12 @@ function CorruptionCard_FrigidOutskirts()
 		DoEntFire("!self", "SetMaxDensityLerpTo", "1", 0, fog, fog);
 		DoEntFire("!self", "Set2DSkyboxFogFactorLerpTo", "1", 0, fog, fog);
 		DoEntFire("!self", "StartFogTransition", "", 0, fog, fog);
+	}
+
+	local player = null;
+	while ((player = Entities.FindByClassname(player, "player")) != null)
+	{
+		NetProps.SetPropInt(player, "m_Local.m_skybox3d.fog.colorPrimary", GetColorInt(Vector(174, 196, 209)));
 	}
 	
 	local windSound = SpawnEntityFromTable("ambient_generic",
@@ -897,40 +941,6 @@ function CorruptionCard_FrigidOutskirts()
 
 	frigidOutskirtsEnabled = true;
 }
-
-/*
-function FrigidOutskirtsSetFog(fogStart, fogEnd)
-{
-	SetFogCvar("fog_start", fogStart);
-	SetFogCvar("fog_startskybox", fogStart);
-	SetFogCvar("fog_end", fogEnd);
-	SetFogCvar("fog_endskybox", fogEnd);
-	
-	local fog = null;
-	while ((fog = Entities.FindByClassname(fog, "env_fog_controller")) != null)
-	{
-		DoEntFire("!self", "SetStartDistLerpTo", "fogStart", 0, fog, fog);
-		DoEntFire("!self", "SetEndDistLerpTo", "fogEnd", 0, fog, fog);
-		DoEntFire("!self", "SetColorLerpTo", "174 196 209", 0, fog, fog);
-		DoEntFire("!self", "SetMaxDensityLerpTo", "1", 0, fog, fog);
-		DoEntFire("!self", "Set2DSkyboxFogFactorLerpTo", "1", 0, fog, fog);
-		DoEntFire("!self", "StartFogTransition", "", 0, fog, fog);
-	}
-
-	if (frigidOutskirtsStormActive == true)
-	{
-		EntFire("__frigid_outskirts_wind_snd", "PlaySound", "", 3);
-		EntFire("__frigid_outskirts_wind_snd2", "PlaySound", "", 10);
-		SetFogCvar("r_flashlightbrightness", "2");
-	}
-	else
-	{
-		EntFire("__frigid_outskirts_wind_snd", "StopSound");
-		EntFire("__frigid_outskirts_wind_snd2", "StopSound");
-		SetFogCvar("r_flashlightbrightness", "0.5");
-	}
-}
-*/
 
 function FrigidOutskirtsTimer()
 {

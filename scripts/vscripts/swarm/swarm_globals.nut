@@ -9,6 +9,19 @@ z_speed <- Convars.GetFloat("z_speed");
 BaseMaxIncaps <- 2;
 DebugMode <- false;
 
+// Fog Map Defaults (disabled since this apparently runs on every restart)
+/*
+local fog = null;
+if ((fog = Entities.FindByClassname(fog, "env_fog_controller")) != null)
+{
+	fogColor <- NetProps.GetPropInt(fog, "m_fog.colorPrimary");
+	fogDensity <- NetProps.GetPropFloat(fog, "m_fog.maxdensity");
+	fogStart <- NetProps.GetPropFloat(fog, "m_fog.start");
+	fogEnd <- NetProps.GetPropFloat(fog, "m_fog.end");
+	fogZ <- NetProps.GetPropFloat(fog, "m_fog.farz");
+}
+*/
+
 //Breaker
 tankModel <- "models/infected/hulk.mdl"
 randomPct <- RandomInt(1,100)
