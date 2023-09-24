@@ -346,6 +346,8 @@ function AllowTakeDamage(damageTable)
 	local GamblerVictim = 0;
 	local AcidMultiplier = 0;
 	local HeadMultiplier = 0;
+	local Shredder = 0;
+	local ShredderMultiplier = 0;
 
 	//Modify Attacker damage
 	if (attacker.IsValid())
@@ -388,6 +390,14 @@ function AllowTakeDamage(damageTable)
 							return false;
 						}
 					}
+				}
+
+				//Shredder
+				Shredder = PlayerHasCard(attacker, "Shredder");
+				if (Shredder > 0)
+				{
+					local shotsfired = NetProps.GetPropInt(attacker, "m_iShotsFired")
+					ShredderMultiplier = 0.01 * shotsfired;
 				}
 
 				//Gambler
@@ -539,6 +549,7 @@ function AllowTakeDamage(damageTable)
 								 + (AddictAttackerMultiplier * AddictAttacker)
 								 + (0.1 * Zoey)
 								 + (0.05 * Nick)
+								 + (ShredderMultiplier * Shredder)
 								 + (HeadMultiplier));
 				if (GamblerAttacker > 0)
 				{

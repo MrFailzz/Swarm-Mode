@@ -23,6 +23,7 @@ reflexCards <-
 	"Multitool",
 	//"RunLikeHell",
 	//"Quickdraw",
+	"Shredder",
 ];
 
 brawnCards <-
@@ -653,6 +654,9 @@ function GetPlayerCardName(cardID, type = "name")
 				case "DownInFront":
 					return "Down In Front";
 					break;
+				case "Shredder":
+					return "Shredder";
+					break;
 				default:
 					return cardID;
 					break;
@@ -922,6 +926,9 @@ function GetPlayerCardName(cardID, type = "name")
 					break;
 				case "DownInFront":
 					return "Down In Front";
+					break;
+				case "Shredder":
+					return "Shredder";
 					break;
 				default:
 					return cardID;
@@ -1196,6 +1203,9 @@ function GetPlayerCardName(cardID, type = "name")
 				case "DownInFront":
 					return "No FF DMG when crouched";
 					break;
+				case "Shredder":
+					return "Every bullet fired increases DMG by 1% until reload";
+					break;
 				default:
 					return cardID;
 					break;
@@ -1465,6 +1475,9 @@ function GetPlayerCardName(cardID, type = "name")
 					break;
 				case "DownInFront":
 					return "No FF DMG when crouched";
+					break;
+				case "Shredder":
+					return "Bullets fired increase DMG by 1% until reload";
 					break;
 				default:
 					return cardID;
