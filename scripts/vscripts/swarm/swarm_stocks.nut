@@ -396,7 +396,7 @@ function AllowTakeDamage(damageTable)
 				Shredder = PlayerHasCard(attacker, "Shredder");
 				if (Shredder > 0)
 				{
-					local shotsfired = NetProps.GetPropInt(attacker, "m_iShotsFired")
+					local shotsfired = NetProps.GetPropInt(attacker, "m_iShotsFired");
 					ShredderMultiplier = 0.01 * shotsfired;
 				}
 
@@ -974,7 +974,7 @@ function PlayerLeftSafeArea(params)
 			firstLeftCheckpoint = true;
 
 			ModifyHittables();
-			//ApplyEnvironmentalCard();
+			ApplyEnvironmentalCard();
 			PropModels();
 
 			//Spawn hazards
