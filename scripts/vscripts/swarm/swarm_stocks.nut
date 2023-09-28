@@ -765,12 +765,6 @@ function PlayerDeath(params)
 		{
 			isSurvivorDeath = true;
 		}
-		else
-		{
-			local playerIndex = player.GetEntityIndex();
-			EntFire("__swarm_stream_lightglow" + playerIndex, "Kill");
-		}
-		NetProps.SetPropInt(player, "m_Glow.m_iGlowType", 0);
 	}
 
 	if (params.victimname == "Tank")
@@ -784,6 +778,20 @@ function PlayerDeath(params)
 
 	if (params.victimname == "Tank" || params.victimname == "Smoker" || params.victimname == "Jockey" || params.victimname == "Boomer" || params.victimname == "Charger")
 	{
+		//Remove swarm stream glow
+		local playerIndex = player.GetEntityIndex();
+		EntFire("__swarm_stream_lightglow" + playerIndex, "Kill");
+
+		//FaceYourFears
+		local attacker = GetPlayerFromUserID(params["attacker"]);
+		local victim = GetPlayerFromUserID(params["userid"]);
+		local FaceYourFears = 0;
+		if (GetVectorDistance(attacker.GetOrigin(), victim.GetOrigin()) < 200)
+		{
+			FaceYourFears = PlayerHasCard(attacker, "FaceYourFears");
+			Heal_TempHealth(attacker, 2 * FaceYourFears);
+		}
+
 		//HotShot
 		local survivor = null;
 		local HotShot = 0;
@@ -838,6 +846,8 @@ function PlayerDeath(params)
 		ApplyAdrenalineRush();
 		ApplyInspiringSacrifice();
 	}
+
+	NetProps.SetPropInt(player, "m_Glow.m_iGlowType", 0);
 }
 
 function RandomItemDrop(origin)
