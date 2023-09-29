@@ -783,13 +783,13 @@ function PlayerDeath(params)
 		EntFire("__swarm_stream_lightglow" + playerIndex, "Kill");
 
 		//FaceYourFears
-		local attacker = GetPlayerFromUserID(params["attacker"]);
+		local player = GetPlayerFromUserID(params["attacker"]);
 		local victim = GetPlayerFromUserID(params["userid"]);
 		local FaceYourFears = 0;
-		if (GetVectorDistance(attacker.GetOrigin(), victim.GetOrigin()) < 200)
+		if (GetVectorDistance(player.GetOrigin(), victim.GetOrigin()) < 100)
 		{
-			FaceYourFears = PlayerHasCard(attacker, "FaceYourFears");
-			Heal_TempHealth(attacker, 2 * FaceYourFears);
+			FaceYourFears = PlayerHasCard(player, "FaceYourFears");
+			Heal_TempHealth(player, 2 * FaceYourFears);
 		}
 
 		//HotShot

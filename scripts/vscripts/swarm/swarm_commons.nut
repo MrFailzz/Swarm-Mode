@@ -6,20 +6,19 @@ function ZombieDeath(params)
 	if ("victim" in params)
 	{
 		local common = EntIndexToHScript(params.victim);
+		local player = EntIndexToHScript(params.attacker);
 
 		if (!common.IsPlayer())
 		{
 			local commonName = common.GetName();
 
 			//FaceYourFears
-			local attacker = GetPlayerFromUserID(params["attacker"]);
 			local FaceYourFears = 0;
-			/*
-			if (GetVectorDistance(attacker.GetOrigin(), common.GetOrigin()) < 200)
+			if (GetVectorDistance(player.GetOrigin(), common.GetOrigin()) < 100)
 			{
-				FaceYourFears = PlayerHasCard(attacker, "FaceYourFears");
-				Heal_TempHealth(attacker, 2 * FaceYourFears);
-			}*/
+				FaceYourFears = PlayerHasCard(player, "FaceYourFears");
+				Heal_TempHealth(player, 2 * FaceYourFears);
+			}
 
 			if (commonName.find("__acid_common") != null)
 			{

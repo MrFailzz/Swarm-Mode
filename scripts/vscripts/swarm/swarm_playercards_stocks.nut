@@ -37,7 +37,7 @@ brawnCards <-
 	"ToughSkin",
 	"ScarTissue",
 	"ChemicalBarrier",
-	//"FaceYourFears",
+	"FaceYourFears",
 	//"BombDisposal",
 	//"Numb",
 	//"MeanDrunk",
