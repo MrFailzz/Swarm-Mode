@@ -1051,7 +1051,7 @@ function GetPlayerCardName(cardID, type = "name")
 					return "+50% Acid RES";
 					break;
 				case "FaceYourFears":
-					return "+2 Temp HP on kill";
+					return "+2 Temp HP on kill within 2.5m";
 					break;
 				case "BombDisposal":
 					return "+75% Explosive / Knockback RES";
@@ -1324,7 +1324,7 @@ function GetPlayerCardName(cardID, type = "name")
 					return "+50% Acid RES";
 					break;
 				case "FaceYourFears":
-					return "+2 Temp HP on kill";
+					return "+2 Temp HP on kill within 2.5m";
 					break;
 				case "BombDisposal":
 					return "+75% Explosive / Knockback RES";
