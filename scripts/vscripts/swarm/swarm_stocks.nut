@@ -1,12 +1,29 @@
 ///////////////////////////////////////////////
 //               SHARED EVENTS               //
 ///////////////////////////////////////////////
-if (!IsSoundPrecached("Vote.Cast.Yes"))
-	PrecacheSound("Vote.Cast.Yes");
-if (!IsSoundPrecached("Vote.Created"))
-	PrecacheSound("Vote.Created");
-if (!IsSoundPrecached("Vote.Passed"))
-	PrecacheSound("Vote.Passed");
+//Vote.Cast.Yes
+if (!IsSoundPrecached("UI/Menu_Click01.wav"))
+{
+	PrecacheSound("UI/Menu_Click01.wav");
+}
+
+//Vote.Created
+if (!IsSoundPrecached("UI/Beep_SynthTone01.wav"))
+{
+	PrecacheSound("UI/Beep_SynthTone01.wav");
+}
+
+//UI/Menu_Enter05.wav"Vote.Passed
+if (!IsSoundPrecached("UI/Menu_Enter05.wav"))
+{
+	PrecacheSound("UI/Menu_Enter05.wav");
+}
+
+//BoomerZombie.Detonate - sound 09 or 10 or 14
+/*if (!IsSoundPrecached("player/Boomer/explode/Explo_Medium_10.wav"))
+{
+	PrecacheSound("player/Boomer/explode/Explo_Medium_10.wav");
+}*/
 
 function InterceptChat(message, speaker)
 {
@@ -192,53 +209,7 @@ function InterceptChat(message, speaker)
 
 			case "шаркать":
 			case "shuffle":
-				if (cardShuffled == false)
-				{
-					local speakerID = GetSurvivorID(speaker);
-					if (cardPickingAllowed[speakerID] > 0)
-					{
-						cardShuffleVote[speakerID] = true;
-					}
-
-					//Check if all players that haven't picked a card have voted yes
-					local voteStatus = true;
-					local voteCount = 0;
-					foreach(vote in cardShuffleVote)
-					{
-						if (vote == false)
-						{
-							voteStatus = false;
-						}
-						else if (vote == true)
-						{
-							voteCount += 1;
-						}
-					}
-
-					// Play voting sounds
-					/*
-					if (voteCount == 1)
-					{
-						EmitAmbientSoundOn("Vote.Created", 1, 100, 100, speaker);
-						//EmitSoundOnClient("Vote.Created", speaker);
-					}
-					else if (voteCount > 1 && voteCount < 4 )
-					{
-						EmitSoundOnClient("Vote.Cast.Yes", speaker);
-					}
-					*/
-					EmitSoundOnClient("Vote.Cast.Yes", speaker);
-					ClientPrint(null, 3, "\x01" + "Use " + "\x03" + "!shuffle\x01" + " to vote for a new set of cards (" + "\x03" + voteCount + "/4" + "\x01" + " votes"  + ")");
-
-					//Vote passed, shuffle cards
-					if (voteStatus == true)
-					{
-						ClientPrint(null, 3, "\x04" + "Shuffle vote passed!");
-						EmitSoundOn("Vote.Passed", speaker);
-						InitCardPicking(true);
-						cardShuffled = true;
-					}
-				}
+				ShuffleVote(speaker);
 			break;
 
 			case "debug":
@@ -271,6 +242,85 @@ function InterceptChat(message, speaker)
 			break;
 		}
 		return false;
+	}
+}
+
+function ShuffleVote(speaker, cardPick = false)
+{
+	if (shuffleVoteStarted == false && cardPick == false)
+	{
+		shuffleVoteStarted = true;
+		ClientPrint(null, 3, "\x04" + speaker.GetPlayerName() + " initiated a shuffle vote!");
+		local player = null;
+		local botID = null;
+		while ((player = Entities.FindByClassname(player, "player")) != null)
+		{
+			if (player.IsSurvivor())
+			{
+				EmitSoundOn("Vote.Created", player);
+				if (IsPlayerABot(player));
+				{
+					botID = GetSurvivorID(player);
+					cardShuffleVote[botID] = true;
+					ClientPrint(null, 3, "\x04" + player.GetPlayerName() + " voted to shuffle");
+				}
+			}
+		}
+	}
+
+	if (cardShuffled == false && shuffleVoteStarted == true)
+	{
+		local speakerID = GetSurvivorID(speaker);
+		if (cardShuffleVote[speakerID] == false && shuffleVoteStarted == true && cardPick == false)
+		{
+			local player = null;
+			while ((player = Entities.FindByClassname(player, "player")) != null)
+			{
+				if (player.IsSurvivor())
+				{
+					EmitSoundOnClient("Vote.Cast.Yes", player);
+				}
+			}
+			ClientPrint(null, 3, "\x04" + speaker.GetPlayerName() + " voted to shuffle");
+		}
+
+		if (cardPickingAllowed[speakerID] > 0)
+		{
+			cardShuffleVote[speakerID] = true;
+		}
+
+		//Check if all players that haven't picked a card have voted yes
+		local voteStatus = true;
+		local voteCount = 0;
+		foreach(vote in cardShuffleVote)
+		{
+			if (vote == false)
+			{
+				voteStatus = false;
+			}
+			else if (vote == true)
+			{
+				voteCount += 1;
+			}
+		}
+
+		//ClientPrint(null, 3, "\x01" + "Use " + "\x03" + "!shuffle\x01" + " to vote for a new set of cards (" + "\x03" + voteCount + "/4" + "\x01" + " votes"  + ")");
+
+		//Vote passed, shuffle cards
+		if (voteStatus == true)
+		{
+			ClientPrint(null, 3, "\x04" + "Shuffle vote passed!");
+			local player = null;
+			while ((player = Entities.FindByClassname(player, "player")) != null)
+			{
+				if (player.IsSurvivor())
+				{
+					EmitSoundOnClient("Vote.Passed", player);
+				}
+			}
+			InitCardPicking(true);
+			cardShuffled = true;
+		}
 	}
 }
 
@@ -666,6 +716,27 @@ function AllowTakeDamage(damageTable)
 					damageModifier += ApplyGamblerValue(GetSurvivorID(victim), 1, GamblerVictim, damageModifier) * -1;
 				}
 				damageDone = damageTable.DamageDone * damageModifier;
+			}
+		}
+		else
+		{
+			//Crows
+			local victimName = victim.GetName();
+			if (victimName.find("__crow_group_") != null)
+			{
+				if ((damageType & DMG_BLAST) == DMG_BLAST || (damageType & DMG_BLAST_SURFACE) == DMG_BLAST_SURFACE || (damageType & DMG_BURN) == DMG_BURN)
+				{
+					local nameArray = split(victimName, "_");
+					local moveEnt = Entities.FindByName(null, "__crow_group_" + nameArray[2] + "_move");
+					if (moveEnt != null)
+					{
+						if (moveEnt.IsValid())
+						{
+							//EmitAmbientSoundOn("player/Boomer/explode/Explo_Medium_10.wav", 1, 100, 170, moveEnt);
+							moveEnt.Kill();
+						}
+					}
+				}
 			}
 		}
 	}

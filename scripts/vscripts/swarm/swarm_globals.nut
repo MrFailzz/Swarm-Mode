@@ -166,7 +166,8 @@ else
 
 cardPickingAllowed <- [0, 0, 0, 0];
 cardShuffleVote <- [false, false, false, false];
-cardShuffled <- false
+cardShuffled <- false;
+shuffleVoteStarted <- false;
 cardReminderInterval <- 20;
 cardReminderTimer <- cardReminderInterval;
 cardsPerCategory <- 2;
