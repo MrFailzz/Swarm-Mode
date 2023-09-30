@@ -372,7 +372,7 @@ function AllowTakeDamage(damageTable)
 					
 					if (originalDamageDone != 0)
 					{
-						damageTable.DamageDone *= RecalculateMeleeDamage(victim);
+						damageTable.DamageDone *= (melee_damage.tofloat() / damageTable.DamageDone.tofloat()); //RecalculateMeleeDamage(victim, damageTable.DamageDone);
 					}
 				}
 
@@ -1365,7 +1365,7 @@ function WeaponFireM60(params)
  * 	}
  * 	return fResult;
 }*/
-function RecalculateMeleeDamage(victim)
+/*function RecalculateMeleeDamage(victim, damageDone)
 {
 	local result = 175.0;
 	local victimClass = null
@@ -1403,11 +1403,14 @@ function RecalculateMeleeDamage(victim)
 		break;
 	}
 
-	/*printl("melee_damage " + melee_damage);
-	printl("result " + result);*/
 
-	return melee_damage / result;
-}
+
+	printl("melee_damage " + melee_damage.tofloat());
+	printl("result " + result.tofloat());
+	printl("multi " + (melee_damage.tofloat() / result.tofloat()))
+
+	return melee_damage.tofloat() / result.tofloat();
+}*/
 
 
 ///////////////////////////////////////////////
