@@ -87,11 +87,11 @@ function Translation_EN(msg)
 		break;
 
 		case "#name_Francis":
-			return "Francis (+10% RES)"
+			return "Francis (+10% DEF)"
 		break;
 
 		case "#desc_Francis":
-			return "+10% RES"
+			return "+10% DEF"
 		break;
 
 		case "#name_GlassCannon":
@@ -99,7 +99,7 @@ function Translation_EN(msg)
 		break;
 
 		case "#desc_GlassCannon":
-			return "+30% DMG, -20% RES"
+			return "+30% DMG, -20% DEF"
 		break;
 
 		case "#name_Sharpshooter":
@@ -123,7 +123,7 @@ function Translation_EN(msg)
 		break;
 
 		case "#desc_Overconfident":
-			return "+25% RES at max lives"
+			return "+25% DEF at max lives"
 		break;
 
 		case "#name_Slugger":
@@ -291,7 +291,7 @@ function Translation_EN(msg)
 		break;
 
 		case "#desc_ToughSkin":
-			return "+40% RES vs Commons"
+			return "+40% DEF vs Commons"
 		break;
 
 		case "#name_ScarTissue":
@@ -299,7 +299,7 @@ function Translation_EN(msg)
 		break;
 
 		case "#desc_ScarTissue":
-			return "+30% RES, -50% Heal EFF"
+			return "+30% DEF, -50% Heal EFF"
 		break;
 
 		case "#name_ChemicalBarrier":
@@ -307,7 +307,7 @@ function Translation_EN(msg)
 		break;
 
 		case "#desc_ChemicalBarrier":
-			return "+50% Acid RES"
+			return "+50% Acid DEF"
 		break;
 
 		case "#name_FaceYourFears":
@@ -323,7 +323,7 @@ function Translation_EN(msg)
 		break;
 
 		case "#desc_BombDisposal":
-			return "+75% Explosive / Knockback RES"
+			return "+75% Explosive / Knockback DEF"
 		break;
 
 		case "#name_Numb":
@@ -331,7 +331,7 @@ function Translation_EN(msg)
 		break;
 
 		case "#desc_Numb":
-			return "Temp HP gives +10% RES"
+			return "Temp HP gives +10% DEF"
 		break;
 
 		case "#name_MeanDrunk":
@@ -395,7 +395,7 @@ function Translation_EN(msg)
 		break;
 
 		case "#desc_Overcrowded":
-			return "+0.5% DMG / +1% RES per Ridden in 5m"
+			return "+0.5% DMG / +1% DEF per Ridden in 5m"
 		break;
 
 		case "#name_LastLegs":
@@ -427,7 +427,7 @@ function Translation_EN(msg)
 		break;
 
 		case "#desc_FireProof":
-			return "+50% Fire RES"
+			return "+50% Fire DEF"
 		break;
 
 		case "#name_Kneecapper":
@@ -782,11 +782,11 @@ function Translation_RU(msg)
 		break;
 
 		case "#name_Francis":
-			return "Francis (+10% RES)"
+			return "Francis (+10% DEF)"
 		break;
 
 		case "#desc_Francis":
-			return "+10% RES"
+			return "+10% DEF"
 		break;
 
 		case "#name_GlassCannon":
@@ -794,7 +794,7 @@ function Translation_RU(msg)
 		break;
 
 		case "#desc_GlassCannon":
-			return "+30% DMG, -20% RES"
+			return "+30% DMG, -20% DEF"
 		break;
 
 		case "#name_Sharpshooter":
@@ -818,7 +818,7 @@ function Translation_RU(msg)
 		break;
 
 		case "#desc_Overconfident":
-			return "+25% RES at max lives"
+			return "+25% DEF at max lives"
 		break;
 
 		case "#name_Slugger":
@@ -986,7 +986,7 @@ function Translation_RU(msg)
 		break;
 
 		case "#desc_ToughSkin":
-			return "+40% RES vs Commons"
+			return "+40% DEF vs Commons"
 		break;
 
 		case "#name_ScarTissue":
@@ -994,7 +994,7 @@ function Translation_RU(msg)
 		break;
 
 		case "#desc_ScarTissue":
-			return "+30% RES, -50% Heal EFF"
+			return "+30% DEF, -50% Heal EFF"
 		break;
 
 		case "#name_ChemicalBarrier":
@@ -1002,7 +1002,7 @@ function Translation_RU(msg)
 		break;
 
 		case "#desc_ChemicalBarrier":
-			return "+50% Acid RES"
+			return "+50% Acid DEF"
 		break;
 
 		case "#name_FaceYourFears":
@@ -1018,7 +1018,7 @@ function Translation_RU(msg)
 		break;
 
 		case "#desc_BombDisposal":
-			return "+75% Explosive / Knockback RES"
+			return "+75% Explosive / Knockback DEF"
 		break;
 
 		case "#name_Numb":
@@ -1026,7 +1026,7 @@ function Translation_RU(msg)
 		break;
 
 		case "#desc_Numb":
-			return "Temp HP gives +10% RES"
+			return "Temp HP gives +10% DEF"
 		break;
 
 		case "#name_MeanDrunk":
@@ -1090,7 +1090,7 @@ function Translation_RU(msg)
 		break;
 
 		case "#desc_Overcrowded":
-			return "+0.5% DMG / +1% RES per Ridden in 5m"
+			return "+0.5% DMG / +1% DEF per Ridden in 5m"
 		break;
 
 		case "#name_LastLegs":
@@ -1122,7 +1122,7 @@ function Translation_RU(msg)
 		break;
 
 		case "#desc_FireProof":
-			return "+50% Fire RES"
+			return "+50% Fire DEF"
 		break;
 
 		case "#name_Kneecapper":

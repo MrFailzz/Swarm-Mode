@@ -337,7 +337,7 @@ function PrintGamblerValue(player)
 	local maxHpString = GamblerColor(maxHp) + "Max HP: " + GamblerSign(maxHp) + ", ";
 
 	local res = GetGamblerValue(GetSurvivorID(player), 1);
-	local resString = GamblerColor(res) + "RES: " + GamblerSign(res) + ", ";
+	local resString = GamblerColor(res) + "DEF: " + GamblerSign(res) + ", ";
 
 	local traumaRes = GetGamblerValue(GetSurvivorID(player), 2);
 	local traumaResString = GamblerColor(traumaRes) + "Trauma RES: " + GamblerSign(traumaRes) + ", ";
