@@ -295,6 +295,7 @@ function AllowTakeDamage(damageTable)
 	local originalDamageDone = damageTable.DamageDone;
 	local attacker = damageTable.Attacker;
 	local victim = damageTable.Victim;
+	//local inflictor = damageTable.Inflictor;
 	local attackerPlayer = null;
 	local attackerClass = null;
 	local attackerType = null;
@@ -307,6 +308,7 @@ function AllowTakeDamage(damageTable)
 		weaponClass = weapon.GetClassname();
 	}
 	local damageType = damageTable.DamageType;
+	//local damageLocation = damageTable.Location;
 
 	//Modifiers
 	local damageModifier = 1.00;
@@ -365,20 +367,14 @@ function AllowTakeDamage(damageTable)
 				}
 
 				//Override melee weapon damage
-				/*if (weaponClass == "weapon_melee")
+				if (weaponClass == "weapon_melee")
 				{
-					if (victimPlayer == true)
+					
+					if (originalDamageDone != 0)
 					{
-						if (!victim.IsSurvivor())
-						{
-							//damageTable.DamageDone = 1;
-						}
+						damageTable.DamageDone *= RecalculateMeleeDamage(victim);
 					}
-					else
-					{
-						//damageTable.DamageDone = 1;
-					}
-				}*/
+				}
 
 				//DownInFront
 				if (victimPlayer == true)
@@ -679,12 +675,19 @@ function AllowTakeDamage(damageTable)
 		damageDone = 1;
 	}
 	damageTable.DamageDone = damageDone;
-	/*printl("Attacker: " + attacker);
+
+	/*
+	printl("Attacker: " + attacker);
 	printl("Victim: " + victim);
 	printl("Weapon: " + weaponClass);
+	//printl("Inflictor: " + inflictor);
 	printl("Original DMG: " + originalDamageDone);
 	printl("New DMG: " + damageTable.DamageDone);
-	printl("DMG Modifier: " + damageModifier);*/
+	printl("DMG Modifier: " + damageModifier);
+	printl("DMG Type: " + damageType);
+	//printl("DMG Location: " + damageLocation);
+	printl("");
+	*/
 
 	return true;
 }
@@ -1329,6 +1332,81 @@ function WeaponFireM60(params)
 			}
 		}
 	}
+}
+
+/* @A1m`:
+ * Original code from the game, function 'CTerrorMeleeWeapon::GetDamageForVictim':
+ * Rewritten to sourcepawn for example :D
+ * In fact, there is no problem with melee damage, the damage depends on where you hit the hitbox (head, leg or body). This plugin removes it.
+ * 
+ * 	float fResult = 175.0;
+ * 	int iZclass = GetEntProp(iVictim, Prop_Send, "m_zombieClass", 4);
+ * 	switch (iZclass)
+ * 	{
+ * 		case L4D2Infected_Common:
+ * 		case L4D2Infected_Smoker:
+ * 		case L4D2Infected_Boomer:
+ * 		case L4D2Infected_Hunter:
+ * 		case L4D2Infected_Spitter:
+ * 		case L4D2Infected_Jockey:
+ * 			fResult = GetEntProp(iVictim, Prop_Send, "m_iHealth");
+ * 			break;
+ * 		case L4D2Infected_Charger:
+ * 			fResult = GetEntProp(client, Prop_Send, "m_iMaxHealth") * 0.64999998;
+ * 			break;
+ * 		case L4D2Infected_Witch:
+ * 			fResult = GetEntProp(client, Prop_Send, "m_iMaxHealth") * 0.25;
+ * 			break;
+ * 		case L4D2Infected_Tank:
+ * 			fResult = GetEntProp(client, Prop_Send, "m_iMaxHealth") * 0.050000001;
+ * 			break;
+ * 		default:
+ * 			return CMeleeWeaponInfo->m_fDamage;
+ * 	}
+ * 	return fResult;
+}*/
+function RecalculateMeleeDamage(victim)
+{
+	local result = 175.0;
+	local victimClass = null
+	if (victim.IsPlayer())
+	{
+		//Smoker = 1, Boomer = 2, Hunter = 3, Spitter = 4, Jockey = 5, Charger = 6, Witch = 7, Tank = 8, Survivor = 9
+		victimClass = victim.GetZombieType();
+	}
+	else
+	{
+		victimClass = victim.GetClassname();
+	}
+
+	switch(victimClass)
+	{
+		case 1:
+		case 2:
+		case 3:
+		case 4:
+		case 5:
+		case "infected":
+			result = NetProps.GetPropInt(victim, "m_iHealth");
+		break;
+
+		case 6:
+			result = NetProps.GetPropInt(victim, "m_iMaxHealth") * 0.64999998;
+		break;
+
+		case "witch":
+			result = NetProps.GetPropInt(victim, "m_iMaxHealth") * 0.25;
+		break;
+
+		case 8:
+			result = NetProps.GetPropInt(victim, "m_iMaxHealth") * 0.050000001;
+		break;
+	}
+
+	/*printl("melee_damage " + melee_damage);
+	printl("result " + result);*/
+
+	return melee_damage / result;
 }
 
 

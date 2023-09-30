@@ -56,7 +56,7 @@ brawnCards <-
 disciplineCards <-
 [
 	"StrengthInNumbers",
-	//"NoHead",
+	//"BOOM",
 	"FireProof",
 	//"HunkerDown",
 	//"SoftenUp",
@@ -540,8 +540,8 @@ function GetPlayerCardName(cardID, type = "name")
 				case "StrengthInNumbers":
 					return "Strength In Numbers";
 					break;
-				case "NoHead":
-					return "So No Head?";
+				case "BOOM":
+					return "BOOM!";
 					break;
 				case "FireProof":
 					return "Fire Proof";
@@ -813,8 +813,8 @@ function GetPlayerCardName(cardID, type = "name")
 				case "StrengthInNumbers":
 					return "Strength In Numbers";
 					break;
-				case "NoHead":
-					return "So No Head?";
+				case "BOOM":
+					return "BOOM!";
 					break;
 				case "FireProof":
 					return "Fire Proof";
@@ -1089,7 +1089,7 @@ function GetPlayerCardName(cardID, type = "name")
 				case "StrengthInNumbers":
 					return "+2.5% Team DMG per alive Cleaner";
 					break;
-				case "NoHead":
+				case "BOOM":
 					return "Headshot kills cause an explosion";
 					break;
 				case "FireProof":
@@ -1362,7 +1362,7 @@ function GetPlayerCardName(cardID, type = "name")
 				case "StrengthInNumbers":
 					return "+2.5% Team DMG per alive Cleaner";
 					break;
-				case "NoHead":
+				case "BOOM":
 					return "Headshot kills cause an explosion";
 					break;
 				case "FireProof":
