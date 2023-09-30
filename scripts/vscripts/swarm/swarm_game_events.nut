@@ -184,6 +184,7 @@ function OnGameEvent_triggered_car_alarm(params)
 function OnGameEvent_player_shoved(params)
 {
 	SleeperShoved(params);
+	VictimShoved(params);
 }
 
 function OnGameEvent_item_pickup(params)

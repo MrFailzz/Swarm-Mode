@@ -100,16 +100,18 @@ function TongueGrab(params)
 {
 	if (corruptionHocker == "Hocker")
 	{
-		local player = GetPlayerFromUserID(params["userid"]);
+		local attacker = GetPlayerFromUserID(params["userid"]);
+		local victim = GetPlayerFromUserID(params["victim"]);
 
 		// Make victim move backwards
 		Convars.SetValue("tongue_force_break", 0);
 		Convars.SetValue("tongue_victim_acceleration", -450);
 		Convars.SetValue("tongue_victim_max_speed", 450);
+		NetProps.SetPropInt(attacker, "m_tongueVictim", 0);
 
-		if (player.ValidateScriptScope())
+		if (attacker.ValidateScriptScope())
 		{
-			local hocker_entityscript = player.GetScriptScope();
+			local hocker_entityscript = attacker.GetScriptScope();
 			hocker_entityscript["TickCount"] <- 0;
 			hocker_entityscript["TongueSpeedReset"] <- function()
 			{
@@ -130,18 +132,61 @@ function TongueGrab(params)
 					Convars.SetValue("tongue_victim_acceleration", -40);
 					Convars.SetValue("tongue_victim_max_speed", 40);
 				}
-				else if (hocker_entityscript["TickCount"] > 6)
+				else if (hocker_entityscript["TickCount"] == 6)
 				{
 					Convars.SetValue("tongue_victim_acceleration", 0);
 					Convars.SetValue("tongue_victim_max_speed", 0);
+				}
+				else if (hocker_entityscript["TickCount"] > 36)
+				{
+					NetProps.SetPropInt(victim, "m_tongueOwner", 0);
 					return
 				}
 				hocker_entityscript["TickCount"]++;
 				return
 			}
 
-			AddThinkToEnt(player, "TongueSpeedReset");
+			AddThinkToEnt(attacker, "TongueSpeedReset");
 		}
+
+		local hockerThinker = SpawnEntityFromTable("info_target", { targetname = "hockerThinker" });
+		if (hockerThinker.ValidateScriptScope())
+		{
+			const RETHINK_TIME_HOCKER = 1;
+			local victim_entityscript = hockerThinker.GetScriptScope();
+			victim_entityscript["victim"] <- victim;
+			victim_entityscript["tongueVictim"] <- 0;
+			victim_entityscript["damagePerTick"] <- (5 * difficultyDamageScale) * RETHINK_TIME_HOCKER;
+			victim_entityscript["HockerSelfDamage"] <- function()
+			{
+				if (victim_entityscript["victim"].IsValid())
+				{
+					victim_entityscript["tongueVictim"] = NetProps.GetPropInt(victim_entityscript["victim"], "m_tongueOwner");
+					if (victim_entityscript["tongueVictim"] != 0)
+					{
+						victim_entityscript["victim"].TakeDamage(victim_entityscript["damagePerTick"], 0, attacker);
+						return RETHINK_TIME_HOCKER;
+					}
+					else
+					{
+						self.Kill();
+					}
+				}
+			}
+
+			AddThinkToEnt(hockerThinker, "HockerSelfDamage");
+		}
+	}	
+}
+
+function VictimShoved(params)
+{
+	//Free survivor on shove
+	local victim = GetPlayerFromUserID(params.userid);
+	local savior = GetPlayerFromUserID(params.attacker);
+	if (victim.GetZombieType() == 9)
+	{
+		NetProps.SetPropInt(victim, "m_tongueOwner", 0);
 	}
 }
 
@@ -224,12 +269,12 @@ function ExploderAbility(player)
 				{
 					if (player_entityscript["player"].GetHealth() > 1)
 					{
-						player_entityscript["player"].TakeDamage(player_entityscript["damagePerTick"], 0, null);
+						player_entityscript["player"].TakeDamage(player_entityscript["damagePerTick"], 0, player);
 						return RETHINK_TIME_EXPLODER;
 					}
 					else
 					{
-						player_entityscript["player"].TakeDamage(player_entityscript["damagePerTick"], 0, null);
+						player_entityscript["player"].TakeDamage(player_entityscript["damagePerTick"], 0, player);
 						self.Kill();
 					}
 				}
@@ -275,7 +320,7 @@ function BoomerExplosion(boomerOrigin, isExploder, exploder)
 }
 
 ///////////////////////////////////////////////
-//                  SPITTER                  //
+//                   RETCH                   //
 ///////////////////////////////////////////////
 function RetchVomitHit(params)
 {
