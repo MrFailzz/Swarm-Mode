@@ -1256,14 +1256,12 @@ function CorruptionCard_NoOffense()
 		}
 		
 		local OnMapItemsLength = OnMapItems.len();
-		printl(modelpath + " " + OnMapItemsLength);
 		if (OnMapItems.len() > 0)
 		{
 			while(OnMapItems.len() >= OnMapItemsLength * 0.25)
 			{
 				local randomItemIndex = RandomInt(0, OnMapItems.len() - 1);
 				local randomItem = OnMapItems.remove(randomItemIndex);
-				printl(randomItem);
 				randomItem.Kill();
 			}
 		}
@@ -1297,14 +1295,12 @@ function CorruptionCard_NoSupport()
 		}
 		
 		local OnMapItemsLength = OnMapItems.len();
-		printl(modelpath + " " + OnMapItemsLength);
 		if (OnMapItems.len() > 0)
 		{
 			while(OnMapItems.len() >= OnMapItemsLength * 0.25)
 			{
 				local randomItemIndex = RandomInt(0, OnMapItems.len() - 1);
 				local randomItem = OnMapItems.remove(randomItemIndex);
-				printl(randomItem);
 				randomItem.Kill();
 			}
 		}

@@ -29,6 +29,7 @@ function PickCard(player, cardID)
 		if (cardPickingAllowed[survivorID] == 0)
 		{
 			cardShuffleVote[survivorID] = true;
+			ShuffleVote(player, true);
 		}
 
 		if (card == "Gambler")
