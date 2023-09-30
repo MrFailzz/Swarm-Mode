@@ -318,14 +318,6 @@ function Translation_EN(msg)
 			return "+2 Temp HP on kill within 2.5m"
 		break;
 
-		case "#name_BombDisposal":
-			return "Bomb Disposal"
-		break;
-
-		case "#desc_BombDisposal":
-			return "+75% Explosive / Knockback DEF"
-		break;
-
 		case "#name_Numb":
 			return "Numb"
 		break;
@@ -462,14 +454,6 @@ function Translation_EN(msg)
 			return "+40% Team Max Ammo"
 		break;
 
-		case "#name_Grenadier":
-			return "Grenadier"
-		break;
-
-		case "#desc_Grenadier":
-			return "+50% Throwable duration"
-		break;
-
 		case "#name_Resupply":
 			return "Resupply"
 		break;
@@ -582,11 +566,11 @@ function Translation_EN(msg)
 			return "+30 Max HP, -5 Team Max HP"
 		break;
 
-		case "#name_Decoy":
-			return "Decoy"
+		case "#name_OutWithABang":
+			return "Out With A Bang"
 		break;
 
-		case "#desc_Decoy":
+		case "#desc_OutWithABang":
 			return "Drop a Pipe Bomb on incap"
 		break;
 
@@ -1013,14 +997,6 @@ function Translation_RU(msg)
 			return "+2 Temp HP on kill within 2.5m"
 		break;
 
-		case "#name_BombDisposal":
-			return "Bomb Disposal"
-		break;
-
-		case "#desc_BombDisposal":
-			return "+75% Explosive / Knockback DEF"
-		break;
-
 		case "#name_Numb":
 			return "Numb"
 		break;
@@ -1157,14 +1133,6 @@ function Translation_RU(msg)
 			return "+40% Team Max Ammo"
 		break;
 
-		case "#name_Grenadier":
-			return "Grenadier"
-		break;
-
-		case "#desc_Grenadier":
-			return "+50% Throwable duration"
-		break;
-
 		case "#name_Resupply":
 			return "Resupply"
 		break;
@@ -1277,11 +1245,11 @@ function Translation_RU(msg)
 			return "+30 Max HP, -5 Team Max HP"
 		break;
 
-		case "#name_Decoy":
-			return "Decoy"
+		case "#name_OutWithABang":
+			return "OutWithABang"
 		break;
 
-		case "#desc_Decoy":
+		case "#desc_OutWithABang":
 			return "Drop a Pipe Bomb on incap"
 		break;
 
