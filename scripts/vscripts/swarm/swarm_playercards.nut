@@ -154,6 +154,7 @@ function GetPickableCardsString(cardArray, cardCount, prefix, hudName, hudPlacem
 
 function MapTransition(params)
 {
+	SaveSettingsTable();
 	SavePlayerCards();
 
 	missionsCompleted["completed"] = 0;
@@ -228,6 +229,7 @@ function CompletedMission(cardID)
 
 function RoundFreezeEnd(params)
 {
+	LoadSettingsTable();
 	LoadPlayerCards();
 	LoadMissions();
 
