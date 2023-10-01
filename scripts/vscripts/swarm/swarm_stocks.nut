@@ -762,33 +762,7 @@ function Update()
 		}
 	}
 
-	if (corruptionUncommons != "None")
-	{
-		switch(corruptionUncommons)
-		{
-			case "uncommonClown":
-				ClownCountdown();
-				break;
-			case "uncommonRiot":
-				RiotCountdown();
-				break;
-			case "uncommonMud":
-				MudCountdown();
-				break;
-			case "uncommonCeda":
-				CedaCountdown();
-				break;
-			case "uncommonConstruction":
-				ConstructionCountdown();
-				break;
-			case "uncommonJimmy":
-				JimmyCountdown();
-				break;
-			case "uncommonFallen":
-				FallenCountdown();
-				break;
-		}
-	}
+	Update_UncommonSpawnTimer();
 
 	if (corruptionEnvironmental == "environmentFrozen")
 	{
