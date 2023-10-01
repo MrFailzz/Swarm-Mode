@@ -449,6 +449,7 @@ function CalcSpeedMultiplier(player)
 	local Addict = PlayerHasCard(player, "Addict");
 	local AddictMultiplier = AddictGetValue(player);
 	local Louis = PlayerHasCard(player, "Louis");
+	local RunLikeHell = PlayerHasCard(player, "RunLikeHell");
 
 	local speedMultiplier = (1
 							+ (-0.1 * SlowAndSteady)
@@ -456,7 +457,8 @@ function CalcSpeedMultiplier(player)
 							+ (0.07 * CrossTrainers)
 							+ (0.025 * MethHead * MethHeadCounter[GetSurvivorID(player)])
 							+ (0.05 * Berserker) + (AddictMultiplier * Addict)
-							+ (0.1 * Louis));
+							+ (0.1 * Louis)
+							+ (0.3 * RunLikeHell));
 	if (Gambler > 0)
 	{
 		speedMultiplier += ApplyGamblerValue(GetSurvivorID(player), 3, Gambler, speedMultiplier);
@@ -898,11 +900,17 @@ function ApplyShovePenalties(player)
 {
 	local survivorID = GetSurvivorID(player);
 	local shovePenalty = 0;
-	
+
 	local MagCoupler = PlayerHasCard(player, "MagCoupler");
 	if (MagCoupler > 0)
 	{
 		shovePenalty += 8;
+	}
+
+	local RunLikeHell = PlayerHasCard(player, "RunLikeHell");
+	if (RunLikeHell > 0)
+	{
+		shovePenalty += 5;
 	}
 
 	baseShovePenalty[survivorID] = shovePenalty;

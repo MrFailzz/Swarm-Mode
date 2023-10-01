@@ -20,7 +20,7 @@ reflexCards <-
 	"FleetOfFoot",
 	"CrossTrainers",
 	"Multitool",
-	//"RunLikeHell",
+	"RunLikeHell",
 	//"Quickdraw",
 	"Shredder",
 ];
