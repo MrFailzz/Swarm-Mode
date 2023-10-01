@@ -404,9 +404,21 @@ function CalcMaxHealth(heal = true)
 			local SelfishPlayer = PlayerHasCard(player, "Selfish");
 			local SelfishTeam = TeamHasCard("Selfish") - SelfishPlayer;
 			local NeedsOfTheMany = PlayerHasCard(player, "NeedsOfTheMany");
+			local MeanDrunk = PlayerHasCard(player, "MeanDrunk");
 
 			local currentMax = player.GetMaxHealth();
-			local newMax = (100 - TraumaDamage) + (35 * CannedGoods) + (50 * SlowAndSteady) + (-10 * FleetOfFoot) + (5 * CrossTrainers) + (10 * Coach) + (-15 * SelflessPlayer) + (20 * SelflessTeam) + (40 * SelfishPlayer) + (-5 * SelfishTeam) + (-10 * NeedsOfTheMany);
+			local newMax = ((100 - TraumaDamage)
+							+ (35 * CannedGoods)
+							+ (50 * SlowAndSteady)
+							+ (-10 * FleetOfFoot)
+							+ (5 * CrossTrainers)
+							+ (10 * Coach)
+							+ (-15 * SelflessPlayer)
+							+ (20 * SelflessTeam)
+							+ (40 * SelfishPlayer)
+							+ (-5 * SelfishTeam)
+							+ (-10 * NeedsOfTheMany)
+							+ (20 * MeanDrunk));
 			if (Gambler > 0)
 			{
 				newMax += ApplyGamblerValue(GetSurvivorID(player), 0, Gambler, newMax);
@@ -758,8 +770,11 @@ function SurvivorPickupItem(params)
 										entityscript["newNextAttack"] = entityscript["storedNextAttack"] - entityscript["baseMeleeSpeed"] + entityscript["newMeleeSpeed"];
 										entityscript["playbackRate"] = entityscript["baseMeleeSpeed"] / entityscript["newMeleeSpeed"];
 
-										NetProps.SetPropFloat(entityscript["weapon"], "m_flNextPrimaryAttack", entityscript["newNextAttack"]);
-										NetProps.SetPropFloat(entityscript["weapon"], "m_flPlaybackRate", entityscript["playbackRate"]);
+										if (entityscript["meleeModifier"] != 1)
+										{
+											NetProps.SetPropFloat(entityscript["weapon"], "m_flNextPrimaryAttack", entityscript["newNextAttack"]);
+											NetProps.SetPropFloat(entityscript["weapon"], "m_flPlaybackRate", entityscript["playbackRate"]);
+										}
 										
 										//printl("time " + Time() + " next " + NetProps.GetPropFloat(entityscript["weapon"], "m_flNextPrimaryAttack"));
 									}

@@ -336,7 +336,7 @@ function Translation_EN(msg)
 		break;
 
 		case "#desc_MeanDrunk":
-			return "+3 Shoves"
+			return "+20% Melee DMG, +20 Max HP"
 		break;
 
 		case "#name_BattleLust":
@@ -1020,7 +1020,7 @@ function Translation_RU(msg)
 		break;
 
 		case "#desc_MeanDrunk":
-			return "+3 Shoves"
+			return "+20% Melee DMG, +20 Max HP"
 		break;
 
 		case "#name_BattleLust":

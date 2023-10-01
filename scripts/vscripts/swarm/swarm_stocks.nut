@@ -64,6 +64,7 @@ function AllowTakeDamage(damageTable)
 	local Shredder = 0;
 	local ShredderMultiplier = 0;
 	local RunLikeHell = 0;
+	local MeanDrunk = 0;
 
 	//Modify Attacker damage
 	if (attacker.IsValid())
@@ -194,6 +195,7 @@ function AllowTakeDamage(damageTable)
 							Brazen = PlayerHasCard(attacker, "Brazen");
 							Berserker = PlayerHasCard(attacker, "Berserker");
 							Zoey = PlayerHasCard(attacker, "Zoey");
+							MeanDrunk = PlayerHasCard(attacker, "MeanDrunk");
 						}
 					}
 				}
@@ -260,6 +262,7 @@ function AllowTakeDamage(damageTable)
 								 + (0.1 * Zoey)
 								 + (0.05 * Nick)
 								 + (ShredderMultiplier * Shredder)
+								 + (0.2 * MeanDrunk)
 								 + (HeadMultiplier));
 				if (GamblerAttacker > 0)
 				{

@@ -38,7 +38,7 @@ brawnCards <-
 	"ChemicalBarrier",
 	"FaceYourFears",
 	//"Numb",
-	//"MeanDrunk",
+	"MeanDrunk",
 	//"BattleLust",
 	//"Brawler",
 	"Berserker",
