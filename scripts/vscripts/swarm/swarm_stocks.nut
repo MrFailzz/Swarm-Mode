@@ -1259,20 +1259,15 @@ function AmmoPack(params)
 
 function PropModels()
 {
-	if (!IsModelPrecached("models/swarm/props/barricade_razorwire001_128_reference.mdl"))
-		PrecacheModel("models/swarm/props/barricade_razorwire001_128_reference.mdl");
-	if (!IsModelPrecached("models/swarm/props/w_eq_incendiary_ammopack.mdl"))
-		PrecacheModel("models/swarm/props/w_eq_incendiary_ammopack.mdl");
-
 	local expl_pack = null;
 	local ince_pack = null;
 	while (expl_pack = Entities.FindByModel(expl_pack, "models/w_models/weapons/w_eq_explosive_ammopack.mdl"))
 	{
-		expl_pack.SetModel("models/swarm/props/barricade_razorwire001_128_reference.mdl");
+		PrecacheAndSetModel(expl_pack, "models/swarm/props/barricade_razorwire001_128_reference.mdl");
 	}
 	while (ince_pack = Entities.FindByModel(ince_pack, "models/w_models/weapons/w_eq_incendiary_ammopack.mdl"))
 	{
-		ince_pack.SetModel("models/swarm/props/w_eq_incendiary_ammopack.mdl");
+		PrecacheAndSetModel(ince_pack, "models/swarm/props/w_eq_incendiary_ammopack.mdl");
 	}	
 }
 
@@ -1287,4 +1282,14 @@ function AllowBash(basher, bashee)
 	}
 
 	return ALLOW_BASH_ALL;
+}
+
+function PrecacheAndSetModel(entity, model)
+{
+	if (!IsModelPrecached(model))
+	{
+		PrecacheModel(model);
+	}
+
+	entity.SetModel(model);
 }

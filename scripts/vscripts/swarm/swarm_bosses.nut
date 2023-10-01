@@ -195,18 +195,10 @@ function CancelRockAnimation()
 			local sequence = tank.GetSequence();
 			if (tank.GetSequenceName(sequence).find("Throw") != null)
 			{
-				// Changing the model resets all animations
+				// Changing the model resets all animations cleanly
 				local tankModel = tank.GetModelName();
-				if (!IsModelPrecached(tankModel))
-				{
-					PrecacheModel(tankModel);
-				}
-				if (!IsModelPrecached("models/infected/hunter.mdl"))
-				{
-					PrecacheModel("models/infected/hunter.mdl");
-				}
-				tank.SetModel("models/infected/hunter.mdl");
-				tank.SetModel(tankModel);
+				PrecacheAndSetModel(tank, "models/infected/hunter.mdl");
+				PrecacheAndSetModel(tank, tankModel);
 			}
 		}
 	}

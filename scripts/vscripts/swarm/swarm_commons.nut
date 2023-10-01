@@ -375,15 +375,8 @@ function ClownCountdown()
 
 function CreateClown(common)
 {
-	local uncommonModel = "models/infected/common_male_clown.mdl";
-
-	if (!IsModelPrecached(uncommonModel))
-	{
-		PrecacheModel(uncommonModel);
-	}
-
 	NetProps.SetPropInt(common, "m_Gender", 16);
-	common.SetModel(uncommonModel);
+	PrecacheAndSetModel(common, "models/infected/common_male_clown.mdl");
 	common.SetMaxHealth(120);
 	common.SetHealth(120);
 
@@ -412,15 +405,8 @@ function RiotCountdown()
 
 function CreateRiot(common)
 {
-	local uncommonModel = "models/infected/common_male_riot.mdl";
-	
-	if (!IsModelPrecached(uncommonModel))
-	{
-		PrecacheModel(uncommonModel);
-	}
-
 	NetProps.SetPropInt(common, "m_Gender", 15);
-	common.SetModel(uncommonModel);
+	PrecacheAndSetModel(common, "models/infected/common_male_riot.mdl");
 	common.SetMaxHealth(450);
 	common.SetHealth(450);
 
@@ -449,15 +435,8 @@ function MudCountdown()
 
 function CreateMud(common)
 {
-	local uncommonModel = "models/infected/common_male_mud.mdl";
-
-	if (!IsModelPrecached(uncommonModel))
-	{
-		PrecacheModel(uncommonModel);
-	}
-
 	NetProps.SetPropInt(common, "m_Gender", 12);
-	common.SetModel(uncommonModel);
+	PrecacheAndSetModel(common, "models/infected/common_male_mud.mdl");
 	common.SetMaxHealth(120);
 	common.SetHealth(120);
 
@@ -486,15 +465,8 @@ function CedaCountdown()
 
 function CreateCeda(common)
 {
-	local uncommonModel = "models/infected/common_male_ceda.mdl";
-
-	if (!IsModelPrecached(uncommonModel))
-	{
-		PrecacheModel(uncommonModel);
-	}
-
 	NetProps.SetPropInt(common, "m_Gender", 11);
-	common.SetModel(uncommonModel);
+	PrecacheAndSetModel(common, "models/infected/common_male_ceda.mdl");
 	common.SetMaxHealth(120);
 	common.SetHealth(120);
 
@@ -523,15 +495,8 @@ function ConstructionCountdown()
 
 function CreateConstruction(common)
 {
-	local uncommonModel = "models/infected/common_male_roadcrew.mdl";
-
-	if (!IsModelPrecached(uncommonModel))
-	{
-		PrecacheModel(uncommonModel);
-	}
-
 	NetProps.SetPropInt(common, "m_Gender", 13);
-	common.SetModel(uncommonModel);
+	PrecacheAndSetModel(common, "models/infected/common_male_roadcrew.mdl");
 	common.SetMaxHealth(120);
 	common.SetHealth(120);
 
@@ -560,15 +525,8 @@ function JimmyCountdown()
 
 function CreateJimmy(common)
 {
-	local uncommonModel = "models/infected/common_male_jimmy.mdl";
-
-	if (!IsModelPrecached(uncommonModel))
-	{
-		PrecacheModel(uncommonModel);
-	}
-
 	NetProps.SetPropInt(common, "m_Gender", 17);
-	common.SetModel(uncommonModel);
+	PrecacheAndSetModel(common, "models/infected/common_male_jimmy.mdl");
 	common.SetMaxHealth(450);
 	common.SetHealth(450);
 
@@ -597,15 +555,8 @@ function FallenCountdown()
 
 function CreateFallen(common)
 {
-	local uncommonModel = "models/infected/common_male_fallen_survivor.mdl";
-
-	if (!IsModelPrecached(uncommonModel))
-	{
-		PrecacheModel(uncommonModel);
-	}
-
 	NetProps.SetPropInt(common, "m_Gender", 14);
-	common.SetModel(uncommonModel);
+	PrecacheAndSetModel(common, "models/infected/common_male_fallen_survivor.mdl");
 	common.SetMaxHealth(450);
 	common.SetHealth(450);
 

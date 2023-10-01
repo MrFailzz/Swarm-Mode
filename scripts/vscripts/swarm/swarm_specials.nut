@@ -3,24 +3,8 @@
 ///////////////////////////////////////////////
 function MutationSpawn(player)
 {
-	if (!IsModelPrecached("models/infected/smoker.mdl"))
-		PrecacheModel("models/infected/smoker.mdl");
-	if (!IsModelPrecached("models/infected/smoker_l4d1.mdl"))
-		PrecacheModel("models/infected/smoker_l4d1.mdl");
-	if (!IsModelPrecached("models/swarm/infected/hunter.mdl"))
-		PrecacheModel("models/swarm/infected/hunter.mdl");
-	if (!IsModelPrecached("models/swarm/infected/boomer.mdl"))
-		PrecacheModel("models/swarm/infected/boomer.mdl");
-	if (!IsModelPrecached("models/swarm/infected/boomette.mdl"))
-		PrecacheModel("models/swarm/infected/boomette.mdl");
-	if (!IsModelPrecached("models/swarm/infected/boomer_l4d1.mdl"))
-		PrecacheModel("models/swarm/infected/boomer_l4d1.mdl");
 	if (!IsModelPrecached("models/infected/limbs/exploded_boomette.mdl"));
 		PrecacheModel("models/infected/limbs/exploded_boomette.mdl");
-	if (!IsModelPrecached("models/swarm/infected/charger.mdl"))
-		PrecacheModel("models/swarm/infected/charger.mdl");
-	if (!IsModelPrecached("models/swarm/infected/bruiser.mdl"))
-		PrecacheModel("models/swarm/infected/bruiser.mdl");
 
 	//Smoker = 1, Boomer = 2, Hunter = 3, Spitter = 4, Jockey = 5, Charger = 6, Witch = 7, Tank = 8, Survivor = 9
 	switch(player.GetZombieType())
@@ -28,11 +12,11 @@ function MutationSpawn(player)
 		case 1:
 			if (corruptionHocker == "Hocker")
 			{
-				player.SetModel("models/infected/smoker.mdl");
+				PrecacheAndSetModel(player, "models/infected/smoker.mdl");
 			}
 			else if (corruptionHocker == "Stinger")
 			{
-				player.SetModel("models/infected/smoker_l4d1.mdl");
+				PrecacheAndSetModel(player, "models/infected/smoker_l4d1.mdl");
 			}
 
 			DirectorOptions.SmokerLimit = RandomInt(1,3)
@@ -41,15 +25,15 @@ function MutationSpawn(player)
 		case 2:
 			if (corruptionRetch == "Exploder")
 			{
-				player.SetModel("models/swarm/infected/boomer.mdl");
+				PrecacheAndSetModel(player, "models/swarm/infected/boomer.mdl");
 			}
 			else if (corruptionRetch == "Retch")
 			{
-				player.SetModel("models/swarm/infected/boomette.mdl");
+				PrecacheAndSetModel(player, "models/swarm/infected/boomette.mdl");
 			}
 			else if (corruptionRetch == "Reeker")
 			{
-				player.SetModel("models/swarm/infected/boomer_l4d1.mdl");
+				PrecacheAndSetModel(player, "models/swarm/infected/boomer_l4d1.mdl");
 			}
 
 			DirectorOptions.BoomerLimit = RandomInt(1,3)
@@ -57,8 +41,8 @@ function MutationSpawn(player)
 
 		case 3:
 			//Make regular hunters always use L4D2 model so we can change texture
-			player.SetModel("models/swarm/infected/hunter.mdl");
-			NetProps.SetPropInt(player, "m_fFlags", NetProps.GetPropInt(player, "m_fFlags") | (1 << 6)) //FL_ATCONTROLS			(1 << 6)	/**< Player can't move, but keeps key inputs for controlling another entity */
+			PrecacheAndSetModel(player, "models/swarm/infected/hunter.mdl");
+			NetProps.SetPropInt(player, "m_fFlags", NetProps.GetPropInt(player, "m_fFlags") | (1 << 6)) //FL_ATCONTROLS	- Player can't move, but keeps key inputs for controlling another entity
 		break;
 
 		case 5:
@@ -69,11 +53,11 @@ function MutationSpawn(player)
 		case 6:
 			if (corruptionTallboy == "Tallboy")
 			{
-				player.SetModel("models/swarm/infected/charger.mdl");
+				PrecacheAndSetModel(player, "models/swarm/infected/charger.mdl");
 			}
 			else if (corruptionTallboy == "Bruiser")
 			{
-				player.SetModel("models/swarm/infected/bruiser.mdl");
+				PrecacheAndSetModel(player, "models/swarm/infected/bruiser.mdl");
 			}
 
 			z_speed = Convars.GetFloat("z_speed");
@@ -82,12 +66,7 @@ function MutationSpawn(player)
 		break;
 
 		case 8:
-			if (!IsModelPrecached(tankModel))
-			{
-				PrecacheModel(tankModel);
-			}
-
-			player.SetModel(tankModel);
+			PrecacheAndSetModel(player, tankModel);
 		break;
 	}
 }

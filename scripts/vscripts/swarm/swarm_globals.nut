@@ -482,7 +482,7 @@ crowGroupCountMax <- 4;				// Max number of crow groups to spawn
 sleeperCountMin <- 4;				// Mix number of sleepers to spawn
 sleeperCountMax <- 4;				// Max number of sleepers to spawn
 explosiveCarHealth <- 1000;			// HP of explosive cars
-spawnSnitch <- (RandomFloat(0.1,0.9))
+spawnSnitch <- (RandomFloat(0.1,0.9));
 snitchSpawned <- false;
 
 // HEALING //
@@ -491,8 +491,8 @@ pillsHealAmount <- 50;				// HP healed by pain pills
 adrenalineHealAmount <- 25;			// HP healed by adrenaline
 
 // PINGING //
-pingRange <- 2000					// Max range for pinging an object
-pingDuration <- 8					// How many seconds do objects stay pinged
+pingRange <- 2000;					// Max range for pinging an object
+pingDuration <- 8;					// How many seconds do objects stay pinged
 
 // SURVIVOR //
-survivorCrawlSpeed <- 30			// Last Legs base crawl speed
+survivorCrawlSpeed <- 30;			// Last Legs base crawl speed
