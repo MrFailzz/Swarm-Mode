@@ -280,7 +280,7 @@ function Translation_EN(msg)
 		break;
 
 		case "#desc_CannedGoods":
-			return "+30 Max HP"
+			return "+35 Max HP"
 		break;
 
 		case "#name_SlowAndSteady":
@@ -964,7 +964,7 @@ function Translation_RU(msg)
 		break;
 
 		case "#desc_CannedGoods":
-			return "+30 Max HP"
+			return "+35 Max HP"
 		break;
 
 		case "#name_SlowAndSteady":
