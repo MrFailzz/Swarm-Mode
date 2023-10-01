@@ -136,7 +136,7 @@ function Translation_EN(msg)
 		break;
 
 		case "#desc_Slugger":
-			return "+25% Melee / Shove Rate"
+			return "+30% Melee Speed"
 		break;
 
 		case "#name_MethHead":
@@ -232,7 +232,7 @@ function Translation_EN(msg)
 		break;
 
 		case "#desc_RunLikeHell":
-			return "+30% Move Speed, DISABLES: All Items"
+			return "+30% Move Speed, -15% DEF, Increases Shove CD"
 		break;
 
 		case "#name_Quickdraw":
@@ -280,7 +280,7 @@ function Translation_EN(msg)
 		break;
 
 		case "#desc_CannedGoods":
-			return "+30 Max HP"
+			return "+35 Max HP"
 		break;
 
 		case "#name_SlowAndSteady":
@@ -336,7 +336,7 @@ function Translation_EN(msg)
 		break;
 
 		case "#desc_MeanDrunk":
-			return "+3 Shoves"
+			return "+20% Melee DMG, +20 Max HP"
 		break;
 
 		case "#name_BattleLust":
@@ -544,7 +544,7 @@ function Translation_EN(msg)
 		break;
 
 		case "#desc_MagCoupler":
-			return "+75% Reload Speed, Increases Shove cooldown"
+			return "+75% Reload Speed, Increases Shove CD"
 		break;
 
 		case "#name_LuckyShot":
@@ -560,7 +560,7 @@ function Translation_EN(msg)
 		break;
 
 		case "#desc_Selfless":
-			return "-15 Max HP, +15 Team Max HP"
+			return "-15 Max HP, +20 Team Max HP"
 		break;
 
 		case "#name_Selfish":
@@ -568,7 +568,7 @@ function Translation_EN(msg)
 		break;
 
 		case "#desc_Selfish":
-			return "+30 Max HP, -5 Team Max HP"
+			return "+40 Max HP, -5 Team Max HP"
 		break;
 
 		case "#name_OutWithABang":
@@ -820,7 +820,7 @@ function Translation_RU(msg)
 		break;
 
 		case "#desc_Slugger":
-			return "+25% Melee / Shove Rate"
+			return "+30% Melee Speed"
 		break;
 
 		case "#name_MethHead":
@@ -916,7 +916,7 @@ function Translation_RU(msg)
 		break;
 
 		case "#desc_RunLikeHell":
-			return "+30% Move Speed, DISABLES: All Items"
+			return "+30% Move Speed, -15% DEF, Increases Shove CD"
 		break;
 
 		case "#name_Quickdraw":
@@ -964,7 +964,7 @@ function Translation_RU(msg)
 		break;
 
 		case "#desc_CannedGoods":
-			return "+30 Max HP"
+			return "+35 Max HP"
 		break;
 
 		case "#name_SlowAndSteady":
@@ -1020,7 +1020,7 @@ function Translation_RU(msg)
 		break;
 
 		case "#desc_MeanDrunk":
-			return "+3 Shoves"
+			return "+20% Melee DMG, +20 Max HP"
 		break;
 
 		case "#name_BattleLust":
@@ -1228,7 +1228,7 @@ function Translation_RU(msg)
 		break;
 
 		case "#desc_MagCoupler":
-			return "+75% Reload Speed, Increases Shove cooldown"
+			return "+75% Reload Speed, Increases Shove CD"
 		break;
 
 		case "#name_LuckyShot":
@@ -1244,7 +1244,7 @@ function Translation_RU(msg)
 		break;
 
 		case "#desc_Selfless":
-			return "-15 Max HP, +15 Team Max HP"
+			return "-15 Max HP, +20 Team Max HP"
 		break;
 
 		case "#name_Selfish":
@@ -1252,7 +1252,7 @@ function Translation_RU(msg)
 		break;
 
 		case "#desc_Selfish":
-			return "+30 Max HP, -5 Team Max HP"
+			return "+40 Max HP, -5 Team Max HP"
 		break;
 
 		case "#name_OutWithABang":

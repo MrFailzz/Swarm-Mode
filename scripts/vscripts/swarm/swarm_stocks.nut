@@ -63,6 +63,8 @@ function AllowTakeDamage(damageTable)
 	local HeadMultiplier = 0;
 	local Shredder = 0;
 	local ShredderMultiplier = 0;
+	local RunLikeHell = 0;
+	local MeanDrunk = 0;
 
 	//Modify Attacker damage
 	if (attacker.IsValid())
@@ -193,6 +195,7 @@ function AllowTakeDamage(damageTable)
 							Brazen = PlayerHasCard(attacker, "Brazen");
 							Berserker = PlayerHasCard(attacker, "Berserker");
 							Zoey = PlayerHasCard(attacker, "Zoey");
+							MeanDrunk = PlayerHasCard(attacker, "MeanDrunk");
 						}
 					}
 				}
@@ -259,6 +262,7 @@ function AllowTakeDamage(damageTable)
 								 + (0.1 * Zoey)
 								 + (0.05 * Nick)
 								 + (ShredderMultiplier * Shredder)
+								 + (0.2 * MeanDrunk)
 								 + (HeadMultiplier));
 				if (GamblerAttacker > 0)
 				{
@@ -364,6 +368,9 @@ function AllowTakeDamage(damageTable)
 					}
 				}
 
+				//RunLikeHell
+				RunLikeHell = PlayerHasCard(victim, "RunLikeHell");
+
 				damageModifier = (damageModifier
 								+ (0.2 * GlassCannonVictim)
 								+ (OverconfidentMultiplier * Overconfident)
@@ -373,6 +380,7 @@ function AllowTakeDamage(damageTable)
 								+ (-0.1 * Francis)
 								+ (-0.3 * ScarTissue)
 								+ (-0.4 * ToughSkin)
+								+ (0.15 * RunLikeHell)
 								+ (AcidMultiplier));
 				if (GamblerVictim > 0)
 				{

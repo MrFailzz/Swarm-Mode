@@ -189,6 +189,7 @@ cardHudTimeout <- 8;
 BaseTempHealthDecayRate <- 0.27;
 BaseSurvivorIncapDecayRate <- 3;
 MaxTraumaDamage <- 20;
+baseShovePenalty <- [0, 0, 0, 0];
 
 //Specials
 bChargerSpawned <- false;

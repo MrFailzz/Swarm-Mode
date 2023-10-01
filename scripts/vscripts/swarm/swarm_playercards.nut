@@ -51,7 +51,7 @@ function ApplyCardEffects(player, heal = true)
 	ApplyLastLegs();
 	ApplyNeedsOfTheMany();
 	ApplyCauterized();
-	ApplyMagCoupler(player);
+	ApplyShovePenalties(player);
 }
 
 function AddCardToTable(cardTable, player, card)
@@ -404,9 +404,21 @@ function CalcMaxHealth(heal = true)
 			local SelfishPlayer = PlayerHasCard(player, "Selfish");
 			local SelfishTeam = TeamHasCard("Selfish") - SelfishPlayer;
 			local NeedsOfTheMany = PlayerHasCard(player, "NeedsOfTheMany");
+			local MeanDrunk = PlayerHasCard(player, "MeanDrunk");
 
 			local currentMax = player.GetMaxHealth();
-			local newMax = (100 - TraumaDamage) + (30 * CannedGoods) + (50 * SlowAndSteady) + (-10 * FleetOfFoot) + (5 * CrossTrainers) + (10 * Coach) + (-15 * SelflessPlayer) + (15 * SelflessTeam) + (30 * SelfishPlayer) + (-5 * SelfishTeam) + (-10 * NeedsOfTheMany);
+			local newMax = ((100 - TraumaDamage)
+							+ (35 * CannedGoods)
+							+ (50 * SlowAndSteady)
+							+ (-10 * FleetOfFoot)
+							+ (5 * CrossTrainers)
+							+ (10 * Coach)
+							+ (-15 * SelflessPlayer)
+							+ (20 * SelflessTeam)
+							+ (40 * SelfishPlayer)
+							+ (-5 * SelfishTeam)
+							+ (-10 * NeedsOfTheMany)
+							+ (20 * MeanDrunk));
 			if (Gambler > 0)
 			{
 				newMax += ApplyGamblerValue(GetSurvivorID(player), 0, Gambler, newMax);
@@ -449,6 +461,7 @@ function CalcSpeedMultiplier(player)
 	local Addict = PlayerHasCard(player, "Addict");
 	local AddictMultiplier = AddictGetValue(player);
 	local Louis = PlayerHasCard(player, "Louis");
+	local RunLikeHell = PlayerHasCard(player, "RunLikeHell");
 
 	local speedMultiplier = (1
 							+ (-0.1 * SlowAndSteady)
@@ -456,7 +469,8 @@ function CalcSpeedMultiplier(player)
 							+ (0.07 * CrossTrainers)
 							+ (0.025 * MethHead * MethHeadCounter[GetSurvivorID(player)])
 							+ (0.05 * Berserker) + (AddictMultiplier * Addict)
-							+ (0.1 * Louis));
+							+ (0.1 * Louis)
+							+ (0.3 * RunLikeHell));
 	if (Gambler > 0)
 	{
 		speedMultiplier += ApplyGamblerValue(GetSurvivorID(player), 3, Gambler, speedMultiplier);
@@ -628,42 +642,6 @@ function ApplyCauterized()
 	}
 }
 
-function ApplyMagCoupler(player)
-{
-	local MagCoupler = PlayerHasCard(player, "MagCoupler");
-	if (MagCoupler > 0)
-	{
-		if (player.ValidateScriptScope())
-		{
-			local shove_entityscript = player.GetScriptScope();
-			shove_entityscript["TickCount"] <- 0;
-			shove_entityscript["ShoveCool"] <- function()
-			{
-				if (shove_entityscript["TickCount"] > 1)
-				{
-					NetProps.SetPropInt(player, "m_iShovePenalty", 8);
-					return
-				}
-				shove_entityscript["TickCount"]++;
-				return
-			}
-			AddThinkToEnt(player, "ShoveCool");
-		}
-	}
-	else if (MagCoupler < 1)
-	{
-		if (player.ValidateScriptScope())
-		{
-			local shove_entityscript = player.GetScriptScope();
-			shove_entityscript["ShoveCool"] <- function()
-			{
-				return
-			}
-			AddThinkToEnt(player, "ShoveCool");
-		}
-	}
-}
-
 function WeaponReload(params)
 {
 	local player = GetPlayerFromUserID(params["userid"]);
@@ -675,7 +653,7 @@ function WeaponReload(params)
 			if (player.IsSurvivor())
 			{
 				local weapon = player.GetActiveWeapon();
-				local weaponClass = weapon.GetClassname();
+				//local weaponClass = weapon.GetClassname();
 				local weaponSequence = weapon.GetSequence();
 				local baseReloadSpeed = weapon.GetSequenceDuration(weaponSequence);
 				local reloadModifier = GetReloadSpeedModifier(player);
@@ -724,6 +702,7 @@ function SurvivorPickupItem(params)
 							entityscript["reloadInsertDuration"] <- NetProps.GetPropFloat(weapon, "m_reloadInsertDuration");
 							entityscript["reloadEndDuration"] <- NetProps.GetPropFloat(weapon, "m_reloadEndDuration");
 							entityscript["weaponSequence"] <- weapon.GetSequence();
+
 							entityscript["ShotgunReload"] <- function()
 							{
 								if (entityscript["player"].IsValid() && entityscript["weapon"].IsValid())
@@ -754,6 +733,55 @@ function SurvivorPickupItem(params)
 							}
 
 							AddThinkToEnt(shotgunThinker, "ShotgunReload");
+						}
+					}
+					else if (weaponClass == "weapon_melee")
+					{
+						local meleeThinker = SpawnEntityFromTable("info_target", { targetname = "meleeThinker" + weaponID });
+						if (meleeThinker.ValidateScriptScope())
+						{
+							local entityscript = meleeThinker.GetScriptScope();
+							entityscript["player"] <- player;
+							entityscript["weapon"] <- weapon;
+							entityscript["weaponSequence"] <- weapon.GetSequence();
+							entityscript["baseMeleeSpeed"] <- 1;
+							entityscript["meleeModifier"] <- 1;
+							entityscript["newMeleeSpeed"] <- 1;
+							entityscript["newNextAttack"] <- 1;
+							entityscript["playbackRate"] <- 1;
+							entityscript["storedLastAttack"] <- 0;
+							entityscript["storedNextAttack"] <- 0;
+
+							entityscript["MeleeThink"] <- function()
+							{
+								if (entityscript["player"].IsValid() && entityscript["weapon"].IsValid())
+								{
+									if (entityscript["player"].GetActiveWeapon() == entityscript["weapon"])
+									{
+										if (entityscript["storedLastAttack"] != NetProps.GetPropFloat(entityscript["weapon"], "m_flLastAttackTime"))
+										{
+											entityscript["storedNextAttack"] = NetProps.GetPropFloat(entityscript["weapon"], "m_flNextPrimaryAttack");
+										}
+										entityscript["storedLastAttack"] = NetProps.GetPropFloat(entityscript["weapon"], "m_flLastAttackTime");
+										entityscript["weaponSequence"] = entityscript["weapon"].GetSequence();
+										entityscript["baseMeleeSpeed"] = entityscript["weapon"].GetSequenceDuration(entityscript["weaponSequence"]);
+										entityscript["meleeModifier"] = GetMeleeSpeedModifier(entityscript["player"]);
+										entityscript["newMeleeSpeed"] = entityscript["baseMeleeSpeed"] / entityscript["meleeModifier"];
+										entityscript["newNextAttack"] = entityscript["storedNextAttack"] - entityscript["baseMeleeSpeed"] + entityscript["newMeleeSpeed"];
+										entityscript["playbackRate"] = entityscript["baseMeleeSpeed"] / entityscript["newMeleeSpeed"];
+
+										if (entityscript["meleeModifier"] != 1)
+										{
+											NetProps.SetPropFloat(entityscript["weapon"], "m_flNextPrimaryAttack", entityscript["newNextAttack"]);
+											NetProps.SetPropFloat(entityscript["weapon"], "m_flPlaybackRate", entityscript["playbackRate"]);
+										}
+										
+										//printl("time " + Time() + " next " + NetProps.GetPropFloat(entityscript["weapon"], "m_flNextPrimaryAttack"));
+									}
+								}
+							}
+
+							AddThinkToEnt(meleeThinker, "MeleeThink");
 						}
 					}
 				}
@@ -892,65 +920,106 @@ function HeightendSensesPing(player)
 	}
 }
 
+function UpdateAddict(player)
+{
+	local AddictValue = AddictGetValue(player);
+	if (AddictValue < 0)
+	{
+		//ScreenShake(vecCenter, flAmplitude, flFrequency, flDuration, flRadius, eCommand, bAirShake)
+		local playerOrigin = player.GetOrigin();
+		if (AddictValue < -0.15)
+		{
+			//Strong effect
+			ScreenFade(player, 0, 0, 0, 140, 1, 1, 1 | 2);
+			ScreenShake(Vector(playerOrigin.x, playerOrigin.y, playerOrigin.z + 34), RandomInt(4, 7), 10, 2, 5, 0, true);
+
+			if (addictPlaySound == false)
+			{
+				StopSoundOn("Player.Heartbeat", player);
+				StopSoundOn("Player.Heartbeat", player);
+				addictPlaySound = true;
+			}
+			else
+			{
+				EmitSoundOnClient("Player.Heartbeat", player);
+				addictPlaySound = false;
+			}
+		}
+		else
+		{
+			//Weak effect
+			ScreenFade(player, 0, 0, 0, 90, 1, 1, 1 | 2);
+			ScreenShake(Vector(playerOrigin.x, playerOrigin.y, playerOrigin.z + 34), RandomInt(2, 6), 10, 2, 5, 0, true);
+		}
+	}
+	else
+	{
+		StopSoundOn("Player.Heartbeat", player);
+	}
+}
+
+function ApplyShovePenalties(player)
+{
+	local survivorID = GetSurvivorID(player);
+	local shovePenalty = 0;
+
+	local MagCoupler = PlayerHasCard(player, "MagCoupler");
+	if (MagCoupler > 0)
+	{
+		shovePenalty += 8;
+	}
+
+	local RunLikeHell = PlayerHasCard(player, "RunLikeHell");
+	if (RunLikeHell > 0)
+	{
+		shovePenalty += 5;
+	}
+
+	baseShovePenalty[survivorID] = shovePenalty;
+}
+
+function UpdateShovePenalty(player)
+{
+	local survivorID = GetSurvivorID(player);
+	local shovePenalty = NetProps.GetPropInt(player, "m_iShovePenalty");
+
+	if (shovePenalty < baseShovePenalty[survivorID])
+	{
+		NetProps.SetPropInt(player, "m_iShovePenalty", baseShovePenalty[survivorID]);
+	}
+}
+
 function Update_PlayerCards()
 {
-	//Runs every second
+	//Runs every second, put player card related functions in here instead of _stocks Update()
 
 	CalcMaxHealth(false);
 
 	local player = null;
 	while ((player = Entities.FindByClassname(player, "player")) != null)
 	{
-		if (player.IsSurvivor())
+		if (player.IsValid())
 		{
-			CalcSpeedMultiplier(player);
-
-			local HeightendSenses = PlayerHasCard(player, "HeightendSenses");
-			if (HeightendSenses > 0)
+			if (player.IsSurvivor())
 			{
-				HeightendSensesPing(player);
-			}
+				CalcSpeedMultiplier(player);
 
-			if (!player.IsDead() && !player.IsIncapacitated() && !player.IsHangingFromLedge())
-			{
-				local Addict = PlayerHasCard(player, "Addict");
-				if (Addict > 0)
+				local HeightendSenses = PlayerHasCard(player, "HeightendSenses");
+				if (HeightendSenses > 0)
 				{
-					local AddictValue = AddictGetValue(player);
-					if (AddictValue < 0)
-					{
-						//ScreenShake(vecCenter, flAmplitude, flFrequency, flDuration, flRadius, eCommand, bAirShake)
-						local playerOrigin = player.GetOrigin();
-						if (AddictValue < -0.15)
-						{
-							//Strong effect
-							ScreenFade(player, 0, 0, 0, 140, 1, 1, 1 | 2);
-							ScreenShake(Vector(playerOrigin.x, playerOrigin.y, playerOrigin.z + 34), RandomInt(4, 7), 10, 2, 5, 0, true);
+					HeightendSensesPing(player);
+				}
 
-							if (addictPlaySound == false)
-							{
-								StopSoundOn("Player.Heartbeat", player);
-								StopSoundOn("Player.Heartbeat", player);
-								addictPlaySound = true;
-							}
-							else
-							{
-								EmitSoundOnClient("Player.Heartbeat", player);
-								addictPlaySound = false;
-							}
-						}
-						else
-						{
-							//Weak effect
-							ScreenFade(player, 0, 0, 0, 90, 1, 1, 1 | 2);
-							ScreenShake(Vector(playerOrigin.x, playerOrigin.y, playerOrigin.z + 34), RandomInt(2, 6), 10, 2, 5, 0, true);
-						}
-					}
-					else
+				if (!player.IsDead() && !player.IsIncapacitated() && !player.IsHangingFromLedge())
+				{
+					local Addict = PlayerHasCard(player, "Addict");
+					if (Addict > 0)
 					{
-						StopSoundOn("Player.Heartbeat", player);
+						UpdateAddict(player);
 					}
 				}
+
+				UpdateShovePenalty(player);
 			}
 		}
 	}

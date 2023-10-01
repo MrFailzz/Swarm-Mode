@@ -8,7 +8,7 @@ reflexCards <-
 	"Sharpshooter",
 	"Outlaw",
 	"Overconfident",
-	//"Slugger",
+	"Slugger",
 	"MethHead",
 	"OpticsEnthusiast",
 	//"Breakout",
@@ -20,7 +20,7 @@ reflexCards <-
 	"FleetOfFoot",
 	"CrossTrainers",
 	"Multitool",
-	//"RunLikeHell",
+	"RunLikeHell",
 	//"Quickdraw",
 	"Shredder",
 ];
@@ -38,7 +38,7 @@ brawnCards <-
 	"ChemicalBarrier",
 	"FaceYourFears",
 	//"Numb",
-	//"MeanDrunk",
+	"MeanDrunk",
 	//"BattleLust",
 	//"Brawler",
 	"Berserker",
@@ -283,12 +283,27 @@ function GetReloadSpeedModifier(player)
 
 	if (reloadModifier <= 0)
 	{
-		reloadModifier = 0.01
+		reloadModifier = 0.01;
 	}
 
 	return reloadModifier;
 }
 ::GetReloadSpeedModifier <- GetReloadSpeedModifier;
+
+function GetMeleeSpeedModifier(player)
+{
+	local Slugger = PlayerHasCard(player, "Slugger");
+
+	local meleeModifier = 1 + (0.30 * Slugger);
+
+	if (meleeModifier <= 0)
+	{
+		meleeModifier = 0.01;
+	}
+
+	return meleeModifier;
+}
+::GetMeleeSpeedModifier <- GetMeleeSpeedModifier;
 
 function GetGamblerValue(player, index)
 {
