@@ -136,7 +136,7 @@ function Translation_EN(msg)
 		break;
 
 		case "#desc_Slugger":
-			return "+25% Melee / Shove Rate"
+			return "+30% Melee Speed"
 		break;
 
 		case "#name_MethHead":
@@ -820,7 +820,7 @@ function Translation_RU(msg)
 		break;
 
 		case "#desc_Slugger":
-			return "+25% Melee / Shove Rate"
+			return "+30% Melee Speed"
 		break;
 
 		case "#name_MethHead":

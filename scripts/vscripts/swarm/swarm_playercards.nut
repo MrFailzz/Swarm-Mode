@@ -641,7 +641,7 @@ function WeaponReload(params)
 			if (player.IsSurvivor())
 			{
 				local weapon = player.GetActiveWeapon();
-				local weaponClass = weapon.GetClassname();
+				//local weaponClass = weapon.GetClassname();
 				local weaponSequence = weapon.GetSequence();
 				local baseReloadSpeed = weapon.GetSequenceDuration(weaponSequence);
 				local reloadModifier = GetReloadSpeedModifier(player);
@@ -690,6 +690,7 @@ function SurvivorPickupItem(params)
 							entityscript["reloadInsertDuration"] <- NetProps.GetPropFloat(weapon, "m_reloadInsertDuration");
 							entityscript["reloadEndDuration"] <- NetProps.GetPropFloat(weapon, "m_reloadEndDuration");
 							entityscript["weaponSequence"] <- weapon.GetSequence();
+
 							entityscript["ShotgunReload"] <- function()
 							{
 								if (entityscript["player"].IsValid() && entityscript["weapon"].IsValid())
@@ -720,6 +721,52 @@ function SurvivorPickupItem(params)
 							}
 
 							AddThinkToEnt(shotgunThinker, "ShotgunReload");
+						}
+					}
+					else if (weaponClass == "weapon_melee")
+					{
+						local meleeThinker = SpawnEntityFromTable("info_target", { targetname = "meleeThinker" + weaponID });
+						if (meleeThinker.ValidateScriptScope())
+						{
+							local entityscript = meleeThinker.GetScriptScope();
+							entityscript["player"] <- player;
+							entityscript["weapon"] <- weapon;
+							entityscript["weaponSequence"] <- weapon.GetSequence();
+							entityscript["baseMeleeSpeed"] <- 1;
+							entityscript["meleeModifier"] <- 1;
+							entityscript["newMeleeSpeed"] <- 1;
+							entityscript["newNextAttack"] <- 1;
+							entityscript["playbackRate"] <- 1;
+							entityscript["storedLastAttack"] <- 0;
+							entityscript["storedNextAttack"] <- 0;
+
+							entityscript["MeleeThink"] <- function()
+							{
+								if (entityscript["player"].IsValid() && entityscript["weapon"].IsValid())
+								{
+									if (entityscript["player"].GetActiveWeapon() == entityscript["weapon"])
+									{
+										if (entityscript["storedLastAttack"] != NetProps.GetPropFloat(entityscript["weapon"], "m_flLastAttackTime"))
+										{
+											entityscript["storedNextAttack"] = NetProps.GetPropFloat(entityscript["weapon"], "m_flNextPrimaryAttack");
+										}
+										entityscript["storedLastAttack"] = NetProps.GetPropFloat(entityscript["weapon"], "m_flLastAttackTime");
+										entityscript["weaponSequence"] = entityscript["weapon"].GetSequence();
+										entityscript["baseMeleeSpeed"] = entityscript["weapon"].GetSequenceDuration(entityscript["weaponSequence"]);
+										entityscript["meleeModifier"] = GetMeleeSpeedModifier(entityscript["player"]);
+										entityscript["newMeleeSpeed"] = entityscript["baseMeleeSpeed"] / entityscript["meleeModifier"];
+										entityscript["newNextAttack"] = entityscript["storedNextAttack"] - entityscript["baseMeleeSpeed"] + entityscript["newMeleeSpeed"];
+										entityscript["playbackRate"] = entityscript["baseMeleeSpeed"] / entityscript["newMeleeSpeed"];
+
+										NetProps.SetPropFloat(entityscript["weapon"], "m_flNextPrimaryAttack", entityscript["newNextAttack"]);
+										NetProps.SetPropFloat(entityscript["weapon"], "m_flPlaybackRate", entityscript["playbackRate"]);
+										
+										//printl("time " + Time() + " next " + NetProps.GetPropFloat(entityscript["weapon"], "m_flNextPrimaryAttack"));
+									}
+								}
+							}
+
+							AddThinkToEnt(meleeThinker, "MeleeThink");
 						}
 					}
 				}
