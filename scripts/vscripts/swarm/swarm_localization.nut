@@ -560,7 +560,7 @@ function Translation_EN(msg)
 		break;
 
 		case "#desc_Selfless":
-			return "-15 Max HP, +15 Team Max HP"
+			return "-15 Max HP, +20 Team Max HP"
 		break;
 
 		case "#name_Selfish":
@@ -568,7 +568,7 @@ function Translation_EN(msg)
 		break;
 
 		case "#desc_Selfish":
-			return "+30 Max HP, -5 Team Max HP"
+			return "+40 Max HP, -5 Team Max HP"
 		break;
 
 		case "#name_OutWithABang":
@@ -1244,7 +1244,7 @@ function Translation_RU(msg)
 		break;
 
 		case "#desc_Selfless":
-			return "-15 Max HP, +15 Team Max HP"
+			return "-15 Max HP, +20 Team Max HP"
 		break;
 
 		case "#name_Selfish":
@@ -1252,7 +1252,7 @@ function Translation_RU(msg)
 		break;
 
 		case "#desc_Selfish":
-			return "+30 Max HP, -5 Team Max HP"
+			return "+40 Max HP, -5 Team Max HP"
 		break;
 
 		case "#name_OutWithABang":

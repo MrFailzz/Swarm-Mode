@@ -406,7 +406,7 @@ function CalcMaxHealth(heal = true)
 			local NeedsOfTheMany = PlayerHasCard(player, "NeedsOfTheMany");
 
 			local currentMax = player.GetMaxHealth();
-			local newMax = (100 - TraumaDamage) + (35 * CannedGoods) + (50 * SlowAndSteady) + (-10 * FleetOfFoot) + (5 * CrossTrainers) + (10 * Coach) + (-15 * SelflessPlayer) + (15 * SelflessTeam) + (30 * SelfishPlayer) + (-5 * SelfishTeam) + (-10 * NeedsOfTheMany);
+			local newMax = (100 - TraumaDamage) + (35 * CannedGoods) + (50 * SlowAndSteady) + (-10 * FleetOfFoot) + (5 * CrossTrainers) + (10 * Coach) + (-15 * SelflessPlayer) + (20 * SelflessTeam) + (40 * SelfishPlayer) + (-5 * SelfishTeam) + (-10 * NeedsOfTheMany);
 			if (Gambler > 0)
 			{
 				newMax += ApplyGamblerValue(GetSurvivorID(player), 0, Gambler, newMax);
