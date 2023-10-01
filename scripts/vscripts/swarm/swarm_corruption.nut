@@ -381,7 +381,7 @@ function UpdateCorruptionCardHUD()
 
 function GetCorruptionCardName(cardID)
 {
-	if (language == "English")
+	if (swarmSettingsTable["language"] == "English")
 	{
 		switch(cardID)
 		{
@@ -558,7 +558,7 @@ function GetCorruptionCardName(cardID)
 				break;
 		}
 	}
-	else if (language == "Russian")
+	else if (swarmSettingsTable["language"] == "Russian")
 	{
 		switch(cardID)
 		{

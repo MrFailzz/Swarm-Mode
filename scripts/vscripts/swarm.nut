@@ -7,6 +7,7 @@ swarmMode <- "swarm";
 ///////////////////////////////////////////////
 IncludeScript("swarm/swarm_globals");
 IncludeScript("swarm/swarm_stocks");
+IncludeScript("swarm/swarm_commands");
 IncludeScript("swarm/swarm_game_events");
 IncludeScript("swarm/swarm_corruption");
 IncludeScript("swarm/swarm_bosses");

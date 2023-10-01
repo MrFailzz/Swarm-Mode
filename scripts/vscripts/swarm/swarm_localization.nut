@@ -5,7 +5,7 @@ function Loc(msg)
 {
 	if (msg.slice(0, 1) == "#")
 	{
-		switch(language)
+		switch(swarmSettingsTable["language"])
 		{
 			case "English":
 				return Translation_EN(msg);
@@ -25,8 +25,13 @@ function Translation_EN(msg)
 {
 	switch(msg)
 	{
+		//CHAT MESSAGES
 		case "#lang_localization":
 			return "English localization";
+		break;
+
+		case "#giveup_msg":
+			return "\x01" + "Type " + "\x03" + "!giveup" + "\x01" + " to die...";
 		break;
 
 		//PLAYER CARDS
@@ -704,8 +709,13 @@ function Translation_RU(msg)
 {
 	switch(msg)
 	{
+		//CHAT MESSAGES
 		case "#lang_localization":
 			return "Русский localization";
+		break;
+
+		case "#giveup_msg":
+			return "\x01" + "Type " + "\x03" + "!giveup" + "\x01" + " to die...";
 		break;
 
 		//PLAYER CARDS

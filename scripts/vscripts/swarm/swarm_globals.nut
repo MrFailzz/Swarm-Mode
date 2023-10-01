@@ -1,13 +1,18 @@
 ///////////////////////////////////////////////
 //            GLOBALS / CONSTANTS            //
 ///////////////////////////////////////////////
+swarmSettingsTable <-
+{
+	language = "English",
+	hardcore = false,
+	debug_mode = false,
+}
+
 //Globals
-language <- "English";
 difficulty <- GetDifficulty();
 survivorSet <- Director.GetSurvivorSet();
 z_speed <- Convars.GetFloat("z_speed");
 BaseMaxIncaps <- 2;
-DebugMode <- false;
 
 // Fog Map Defaults (disabled since this apparently runs on every restart)
 /*
@@ -406,7 +411,7 @@ DirectorOptions.SurvivorMaxIncapacitatedCount = BaseMaxIncaps;
 ///////////////////////////////////////////////
 //              GAMEMODE OPTIONS             //
 ///////////////////////////////////////////////
-if (swarmMode == "hardcore" || swarmMode == "survival" || swarmMode == "vs" || swarmMode == "survival_vs")
+if (swarmMode == "survival" || swarmMode == "survival_vs")
 {
 	DirectorOptions.cm_TankLimit = 2;
 }
