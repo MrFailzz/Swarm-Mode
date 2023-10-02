@@ -4,6 +4,8 @@
 IncludeScript("swarm/swarm_globals");
 IncludeScript("swarm/swarm_stocks");
 IncludeScript("swarm/swarm_damage");
+IncludeScript("swarm/swarm_hud");
+IncludeScript("swarm/swarm_healing");
 IncludeScript("swarm/swarm_commands");
 IncludeScript("swarm/swarm_game_events");
 IncludeScript("swarm/swarm_corruption");

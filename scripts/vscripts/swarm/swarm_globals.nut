@@ -1,6 +1,9 @@
 ///////////////////////////////////////////////
 //            GLOBALS / CONSTANTS            //
 ///////////////////////////////////////////////
+//1m = 40 units
+//5m = 200 units
+
 swarmSettingsTable <-
 {
 	language = "English",

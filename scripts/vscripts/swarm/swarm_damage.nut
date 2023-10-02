@@ -87,7 +87,7 @@ function AllowTakeDamage(damageTable)
 					
 					if (originalDamageDone != 0)
 					{
-						damageTable.DamageDone *= (melee_damage.tofloat() / damageTable.DamageDone.tofloat()); //RecalculateMeleeDamage(victim, damageTable.DamageDone);
+						damageTable.DamageDone *= (melee_damage.tofloat() / damageTable.DamageDone.tofloat());
 					}
 				}
 
