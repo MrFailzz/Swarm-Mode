@@ -1,475 +1,6 @@
 ///////////////////////////////////////////////
 //               SHARED EVENTS               //
 ///////////////////////////////////////////////
-function AllowTakeDamage(damageTable)
-{
-	//Table values
-	local damageDone = damageTable.DamageDone;
-	local originalDamageDone = damageTable.DamageDone;
-	local attacker = damageTable.Attacker;
-	local victim = damageTable.Victim;
-	//local inflictor = damageTable.Inflictor;
-	local attackerPlayer = null;
-	local attackerClass = null;
-	local attackerType = null;
-	local victimPlayer = null;
-	local victimType = null;
-	local weapon = damageTable.Weapon;
-	local weaponClass = null;
-	if (weapon != null)
-	{
-		weaponClass = weapon.GetClassname();
-	}
-	local damageType = damageTable.DamageType;
-	//local damageLocation = damageTable.Location;
-
-	//Modifiers
-	local damageModifier = 1.00;
-	local GlassCannonAttacker = 0;
-	local GlassCannonVictim = 0;
-	local Sharpshooter = 0;
-	local Outlaw = 0;
-	local Overconfident = 0;
-	local OverconfidentMultiplier = 0;
-	local Broken = 0;
-	local Pyromaniac = 0;
-	local BombSquad = 0;
-	local LuckyShot = 0;
-	local LuckyShotRoll = 0;
-	local FireProof = 0;
-	local EyeOfTheSwarmAttacker = 0;
-	local Brazen = 0;
-	local StrengthInNumbers = 0;
-	local StrengthInNumbersSurvivors = 0;
-	local ConfidentKiller = 0;
-	local ChemicalBarrier = 0;
-	local Berserker = 0;
-	local AddictAttacker = 0;
-	local AddictAttackerMultiplier = 0;
-	local AddictVictim = 0;
-	local AddictVictimMultiplier = 0;
-	local BuckshotBruiser = 0;
-	local Nick = 0;
-	local Ellis = 0;
-	local Zoey = 0;
-	local Francis = 0;
-	local ScarTissue = 0;
-	local Arsonist = 0;
-	local SwanSong = 0;
-	local ToughSkin = 0;
-	local GamblerAttacker = 0;
-	local GamblerVictim = 0;
-	local AcidMultiplier = 0;
-	local HeadMultiplier = 0;
-	local Shredder = 0;
-	local ShredderMultiplier = 0;
-	local RunLikeHell = 0;
-	local MeanDrunk = 0;
-
-	//Modify Attacker damage
-	if (attacker.IsValid())
-	{
-		if (attacker.IsPlayer())
-		{
-			//Survivor dealing damage
-			if (attacker.IsSurvivor())
-			{
-				//Attack Specific Variables
-				if (victim.IsValid())
-				{
-					victimPlayer = victim.IsPlayer();
-					victimType = victim.GetClassname();
-				}
-
-				//Override melee weapon damage
-				if (weaponClass == "weapon_melee")
-				{
-					
-					if (originalDamageDone != 0)
-					{
-						damageTable.DamageDone *= (melee_damage.tofloat() / damageTable.DamageDone.tofloat()); //RecalculateMeleeDamage(victim, damageTable.DamageDone);
-					}
-				}
-
-				//DownInFront
-				if (victimPlayer == true)
-				{
-					if (victim.IsSurvivor())
-					{
-						if ((attacker.GetButtonMask() & IN_DUCK) && PlayerHasCard(attacker, "DownInFront"))
-						{
-							return false;
-						}
-					}
-				}
-
-				//Shredder
-				Shredder = PlayerHasCard(attacker, "Shredder");
-				if (Shredder > 0)
-				{
-					local shotsfired = NetProps.GetPropInt(attacker, "m_iShotsFired");
-					ShredderMultiplier = 0.01 * shotsfired;
-				}
-
-				//Gambler
-				local GamblerAttacker = PlayerHasCard(attacker, "Gambler");
-
-				//Nick Perk
-				Nick = PlayerHasCard(attacker, "Nick");
-
-				//Glass Cannon
-				GlassCannonAttacker = PlayerHasCard(attacker, "GlassCannon");
-
-				//Sharpshooter
-				if (GetVectorDistance(attacker.GetOrigin(), victim.GetOrigin()) > 400)
-				{
-					Sharpshooter = PlayerHasCard(attacker, "Sharpshooter");
-				}
-
-				//Outlaw
-				if (weaponClass == "weapon_pistol" || weaponClass == "weapon_pistol_magnum")
-				{
-					Outlaw = PlayerHasCard(attacker, "Outlaw");
-				}
-
-				//Broken
-				if (victimPlayer == true)
-				{
-					if (victim.GetZombieType() == 8)
-					{
-						Broken = PlayerHasCard(attacker, "Broken");
-					}
-				}
-				else if (victimType == "witch")
-				{
-					Broken = PlayerHasCard(attacker, "Broken");
-				}
-				
-				//Pyromaniac
-				//Arsonist
-				if ((damageType & DMG_BURN) == DMG_BURN)
-				{
-					Pyromaniac = PlayerHasCard(attacker, "Pyromaniac");
-					Arsonist = PlayerHasCard(attacker, "Arsonist");
-					if (Arsonist > 0)
-					{
-						Heal_TempHealth(attacker, 0.1 * Arsonist);
-					}
-				}
-
-				//BombSquad
-				if ((damageType & DMG_BLAST) == DMG_BLAST || (damageType & DMG_BLAST_SURFACE) == DMG_BLAST_SURFACE)
-				{
-					BombSquad = PlayerHasCard(attacker, "BombSquad");
-				}
-
-				//LuckyShot
-				//Ellis Perk
-				LuckyShot = TeamHasCard("LuckyShot");
-				Ellis = PlayerHasCard(attacker, "Ellis");
-				SwanSong = PlayerHasCard(attacker, "SwanSong");
-				local SwanSongMultiplier = (attacker.IsIncapacitated() == true ? 1 : 0);
-				local critChance = (7 * LuckyShot) + (5 * Ellis) + (100 * SwanSongMultiplier * SwanSong);
-
-				if (RandomInt(1, 100) <= critChance)
-				{
-					LuckyShotRoll = 1;
-					CriticalHit(attacker, damageTable.Location);
-				}
-
-				//EyeOfTheSwarm
-				if (safeSurvivors.find(attacker) != null)
-				{
-					EyeOfTheSwarmAttacker = PlayerHasCard(attacker, "EyeOfTheSwarm");
-				}
-
-				//Brazen
-				//Berserker
-				//Zoey Perk
-				if ((damageType & DMG_MELEE) == DMG_MELEE)
-				{
-					if (victimPlayer == true)
-					{
-						if (victim.IsSurvivor() == false)
-						{
-							Brazen = PlayerHasCard(attacker, "Brazen");
-							Berserker = PlayerHasCard(attacker, "Berserker");
-							Zoey = PlayerHasCard(attacker, "Zoey");
-							MeanDrunk = PlayerHasCard(attacker, "MeanDrunk");
-						}
-					}
-				}
-
-				// Headshot DMG
-				if ((damageType & DMG_HEADSHOT) == DMG_HEADSHOT)
-				{
-					if (victimPlayer == true)
-					{
-						if (corruptionRetch == "Reeker" && victim.GetZombieType() == 2)
-						{
-							HeadMultiplier = -0.75;
-						}
-						else if (victim.GetZombieType() == 8)
-						{
-							HeadMultiplier = 1.5;
-						}
-						else
-						{
-							HeadMultiplier = -0.25;
-						}
-					}
-				}
-
-				//StrengthInNumbers
-				local survivorSIN = null;
-				while ((survivorSIN = Entities.FindByClassname(survivorSIN, "player")) != null)
-				{
-					if (survivorSIN.IsSurvivor() && !survivorSIN.IsDead())
-					{
-						StrengthInNumbersSurvivors++
-					}
-				}
-				StrengthInNumbers = TeamHasCard("StrengthInNumbers");
-
-				//ConfidentKiller
-				ConfidentKiller = PlayerHasCard(attacker, "ConfidentKiller");
-
-				//Addict
-				AddictAttacker = PlayerHasCard(attacker, "Addict");
-				AddictAttackerMultiplier = AddictGetValue(attacker);
-
-				//BuckshotBruiser
-				if (weaponClass == "weapon_shotgun_chrome" || weaponClass == "weapon_pumpshotgun" || weaponClass == "weapon_autoshotgun" || weaponClass == "weapon_shotgun_spas")
-				{
-					BuckshotBruiser = PlayerHasCard(attacker, "BuckshotBruiser");
-					Heal_TempHealth(attacker, 0.25 * BuckshotBruiser);
-				}
-
-				damageModifier = (damageModifier
-								 + (0.3 * GlassCannonAttacker)
-								 + (0.25 * Sharpshooter)
-								 + (1 * Outlaw)
-								 + (0.2 * Broken)
-								 + (1.5 * Pyromaniac)
-								 + (1.5 * BombSquad)
-								 + (3 * LuckyShotRoll)
-								 + (0.5 * EyeOfTheSwarmAttacker)
-								 + (0.4 * Brazen)
-								 + (0.025 * StrengthInNumbers * StrengthInNumbersSurvivors)
-								 + (0.025 * ConfidentKiller * ConfidentKillerCounter)
-								 + (0.25 * Berserker)
-								 + (AddictAttackerMultiplier * AddictAttacker)
-								 + (0.1 * Zoey)
-								 + (0.05 * Nick)
-								 + (ShredderMultiplier * Shredder)
-								 + (0.2 * MeanDrunk)
-								 + (HeadMultiplier));
-				if (GamblerAttacker > 0)
-				{
-					damageModifier += ApplyGamblerValue(GetSurvivorID(attacker), 4, GamblerAttacker, damageModifier);
-				}
-				damageDone = damageTable.DamageDone * damageModifier;
-			}
-		}
-	}
-
-
-	//Modify Victim damage
-	if (victim.IsValid())
-	{
-		if (victim.IsPlayer())
-		{
-			if (victim.IsSurvivor())
-			{
-				//Victim Specific Variables
-				if (attacker.IsValid())
-				{
-					attackerPlayer = attacker.IsPlayer();
-					attackerType = attacker.GetClassname();
-				}
-
-				/*if (victim.GetHealth() == 1 && victim.GetHealthBuffer() > 0)
-				{
-					victimOnTempHP = true
-				}*/
-
-				//Prevent witch damage
-				if (attackerType == "witch")
-				{
-					return false;
-				}
-
-				//DownInFront
-				if (attackerPlayer == true)
-				{
-					if (attacker.IsSurvivor())
-					{
-						if ((victim.GetButtonMask() & IN_DUCK) && PlayerHasCard(victim, "DownInFront"))
-						{
-							return false;
-						}
-					}
-				}
-
-				//Gambler
-				local GamblerVictim = PlayerHasCard(victim, "Gambler");
-
-				//Francis Perk
-				Francis = PlayerHasCard(victim, "Francis");
-
-				//Glass Cannon
-				GlassCannonVictim = PlayerHasCard(victim, "GlassCannon");
-
-				//Overconfident
-				Overconfident = PlayerHasCard(victim, "Overconfident");
-				if (Overconfident > 0)
-				{
-					if (NetProps.GetPropInt(victim, "m_currentReviveCount") == 0)
-					{
-						OverconfidentMultiplier = -0.25;
-					}
-					else
-					{
-						OverconfidentMultiplier = 0;
-					}
-				}
-
-				if ((damageType & DMG_BURN) == DMG_BURN)
-				{
-					FireProof = PlayerHasCard(victim, "FireProof");
-				}
-
-				//Spitter Acid damage modifiers
-				//ChemicalBarrier
-				//DMG_RADIATION + DMG_ENERGYBEAM = Spitter Acid
-				if ((damageType & 262144) == 262144 && (damageType & 1024) == 1024)
-				{
-					//Reduce acid damage globally and add a slowdown effect
-					AcidMultiplier = -0.5;
-					victim.OverrideFriction(0.5,1.5);
-
-					ChemicalBarrier = PlayerHasCard(victim, "ChemicalBarrier");
-				}
-
-				//Addict
-				AddictVictim = PlayerHasCard(victim, "Addict");
-				AddictVictimMultiplier = AddictGetValue(victim);
-
-				//ScarTissue
-				ScarTissue = PlayerHasCard(victim, "ScarTissue");
-
-				//ToughSkin
-				if (attacker.IsValid())
-				{
-					local attackerClass = attacker.GetClassname();
-					if (attackerClass == "infected")
-					{
-						ToughSkin = PlayerHasCard(victim, "ToughSkin");
-					}
-				}
-
-				//RunLikeHell
-				RunLikeHell = PlayerHasCard(victim, "RunLikeHell");
-
-				damageModifier = (damageModifier
-								+ (0.2 * GlassCannonVictim)
-								+ (OverconfidentMultiplier * Overconfident)
-								+ (-0.5 * FireProof)
-								+ (-0.5 * ChemicalBarrier)
-								+ (-1 * AddictVictimMultiplier * AddictVictim)
-								+ (-0.1 * Francis)
-								+ (-0.3 * ScarTissue)
-								+ (-0.4 * ToughSkin)
-								+ (0.15 * RunLikeHell)
-								+ (AcidMultiplier));
-				if (GamblerVictim > 0)
-				{
-					damageModifier += ApplyGamblerValue(GetSurvivorID(victim), 1, GamblerVictim, damageModifier) * -1;
-				}
-				damageDone = damageTable.DamageDone * damageModifier;
-			}
-		}
-		else
-		{
-			//Crows
-			local victimName = victim.GetName();
-			if (victimName.find("__crow_group_") != null)
-			{
-				if ((damageType & DMG_BLAST) == DMG_BLAST || (damageType & DMG_BLAST_SURFACE) == DMG_BLAST_SURFACE || (damageType & DMG_BURN) == DMG_BURN)
-				{
-					local nameArray = split(victimName, "_");
-					local moveEnt = Entities.FindByName(null, "__crow_group_" + nameArray[2] + "_move");
-					if (moveEnt != null)
-					{
-						if (moveEnt.IsValid())
-						{
-							//EmitAmbientSoundOn("player/Boomer/explode/Explo_Medium_10.wav", 1, 100, 170, moveEnt);
-							moveEnt.Kill();
-						}
-					}
-				}
-			}
-		}
-	}
-
-	if (damageDone < 1 && originalDamageDone >= 1)
-	{
-		damageDone = 1;
-	}
-	damageTable.DamageDone = damageDone;
-
-	/*
-	printl("Attacker: " + attacker);
-	printl("Victim: " + victim);
-	printl("Weapon: " + weaponClass);
-	//printl("Inflictor: " + inflictor);
-	printl("Original DMG: " + originalDamageDone);
-	printl("New DMG: " + damageTable.DamageDone);
-	printl("DMG Modifier: " + damageModifier);
-	printl("DMG Type: " + damageType);
-	//printl("DMG Location: " + damageLocation);
-	printl("");
-	*/
-
-	return true;
-}
-
-function CriticalHit(player, location)
-{
-	local id = location.Length();
-
-	local target = SpawnEntityFromTable("info_particle_target",
-	{
-		targetname = "__critical_particle_target" + id,
-		origin = Vector(location.x, location.y, location.z + 16)
-	});
-	local particle = SpawnEntityFromTable("info_particle_system",
-	{
-		targetname = "__critical_particle" + id,
-		origin = Vector(location.x, location.y, location.z - 16),
-		cpoint1 = "__critical_particle_target" + id,
-		effect_name = "electrical_arc_01",
-		start_active = 1
-	});
-
-	local random = RandomInt(1, 3);
-	if (random == 1)
-	{
-		//EmitSoundOnClient("ambient.electrical_zap_1", player);
-		EmitAmbientSoundOn("ambient.electrical_zap_1", 0.75, RandomInt(95, 105), RandomInt(90, 110), target);
-	}
-	else if (random == 2)
-	{
-		//EmitSoundOnClient("ambient.electrical_zap_2", player);
-		EmitAmbientSoundOn("ambient.electrical_zap_2", 0.75, RandomInt(95, 105), RandomInt(90, 110), target);
-	}
-	else
-	{
-		//EmitSoundOnClient("ambient.electrical_zap_3", player);
-		EmitAmbientSoundOn("ambient.electrical_zap_2", 0.75, RandomInt(95, 105), RandomInt(90, 110), target);
-	}
-}
-
 function PlayerSpawn(params)
 {
 	local player = GetPlayerFromUserID(params["userid"]);
@@ -488,9 +19,11 @@ function PlayerSpawn(params)
 	else
 	{
 		MutationSpawn(player);
-		if (corruptionEnvironmental == "environmentSwarmStream" && RandomInt(0, 3) == 0)
+
+		//Potentially apply swarm stream to specials (except tank and hunter)
+		if (player.GetZombieType() != 8 && player.GetZombieType() != 3)
 		{
-			if (player.GetZombieType() != 8 && player.GetZombieType() != 7 && player.GetZombieType() != 3)
+			if (corruptionEnvironmental == "environmentSwarmStream" && RandomInt(1, 100) <= swarm_stream_chance)
 			{
 				CorruptionCard_SwarmStreamGlow(player);
 			}
@@ -500,99 +33,74 @@ function PlayerSpawn(params)
 
 function PlayerDeath(params)
 {
-	local player = null;
-	local isSurvivorDeath = false;
-
+	//Check if a valid Player died, if userid does not exist then it was not a Player entity so we can ignore it
 	if ("userid" in params)
 	{
-		player = GetPlayerFromUserID(params["userid"]);
+		local player = GetPlayerFromUserID(params["userid"]);
+
 		if (player.IsSurvivor())
 		{
-			isSurvivorDeath = true;
+			//AdrenalineRush
+			//InspiringSacrifice
+			ApplyAdrenalineRush();
+			ApplyInspiringSacrifice();
 		}
-	}
-
-	if (params.victimname == "Tank")
-	{
-		TankDeath();
-	}
-	else if (params.victimname == "Boomer")
-	{
-		BoomerDeath(GetPlayerFromUserID(params["userid"]));
-	}
-
-	if (params.victimname == "Tank" || params.victimname == "Smoker" || params.victimname == "Jockey" || params.victimname == "Boomer" || params.victimname == "Charger")
-	{
-		//Remove swarm stream glow
-		local playerIndex = player.GetEntityIndex();
-		EntFire("__swarm_stream_lightglow" + playerIndex, "Kill");
-
-		//FaceYourFears
-		local player = GetPlayerFromUserID(params["attacker"]);
-		local victim = GetPlayerFromUserID(params["userid"]);
-		local FaceYourFears = 0;
-		if (GetVectorDistance(player.GetOrigin(), victim.GetOrigin()) < 100)
+		else
 		{
-			FaceYourFears = PlayerHasCard(player, "FaceYourFears");
-			Heal_TempHealth(player, 2 * FaceYourFears);
-		}
-
-		//HotShot
-		local survivor = null;
-		local HotShot = 0;
-		while ((survivor = Entities.FindByClassname(survivor, "player")) != null)
-		{
-			if (survivor.IsSurvivor())
+			if (params.victimname == "Tank")
 			{
-				HotShot = PlayerHasCard(survivor, "HotShot");
-				if (RandomInt(1, 100) <= HotShot * 15)
-				{
-					//0 = UPGRADE_INCENDIARY_AMMO, 1 = UPGRADE_EXPLOSIVE_AMMO
-					survivor.GiveUpgrade(RandomInt(0, 1));
-				}
+				TankDeath();
 			}
-		}
-
-		//Piñata
-		//local player = GetPlayerFromUserID(params["userid"]);
-		local origin = player.GetOrigin();
-		local Pinata = TeamHasCard("Pinata");
-
-		if (RandomInt(1, 100) <= Pinata * 15)
-		{
-			RandomItemDrop(origin);
-		}
-
-		//ConfidentKiller
-		ConfidentKillerCounter++;
-
-		//MethHead
-		if ("attacker" in params)
-		{
-			local attacker = GetPlayerFromUserID(params["attacker"]);
-			if (attacker.IsValid())
+			else if (params.victimname == "Boomer")
 			{
-				if (attacker.IsPlayer())
+				BoomerDeath(player);
+			}
+
+			//Mutation death (excludes Hunters, and Witches since they are not Players)
+			if (params.victimname == "Tank" || params.victimname == "Smoker" || params.victimname == "Jockey" || params.victimname == "Boomer" || params.victimname == "Charger" || params.victimname == "Spitter")
+			{
+				//FaceYourFears
+				local attacker = GetPlayerFromUserID(params["attacker"]);
+				local victim = GetPlayerFromUserID(params["userid"]);
+				local FaceYourFears = 0;
+				if (GetVectorDistance(attacker.GetOrigin(), victim.GetOrigin()) < 100)
 				{
-					if (attacker.IsSurvivor())
+					FaceYourFears = PlayerHasCard(attacker, "FaceYourFears");
+					Heal_TempHealth(attacker, 2 * FaceYourFears);
+				}
+
+				//Piñata
+				local Pinata = TeamHasCard("Pinata");
+				if (RandomInt(1, 100) <= Pinata * 15)
+				{
+					RandomItemDrop(player.GetOrigin());
+				}
+
+				//ConfidentKiller
+				ConfidentKillerCounter++;
+
+				if ("attacker" in params)
+				{
+					local attacker = GetPlayerFromUserID(params["attacker"]);
+					if (attacker.IsValid())
 					{
-						MethHeadCounter[GetSurvivorID(attacker)]++;
-						CalcSpeedMultiplier(attacker);
+						if (attacker.IsPlayer())
+						{
+							if (attacker.IsSurvivor())
+							{
+								ApplyCardsOnMutationKill(attacker);
+							}
+						}
 					}
 				}
+
+				//Remove swarm stream glow
+				EntFire("__swarm_stream_lightglow" + player.GetEntityIndex(), "Kill");
 			}
 		}
-	}
 
-	//AdrenalineRush
-	//InspiringSacrifice
-	if (isSurvivorDeath)
-	{
-		ApplyAdrenalineRush();
-		ApplyInspiringSacrifice();
+		NetProps.SetPropInt(player, "m_Glow.m_iGlowType", 0);
 	}
-
-	NetProps.SetPropInt(player, "m_Glow.m_iGlowType", 0);
 }
 
 function RandomItemDrop(origin)
@@ -649,26 +157,6 @@ function RandomItemDrop(origin)
 			SpawnEntityFromTable("weapon_defibrillator",{origin = Vector(origin.x, origin.y, origin.z + 24),angles = Vector(0, 0, 0),model = "models/w_models/weapons/w_eq_defibrillator.mdl"});
 		break;
 	}
-}
-
-function RoundStart(params)
-{
-	CreateCardHud();
-
-	// Multiplier for speedrun objective based on map length. Must be before InitCorruption
-	local flow = GetMaxFlowDistance();
-	if (flow < 25000)
-	{
-		MissionSpeedrun_Multi = 1
-	}
-	else
-	{
-		MissionSpeedrun_Multi = 1.5
-	}
-
-	difficulty = GetDifficulty();
-	InitCorruptionCards();
-	SetDifficulty();
 }
 
 function PlayerLeftSafeArea(params)
@@ -799,239 +287,6 @@ function PlayerHurt(params)
 	}
 }
 
-//Use heal begin because heal end is bugged, so restored temp health may not be accurate
-function HealBegin(params)
-{
-	local player = GetPlayerFromUserID(params.subject);
-	local currentTempHealth = player.GetHealthBuffer();
-	survivorHealthBuffer[GetSurvivorID(player)] = currentTempHealth; //Store temp health at time of heal
-}
-
-function HealSuccess(params)
-{
-	local healer = GetPlayerFromUserID(params.userid);
-	local player = GetPlayerFromUserID(params.subject);
-
-	local Gambler = PlayerHasCard(healer, "Gambler");
-	local EMTBag = PlayerHasCard(healer, "EMTBag");
-	local AntibioticOintment = PlayerHasCard(healer, "AntibioticOintment");
-	local MedicalExpert = TeamHasCard("MedicalExpert");
-	local Rochelle = PlayerHasCard(healer, "Rochelle");
-	local ScarTissue = PlayerHasCard(healer, "ScarTissue");
-	local healMultiplier = 1 + ((0.5 * EMTBag) + (0.25 * AntibioticOintment) + (0.30 * MedicalExpert) + (0.1 * Rochelle) + (-0.5 * ScarTissue));
-	if (Gambler > 0)
-	{
-		healMultiplier += ApplyGamblerValue(GetSurvivorID(healer), 6, Gambler, healMultiplier);
-	}
-	local healAmount = medkitHealAmount * healMultiplier;
-
-	Heal_PermaHealth(player, healAmount, survivorHealthBuffer[GetSurvivorID(player)]);
-
-	if (AntibioticOintment > 0)
-	{
-		local healAmountAntibiotic = 10 * AntibioticOintment;
-		Heal_TempHealth(player, healAmountAntibiotic);
-		Heal_GroupTherapy(player, healAmountAntibiotic, true);
-	}
-
-	Heal_GroupTherapy(player, healAmount, false);
-}
-
-function PillsUsed(params)
-{
-	local player = GetPlayerFromUserID(params.subject);
-	local maxHealth = player.GetMaxHealth();
-
-	local Gambler = PlayerHasCard(player, "Gambler");
-	local EMTBag = PlayerHasCard(player, "EMTBag");
-	local AntibioticOintment = PlayerHasCard(player, "AntibioticOintment");
-	local MedicalExpert = TeamHasCard("MedicalExpert");
-	local Addict = PlayerHasCard(player, "Addict");
-	local Rochelle = PlayerHasCard(player, "Rochelle");
-	local ScarTissue = PlayerHasCard(player, "ScarTissue");
-	local healMultiplier = 1 + ((0.5 * EMTBag) + (0.25 * AntibioticOintment) + (0.30 * MedicalExpert) + (0.5 * Addict) + (0.1 * Rochelle) + (-0.5 * ScarTissue));
-	if (Gambler > 0)
-	{
-		healMultiplier += ApplyGamblerValue(GetSurvivorID(player), 6, Gambler, healMultiplier);
-	}
-	local healAmount = (pillsHealAmount * healMultiplier) + (10 * AntibioticOintment);
-
-	Heal_TempHealth(player, healAmount);
-	Heal_GroupTherapy(player, healAmount, true);
-}
-
-function AdrenalineUsed(params)
-{
-	local player = GetPlayerFromUserID(params.subject);
-	local maxHealth = player.GetMaxHealth();
-
-	local Gambler = PlayerHasCard(player, "Gambler");
-	local EMTBag = PlayerHasCard(player, "EMTBag");
-	local AntibioticOintment = PlayerHasCard(player, "AntibioticOintment");
-	local MedicalExpert = TeamHasCard("MedicalExpert");
-	local Addict = PlayerHasCard(player, "Addict");
-	local Rochelle = PlayerHasCard(player, "Rochelle");
-	local ScarTissue = PlayerHasCard(player, "ScarTissue");
-	local healMultiplier = 1 + ((0.5 * EMTBag) + (0.25 * AntibioticOintment) + (0.30 * MedicalExpert) + (0.75 * Addict) + (0.1 * Rochelle) + (-0.5 * ScarTissue));
-	if (Gambler > 0)
-	{
-		healMultiplier += ApplyGamblerValue(GetSurvivorID(player), 6, Gambler, healMultiplier);
-	}
-	local healAmount = (adrenalineHealAmount * healMultiplier) + (10 * AntibioticOintment);
-
-	Heal_TempHealth(player, healAmount);
-	Heal_GroupTherapy(player, healAmount, true);
-}
-
-function Heal_PermaHealth(player, healAmount, currentTempHealth)
-{
-	local currentHealth = player.GetHealth();
-	local maxHealth = player.GetMaxHealth();
-
-	if (currentHealth + healAmount > maxHealth)
-	{
-		player.SetHealth(maxHealth);
-		player.SetHealthBuffer(0);
-	}
-	else
-	{
-		player.SetHealth(currentHealth + healAmount);
-
-		if (currentTempHealth + (currentHealth + healAmount) > maxHealth)
-		{
-			player.SetHealthBuffer(maxHealth - (currentHealth + healAmount));
-		}
-		else
-		{
-			player.SetHealthBuffer(currentTempHealth);
-		}
-	}
-}
-
-function Heal_TempHealth(player, healAmount)
-{
-	local currentHealth = player.GetHealth();
-	local currentTempHealth = player.GetHealthBuffer();
-	local maxHealth = player.GetMaxHealth();
-
-	if (currentHealth + currentTempHealth + healAmount > maxHealth)
-	{
-		player.SetHealthBuffer(maxHealth - currentHealth);
-	}
-	else
-	{
-		player.SetHealthBuffer(healAmount + currentTempHealth);
-	}
-}
-
-function Heal_GroupTherapy(healTarget, healAmount, isTempHealth)
-{
-	local GroupTherapy = TeamHasCard("GroupTherapy");
-
-	if (GroupTherapy > 0)
-	{
-		healAmount = healAmount * (0.2 * GroupTherapy);
-		
-		local player = null;
-		while ((player = Entities.FindByClassname(player, "player")) != null)
-		{
-			if (player.IsValid())
-			{
-				if (player.IsSurvivor())
-				{
-					if (player != healTarget)
-					{
-						if (isTempHealth == false)
-						{
-							Heal_PermaHealth(player, healAmount, player.GetHealthBuffer());
-						}
-						else
-						{
-							Heal_TempHealth(player, healAmount);
-						}
-					}
-				}
-			}
-		}
-	}
-}
-
-function ReviveSuccess(params)
-{
-	local ledgeHang = params.ledge_hang;
-	if (ledgeHang == 0)
-	{
-		local player = GetPlayerFromUserID(params.userid);
-		local subject = GetPlayerFromUserID(params.subject);
-		local maxHealth = subject.GetMaxHealth();
-		local reviveHealth = Convars.GetFloat("survivor_revive_health");
-
-		local CombatMedic = TeamHasCard("CombatMedic");
-
-		if (CombatMedic > 0)
-		{
-			local CombatMedicAmount = 15 * CombatMedic;
-			Heal_PermaHealth(subject, CombatMedicAmount, reviveHealth);
-		}
-	}
-}
-
-function DefibrillatorUsed(params)
-{
-	local player = GetPlayerFromUserID(params.userid);
-	local subject = GetPlayerFromUserID(params.subject);
-	local maxHealth = subject.GetMaxHealth();
-
-	local CombatMedic = TeamHasCard("CombatMedic");
-
-	if (CombatMedic > 0)
-	{
-		local CombatMedicAmount = 15 * CombatMedic;
-		Heal_PermaHealth(subject, CombatMedicAmount, reviveHealth);
-	}
-}
-
-function Heal_AmpedUp()
-{
-	local AmpedUp = TeamHasCard("AmpedUp");
-	if (AmpedUp > 0)
-	{
-		if (AmpedUpCooldown <= 0)
-		{
-			local player = null;
-			while ((player = Entities.FindByClassname(player, "player")) != null)
-			{
-				if (player.IsSurvivor())
-				{
-					local currentTempHealth = player.GetHealthBuffer();
-					local currentHealth = player.GetHealth();
-					local maxHealth = player.GetMaxHealth();
-
-					local healAmount = 20 * AmpedUp;
-
-					if (healAmount + currentHealth > maxHealth)
-					{
-						player.SetHealth(maxHealth);
-					}
-					else
-					{
-						player.SetHealth(healAmount + currentHealth);
-					}
-
-					local currentHealth = player.GetHealth();
-					if (currentHealth + currentTempHealth > maxHealth)
-					{
-						player.SetHealthBuffer(maxHealth - currentHealth)
-					}
-				}
-			}
-
-			AmpedUpCooldown = 5;
-		}
-	}
-}
-::Heal_AmpedUp <- Heal_AmpedUp;
-
 function CappedAlert()
 {
 	local player = null;
@@ -1063,131 +318,6 @@ function WeaponFireM60(params)
 	}
 }
 
-/* @A1m`:
- * Original code from the game, function 'CTerrorMeleeWeapon::GetDamageForVictim':
- * Rewritten to sourcepawn for example :D
- * In fact, there is no problem with melee damage, the damage depends on where you hit the hitbox (head, leg or body). This plugin removes it.
- * 
- * 	float fResult = 175.0;
- * 	int iZclass = GetEntProp(iVictim, Prop_Send, "m_zombieClass", 4);
- * 	switch (iZclass)
- * 	{
- * 		case L4D2Infected_Common:
- * 		case L4D2Infected_Smoker:
- * 		case L4D2Infected_Boomer:
- * 		case L4D2Infected_Hunter:
- * 		case L4D2Infected_Spitter:
- * 		case L4D2Infected_Jockey:
- * 			fResult = GetEntProp(iVictim, Prop_Send, "m_iHealth");
- * 			break;
- * 		case L4D2Infected_Charger:
- * 			fResult = GetEntProp(client, Prop_Send, "m_iMaxHealth") * 0.64999998;
- * 			break;
- * 		case L4D2Infected_Witch:
- * 			fResult = GetEntProp(client, Prop_Send, "m_iMaxHealth") * 0.25;
- * 			break;
- * 		case L4D2Infected_Tank:
- * 			fResult = GetEntProp(client, Prop_Send, "m_iMaxHealth") * 0.050000001;
- * 			break;
- * 		default:
- * 			return CMeleeWeaponInfo->m_fDamage;
- * 	}
- * 	return fResult;
-}*/
-/*function RecalculateMeleeDamage(victim, damageDone)
-{
-	local result = 175.0;
-	local victimClass = null
-	if (victim.IsPlayer())
-	{
-		//Smoker = 1, Boomer = 2, Hunter = 3, Spitter = 4, Jockey = 5, Charger = 6, Witch = 7, Tank = 8, Survivor = 9
-		victimClass = victim.GetZombieType();
-	}
-	else
-	{
-		victimClass = victim.GetClassname();
-	}
-
-	switch(victimClass)
-	{
-		case 1:
-		case 2:
-		case 3:
-		case 4:
-		case 5:
-		case "infected":
-			result = NetProps.GetPropInt(victim, "m_iHealth");
-		break;
-
-		case 6:
-			result = NetProps.GetPropInt(victim, "m_iMaxHealth") * 0.64999998;
-		break;
-
-		case "witch":
-			result = NetProps.GetPropInt(victim, "m_iMaxHealth") * 0.25;
-		break;
-
-		case 8:
-			result = NetProps.GetPropInt(victim, "m_iMaxHealth") * 0.050000001;
-		break;
-	}
-
-
-
-	printl("melee_damage " + melee_damage.tofloat());
-	printl("result " + result.tofloat());
-	printl("multi " + (melee_damage.tofloat() / result.tofloat()))
-
-	return melee_damage.tofloat() / result.tofloat();
-}*/
-
-
-///////////////////////////////////////////////
-//                    HUD                    //
-///////////////////////////////////////////////
-swarmHudX <- 0.01;
-swarmHudY <- 0.01;
-swarmHudW <- 0.22;
-swarmHudH <- 0.0275;
-swarmHudLineH <- 0.0275;
-swarmHudMidBoxW <- 0.5;
-swarmHudGapY <- 0.01;
-
-swarmHUD <-
-{
-	Fields = 
-	{
-		corruptionCards = {name = "corruptionCards", slot = HUD_FAR_RIGHT, dataval = "", flags = HUD_FLAG_ALIGN_LEFT},
-		corruptionCardsInfected = {name = "corruptionCardsInfected", slot = HUD_SCORE_1, dataval = "", flags = HUD_FLAG_ALIGN_LEFT},
-		corruptionCardsMission = {name = "corruptionCardsMission", slot = HUD_SCORE_2, dataval = "", flags = HUD_FLAG_ALIGN_LEFT},
-		corruptionCardsHorde = {name = "corruptionCardsHorde", slot = HUD_SCORE_3, dataval = "", flags = HUD_FLAG_ALIGN_LEFT},
-		playerCardsP1 = {name = "playerCardsP1", slot = HUD_FAR_LEFT, dataval = "", flags = HUD_FLAG_ALIGN_LEFT},
-		playerCardsP2 = {name = "playerCardsP2", slot = HUD_LEFT_TOP, dataval = "", flags = HUD_FLAG_ALIGN_LEFT},
-		playerCardsP3 = {name = "playerCardsP3", slot = HUD_LEFT_BOT, dataval = "", flags = HUD_FLAG_ALIGN_LEFT},
-		playerCardsP4 = {name = "playerCardsP4", slot = HUD_MID_TOP, dataval = "", flags = HUD_FLAG_ALIGN_LEFT},
-		cardPickReflex = {name = "cardPickReflex", slot = HUD_MID_BOX, dataval = "", flags = HUD_FLAG_ALIGN_LEFT},
-		cardPickBrawn = {name = "cardPickBrawn", slot = HUD_MID_BOT, dataval = "", flags = HUD_FLAG_ALIGN_LEFT},
-		cardPickDiscipline = {name = "cardPickDiscipline", slot = HUD_RIGHT_TOP, dataval = "", flags = HUD_FLAG_ALIGN_LEFT},
-		cardPickFortune = {name = "cardPickFortune", slot = HUD_RIGHT_BOT, dataval = "", flags = HUD_FLAG_ALIGN_LEFT}
-	}
-}
-
-function CreateCardHud()
-{
-	HUDSetLayout(swarmHUD);
-}
-
-function ToggleHudElement(hudName)
-{
-	swarmHUD.Fields[hudName].flags = swarmHUD.Fields[hudName].flags ^ HUD_FLAG_NOTVISIBLE;
-}
-
-function IsHudElementVisible(hudName)
-{
-	local flagValue = swarmHUD.Fields[hudName].flags & HUD_FLAG_NOTVISIBLE;
-	return flagValue == 0 ? true : false;
-}
-
 ///////////////////////////////////////////////
 //               STOCK FUNCTIONS             //
 ///////////////////////////////////////////////
@@ -1209,55 +339,7 @@ function Update()
 		}
 	}
 
-	if (corruptionCommons != "None" || corruptionUncommons != "None")
-	{
-		BuildCommonList();
-	}
-
-	if (corruptionCommons != "None")
-	{
-		switch(corruptionCommons)
-		{
-			case "commonAcid":
-				AcidCommonsCountdown();
-				break;
-			case "commonFire":
-				FireCommonsCountdown();
-				break;
-			case "commonExplode":
-				ExplodingCommonsFilters();
-				ExplodingCommonsCountdown();
-				break;
-		}
-	}
-
-	if (corruptionUncommons != "None")
-	{
-		switch(corruptionUncommons)
-		{
-			case "uncommonClown":
-				ClownCountdown();
-				break;
-			case "uncommonRiot":
-				RiotCountdown();
-				break;
-			case "uncommonMud":
-				MudCountdown();
-				break;
-			case "uncommonCeda":
-				CedaCountdown();
-				break;
-			case "uncommonConstruction":
-				ConstructionCountdown();
-				break;
-			case "uncommonJimmy":
-				JimmyCountdown();
-				break;
-			case "uncommonFallen":
-				FallenCountdown();
-				break;
-		}
-	}
+	CommonsUpdate();
 
 	if (corruptionEnvironmental == "environmentFrozen")
 	{
@@ -1313,76 +395,7 @@ function Update()
 
 	if (firstLeftCheckpoint == true)
 	{
-		if (cardPickingAllowed[0] == 0 && cardPickingAllowed[1] == 0 && cardPickingAllowed[2] == 0 && cardPickingAllowed[3] == 0)
-		{
-			if (cardHudTimeout == 0)
-			{
-				if (IsHudElementVisible("corruptionCards"))
-				{
-					ToggleHudElement("corruptionCards");
-				}
-				if (IsHudElementVisible("corruptionCardsInfected"))
-				{
-					ToggleHudElement("corruptionCardsInfected");
-				}
-				if (corruptionMission == "None")
-				{
-					if (IsHudElementVisible("corruptionCardsMission"))
-					{
-						ToggleHudElement("corruptionCardsMission");
-					}
-				}
-				if (corruptionHordes == "None")
-				{
-					if (IsHudElementVisible("corruptionCardsHorde"))
-					{
-						ToggleHudElement("corruptionCardsHorde");
-					}
-				}
-				if (IsHudElementVisible("playerCardsP1"))
-				{
-					ToggleHudElement("playerCardsP1");
-				}
-				if (IsHudElementVisible("playerCardsP2"))
-				{
-					ToggleHudElement("playerCardsP2");
-				}
-				if (IsHudElementVisible("playerCardsP3"))
-				{
-					ToggleHudElement("playerCardsP3");
-				}
-				if (IsHudElementVisible("playerCardsP4"))
-				{
-					ToggleHudElement("playerCardsP4");
-				}
-				if (IsHudElementVisible("cardPickReflex"))
-				{
-					ToggleHudElement("cardPickReflex");
-				}
-				if (IsHudElementVisible("cardPickBrawn"))
-				{
-					ToggleHudElement("cardPickBrawn");
-				}
-				if (IsHudElementVisible("cardPickDiscipline"))
-				{
-					ToggleHudElement("cardPickDiscipline");
-				}
-				if (IsHudElementVisible("cardPickFortune"))
-				{
-					ToggleHudElement("cardPickFortune");
-				}
-			}
-			if (cardHudTimeout >= 0)
-			{
-				cardHudTimeout--;
-			}
-		}
-
-		if (corruptionMission == "missionSpeedrun")
-		{
-			MissionSpeedrun_Timer++;
-		}
-		UpdateCorruptionCardHUD();
+		CardHudUpdate();
 	}
 
 	if (corruptionMission == "missionGnomeAlone")
@@ -1403,226 +416,6 @@ function Update()
 	{
 		AmpedUpCooldown--;
 	}
-
-	if (cardReminderTimer > 0)
-	{
-		cardReminderTimer--;
-	}
-	else
-	{
-		local player = null;
-		while ((player = Entities.FindByClassname(player, "player")) != null)
-		{
-			local survivorID = GetSurvivorID(player);
-
-			if (player.IsSurvivor() && survivorID != -1)
-			{
-				if (cardPickingAllowed[survivorID] > 0)
-				{
-					ClientPrint(player, 3, "\x01" + "Use " + "\x03" + "!pick [A-H]\x01" + " to choose a card (" + "\x03" + cardPickingAllowed[survivorID] + " remaining" + "\x01" + ")");
-
-					local voteCount = 0;
-					foreach(vote in cardShuffleVote)
-					{
-						if (vote == true)
-						{
-							voteCount += 1;
-						}
-					}
-					if (voteCount < 4)
-					{
-						ClientPrint(player, 3, "\x01" + "Use " + "\x03" + "!shuffle\x01" + " to vote for a new set of cards (" + "\x03" + voteCount + "/4" + "\x01" + " votes"  + ")");
-					}
-				}
-			}
-		}
-		cardReminderTimer = cardReminderInterval;
-	}
-
-	//Remove critical particles
-	EntFire("__critical_particle*", "Kill");
-}
-
-function SpawnMob(count = 1, zType = 10)
-{
-	//count = Number of groups to spawn
-	//zType = Infected type to spawn, defaults to MOB if zType is not specified
-	/*ZOMBIE_NORMAL = 0
-	ZOMBIE_SMOKER = 1
-	ZOMBIE_BOOMER = 2
-	ZOMBIE_HUNTER = 3
-	ZOMBIE_SPITTER = 4
-	ZOMBIE_JOCKEY = 5
-	ZOMBIE_CHARGER = 6
-	ZOMBIE_WITCH = 7
-	ZOMBIE_TANK = 8
-	ZSPAWN_MOB = 10
-	ZSPAWN_MUDMEN = 12
-	ZSPAWN_WITCHBRIDE = 11*/
-
-	local i = 0;
-	while (i < count)
-	{
-		ZSpawn({type = zType, pos = Vector(0,0,0)});
-		i++;
-	}
-
-	DelayHordeTimers();
-
-	Heal_AmpedUp();
-	Director.PlayMegaMobWarningSounds();
-}
-::ZSpawnMob <- SpawnMob;
-
-function DelayHordeTimers()
-{
-	if (HuntedTimer != null)
-	{
-		HuntedTimer += 20;
-	}
-	if (OnslaughtTimer != null)
-	{
-		OnslaughtTimer += 20;
-	}
-	if (SpecialHordeTimer != null)
-	{
-		SpecialHordeTimer += 20;
-	}
-}
-::DelayHordeTimers <- DelayHordeTimers;
-
-function DegToRad(angle)
-{
-	return angle * (PI / 180);
-}
-
-function GetVectorDistance(vec1, vec2)
-{
-	return sqrt(pow(vec1.x - vec2.x,2) + pow(vec1.y - vec2.y,2) + pow(vec1.z - vec2.z,2));
-}
-::zGetVectorDistance <- GetVectorDistance;
-
-function GetVectorAngle(vec1, vec2)
-{
-	return atan2(vec1.y - vec2.y, vec1.x - vec2.x);
-}
-::zGetVectorAngle <- GetVectorAngle;
-
-function CheckLOS(vec1, vec2, originEntity)
-{
-	local traceTable =
-	{
-		start = vec1
-		end = vec2
-		mask = TRACE_MASK_VISION
-		ignore = originEntity
-	};
-
-	if(TraceLine(traceTable))
-	{
-		if(traceTable.hit)
-		{
-			return traceTable.enthit;
-		}
-	}
-}
-::CheckLOS <- CheckLOS;
-::TRACE_MASK_VISION <- TRACE_MASK_VISION;
-
-function Clamp(angle, clampTo)
-{
-	if (angle > clampTo)
-	{
-		return clampTo;
-	}
-	else
-	{
-		return angle;
-	}
-}
-
-function Sign(x)
-{
-	if (x >= 0)
-	{
-		return 1;
-	}
-	else
-	{
-		return -1;
-	}
-}
-
-// From Rocketdude
-function GetColorInt(col)
-{
-	if(typeof(col) == "Vector")
-	{
-		local color = col.x;
-		color += 256 * col.y;
-		color += 65536 * col.z;
-		return color;
-	}
-	else if(typeof(col) == "string")
-	{
-		local colorArray = split(col, " ");
-		local r = colorArray[0].tointeger();
-		local g = colorArray[1].tointeger();
-		local b = colorArray[2].tointeger();
-		local color = r;
-		color += 256 * g;
-		color += 65536 * b;
-		return color;
-	}
-}
-
-function CreateSurvivorFilter()
-{
-	SpawnEntityFromTable("filter_activator_team",
-	{
-		targetname = "__swarm_filter_survivor",
-		Negated = "Allow entities that match criteria",
-		filterteam = 2
-	});
-}
-CreateSurvivorFilter();
-
-function CreateInfectedFilter()
-{
-	SpawnEntityFromTable("filter_activator_team",
-	{
-		targetname = "__swarm_filter_infected",
-		Negated = "Allow entities that match criteria",
-		filterteam = 3
-	});
-}
-CreateInfectedFilter();
-
-// From VSLib - Get rendercolor of a prop
-/**
- * Gets a table of RGBA colors from 32 bit format to 8 bit.
- */
-function GetColor32( color32 )
-{
-	local t = {};
-	local readColor = color32;
-	
-	// Reads the 8 bit color values by rightshifting and masking the lowest byte out with bitwise AND.
-	// The >>> makes it consider the input value unsigned.
-	t.red <- (readColor & 0xFF);
-	t.green <- ((readColor >>> 8) & 0xFF);
-	t.blue <- ((readColor >>> 16) & 0xFF);
-	t.alpha <- ((readColor >>> 24) & 0xFF);
-	return t;
-}
-
-function IntToTime(integer)
-{
-	local minutes = floor(integer / 60);
-	minutes = format("%02i", minutes);
-	local seconds = integer % 60;
-	seconds = format("%02i", seconds);
-	return minutes + ":" + seconds;
 }
 
 function BarbedWire(params)
@@ -1728,36 +521,14 @@ function AmmoPack(params)
 
 function PropModels()
 {
-	if (!IsModelPrecached("models/swarm/props/barricade_razorwire001_128_reference.mdl"))
-		PrecacheModel("models/swarm/props/barricade_razorwire001_128_reference.mdl");
-	if (!IsModelPrecached("models/swarm/props/w_eq_incendiary_ammopack.mdl"))
-		PrecacheModel("models/swarm/props/w_eq_incendiary_ammopack.mdl");
-
 	local expl_pack = null;
 	local ince_pack = null;
 	while (expl_pack = Entities.FindByModel(expl_pack, "models/w_models/weapons/w_eq_explosive_ammopack.mdl"))
 	{
-		expl_pack.SetModel("models/swarm/props/barricade_razorwire001_128_reference.mdl");
+		PrecacheAndSetModel(expl_pack, "models/swarm/props/barricade_razorwire001_128_reference.mdl");
 	}
 	while (ince_pack = Entities.FindByModel(ince_pack, "models/w_models/weapons/w_eq_incendiary_ammopack.mdl"))
 	{
-		ince_pack.SetModel("models/swarm/props/w_eq_incendiary_ammopack.mdl");
+		PrecacheAndSetModel(ince_pack, "models/swarm/props/w_eq_incendiary_ammopack.mdl");
 	}	
-}
-
-function AllowBash(basher, bashee)
-{
-    if (bashee.IsPlayer())
-    {
-        if (bashee.GetZombieType() == 2)
-        {
-            return ALLOW_BASH_NONE;
-        }
-        else
-        {
-            return ALLOW_BASH_ALL;
-        }
-    }
-
-    return ALLOW_BASH_ALL;
 }

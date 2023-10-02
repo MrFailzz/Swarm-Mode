@@ -3,7 +3,7 @@
 ///////////////////////////////////////////////
 function BossSettings_Breaker()
 {
-	tankModel = "models/infected/hulk.mdl"
+	tankModel = "models/infected/hulk.mdl";
 	bossBreakerEnable = true;
 	Convars.SetValue("z_tank_health", 7500);
 	Convars.SetValue("z_tank_speed", 190);
@@ -14,13 +14,27 @@ function BossSettings_Breaker()
 
 function BossSettings_Ogre()
 {
-	tankModel = "models/infected/hulk_dlc3.mdl"
+	tankModel = "models/infected/hulk_dlc3.mdl";
 	bossOgreEnable = true;
 	Convars.SetValue("z_tank_health", 8000);
 	Convars.SetValue("z_tank_speed", 200);
 	Convars.SetValue("z_tank_speed_vs", 200);
 	Convars.SetValue("z_tank_throw_interval", 8);
 	Convars.SetValue("tank_throw_allow_range", 125);
+}
+
+function TankSpawn(params)
+{
+	if (!bTankHudExists)
+	{
+		tankHudTankID = GetPlayerFromUserID(params["userid"]);
+		CreateTankHealthHud();
+	}
+
+	if (corruptionBoss == "hazardOgreRaging")
+	{
+		ogreAggro = false;
+	}
 }
 
 ///////////////////////////////////////////////
@@ -195,106 +209,11 @@ function CancelRockAnimation()
 			local sequence = tank.GetSequence();
 			if (tank.GetSequenceName(sequence).find("Throw") != null)
 			{
-				// Changing the model resets all animations
+				// Changing the model resets all animations cleanly
 				local tankModel = tank.GetModelName();
-				if (!IsModelPrecached(tankModel))
-				{
-					PrecacheModel(tankModel);
-				}
-				if (!IsModelPrecached("models/infected/hunter.mdl"))
-				{
-					PrecacheModel("models/infected/hunter.mdl");
-				}
-				tank.SetModel("models/infected/hunter.mdl");
-				tank.SetModel(tankModel);
+				PrecacheAndSetModel(tank, "models/infected/hunter.mdl");
+				PrecacheAndSetModel(tank, tankModel);
 			}
 		}
-	}
-}
-
-///////////////////////////////////////////////
-//                HEALTH HUD                 //
-///////////////////////////////////////////////
-function TankSpawn(params)
-{
-	if (!bTankHudExists)
-	{
-		tankHudTankID = GetPlayerFromUserID(params["userid"]);
-		CreateTankHealthHud();
-	}
-
-	if (corruptionBoss == "hazardOgreRaging")
-	{
-		ogreAggro = false;
-	}
-/*
-	local tankName = GetPlayerFromUserID(params["userid"]);
-	local wkspotHitbox = SpawnEntityFromTable("func_breakable",
-	{
-		targetname = tankName + "wkspotHitbox",
-		origin = tankName.GetOrigin(),
-		angles = Vector(0, 0, 0),
-		spawnflags = 0,
-		health = 10,
-		BreakableType = 0,
-		damagefilter = "__swarm_filter_explHitbox",
-		material = 0
-	});
-
-	// Set up hitbox
-	EntFire(tankName + "wkspotHitbox", "SetParent", tankName);
-	EntFire(tankName + "wkspotHitbox", "SetParentAttachment", "mouth");
-	DoEntFire("!self", "AddOutput", "mins -14 -7 -6", 0, null, wkspotHitbox);
-	DoEntFire("!self", "AddOutput", "maxs 1 8 14", 0, null, wkspotHitbox);
-	DoEntFire("!self", "AddOutput", "solid 2", 0, null, wkspotHitbox);
-	EntFire(tankName + "wkspotHitbox", "AddOutput", "OnBreak !self:RunScriptCode:tankName.Stagger()");
-*/
-}
-
-function CreateTankHealthHud(startStr = "FROM THE CREATORS OF BACK 4 BLOOD")
-{
-   Ticker_AddToHud(swarmHUD, startStr)
-   HUDSetLayout(swarmHUD)
-   HUDPlace(HUD_TICKER, 0.25, 0.05, 0.5, 0.04)
-
-   bTankHudExists = true;
-}
-
-function CalculateTankHudString()
-{
-	if (tankHudTankID == null || bTankHudExists == false)
-	{
-		Ticker_NewStr("");
-	}
-	else
-	{
-		local healthCur = tankHudTankID.GetHealth();
-		local healthMax = tankHudTankID.GetMaxHealth();
-		local maxBlocks = 40;
-		local healthPerBlock = healthMax / maxBlocks;
-		local fullBlocks = ceil(healthCur / healthPerBlock); //ceil is bugged lol?
-		local emptyBlocks = maxBlocks - fullBlocks;
-		local hudString = "";
-
-		local i = 0;
-		for (i = 0; i < fullBlocks; i++)
-		{
-			hudString = hudString + "■";
-		}
-		for (i = 0; i < emptyBlocks; i++)
-		{
-			hudString = hudString + "□";
-		}
-		Ticker_NewStr(hudString);
-	}
-}
-
-function DestroyTankHud()
-{
-	if (bTankHudExists == true)
-	{
-		bTankHudExists = false;
-		tankHudTankID = null;
-		Ticker_Hide();
 	}
 }

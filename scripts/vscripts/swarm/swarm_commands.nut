@@ -107,64 +107,7 @@ function InterceptChat(message, speaker)
 
 			case "карты":
 			case "cards":
-				if (!IsHudElementVisible("corruptionCards"))
-				{
-					ToggleHudElement("corruptionCards");
-				}
-				if (!IsHudElementVisible("corruptionCardsInfected"))
-				{
-					ToggleHudElement("corruptionCardsInfected");
-				}
-				if (corruptionMission == "None")
-				{
-					if (!IsHudElementVisible("corruptionCardsMission"))
-					{
-						ToggleHudElement("corruptionCardsMission");
-					}
-				}
-				if (corruptionHordes == "None")
-				{
-					if (!IsHudElementVisible("corruptionCardsHorde"))
-					{
-						ToggleHudElement("corruptionCardsHorde");
-					}
-				}
-				if (!IsHudElementVisible("playerCardsP1"))
-				{
-					ToggleHudElement("playerCardsP1");
-				}
-				if (!IsHudElementVisible("playerCardsP2"))
-				{
-					ToggleHudElement("playerCardsP2");
-				}
-				if (!IsHudElementVisible("playerCardsP3"))
-				{
-					ToggleHudElement("playerCardsP3");
-				}
-				if (!IsHudElementVisible("playerCardsP4"))
-				{
-					ToggleHudElement("playerCardsP4");
-				}
-				if (cardPickingAllowed[0] > 0 || cardPickingAllowed[1] > 0 || cardPickingAllowed[2] > 0 || cardPickingAllowed[3] > 0)
-				{
-					if (!IsHudElementVisible("cardPickReflex"))
-					{
-						ToggleHudElement("cardPickReflex");
-					}
-					if (!IsHudElementVisible("cardPickBrawn"))
-					{
-						ToggleHudElement("cardPickBrawn");
-					}
-					if (!IsHudElementVisible("cardPickDiscipline"))
-					{
-						ToggleHudElement("cardPickDiscipline");
-					}
-					if (!IsHudElementVisible("cardPickFortune"))
-					{
-						ToggleHudElement("cardPickFortune");
-					}
-				}
-				cardHudTimeout = 8;
+				ShowCardsCommand();
 			break;
 
 			case "нарвать":

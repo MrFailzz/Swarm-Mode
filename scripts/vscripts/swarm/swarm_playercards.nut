@@ -920,6 +920,25 @@ function HeightendSensesPing(player)
 	}
 }
 
+function ApplyCardsOnMutationKill(attacker)
+{
+	//MethHead
+	local MethHead = PlayerHasCard(attacker, "MethHead");
+	if (MethHead > 0)
+	{
+		MethHeadCounter[GetSurvivorID(attacker)]++;
+		CalcSpeedMultiplier(attacker);
+	}
+
+	//HotShot
+	local HotShot = PlayerHasCard(attacker, "HotShot");
+	if (HotShot > 0)
+	{
+		//0 = UPGRADE_INCENDIARY_AMMO, 1 = UPGRADE_EXPLOSIVE_AMMO
+		attacker.GiveUpgrade(RandomInt(0, 1));
+	}
+}
+
 function UpdateAddict(player)
 {
 	local AddictValue = AddictGetValue(player);
@@ -989,11 +1008,50 @@ function UpdateShovePenalty(player)
 	}
 }
 
+function CardPickReminder()
+{
+	if (cardReminderTimer > 0)
+	{
+		cardReminderTimer--;
+	}
+	else
+	{
+		local player = null;
+		while ((player = Entities.FindByClassname(player, "player")) != null)
+		{
+			local survivorID = GetSurvivorID(player);
+
+			if (player.IsSurvivor() && survivorID != -1)
+			{
+				if (cardPickingAllowed[survivorID] > 0)
+				{
+					ClientPrint(player, 3, "\x01" + "Use " + "\x03" + "!pick [A-H]\x01" + " to choose a card (" + "\x03" + cardPickingAllowed[survivorID] + " remaining" + "\x01" + ")");
+
+					local voteCount = 0;
+					foreach(vote in cardShuffleVote)
+					{
+						if (vote == true)
+						{
+							voteCount += 1;
+						}
+					}
+					if (voteCount < 4)
+					{
+						ClientPrint(player, 3, "\x01" + "Use " + "\x03" + "!shuffle\x01" + " to vote for a new set of cards (" + "\x03" + voteCount + "/4" + "\x01" + " votes"  + ")");
+					}
+				}
+			}
+		}
+		cardReminderTimer = cardReminderInterval;
+	}
+}
+
 function Update_PlayerCards()
 {
 	//Runs every second, put player card related functions in here instead of _stocks Update()
 
 	CalcMaxHealth(false);
+	CardPickReminder();
 
 	local player = null;
 	while ((player = Entities.FindByClassname(player, "player")) != null)

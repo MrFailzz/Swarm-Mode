@@ -1,6 +1,33 @@
 ///////////////////////////////////////////////
 //            SHARED COMMON EVENTS           //
 ///////////////////////////////////////////////
+function CommonsUpdate()
+{
+	if (corruptionCommons != "None" || corruptionUncommons != "None")
+	{
+		BuildCommonList();
+	}
+
+	if (corruptionCommons != "None")
+	{
+		switch(corruptionCommons)
+		{
+			case "commonAcid":
+				AcidCommonsCountdown();
+				break;
+			case "commonFire":
+				FireCommonsCountdown();
+				break;
+			case "commonExplode":
+				ExplodingCommonsFilters();
+				ExplodingCommonsCountdown();
+				break;
+		}
+	}
+
+	Update_UncommonSpawnTimer();
+}
+
 function ZombieDeath(params)
 {
 	if ("victim" in params)
@@ -354,7 +381,44 @@ function ExplodingCommonBoom(common)
 ///////////////////////////////////////////////
 //                 UNCOMMONS                 //
 ///////////////////////////////////////////////
-function ClownCountdown()
+function Update_UncommonSpawnTimer()
+{
+	if (corruptionUncommons != "None")
+	{
+		switch(corruptionUncommons)
+		{
+			case "uncommonClown":
+				UncommonCountdown("models/infected/common_male_clown.mdl", 16, 120);
+			break;
+
+			case "uncommonRiot":
+				UncommonCountdown("models/infected/common_male_riot.mdl", 15, 450);
+			break;
+
+			case "uncommonMud":
+				UncommonCountdown("models/infected/common_male_mud.mdl", 12, 120);
+			break;
+
+			case "uncommonCeda":
+				UncommonCountdown("models/infected/common_male_ceda.mdl", 11, 120);
+			break;
+
+			case "uncommonConstruction":
+				UncommonCountdown("models/infected/common_male_roadcrew.mdl", 13, 120);
+			break;
+
+			case "uncommonJimmy":
+				UncommonCountdown("models/infected/common_male_jimmy.mdl", 17, 450);
+			break;
+
+			case "uncommonFallen":
+				UncommonCountdown("models/infected/common_male_fallen_survivor.mdl", 14, 450);
+			break;
+		}
+	}
+}
+
+function UncommonCountdown(model, gender, health)
 {
 	if ((Time() - uncommonsTimer) >= uncommonSpawnRate)
 	{
@@ -364,7 +428,7 @@ function ClownCountdown()
 
 			while (remainingSpawns > 0 && commonVarList.len() - 1 >= 0)
 			{
-				CreateClown(commonVarList.remove(RandomInt(0, commonVarList.len() - 1)));
+				CreateUncommon(commonVarList.remove(RandomInt(0, commonVarList.len() - 1)), model, gender, health);
 				remainingSpawns--;
 			}
 		}
@@ -373,243 +437,14 @@ function ClownCountdown()
 	}
 }
 
-function CreateClown(common)
+function CreateUncommon(common, model, gender, health)
 {
-	local uncommonModel = "models/infected/common_male_clown.mdl";
-
-	if (!IsModelPrecached(uncommonModel))
-	{
-		PrecacheModel(uncommonModel);
-	}
-
-	NetProps.SetPropInt(common, "m_Gender", 16);
-	common.SetModel(uncommonModel);
-	common.SetMaxHealth(120);
-	common.SetHealth(120);
+	PrecacheAndSetModel(common, model);
+	NetProps.SetPropInt(common, "m_Gender", gender);
+	common.SetMaxHealth(health);
+	common.SetHealth(health);
 
 	local commonName = "__uncommon_" + common.GetEntityIndex();
-	DoEntFire("!self", "AddOutput", "targetname " + commonName, 0, common, common);
-}
-
-function RiotCountdown()
-{
-	if ((Time() - uncommonsTimer) >= uncommonSpawnRate)
-	{
-		if (uncommonsCount < uncommonMax)
-		{
-			local remainingSpawns = uncommonSpawnAmount;
-
-			while (remainingSpawns > 0 && commonVarList.len() - 1 >= 0)
-			{
-				CreateRiot(commonVarList.remove(RandomInt(0, commonVarList.len() - 1)));
-				remainingSpawns--;
-			}
-		}
-
-		uncommonsTimer = Time();
-	}
-}
-
-function CreateRiot(common)
-{
-	local uncommonModel = "models/infected/common_male_riot.mdl";
-	
-	if (!IsModelPrecached(uncommonModel))
-	{
-		PrecacheModel(uncommonModel);
-	}
-
-	NetProps.SetPropInt(common, "m_Gender", 15);
-	common.SetModel(uncommonModel);
-	common.SetMaxHealth(450);
-	common.SetHealth(450);
-
-	local commonName = "__uncommon_" + common.GetEntityIndex();
-	DoEntFire("!self", "AddOutput", "targetname " + commonName, 0, common, common);
-}
-
-function MudCountdown()
-{
-	if ((Time() - uncommonsTimer) >= uncommonSpawnRate)
-	{
-		if (uncommonsCount < uncommonMax)
-		{
-			local remainingSpawns = uncommonSpawnAmount;
-
-			while (remainingSpawns > 0 && commonVarList.len() - 1 >= 0)
-			{
-				CreateMud(commonVarList.remove(RandomInt(0, commonVarList.len() - 1)));
-				remainingSpawns--;
-			}
-		}
-
-		uncommonsTimer = Time();
-	}
-}
-
-function CreateMud(common)
-{
-	local uncommonModel = "models/infected/common_male_mud.mdl";
-
-	if (!IsModelPrecached(uncommonModel))
-	{
-		PrecacheModel(uncommonModel);
-	}
-
-	NetProps.SetPropInt(common, "m_Gender", 12);
-	common.SetModel(uncommonModel);
-	common.SetMaxHealth(120);
-	common.SetHealth(120);
-
-	local commonName = "__uncommon_" + common.GetEntityIndex();
-	DoEntFire("!self", "AddOutput", "targetname " + commonName, 0, common, common);
-}
-
-function CedaCountdown()
-{
-	if ((Time() - uncommonsTimer) >= uncommonSpawnRate)
-	{
-		if (uncommonsCount < uncommonMax)
-		{
-			local remainingSpawns = uncommonSpawnAmount;
-
-			while (remainingSpawns > 0 && commonVarList.len() - 1 >= 0)
-			{
-				CreateCeda(commonVarList.remove(RandomInt(0, commonVarList.len() - 1)));
-				remainingSpawns--;
-			}
-		}
-
-		uncommonsTimer = Time();
-	}
-}
-
-function CreateCeda(common)
-{
-	local uncommonModel = "models/infected/common_male_ceda.mdl";
-
-	if (!IsModelPrecached(uncommonModel))
-	{
-		PrecacheModel(uncommonModel);
-	}
-
-	NetProps.SetPropInt(common, "m_Gender", 11);
-	common.SetModel(uncommonModel);
-	common.SetMaxHealth(120);
-	common.SetHealth(120);
-
-	local commonName = "__uncommon_" + common.GetEntityIndex();
-	DoEntFire("!self", "AddOutput", "targetname " + commonName, 0, common, common);
-}
-
-function ConstructionCountdown()
-{
-	if ((Time() - uncommonsTimer) >= uncommonSpawnRate)
-	{
-		if (uncommonsCount < uncommonMax)
-		{
-			local remainingSpawns = uncommonSpawnAmount;
-
-			while (remainingSpawns > 0 && commonVarList.len() - 1 >= 0)
-			{
-				CreateConstruction(commonVarList.remove(RandomInt(0, commonVarList.len() - 1)));
-				remainingSpawns--;
-			}
-		}
-
-		uncommonsTimer = Time();
-	}
-}
-
-function CreateConstruction(common)
-{
-	local uncommonModel = "models/infected/common_male_roadcrew.mdl";
-
-	if (!IsModelPrecached(uncommonModel))
-	{
-		PrecacheModel(uncommonModel);
-	}
-
-	NetProps.SetPropInt(common, "m_Gender", 13);
-	common.SetModel(uncommonModel);
-	common.SetMaxHealth(120);
-	common.SetHealth(120);
-
-	local commonName = "__uncommon_" + common.GetEntityIndex();
-	DoEntFire("!self", "AddOutput", "targetname " + commonName, 0, common, common);
-}
-
-function JimmyCountdown()
-{
-	if ((Time() - uncommonsTimer) >= uncommonSpawnRate)
-	{
-		if (uncommonsCount < uncommonJimmyMax)
-		{
-			local remainingSpawns = uncommonJimmySpawnAmount;
-
-			while (remainingSpawns > 0 && commonVarList.len() - 1 >= 0)
-			{
-				CreateJimmy(commonVarList.remove(RandomInt(0, commonVarList.len() - 1)));
-				remainingSpawns--;
-			}
-		}
-
-		uncommonsTimer = Time();
-	}
-}
-
-function CreateJimmy(common)
-{
-	local uncommonModel = "models/infected/common_male_jimmy.mdl";
-
-	if (!IsModelPrecached(uncommonModel))
-	{
-		PrecacheModel(uncommonModel);
-	}
-
-	NetProps.SetPropInt(common, "m_Gender", 17);
-	common.SetModel(uncommonModel);
-	common.SetMaxHealth(450);
-	common.SetHealth(450);
-
-	local commonName = "__uncommon_" + common.GetEntityIndex();
-	DoEntFire("!self", "AddOutput", "targetname " + commonName, 0, common, common);
-}
-
-function FallenCountdown()
-{
-	if ((Time() - uncommonsTimer) >= uncommonSpawnRate)
-	{
-		if (uncommonsCount < uncommonFallenMax)
-		{
-			local remainingSpawns = uncommonFallenSpawnAmount;
-
-			while (remainingSpawns > 0 && commonVarList.len() - 1 >= 0)
-			{
-				CreateFallen(commonVarList.remove(RandomInt(0, commonVarList.len() - 1)));
-				remainingSpawns--;
-			}
-		}
-
-		uncommonsTimer = Time();
-	}
-}
-
-function CreateFallen(common)
-{
-	local uncommonModel = "models/infected/common_male_fallen_survivor.mdl";
-
-	if (!IsModelPrecached(uncommonModel))
-	{
-		PrecacheModel(uncommonModel);
-	}
-
-	NetProps.SetPropInt(common, "m_Gender", 14);
-	common.SetModel(uncommonModel);
-	common.SetMaxHealth(450);
-	common.SetHealth(450);
-
-	local commonName = "__uncommon_fallen_" + common.GetEntityIndex();
 	DoEntFire("!self", "AddOutput", "targetname " + commonName, 0, common, common);
 }
 

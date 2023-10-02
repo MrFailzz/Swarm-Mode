@@ -1,6 +1,9 @@
 ///////////////////////////////////////////////
 //            GLOBALS / CONSTANTS            //
 ///////////////////////////////////////////////
+//1m = 40 units
+//5m = 200 units
+
 swarmSettingsTable <-
 {
 	language = "English",
@@ -100,10 +103,11 @@ missionsCompleted <- {};
 missionsCompleted["completed"] <- 0;
 MissionSpeedrun_Goal <- 8 * 60;
 MissionSpeedrun_Timer <- 0;
-MissionSpeedrun_Multi <- 1;
 MissionGnomeAlone_Status <- 0;
 MissionGnomeAlone_CalloutTimerInterval <- 10;
 MissionGnomeAlone_CalloutTimer <- MissionGnomeAlone_CalloutTimerInterval;
+
+swarm_stream_chance <- 25;	//Percentage chance
 
 //Ammo
 ammoShortageMultiplier <- 0.7;
@@ -183,7 +187,7 @@ fortuneCardsPick <- array(cardsPerCategory);
 pickableCards <- array(cardsPerCategory * 4);
 addictPlaySound <- false;
 ConfidentKillerCounter <- 0;
-MethHeadCounter <- [0, 0, 0, 0];
+::MethHeadCounter <- [0, 0, 0, 0];
 cardHudTimeout <- 8;
 ::AmpedUpCooldown <- 0;
 BaseTempHealthDecayRate <- 0.27;
@@ -249,6 +253,7 @@ DirectorOptions <-
 function SetDifficulty()
 {
 	difficulty = GetDifficulty();
+
 	switch(difficulty)
 	{
 		//Easy
@@ -286,7 +291,6 @@ function SetDifficulty()
 			stagger_dmg = 4000;
 			DirectorOptions.MobSpawnSize = 30;
 			DirectorOptions.MegaMobSize = 50;
-			MissionSpeedrun_Goal = 10 * MissionSpeedrun_Multi * 60;
 		break;
 
 		//Normal
@@ -324,7 +328,6 @@ function SetDifficulty()
 			stagger_dmg = 4000;
 			DirectorOptions.MobSpawnSize = 30;
 			DirectorOptions.MegaMobSize = 50;
-			MissionSpeedrun_Goal = 8 * MissionSpeedrun_Multi * 60;
 		break;
 
 		//Advanced
@@ -362,7 +365,6 @@ function SetDifficulty()
 			stagger_dmg = 10000;
 			DirectorOptions.MobSpawnSize = 35;
 			DirectorOptions.MegaMobSize = 60;
-			MissionSpeedrun_Goal = 7 * MissionSpeedrun_Multi * 60;
 		break;
 
 		//Expert
@@ -402,9 +404,10 @@ function SetDifficulty()
 			DirectorOptions.MobSpawnSize = 40;
 			DirectorOptions.MegaMobSize = 70;
 			DirectorOptions.TankHitDamageModifierCoop = 0.48;
-			MissionSpeedrun_Goal = 5 * MissionSpeedrun_Multi * 60;
 		break;
 	}
+
+	SetSpeedrunTimer();
 }
 
 DirectorOptions.SurvivorMaxIncapacitatedCount = BaseMaxIncaps;
@@ -482,7 +485,7 @@ crowGroupCountMax <- 4;				// Max number of crow groups to spawn
 sleeperCountMin <- 4;				// Mix number of sleepers to spawn
 sleeperCountMax <- 4;				// Max number of sleepers to spawn
 explosiveCarHealth <- 1000;			// HP of explosive cars
-spawnSnitch <- (RandomFloat(0.1,0.9))
+spawnSnitch <- (RandomFloat(0.1,0.9));
 snitchSpawned <- false;
 
 // HEALING //
@@ -491,8 +494,8 @@ pillsHealAmount <- 50;				// HP healed by pain pills
 adrenalineHealAmount <- 25;			// HP healed by adrenaline
 
 // PINGING //
-pingRange <- 2000					// Max range for pinging an object
-pingDuration <- 8					// How many seconds do objects stay pinged
+pingRange <- 2000;					// Max range for pinging an object
+pingDuration <- 8;					// How many seconds do objects stay pinged
 
 // SURVIVOR //
-survivorCrawlSpeed <- 30			// Last Legs base crawl speed
+survivorCrawlSpeed <- 30;			// Last Legs base crawl speed
