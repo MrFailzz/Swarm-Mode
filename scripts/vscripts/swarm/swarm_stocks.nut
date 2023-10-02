@@ -33,11 +33,10 @@ function PlayerSpawn(params)
 
 function PlayerDeath(params)
 {
-	local player = null;
-
 	if ("userid" in params)
 	{
-		player = GetPlayerFromUserID(params["userid"]);
+		local player = GetPlayerFromUserID(params["userid"]);
+
 		if (player.IsSurvivor())
 		{
 			//AdrenalineRush
@@ -45,80 +44,61 @@ function PlayerDeath(params)
 			ApplyAdrenalineRush();
 			ApplyInspiringSacrifice();
 		}
-
-		NetProps.SetPropInt(player, "m_Glow.m_iGlowType", 0);
-
-		if (params.victimname == "Tank")
+		else
 		{
-			TankDeath();
-		}
-		else if (params.victimname == "Boomer")
-		{
-			BoomerDeath(GetPlayerFromUserID(params["userid"]));
-		}
-	}
-
-	if (params.victimname == "Tank" || params.victimname == "Smoker" || params.victimname == "Jockey" || params.victimname == "Boomer" || params.victimname == "Charger" || params.victimname == "Spitter")
-	{
-		//Remove swarm stream glow
-		local playerIndex = player.GetEntityIndex();
-		EntFire("__swarm_stream_lightglow" + playerIndex, "Kill");
-
-		//FaceYourFears
-		local player = GetPlayerFromUserID(params["attacker"]);
-		local victim = GetPlayerFromUserID(params["userid"]);
-		local FaceYourFears = 0;
-		if (GetVectorDistance(player.GetOrigin(), victim.GetOrigin()) < 100)
-		{
-			FaceYourFears = PlayerHasCard(player, "FaceYourFears");
-			Heal_TempHealth(player, 2 * FaceYourFears);
-		}
-
-		//HotShot
-		local survivor = null;
-		local HotShot = 0;
-		while ((survivor = Entities.FindByClassname(survivor, "player")) != null)
-		{
-			if (survivor.IsSurvivor())
+			if (params.victimname == "Tank")
 			{
-				HotShot = PlayerHasCard(survivor, "HotShot");
-				if (RandomInt(1, 100) <= HotShot * 15)
-				{
-					//0 = UPGRADE_INCENDIARY_AMMO, 1 = UPGRADE_EXPLOSIVE_AMMO
-					survivor.GiveUpgrade(RandomInt(0, 1));
-				}
+				TankDeath();
 			}
-		}
-
-		//Piñata
-		//local player = GetPlayerFromUserID(params["userid"]);
-		local origin = player.GetOrigin();
-		local Pinata = TeamHasCard("Pinata");
-
-		if (RandomInt(1, 100) <= Pinata * 15)
-		{
-			RandomItemDrop(origin);
-		}
-
-		//ConfidentKiller
-		ConfidentKillerCounter++;
-
-		//MethHead
-		if ("attacker" in params)
-		{
-			local attacker = GetPlayerFromUserID(params["attacker"]);
-			if (attacker.IsValid())
+			else if (params.victimname == "Boomer")
 			{
-				if (attacker.IsPlayer())
+				BoomerDeath(player);
+			}
+
+			if (params.victimname == "Tank" || params.victimname == "Smoker" || params.victimname == "Jockey" || params.victimname == "Boomer" || params.victimname == "Charger" || params.victimname == "Spitter")
+			{
+				//FaceYourFears
+				local attacker = GetPlayerFromUserID(params["attacker"]);
+				local victim = GetPlayerFromUserID(params["userid"]);
+				local FaceYourFears = 0;
+				if (GetVectorDistance(attacker.GetOrigin(), victim.GetOrigin()) < 100)
 				{
-					if (attacker.IsSurvivor())
+					FaceYourFears = PlayerHasCard(attacker, "FaceYourFears");
+					Heal_TempHealth(attacker, 2 * FaceYourFears);
+				}
+
+				//Piñata
+				local Pinata = TeamHasCard("Pinata");
+				if (RandomInt(1, 100) <= Pinata * 15)
+				{
+					RandomItemDrop(player.GetOrigin());
+				}
+
+				//ConfidentKiller
+				ConfidentKillerCounter++;
+
+				
+				if ("attacker" in params)
+				{
+					local attacker = GetPlayerFromUserID(params["attacker"]);
+					if (attacker.IsValid())
 					{
-						MethHeadCounter[GetSurvivorID(attacker)]++;
-						CalcSpeedMultiplier(attacker);
+						if (attacker.IsPlayer())
+						{
+							if (attacker.IsSurvivor())
+							{
+								ApplyCardsOnMutationKill(attacker);
+							}
+						}
 					}
 				}
+
+				//Remove swarm stream glow
+				EntFire("__swarm_stream_lightglow" + player.GetEntityIndex(), "Kill");
 			}
 		}
+
+		NetProps.SetPropInt(player, "m_Glow.m_iGlowType", 0);
 	}
 }
 

@@ -920,6 +920,25 @@ function HeightendSensesPing(player)
 	}
 }
 
+function ApplyCardsOnMutationKill(attacker)
+{
+	//MethHead
+	local MethHead = PlayerHasCard(attacker, "MethHead");
+	if (MethHead > 0)
+	{
+		MethHeadCounter[GetSurvivorID(attacker)]++;
+		CalcSpeedMultiplier(attacker);
+	}
+
+	//HotShot
+	local HotShot = PlayerHasCard(attacker, "HotShot");
+	if (HotShot > 0)
+	{
+		//0 = UPGRADE_INCENDIARY_AMMO, 1 = UPGRADE_EXPLOSIVE_AMMO
+		attacker.GiveUpgrade(RandomInt(0, 1));
+	}
+}
+
 function UpdateAddict(player)
 {
 	local AddictValue = AddictGetValue(player);
