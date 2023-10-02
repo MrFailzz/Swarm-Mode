@@ -361,31 +361,31 @@ function Update_UncommonSpawnTimer()
 		switch(corruptionUncommons)
 		{
 			case "uncommonClown":
-				ClownCountdown("models/infected/common_male_clown.mdl", 16, 120);
+				UncommonCountdown("models/infected/common_male_clown.mdl", 16, 120);
 			break;
 
 			case "uncommonRiot":
-				RiotCountdown("models/infected/common_male_riot.mdl", 15, 450);
+				UncommonCountdown("models/infected/common_male_riot.mdl", 15, 450);
 			break;
 
 			case "uncommonMud":
-				MudCountdown("models/infected/common_male_mud.mdl", 12, 120);
+				UncommonCountdown("models/infected/common_male_mud.mdl", 12, 120);
 			break;
 
 			case "uncommonCeda":
-				CedaCountdown("models/infected/common_male_ceda.mdl", 11, 120);
+				UncommonCountdown("models/infected/common_male_ceda.mdl", 11, 120);
 			break;
 
 			case "uncommonConstruction":
-				ConstructionCountdown("models/infected/common_male_roadcrew.mdl", 13, 120);
+				UncommonCountdown("models/infected/common_male_roadcrew.mdl", 13, 120);
 			break;
 
 			case "uncommonJimmy":
-				JimmyCountdown("models/infected/common_male_jimmy.mdl", 17, 450);
+				UncommonCountdown("models/infected/common_male_jimmy.mdl", 17, 450);
 			break;
 
 			case "uncommonFallen":
-				FallenCountdown("models/infected/common_male_fallen_survivor.mdl", 14, 450);
+				UncommonCountdown("models/infected/common_male_fallen_survivor.mdl", 14, 450);
 			break;
 		}
 	}
