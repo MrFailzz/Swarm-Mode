@@ -108,6 +108,8 @@ MissionGnomeAlone_Status <- 0;
 MissionGnomeAlone_CalloutTimerInterval <- 10;
 MissionGnomeAlone_CalloutTimer <- MissionGnomeAlone_CalloutTimerInterval;
 
+swarm_stream_chance <- 25;	//Percentage chance
+
 //Ammo
 ammoShortageMultiplier <- 0.7;
 ammo_assaultrifle_max <- 360;
@@ -186,7 +188,7 @@ fortuneCardsPick <- array(cardsPerCategory);
 pickableCards <- array(cardsPerCategory * 4);
 addictPlaySound <- false;
 ConfidentKillerCounter <- 0;
-MethHeadCounter <- [0, 0, 0, 0];
+::MethHeadCounter <- [0, 0, 0, 0];
 cardHudTimeout <- 8;
 ::AmpedUpCooldown <- 0;
 BaseTempHealthDecayRate <- 0.27;

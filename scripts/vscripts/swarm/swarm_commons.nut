@@ -1,6 +1,33 @@
 ///////////////////////////////////////////////
 //            SHARED COMMON EVENTS           //
 ///////////////////////////////////////////////
+function CommonsUpdate()
+{
+	if (corruptionCommons != "None" || corruptionUncommons != "None")
+	{
+		BuildCommonList();
+	}
+
+	if (corruptionCommons != "None")
+	{
+		switch(corruptionCommons)
+		{
+			case "commonAcid":
+				AcidCommonsCountdown();
+				break;
+			case "commonFire":
+				FireCommonsCountdown();
+				break;
+			case "commonExplode":
+				ExplodingCommonsFilters();
+				ExplodingCommonsCountdown();
+				break;
+		}
+	}
+
+	Update_UncommonSpawnTimer();
+}
+
 function ZombieDeath(params)
 {
 	if ("victim" in params)

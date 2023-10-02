@@ -19,9 +19,11 @@ function PlayerSpawn(params)
 	else
 	{
 		MutationSpawn(player);
-		if (corruptionEnvironmental == "environmentSwarmStream" && RandomInt(0, 3) == 0)
+
+		//Potentially apply swarm stream to specials (except tank and hunter)
+		if (player.GetZombieType() != 8 && player.GetZombieType() != 3)
 		{
-			if (player.GetZombieType() != 8 && player.GetZombieType() != 7 && player.GetZombieType() != 3)
+			if (corruptionEnvironmental == "environmentSwarmStream" && RandomInt(1, 100) <= swarm_stream_chance)
 			{
 				CorruptionCard_SwarmStreamGlow(player);
 			}
@@ -32,27 +34,31 @@ function PlayerSpawn(params)
 function PlayerDeath(params)
 {
 	local player = null;
-	local isSurvivorDeath = false;
 
 	if ("userid" in params)
 	{
 		player = GetPlayerFromUserID(params["userid"]);
 		if (player.IsSurvivor())
 		{
-			isSurvivorDeath = true;
+			//AdrenalineRush
+			//InspiringSacrifice
+			ApplyAdrenalineRush();
+			ApplyInspiringSacrifice();
+		}
+
+		NetProps.SetPropInt(player, "m_Glow.m_iGlowType", 0);
+
+		if (params.victimname == "Tank")
+		{
+			TankDeath();
+		}
+		else if (params.victimname == "Boomer")
+		{
+			BoomerDeath(GetPlayerFromUserID(params["userid"]));
 		}
 	}
 
-	if (params.victimname == "Tank")
-	{
-		TankDeath();
-	}
-	else if (params.victimname == "Boomer")
-	{
-		BoomerDeath(GetPlayerFromUserID(params["userid"]));
-	}
-
-	if (params.victimname == "Tank" || params.victimname == "Smoker" || params.victimname == "Jockey" || params.victimname == "Boomer" || params.victimname == "Charger")
+	if (params.victimname == "Tank" || params.victimname == "Smoker" || params.victimname == "Jockey" || params.victimname == "Boomer" || params.victimname == "Charger" || params.victimname == "Spitter")
 	{
 		//Remove swarm stream glow
 		local playerIndex = player.GetEntityIndex();
@@ -114,16 +120,6 @@ function PlayerDeath(params)
 			}
 		}
 	}
-
-	//AdrenalineRush
-	//InspiringSacrifice
-	if (isSurvivorDeath)
-	{
-		ApplyAdrenalineRush();
-		ApplyInspiringSacrifice();
-	}
-
-	NetProps.SetPropInt(player, "m_Glow.m_iGlowType", 0);
 }
 
 function RandomItemDrop(origin)
@@ -382,29 +378,7 @@ function Update()
 		}
 	}
 
-	if (corruptionCommons != "None" || corruptionUncommons != "None")
-	{
-		BuildCommonList();
-	}
-
-	if (corruptionCommons != "None")
-	{
-		switch(corruptionCommons)
-		{
-			case "commonAcid":
-				AcidCommonsCountdown();
-				break;
-			case "commonFire":
-				FireCommonsCountdown();
-				break;
-			case "commonExplode":
-				ExplodingCommonsFilters();
-				ExplodingCommonsCountdown();
-				break;
-		}
-	}
-
-	Update_UncommonSpawnTimer();
+	CommonsUpdate();
 
 	if (corruptionEnvironmental == "environmentFrozen")
 	{
@@ -481,226 +455,6 @@ function Update()
 	{
 		AmpedUpCooldown--;
 	}
-
-	if (cardReminderTimer > 0)
-	{
-		cardReminderTimer--;
-	}
-	else
-	{
-		local player = null;
-		while ((player = Entities.FindByClassname(player, "player")) != null)
-		{
-			local survivorID = GetSurvivorID(player);
-
-			if (player.IsSurvivor() && survivorID != -1)
-			{
-				if (cardPickingAllowed[survivorID] > 0)
-				{
-					ClientPrint(player, 3, "\x01" + "Use " + "\x03" + "!pick [A-H]\x01" + " to choose a card (" + "\x03" + cardPickingAllowed[survivorID] + " remaining" + "\x01" + ")");
-
-					local voteCount = 0;
-					foreach(vote in cardShuffleVote)
-					{
-						if (vote == true)
-						{
-							voteCount += 1;
-						}
-					}
-					if (voteCount < 4)
-					{
-						ClientPrint(player, 3, "\x01" + "Use " + "\x03" + "!shuffle\x01" + " to vote for a new set of cards (" + "\x03" + voteCount + "/4" + "\x01" + " votes"  + ")");
-					}
-				}
-			}
-		}
-		cardReminderTimer = cardReminderInterval;
-	}
-
-	//Remove critical particles
-	EntFire("__critical_particle*", "Kill");
-}
-
-function SpawnMob(count = 1, zType = 10)
-{
-	//count = Number of groups to spawn
-	//zType = Infected type to spawn, defaults to MOB if zType is not specified
-	/*ZOMBIE_NORMAL = 0
-	ZOMBIE_SMOKER = 1
-	ZOMBIE_BOOMER = 2
-	ZOMBIE_HUNTER = 3
-	ZOMBIE_SPITTER = 4
-	ZOMBIE_JOCKEY = 5
-	ZOMBIE_CHARGER = 6
-	ZOMBIE_WITCH = 7
-	ZOMBIE_TANK = 8
-	ZSPAWN_MOB = 10
-	ZSPAWN_MUDMEN = 12
-	ZSPAWN_WITCHBRIDE = 11*/
-
-	local i = 0;
-	while (i < count)
-	{
-		ZSpawn({type = zType, pos = Vector(0,0,0)});
-		i++;
-	}
-
-	DelayHordeTimers();
-
-	Heal_AmpedUp();
-	Director.PlayMegaMobWarningSounds();
-}
-::ZSpawnMob <- SpawnMob;
-
-function DelayHordeTimers()
-{
-	if (HuntedTimer != null)
-	{
-		HuntedTimer += 20;
-	}
-	if (OnslaughtTimer != null)
-	{
-		OnslaughtTimer += 20;
-	}
-	if (SpecialHordeTimer != null)
-	{
-		SpecialHordeTimer += 20;
-	}
-}
-::DelayHordeTimers <- DelayHordeTimers;
-
-function DegToRad(angle)
-{
-	return angle * (PI / 180);
-}
-
-function GetVectorDistance(vec1, vec2)
-{
-	return sqrt(pow(vec1.x - vec2.x,2) + pow(vec1.y - vec2.y,2) + pow(vec1.z - vec2.z,2));
-}
-::zGetVectorDistance <- GetVectorDistance;
-
-function GetVectorAngle(vec1, vec2)
-{
-	return atan2(vec1.y - vec2.y, vec1.x - vec2.x);
-}
-::zGetVectorAngle <- GetVectorAngle;
-
-function CheckLOS(vec1, vec2, originEntity)
-{
-	local traceTable =
-	{
-		start = vec1
-		end = vec2
-		mask = TRACE_MASK_VISION
-		ignore = originEntity
-	};
-
-	if(TraceLine(traceTable))
-	{
-		if(traceTable.hit)
-		{
-			return traceTable.enthit;
-		}
-	}
-}
-::CheckLOS <- CheckLOS;
-::TRACE_MASK_VISION <- TRACE_MASK_VISION;
-
-function Clamp(angle, clampTo)
-{
-	if (angle > clampTo)
-	{
-		return clampTo;
-	}
-	else
-	{
-		return angle;
-	}
-}
-
-function Sign(x)
-{
-	if (x >= 0)
-	{
-		return 1;
-	}
-	else
-	{
-		return -1;
-	}
-}
-
-// From Rocketdude
-function GetColorInt(col)
-{
-	if(typeof(col) == "Vector")
-	{
-		local color = col.x;
-		color += 256 * col.y;
-		color += 65536 * col.z;
-		return color;
-	}
-	else if(typeof(col) == "string")
-	{
-		local colorArray = split(col, " ");
-		local r = colorArray[0].tointeger();
-		local g = colorArray[1].tointeger();
-		local b = colorArray[2].tointeger();
-		local color = r;
-		color += 256 * g;
-		color += 65536 * b;
-		return color;
-	}
-}
-
-function CreateSurvivorFilter()
-{
-	SpawnEntityFromTable("filter_activator_team",
-	{
-		targetname = "__swarm_filter_survivor",
-		Negated = "Allow entities that match criteria",
-		filterteam = 2
-	});
-}
-CreateSurvivorFilter();
-
-function CreateInfectedFilter()
-{
-	SpawnEntityFromTable("filter_activator_team",
-	{
-		targetname = "__swarm_filter_infected",
-		Negated = "Allow entities that match criteria",
-		filterteam = 3
-	});
-}
-CreateInfectedFilter();
-
-// From VSLib - Get rendercolor of a prop
-/**
- * Gets a table of RGBA colors from 32 bit format to 8 bit.
- */
-function GetColor32( color32 )
-{
-	local t = {};
-	local readColor = color32;
-	
-	// Reads the 8 bit color values by rightshifting and masking the lowest byte out with bitwise AND.
-	// The >>> makes it consider the input value unsigned.
-	t.red <- (readColor & 0xFF);
-	t.green <- ((readColor >>> 8) & 0xFF);
-	t.blue <- ((readColor >>> 16) & 0xFF);
-	t.alpha <- ((readColor >>> 24) & 0xFF);
-	return t;
-}
-
-function IntToTime(integer)
-{
-	local minutes = floor(integer / 60);
-	minutes = format("%02i", minutes);
-	local seconds = integer % 60;
-	seconds = format("%02i", seconds);
-	return minutes + ":" + seconds;
 }
 
 function BarbedWire(params)
@@ -816,27 +570,4 @@ function PropModels()
 	{
 		PrecacheAndSetModel(ince_pack, "models/swarm/props/w_eq_incendiary_ammopack.mdl");
 	}	
-}
-
-function AllowBash(basher, bashee)
-{
-	if (bashee.IsPlayer())
-	{
-		if (bashee.GetZombieType() == 2)
-		{
-			return ALLOW_BASH_NONE;
-		}
-	}
-
-	return ALLOW_BASH_ALL;
-}
-
-function PrecacheAndSetModel(entity, model)
-{
-	if (!IsModelPrecached(model))
-	{
-		PrecacheModel(model);
-	}
-
-	entity.SetModel(model);
 }

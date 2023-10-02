@@ -1,6 +1,19 @@
 ///////////////////////////////////////////////
 //            DAMAGE INTERACTIONS            //
 ///////////////////////////////////////////////
+function AllowBash(basher, bashee)
+{
+	if (bashee.IsPlayer())
+	{
+		if (bashee.GetZombieType() == 2)
+		{
+			return ALLOW_BASH_NONE;
+		}
+	}
+
+	return ALLOW_BASH_ALL;
+}
+
 function AllowTakeDamage(damageTable)
 {
 	//Table values
@@ -8,7 +21,6 @@ function AllowTakeDamage(damageTable)
 	local originalDamageDone = damageTable.DamageDone;
 	local attacker = damageTable.Attacker;
 	local victim = damageTable.Victim;
-	//local inflictor = damageTable.Inflictor;
 	local attackerPlayer = null;
 	local attackerClass = null;
 	local attackerType = null;
@@ -21,7 +33,6 @@ function AllowTakeDamage(damageTable)
 		weaponClass = weapon.GetClassname();
 	}
 	local damageType = damageTable.DamageType;
-	//local damageLocation = damageTable.Location;
 
 	//Modifiers
 	local damageModifier = 1.00;
@@ -452,20 +463,20 @@ function CriticalHit(player, location)
 		start_active = 1
 	});
 
+	EntFire("__critical_particle_target" + id, "Kill", "", 2);
+	EntFire("__critical_particle" + id, "Kill", "", 2);
+
 	local random = RandomInt(1, 3);
 	if (random == 1)
 	{
-		//EmitSoundOnClient("ambient.electrical_zap_1", player);
 		EmitAmbientSoundOn("ambient.electrical_zap_1", 0.75, RandomInt(95, 105), RandomInt(90, 110), target);
 	}
 	else if (random == 2)
 	{
-		//EmitSoundOnClient("ambient.electrical_zap_2", player);
 		EmitAmbientSoundOn("ambient.electrical_zap_2", 0.75, RandomInt(95, 105), RandomInt(90, 110), target);
 	}
 	else
 	{
-		//EmitSoundOnClient("ambient.electrical_zap_3", player);
 		EmitAmbientSoundOn("ambient.electrical_zap_2", 0.75, RandomInt(95, 105), RandomInt(90, 110), target);
 	}
 }
