@@ -33,6 +33,7 @@ function PlayerSpawn(params)
 
 function PlayerDeath(params)
 {
+	//Check if a valid Player died, if userid does not exist then it was not a Player entity so we can ignore it
 	if ("userid" in params)
 	{
 		local player = GetPlayerFromUserID(params["userid"]);
@@ -55,6 +56,7 @@ function PlayerDeath(params)
 				BoomerDeath(player);
 			}
 
+			//Mutation death (excludes Hunters, and Witches since they are not Players)
 			if (params.victimname == "Tank" || params.victimname == "Smoker" || params.victimname == "Jockey" || params.victimname == "Boomer" || params.victimname == "Charger" || params.victimname == "Spitter")
 			{
 				//FaceYourFears
@@ -77,7 +79,6 @@ function PlayerDeath(params)
 				//ConfidentKiller
 				ConfidentKillerCounter++;
 
-				
 				if ("attacker" in params)
 				{
 					local attacker = GetPlayerFromUserID(params["attacker"]);
@@ -162,20 +163,8 @@ function RoundStart(params)
 {
 	CreateCardHud();
 
-	// Multiplier for speedrun objective based on map length. Must be before InitCorruption
-	local flow = GetMaxFlowDistance();
-	if (flow < 25000)
-	{
-		MissionSpeedrun_Multi = 1
-	}
-	else
-	{
-		MissionSpeedrun_Multi = 1.5
-	}
-
-	difficulty = GetDifficulty();
-	InitCorruptionCards();
 	SetDifficulty();
+	InitCorruptionCards();
 }
 
 function PlayerLeftSafeArea(params)

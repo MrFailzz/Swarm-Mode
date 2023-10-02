@@ -1630,6 +1630,39 @@ function GetMissionStatus()
 	}
 }
 
+function SetSpeedrunTimer()
+{
+	// Multiplier for speedrun objective based on map length. Must be before InitCorruption
+	local distanceMultiplier = 1;
+	if (GetMaxFlowDistance() >= 25000)
+	{
+		distanceMultiplier = 1.5;
+	}
+
+	switch(difficulty)
+	{
+		//Easy
+		case 0:
+			MissionSpeedrun_Goal = 10 * distanceMultiplier * 60;
+		break;
+
+		//Normal
+		case 1:
+			MissionSpeedrun_Goal = 8 * distanceMultiplier * 60;
+		break;
+
+		//Advanced
+		case 2:
+			MissionSpeedrun_Goal = 7 * distanceMultiplier * 60;
+		break;
+
+		//Expert
+		case 3:
+			MissionSpeedrun_Goal = 5 * distanceMultiplier * 60;
+		break;
+	}
+}
+
 function CorruptionCard_GnomeAlone()
 {
 	//Spawn the Gnome on a random nav

@@ -103,7 +103,6 @@ missionsCompleted <- {};
 missionsCompleted["completed"] <- 0;
 MissionSpeedrun_Goal <- 8 * 60;
 MissionSpeedrun_Timer <- 0;
-MissionSpeedrun_Multi <- 1;
 MissionGnomeAlone_Status <- 0;
 MissionGnomeAlone_CalloutTimerInterval <- 10;
 MissionGnomeAlone_CalloutTimer <- MissionGnomeAlone_CalloutTimerInterval;
@@ -254,6 +253,7 @@ DirectorOptions <-
 function SetDifficulty()
 {
 	difficulty = GetDifficulty();
+
 	switch(difficulty)
 	{
 		//Easy
@@ -291,7 +291,6 @@ function SetDifficulty()
 			stagger_dmg = 4000;
 			DirectorOptions.MobSpawnSize = 30;
 			DirectorOptions.MegaMobSize = 50;
-			MissionSpeedrun_Goal = 10 * MissionSpeedrun_Multi * 60;
 		break;
 
 		//Normal
@@ -329,7 +328,6 @@ function SetDifficulty()
 			stagger_dmg = 4000;
 			DirectorOptions.MobSpawnSize = 30;
 			DirectorOptions.MegaMobSize = 50;
-			MissionSpeedrun_Goal = 8 * MissionSpeedrun_Multi * 60;
 		break;
 
 		//Advanced
@@ -367,7 +365,6 @@ function SetDifficulty()
 			stagger_dmg = 10000;
 			DirectorOptions.MobSpawnSize = 35;
 			DirectorOptions.MegaMobSize = 60;
-			MissionSpeedrun_Goal = 7 * MissionSpeedrun_Multi * 60;
 		break;
 
 		//Expert
@@ -407,9 +404,10 @@ function SetDifficulty()
 			DirectorOptions.MobSpawnSize = 40;
 			DirectorOptions.MegaMobSize = 70;
 			DirectorOptions.TankHitDamageModifierCoop = 0.48;
-			MissionSpeedrun_Goal = 5 * MissionSpeedrun_Multi * 60;
 		break;
 	}
+
+	SetSpeedrunTimer();
 }
 
 DirectorOptions.SurvivorMaxIncapacitatedCount = BaseMaxIncaps;

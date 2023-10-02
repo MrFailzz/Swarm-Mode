@@ -144,7 +144,7 @@ function Translation_EN(msg)
 		break;
 
 		case "#desc_MethHead":
-			return "+2.5% Move Speed / Melee Speed per Mutation kill"
+			return "+2.5% Move / Melee Speed per Mutation kill"
 		break;
 
 		case "#name_OpticsEnthusiast":
@@ -828,7 +828,7 @@ function Translation_RU(msg)
 		break;
 
 		case "#desc_MethHead":
-			return "+2.5% Move Speed / Melee Speed per Mutation kill"
+			return "+2.5% Move / Melee Speed per Mutation kill"
 		break;
 
 		case "#name_OpticsEnthusiast":
