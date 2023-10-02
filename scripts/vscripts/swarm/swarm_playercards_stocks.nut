@@ -293,8 +293,11 @@ function GetReloadSpeedModifier(player)
 function GetMeleeSpeedModifier(player)
 {
 	local Slugger = PlayerHasCard(player, "Slugger");
+	local MethHead = PlayerHasCard(player, "MethHead");
 
-	local meleeModifier = 1 + (0.30 * Slugger);
+	local meleeModifier = (1 
+						+ (0.30 * Slugger)
+						+ (0.025 * MethHead * MethHeadCounter[GetSurvivorID(player)]));
 
 	if (meleeModifier <= 0)
 	{
