@@ -159,14 +159,6 @@ function RandomItemDrop(origin)
 	}
 }
 
-function RoundStart(params)
-{
-	CreateCardHud();
-
-	SetDifficulty();
-	InitCorruptionCards();
-}
-
 function PlayerLeftSafeArea(params)
 {
 	if (firstLeftCheckpoint == false)
