@@ -52,7 +52,7 @@ function HealSuccess(params)
 	local AntibioticOintment = PlayerHasCard(healer, "AntibioticOintment");
 	if (AntibioticOintment > 0)
 	{
-		local healAmountAntibiotic = 10 * AntibioticOintment;
+		local healAmountAntibiotic = antibioticHealAmount * AntibioticOintment;
 		Heal_TempHealth(player, healAmountAntibiotic);
 		Heal_GroupTherapy(player, healAmountAntibiotic, true);
 	}
@@ -67,7 +67,7 @@ function PillsUsed(params)
 	local healMultiplier = CalcHealingMultiplier(player, true);
 
 	local AntibioticOintment = PlayerHasCard(player, "AntibioticOintment");
-	local healAmount = (pillsHealAmount * healMultiplier) + (10 * AntibioticOintment);
+	local healAmount = (pillsHealAmount * healMultiplier) + (antibioticHealAmount * AntibioticOintment);
 
 	Heal_TempHealth(player, healAmount);
 	Heal_GroupTherapy(player, healAmount, true);
@@ -80,7 +80,7 @@ function AdrenalineUsed(params)
 	local healMultiplier = CalcHealingMultiplier(player, true);
 
 	local AntibioticOintment = PlayerHasCard(player, "AntibioticOintment");
-	local healAmount = (adrenalineHealAmount * healMultiplier) + (10 * AntibioticOintment);
+	local healAmount = (adrenalineHealAmount * healMultiplier) + (antibioticHealAmount * AntibioticOintment);
 
 	Heal_TempHealth(player, healAmount);
 	Heal_GroupTherapy(player, healAmount, true);

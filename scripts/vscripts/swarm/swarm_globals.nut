@@ -493,6 +493,7 @@ snitchSpawned <- false;
 medkitHealAmount <- 50;				// HP healed by first aid kits
 pillsHealAmount <- 50;				// HP healed by pain pills
 adrenalineHealAmount <- 25;			// HP healed by adrenaline
+antibioticHealAmount <- 15;
 
 // PINGING //
 pingRange <- 2000;					// Max range for pinging an object

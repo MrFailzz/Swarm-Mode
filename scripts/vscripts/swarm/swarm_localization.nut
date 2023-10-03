@@ -496,7 +496,7 @@ function Translation_EN(msg)
 		break;
 
 		case "#desc_AntibioticOintment":
-			return "+25% Heal EFF, +10 Temp HP to target"
+			return "+25% Heal EFF, +15 Temp HP to target"
 		break;
 
 		case "#name_MedicalExpert":
@@ -1180,7 +1180,7 @@ function Translation_RU(msg)
 		break;
 
 		case "#desc_AntibioticOintment":
-			return "+25% Heal EFF, +10 Temp HP to target"
+			return "+25% Heal EFF, +15 Temp HP to target"
 		break;
 
 		case "#name_MedicalExpert":
