@@ -408,7 +408,7 @@ function CalcMaxHealth(heal = true)
 
 			local currentMax = player.GetMaxHealth();
 			local newMax = ((100 - TraumaDamage)
-							+ (35 * CannedGoods)
+							+ (40 * CannedGoods)
 							+ (50 * SlowAndSteady)
 							+ (-10 * FleetOfFoot)
 							+ (5 * CrossTrainers)
@@ -974,7 +974,13 @@ function ApplyShovePenalties(player)
 	local RunLikeHell = PlayerHasCard(player, "RunLikeHell");
 	if (RunLikeHell > 0)
 	{
-		shovePenalty += 5;
+		shovePenalty += 6;
+	}
+
+	local CannedGoods = PlayerHasCard(player, "CannedGoods");
+	if (RunLikeHell > 0)
+	{
+		shovePenalty += 2;
 	}
 
 	baseShovePenalty[survivorID] = shovePenalty;

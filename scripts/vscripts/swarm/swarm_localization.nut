@@ -232,7 +232,7 @@ function Translation_EN(msg)
 		break;
 
 		case "#desc_RunLikeHell":
-			return "+30% Move Speed, -15% DEF, Increases Shove CD"
+			return "+30% Move Speed, -15% DEF, +75% Shove CD"
 		break;
 
 		case "#name_Quickdraw":
@@ -280,7 +280,7 @@ function Translation_EN(msg)
 		break;
 
 		case "#desc_CannedGoods":
-			return "+35 Max HP"
+			return "+40 Max HP, +25% Shove CD"
 		break;
 
 		case "#name_SlowAndSteady":
@@ -544,7 +544,7 @@ function Translation_EN(msg)
 		break;
 
 		case "#desc_MagCoupler":
-			return "+75% Reload Speed, Increases Shove CD"
+			return "+75% Reload Speed, +100% Shove CD"
 		break;
 
 		case "#name_LuckyShot":
@@ -916,7 +916,7 @@ function Translation_RU(msg)
 		break;
 
 		case "#desc_RunLikeHell":
-			return "+30% Move Speed, -15% DEF, Increases Shove CD"
+			return "+30% Move Speed, -15% DEF, +75% Shove CD"
 		break;
 
 		case "#name_Quickdraw":
@@ -964,7 +964,7 @@ function Translation_RU(msg)
 		break;
 
 		case "#desc_CannedGoods":
-			return "+35 Max HP"
+			return "+40 Max HP, +25% Shove CD"
 		break;
 
 		case "#name_SlowAndSteady":
@@ -1228,7 +1228,7 @@ function Translation_RU(msg)
 		break;
 
 		case "#desc_MagCoupler":
-			return "+75% Reload Speed, Increases Shove CD"
+			return "+75% Reload Speed, +100% Shove CD"
 		break;
 
 		case "#name_LuckyShot":

@@ -60,7 +60,6 @@ disciplineCards <-
 	"Brazen",
 	//"MarkedForDeath",
 	"PackMule",
-	//"Resupply",
 	//"Suppression",
 	"EyeOfTheSwarm",
 	"EMTBag",
@@ -89,6 +88,7 @@ fortuneCards <-
 	//"RefundPolicy",
 	//"Stockpile",
 	//"LifeInsurance",
+	//"Resupply",
 	"WellRested",
 	"Gambler",
 ];
