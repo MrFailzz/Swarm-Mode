@@ -59,16 +59,6 @@ function PlayerDeath(params)
 			//Mutation death (excludes Hunters, and Witches since they are not Players)
 			if (params.victimname == "Tank" || params.victimname == "Smoker" || params.victimname == "Jockey" || params.victimname == "Boomer" || params.victimname == "Charger" || params.victimname == "Spitter")
 			{
-				//FaceYourFears
-				local attacker = GetPlayerFromUserID(params["attacker"]);
-				local victim = GetPlayerFromUserID(params["userid"]);
-				local FaceYourFears = 0;
-				if (GetVectorDistance(attacker.GetOrigin(), victim.GetOrigin()) < 100)
-				{
-					FaceYourFears = PlayerHasCard(attacker, "FaceYourFears");
-					Heal_TempHealth(attacker, 2 * FaceYourFears);
-				}
-
 				//Piñata
 				local Pinata = TeamHasCard("Pinata");
 				if (RandomInt(1, 100) <= Pinata * 15)
@@ -88,7 +78,7 @@ function PlayerDeath(params)
 						{
 							if (attacker.IsSurvivor())
 							{
-								ApplyCardsOnMutationKill(attacker);
+								ApplyCardsOnMutationKill(attacker, player);
 							}
 						}
 					}

@@ -903,7 +903,7 @@ function HeightendSensesPing(player)
 	}
 }
 
-function ApplyCardsOnMutationKill(attacker)
+function ApplyCardsOnMutationKill(attacker, victim)
 {
 	//MethHead
 	local MethHead = PlayerHasCard(attacker, "MethHead");
@@ -919,6 +919,16 @@ function ApplyCardsOnMutationKill(attacker)
 	{
 		//0 = UPGRADE_INCENDIARY_AMMO, 1 = UPGRADE_EXPLOSIVE_AMMO
 		attacker.GiveUpgrade(RandomInt(0, 1));
+	}
+
+	//FaceYourFears
+	local FaceYourFears = PlayerHasCard(attacker, "FaceYourFears");
+	if (GetVectorDistance(attacker.GetOrigin(), victim.GetOrigin()) < 100)
+	{
+		if (FaceYourFears > 0)
+		{
+			Heal_TempHealth(attacker, 2 * FaceYourFears);
+		}
 	}
 }
 
