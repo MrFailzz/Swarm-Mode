@@ -23,7 +23,7 @@ function HealSuccess(params)
 	local healMultiplier = 1 + ((0.5 * EMTBag) + (0.25 * AntibioticOintment) + (0.30 * MedicalExpert) + (0.1 * Rochelle) + (-0.5 * ScarTissue));
 	if (Gambler > 0)
 	{
-		healMultiplier += ApplyGamblerValue(GetSurvivorID(healer), 6, Gambler, healMultiplier);
+		healMultiplier += ApplyGamblerValue(GetSurvivorID(healer), 6, Gambler);
 	}
 	local healAmount = medkitHealAmount * healMultiplier;
 
@@ -54,7 +54,7 @@ function PillsUsed(params)
 	local healMultiplier = 1 + ((0.5 * EMTBag) + (0.25 * AntibioticOintment) + (0.30 * MedicalExpert) + (0.5 * Addict) + (0.1 * Rochelle) + (-0.5 * ScarTissue));
 	if (Gambler > 0)
 	{
-		healMultiplier += ApplyGamblerValue(GetSurvivorID(player), 6, Gambler, healMultiplier);
+		healMultiplier += ApplyGamblerValue(GetSurvivorID(player), 6, Gambler);
 	}
 	local healAmount = (pillsHealAmount * healMultiplier) + (10 * AntibioticOintment);
 
@@ -77,7 +77,7 @@ function AdrenalineUsed(params)
 	local healMultiplier = 1 + ((0.5 * EMTBag) + (0.25 * AntibioticOintment) + (0.30 * MedicalExpert) + (0.75 * Addict) + (0.1 * Rochelle) + (-0.5 * ScarTissue));
 	if (Gambler > 0)
 	{
-		healMultiplier += ApplyGamblerValue(GetSurvivorID(player), 6, Gambler, healMultiplier);
+		healMultiplier += ApplyGamblerValue(GetSurvivorID(player), 6, Gambler);
 	}
 	local healAmount = (adrenalineHealAmount * healMultiplier) + (10 * AntibioticOintment);
 

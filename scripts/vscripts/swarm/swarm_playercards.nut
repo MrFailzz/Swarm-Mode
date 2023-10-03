@@ -375,7 +375,7 @@ function CalcMaxHealth(heal = true)
 			local TraumaResistance = 1 //+ (-0.2 * CombatMedic);
 			if (Gambler > 0)
 			{
-				TraumaResistance += ApplyGamblerValue(GetSurvivorID(player), 2, Gambler, TraumaResistance);
+				TraumaResistance += ApplyGamblerValue(GetSurvivorID(player), 2, Gambler);
 			}
 			if (TraumaResistance < 0)
 			{
@@ -421,7 +421,7 @@ function CalcMaxHealth(heal = true)
 							+ (20 * MeanDrunk));
 			if (Gambler > 0)
 			{
-				newMax += ApplyGamblerValue(GetSurvivorID(player), 0, Gambler, newMax);
+				newMax += ApplyGamblerValue(GetSurvivorID(player), 0, Gambler);
 			}
 			local currentHealth = player.GetHealth();
 			local healthAdjustment = newMax - currentMax;
@@ -473,7 +473,7 @@ function CalcSpeedMultiplier(player)
 							+ (0.3 * RunLikeHell));
 	if (Gambler > 0)
 	{
-		speedMultiplier += ApplyGamblerValue(GetSurvivorID(player), 3, Gambler, speedMultiplier);
+		speedMultiplier += ApplyGamblerValue(GetSurvivorID(player), 3, Gambler);
 	}
 
 	if (speedMultiplier <= 0.1)

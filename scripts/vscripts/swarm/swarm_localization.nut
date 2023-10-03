@@ -352,7 +352,7 @@ function Translation_EN(msg)
 		break;
 
 		case "#desc_Brawler":
-			return "Shove deals +50 Melee DMG"
+			return "+50 Shove DMG"
 		break;
 
 		case "#name_Berserker":
@@ -1036,7 +1036,7 @@ function Translation_RU(msg)
 		break;
 
 		case "#desc_Brawler":
-			return "Shove deals +50 Melee DMG"
+			return "+50 Shove DMG"
 		break;
 
 		case "#name_Berserker":
