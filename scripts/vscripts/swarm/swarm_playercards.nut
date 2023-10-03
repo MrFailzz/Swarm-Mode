@@ -607,23 +607,6 @@ function ApplyAdrenalineRush()
 	}
 }
 
-function ApplyInspiringSacrifice()
-{
-	local InspiringSacrifice = TeamHasCard("InspiringSacrifice");
-
-	local player = null;
-	while ((player = Entities.FindByClassname(player, "player")) != null)
-	{
-		if (player.IsSurvivor())
-		{
-			if (!player.IsDead() && !player.IsIncapacitated() && !player.IsHangingFromLedge())
-			{
-				Heal_TempHealth(player, (25 * InspiringSacrifice));
-			}
-		}
-	}
-}
-
 function ApplyNeedsOfTheMany()
 {
 	DirectorOptions.SurvivorMaxIncapacitatedCount = BaseMaxIncaps + TeamHasCard("NeedsOfTheMany");

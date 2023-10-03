@@ -1,6 +1,37 @@
 ///////////////////////////////////////////////
-//               SHARED EVENTS               //
+//               HEALING EVENTS              //
 ///////////////////////////////////////////////
+function CalcHealingMultiplier(player, tempHealth = false)
+{
+	local Gambler = PlayerHasCard(player, "Gambler");
+	local EMTBag = PlayerHasCard(player, "EMTBag");
+	local AntibioticOintment = PlayerHasCard(player, "AntibioticOintment");
+	local MedicalExpert = TeamHasCard("MedicalExpert");
+	local Rochelle = PlayerHasCard(player, "Rochelle");
+	local ScarTissue = PlayerHasCard(player, "ScarTissue");
+
+	local Addict = 0;
+	if (tempHealth == true)
+	{
+		Addict = PlayerHasCard(player, "Addict");
+	}
+
+	local healMultiplier = (1
+							+ (0.5 * EMTBag)
+							+ (0.25 * AntibioticOintment)
+							+ (0.30 * MedicalExpert)
+							+ (0.1 * Rochelle)
+							+ (-0.5 * ScarTissue)
+							+ (0.5 * Addict));
+
+	if (Gambler > 0)
+	{
+		healMultiplier += ApplyGamblerValue(GetSurvivorID(player), 6, Gambler);
+	}
+
+	return healMultiplier;
+}
+
 //Use heal begin because heal end is bugged, so restored temp health may not be accurate
 function HealBegin(params)
 {
@@ -13,22 +44,12 @@ function HealSuccess(params)
 {
 	local healer = GetPlayerFromUserID(params.userid);
 	local player = GetPlayerFromUserID(params.subject);
+	local healMultiplier = CalcHealingMultiplier(healer);
 
-	local Gambler = PlayerHasCard(healer, "Gambler");
-	local EMTBag = PlayerHasCard(healer, "EMTBag");
-	local AntibioticOintment = PlayerHasCard(healer, "AntibioticOintment");
-	local MedicalExpert = TeamHasCard("MedicalExpert");
-	local Rochelle = PlayerHasCard(healer, "Rochelle");
-	local ScarTissue = PlayerHasCard(healer, "ScarTissue");
-	local healMultiplier = 1 + ((0.5 * EMTBag) + (0.25 * AntibioticOintment) + (0.30 * MedicalExpert) + (0.1 * Rochelle) + (-0.5 * ScarTissue));
-	if (Gambler > 0)
-	{
-		healMultiplier += ApplyGamblerValue(GetSurvivorID(healer), 6, Gambler);
-	}
 	local healAmount = medkitHealAmount * healMultiplier;
-
 	Heal_PermaHealth(player, healAmount, survivorHealthBuffer[GetSurvivorID(player)]);
 
+	local AntibioticOintment = PlayerHasCard(healer, "AntibioticOintment");
 	if (AntibioticOintment > 0)
 	{
 		local healAmountAntibiotic = 10 * AntibioticOintment;
@@ -43,19 +64,9 @@ function PillsUsed(params)
 {
 	local player = GetPlayerFromUserID(params.subject);
 	local maxHealth = player.GetMaxHealth();
+	local healMultiplier = CalcHealingMultiplier(player);
 
-	local Gambler = PlayerHasCard(player, "Gambler");
-	local EMTBag = PlayerHasCard(player, "EMTBag");
 	local AntibioticOintment = PlayerHasCard(player, "AntibioticOintment");
-	local MedicalExpert = TeamHasCard("MedicalExpert");
-	local Addict = PlayerHasCard(player, "Addict");
-	local Rochelle = PlayerHasCard(player, "Rochelle");
-	local ScarTissue = PlayerHasCard(player, "ScarTissue");
-	local healMultiplier = 1 + ((0.5 * EMTBag) + (0.25 * AntibioticOintment) + (0.30 * MedicalExpert) + (0.5 * Addict) + (0.1 * Rochelle) + (-0.5 * ScarTissue));
-	if (Gambler > 0)
-	{
-		healMultiplier += ApplyGamblerValue(GetSurvivorID(player), 6, Gambler);
-	}
 	local healAmount = (pillsHealAmount * healMultiplier) + (10 * AntibioticOintment);
 
 	Heal_TempHealth(player, healAmount);
@@ -66,19 +77,9 @@ function AdrenalineUsed(params)
 {
 	local player = GetPlayerFromUserID(params.subject);
 	local maxHealth = player.GetMaxHealth();
+	local healMultiplier = CalcHealingMultiplier(player);
 
-	local Gambler = PlayerHasCard(player, "Gambler");
-	local EMTBag = PlayerHasCard(player, "EMTBag");
 	local AntibioticOintment = PlayerHasCard(player, "AntibioticOintment");
-	local MedicalExpert = TeamHasCard("MedicalExpert");
-	local Addict = PlayerHasCard(player, "Addict");
-	local Rochelle = PlayerHasCard(player, "Rochelle");
-	local ScarTissue = PlayerHasCard(player, "ScarTissue");
-	local healMultiplier = 1 + ((0.5 * EMTBag) + (0.25 * AntibioticOintment) + (0.30 * MedicalExpert) + (0.75 * Addict) + (0.1 * Rochelle) + (-0.5 * ScarTissue));
-	if (Gambler > 0)
-	{
-		healMultiplier += ApplyGamblerValue(GetSurvivorID(player), 6, Gambler);
-	}
 	local healAmount = (adrenalineHealAmount * healMultiplier) + (10 * AntibioticOintment);
 
 	Heal_TempHealth(player, healAmount);
@@ -141,15 +142,18 @@ function Heal_GroupTherapy(healTarget, healAmount, isTempHealth)
 			{
 				if (player.IsSurvivor())
 				{
-					if (player != healTarget)
+					if (ValidAliveSurvivor(player))
 					{
-						if (isTempHealth == false)
+						if (player != healTarget)
 						{
-							Heal_PermaHealth(player, healAmount, player.GetHealthBuffer());
-						}
-						else
-						{
-							Heal_TempHealth(player, healAmount);
+							if (isTempHealth == false)
+							{
+								Heal_PermaHealth(player, healAmount, player.GetHealthBuffer());
+							}
+							else
+							{
+								Heal_TempHealth(player, healAmount);
+							}
 						}
 					}
 				}
@@ -205,25 +209,28 @@ function Heal_AmpedUp()
 			{
 				if (player.IsSurvivor())
 				{
-					local currentTempHealth = player.GetHealthBuffer();
-					local currentHealth = player.GetHealth();
-					local maxHealth = player.GetMaxHealth();
-
-					local healAmount = 20 * AmpedUp;
-
-					if (healAmount + currentHealth > maxHealth)
+					if (ValidAliveSurvivor(player))
 					{
-						player.SetHealth(maxHealth);
-					}
-					else
-					{
-						player.SetHealth(healAmount + currentHealth);
-					}
+						local currentTempHealth = player.GetHealthBuffer();
+						local currentHealth = player.GetHealth();
+						local maxHealth = player.GetMaxHealth();
 
-					local currentHealth = player.GetHealth();
-					if (currentHealth + currentTempHealth > maxHealth)
-					{
-						player.SetHealthBuffer(maxHealth - currentHealth)
+						local healAmount = 20 * AmpedUp;
+
+						if (healAmount + currentHealth > maxHealth)
+						{
+							player.SetHealth(maxHealth);
+						}
+						else
+						{
+							player.SetHealth(healAmount + currentHealth);
+						}
+
+						local currentHealth = player.GetHealth();
+						if (currentHealth + currentTempHealth > maxHealth)
+						{
+							player.SetHealthBuffer(maxHealth - currentHealth)
+						}
 					}
 				}
 			}
@@ -233,3 +240,20 @@ function Heal_AmpedUp()
 	}
 }
 ::Heal_AmpedUp <- Heal_AmpedUp;
+
+function ApplyInspiringSacrifice()
+{
+	local InspiringSacrifice = TeamHasCard("InspiringSacrifice");
+
+	local player = null;
+	while ((player = Entities.FindByClassname(player, "player")) != null)
+	{
+		if (player.IsSurvivor())
+		{
+			if (ValidAliveSurvivor(player))
+			{
+				Heal_TempHealth(player, (25 * InspiringSacrifice));
+			}
+		}
+	}
+}

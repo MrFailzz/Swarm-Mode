@@ -192,3 +192,8 @@ function PrecacheAndSetModel(entity, model)
 
 	entity.SetModel(model);
 }
+
+function ValidAliveSurvivor(player)
+{
+	return !player.IsDead() && !player.IsDying() && !player.IsIncapacitated() && !player.IsHangingFromLedge();
+}

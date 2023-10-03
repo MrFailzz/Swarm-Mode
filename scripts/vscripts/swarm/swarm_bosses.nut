@@ -76,7 +76,7 @@ function CreateSwarmCircle(tankID)
 		// Find closest player to tank
 		while ((survivor = Entities.FindByClassname(survivor, "player")) != null)
 		{
-			if (survivor.IsSurvivor() && !survivor.IsDead() && !survivor.IsIncapacitated() && !survivor.IsHangingFromLedge())
+			if (ValidAliveSurvivor(survivor))
 			{
 				playerOrigin = survivor.GetOrigin();
 				vectorDistance = GetVectorDistance(playerOrigin, tankOrigin);
