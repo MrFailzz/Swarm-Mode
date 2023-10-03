@@ -3,6 +3,23 @@
 ///////////////////////////////////////////////
 function AllowBash(basher, bashee)
 {
+	//Shove damage
+	if (bashee.IsValid())
+	{
+		if (bashee.IsPlayer())
+		{
+			if (!bashee.IsSurvivor())
+			{
+				CalcBashDamage(basher, bashee);
+			}
+		}
+		else
+		{
+			CalcBashDamage(basher, bashee);
+		}
+	}
+
+	//Ignore shoves on boomer-types
 	if (bashee.IsPlayer())
 	{
 		if (bashee.GetZombieType() == 2)
@@ -12,6 +29,16 @@ function AllowBash(basher, bashee)
 	}
 
 	return ALLOW_BASH_ALL;
+}
+
+function CalcBashDamage(basher, bashee)
+{
+	local finalShoveDamage = shove_damage;
+	local Brawler = PlayerHasCard(basher, "Brawler");
+
+	finalShoveDamage += (50 * Brawler);
+
+	bashee.TakeDamageEx(basher, basher, null, Vector(0,0,0), bashee.GetOrigin(), finalShoveDamage, DMG_MELEE);
 }
 
 function AllowTakeDamage(damageTable)

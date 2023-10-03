@@ -130,6 +130,7 @@ survivor_revive_duration <- 5;
 
 //Melee
 melee_damage <- 400;
+shove_damage <- 15;
 
 //Chainsaw
 chainsaw_damage <- 100;

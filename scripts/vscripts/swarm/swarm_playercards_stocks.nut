@@ -40,7 +40,7 @@ brawnCards <-
 	//"Numb",
 	"MeanDrunk",
 	//"BattleLust",
-	//"Brawler",
+	"Brawler",
 	"Berserker",
 	//"HeavyHitter",
 	//"Rampage",
