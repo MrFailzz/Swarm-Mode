@@ -228,7 +228,7 @@ function GetEntityType(entity)
 			return "Snitcher";
 			break;
 		case "prop_door_rotating":
-			if (targetname.find("__alarm_door") != null)
+			if (targetname.find("__alarm_door_") != null)
 			{
 				return "Alarm Door";
 			}

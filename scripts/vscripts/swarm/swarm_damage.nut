@@ -437,10 +437,10 @@ function AllowTakeDamage(damageTable)
 		}
 		else
 		{
-			//Crows
 			local victimName = victim.GetName();
 			if (victimName.find("__crow_group_") != null)
 			{
+				//Hit a crow
 				if ((damageType & DMG_BLAST) == DMG_BLAST || (damageType & DMG_BLAST_SURFACE) == DMG_BLAST_SURFACE || (damageType & DMG_BURN) == DMG_BURN)
 				{
 					local nameArray = split(victimName, "_");
@@ -455,6 +455,24 @@ function AllowTakeDamage(damageTable)
 					}
 				}
 			}
+			else if (victimName.find("__alarm_door_") != null)
+			{
+				//Hit an alarm door
+				if (attacker.IsValid())
+				{
+					if (attacker.IsPlayer())
+					{
+						if (attacker.IsSurvivor())
+						{
+							if (damageTable.DamageDone > 0)
+							{
+								local nameArray = split(victimName, "_");
+								AlarmDoorActivate(nameArray[2]);
+							}
+						}
+					}
+				}
+			}
 		}
 	}
 
@@ -464,18 +482,17 @@ function AllowTakeDamage(damageTable)
 	}
 	damageTable.DamageDone = damageDone;
 
-	/*
-	printl("Attacker: " + attacker);
-	printl("Victim: " + victim);
-	printl("Weapon: " + weaponClass);
-	//printl("Inflictor: " + inflictor);
-	printl("Original DMG: " + originalDamageDone);
-	printl("New DMG: " + damageTable.DamageDone);
-	printl("DMG Modifier: " + damageModifier);
-	printl("DMG Type: " + damageType);
-	//printl("DMG Location: " + damageLocation);
-	printl("");
-	*/
+	if (swarmSettingsTable["debug_mode"] >= 2)
+	{
+		printl("Attacker: " + attacker);
+		printl("Victim: " + victim);
+		printl("Weapon: " + weaponClass);
+		printl("Original DMG: " + originalDamageDone);
+		printl("New DMG: " + damageTable.DamageDone);
+		printl("DMG Modifier: " + damageModifier);
+		printl("DMG Type: " + damageType);
+		printl("");
+	}
 
 	return true;
 }

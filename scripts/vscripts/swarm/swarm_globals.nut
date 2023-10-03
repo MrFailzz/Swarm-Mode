@@ -8,7 +8,7 @@ swarmSettingsTable <-
 {
 	language = "English",
 	hardcore = false,
-	debug_mode = false,
+	debug_mode = 0,
 }
 
 //Globals
@@ -108,6 +108,9 @@ MissionGnomeAlone_CalloutTimerInterval <- 10;
 MissionGnomeAlone_CalloutTimer <- MissionGnomeAlone_CalloutTimerInterval;
 
 swarm_stream_chance <- 25;	//Percentage chance
+
+//Corruption - Hazards
+::alarmDoorStatus <- {};
 
 //Ammo
 ammoShortageMultiplier <- 0.7;

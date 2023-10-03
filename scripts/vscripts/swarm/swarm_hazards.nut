@@ -1,5 +1,7 @@
-if (!IsSoundPrecached("Car.Alarm"))
-	PrecacheSound("Car.Alarm");
+if (!IsSoundPrecached("vehicles/car_alarm/car_alarm.wav"))
+{
+	PrecacheSound("vehicles/car_alarm/car_alarm.wav");
+}
 
 ///////////////////////////////////////////////
 //                HAZARD NAVS                //
@@ -63,7 +65,7 @@ function InitAlarmDoors()
 	}
 	else
 	{
-		remainingDoors = 0
+		remainingDoors = 0;
 	}
 
 	while (remainingDoors > 0 && doorList.len() - 1 >= 0)
@@ -76,8 +78,10 @@ function InitAlarmDoors()
 function CreateAlarmDoor(door)
 {
 	local doorIndex = door.GetEntityIndex();
-	local doorName = "__alarm_door" + doorIndex;
+	local doorName = "__alarm_door_" + doorIndex;
 	DoEntFire("!self", "AddOutput", "targetname " + doorName, 0, door, door);
+	//Track door status
+	alarmDoorStatus[doorIndex.tostring()] <- false;
 
 	local doorX = door.GetOrigin().x;
 	local doorY = door.GetOrigin().y;
@@ -130,26 +134,42 @@ function CreateAlarmDoor(door)
 	EntFire(doorName + "_sign2", "SetParent", doorName);
 
 	// Horde events
-	EntFire(doorName, "AddOutput", "OnOpen !self:RunScriptCode:AlarmDoorActivate(" + doorIndex + "):0:1");
-	EntFire(doorName, "AddOutput", "OnOpen !self:RunScriptCode:AlarmDoorStopSound(" + doorIndex + "):8:1");
-	EntFire(doorName, "AddOutput", "OnBreak !self:RunScriptCode:AlarmDoorStopSound(" + doorIndex + "):0:1");
+	EntFire(doorName, "AddOutput", "OnOpen !self:RunScriptCode:AlarmDoorActivate(" + doorIndex.tostring() + "):0:1");
 	// Make doors unbreakable until opened
-	EntFire(doorName, "SetUnbreakable", "!self:0:1");
-	EntFire(doorName, "AddOutput", "OnOpen !self:SetBreakable:8:1");
+	//EntFire(doorName, "SetUnbreakable", "!self:0:1");
 }
 
 function AlarmDoorActivate(doorIndex)
 {
-	local doorEnt = Entities.FindByName(null, "__alarm_door" + doorIndex);
-	EmitSoundOn("Car.Alarm", doorEnt);
-	ZSpawnMob();
+	if (alarmDoorStatus[doorIndex.tostring()] == false)
+	{
+		alarmDoorStatus[doorIndex.tostring()] = true;
+		
+		local doorName = "__alarm_door_" + doorIndex;
+		local doorEnt = Entities.FindByName(null, doorName);
+
+		//Create target for sound
+		local doorOrigin = doorEnt.GetOrigin();
+		local soundTarget = SpawnEntityFromTable("info_target",
+		{
+			targetname = doorName + "_target",
+			origin = Vector(doorOrigin.x, doorOrigin.y, doorOrigin.z + 56)
+		});
+
+		EmitSoundOn("Car.Alarm", soundTarget);
+		EntFire(doorName, "SetBreakable");
+		ZSpawnMob();
+
+		EntFire(doorName + "_target", "RunScriptCode", "AlarmDoorStopSound(" + doorIndex + ")", 8);
+	}
 }
 ::AlarmDoorActivate <- AlarmDoorActivate;
 
 function AlarmDoorStopSound(doorIndex)
 {
-	local doorEnt = Entities.FindByName(null, "__alarm_door" + doorIndex);
-	StopSoundOn("Car.Alarm", doorEnt)
+	local soundTarget = Entities.FindByName(null, "__alarm_door_" + doorIndex + "_target");
+	StopSoundOn("Car.Alarm", soundTarget);
+	EntFire("__alarm_door_" + doorIndex + "_target", "Kill");
 }
 ::AlarmDoorStopSound <- AlarmDoorStopSound;
 
@@ -175,7 +195,7 @@ function InitCrows()
 	}
 	else
 	{
-		crowGroupsToSpawn = 0
+		crowGroupsToSpawn = 0;
 	}
 
 	while (crowsGroupsSpawned < crowGroupsToSpawn)

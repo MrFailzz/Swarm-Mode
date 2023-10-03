@@ -184,11 +184,34 @@ function InterceptChat(message, speaker)
 			case "debug":
 				if (GetListenServerHost() == speaker)
 				{
-					swarmSettingsTable["debug_mode"] = !swarmSettingsTable["debug_mode"];
+					/* Debug Mode Levels - higher numbers include effects of the numbers below them
+						0: Disabled
+						1: Enable !debugpick
+						2: Show debug messages, e.g. damage table
+					*/
 
-					if (swarmSettingsTable["debug_mode"])
+
+					if (textArgs.len() > 1)
 					{
-						ClientPrint(speaker, 3, "\x04" + "Debug mode enabled");
+						swarmSettingsTable["debug_mode"] = textArgs[1].tointeger();
+						//ClientPrint(speaker, 3, "\x04" + "Debug mode enabled");
+					}
+					else
+					{
+						if (swarmSettingsTable["debug_mode"] > 0)
+						{
+							swarmSettingsTable["debug_mode"] = 0;
+						}
+						else
+						{
+							swarmSettingsTable["debug_mode"] = 1;
+						}
+					}
+					printl(swarmSettingsTable["debug_mode"]);
+
+					if (swarmSettingsTable["debug_mode"] > 0)
+					{
+						ClientPrint(speaker, 3, "\x04" + "Debug mode enabled (" + swarmSettingsTable["debug_mode"] + ")");
 					}
 					else
 					{
