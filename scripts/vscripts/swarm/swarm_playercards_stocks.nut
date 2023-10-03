@@ -337,7 +337,10 @@ function ApplyGamblerValue(player, index, Gambler)
 
 	if (gambleValue != -1)
 	{
-		gambleValue = gambleValue.tofloat() / 100;
+		if (index != 0)
+		{
+			gambleValue = gambleValue.tofloat() / 100;
+		}
 		return (Gambler * gambleValue);
 	}
 	else
