@@ -64,7 +64,7 @@ function PillsUsed(params)
 {
 	local player = GetPlayerFromUserID(params.subject);
 	local maxHealth = player.GetMaxHealth();
-	local healMultiplier = CalcHealingMultiplier(player);
+	local healMultiplier = CalcHealingMultiplier(player, true);
 
 	local AntibioticOintment = PlayerHasCard(player, "AntibioticOintment");
 	local healAmount = (pillsHealAmount * healMultiplier) + (10 * AntibioticOintment);
@@ -77,7 +77,7 @@ function AdrenalineUsed(params)
 {
 	local player = GetPlayerFromUserID(params.subject);
 	local maxHealth = player.GetMaxHealth();
-	local healMultiplier = CalcHealingMultiplier(player);
+	local healMultiplier = CalcHealingMultiplier(player, true);
 
 	local AntibioticOintment = PlayerHasCard(player, "AntibioticOintment");
 	local healAmount = (adrenalineHealAmount * healMultiplier) + (10 * AntibioticOintment);
