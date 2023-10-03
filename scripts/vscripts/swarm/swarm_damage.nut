@@ -304,7 +304,7 @@ function AllowTakeDamage(damageTable)
 								 + (HeadMultiplier));
 				if (GamblerAttacker > 0)
 				{
-					damageModifier += ApplyGamblerValue(GetSurvivorID(attacker), 4, GamblerAttacker, damageModifier);
+					damageModifier += ApplyGamblerValue(GetSurvivorID(attacker), 4, GamblerAttacker);
 				}
 				damageDone = damageTable.DamageDone * damageModifier;
 			}
@@ -422,7 +422,7 @@ function AllowTakeDamage(damageTable)
 								+ (AcidMultiplier));
 				if (GamblerVictim > 0)
 				{
-					damageModifier += ApplyGamblerValue(GetSurvivorID(victim), 1, GamblerVictim, damageModifier) * -1;
+					damageModifier += ApplyGamblerValue(GetSurvivorID(victim), 1, GamblerVictim);
 				}
 				damageDone = damageTable.DamageDone * damageModifier;
 			}

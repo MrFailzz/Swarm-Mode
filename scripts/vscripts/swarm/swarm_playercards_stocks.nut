@@ -278,7 +278,7 @@ function GetReloadSpeedModifier(player)
 
 	if (Gambler > 0)
 	{
-		reloadModifier += ApplyGamblerValue(GetSurvivorID(player), 5, Gambler, reloadModifier);
+		reloadModifier += ApplyGamblerValue(GetSurvivorID(player), 5, Gambler);
 	}
 
 	if (reloadModifier <= 0)
@@ -331,14 +331,14 @@ function GetGamblerValue(player, index)
 }
 ::GetGamblerValue <- GetGamblerValue;
 
-function ApplyGamblerValue(player, index, Gambler, affectedValue)
+function ApplyGamblerValue(player, index, Gambler)
 {
 	local gambleValue = GetGamblerValue(player, index);
 
 	if (gambleValue != -1)
 	{
 		gambleValue = gambleValue.tofloat() / 100;
-		return affectedValue * (Gambler * gambleValue);
+		return (Gambler * gambleValue);
 	}
 	else
 	{
@@ -350,7 +350,7 @@ function ApplyGamblerValue(player, index, Gambler, affectedValue)
 function PrintGamblerValue(player)
 {
 	local maxHp = GetGamblerValue(GetSurvivorID(player), 0);
-	local maxHpString = GamblerColor(maxHp) + "Max HP: " + GamblerSign(maxHp) + ", ";
+	local maxHpString = GamblerColor(maxHp) + "Max HP: " + GamblerSign(maxHp, "") + ", ";
 
 	local res = GetGamblerValue(GetSurvivorID(player), 1);
 	local resString = GamblerColor(res) + "DEF: " + GamblerSign(res) + ", ";
@@ -373,15 +373,15 @@ function PrintGamblerValue(player)
 	ClientPrint(player, 3, "\x03Gambler: " + maxHpString + resString + traumaResString + speedString + damageString + reloadString + healEffString);
 }
 
-function GamblerSign(gambleValue)
+function GamblerSign(gambleValue, suffix = "%")
 {
 	if (gambleValue >= 0)
 	{
-		return "+" + gambleValue + "%";
+		return "+" + gambleValue + suffix;
 	}
 	else
 	{
-		return "" + gambleValue + "%";
+		return "" + gambleValue + suffix;
 	}
 }
 
