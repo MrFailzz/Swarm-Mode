@@ -129,6 +129,29 @@ function AllowTakeDamage(damageTable)
 					}
 				}
 
+				// Headshot DMG
+				if ((damageType & DMG_HEADSHOT) == DMG_HEADSHOT)
+				{
+					if (victimPlayer == true)
+					{
+						if (corruptionRetch == "Reeker" && victim.GetZombieType() == 2)
+						{
+							//Reduce headshot damage vs Reekers
+							HeadMultiplier = -0.75;
+						}
+						else if (victim.GetZombieType() == 8)
+						{
+							//Add headshot multiplier for tanks
+							HeadMultiplier = 1.5;
+						}
+						else
+						{
+							//Reduce headshot damage to 3x (default: 4x)
+							HeadMultiplier = -0.25;
+						}
+					}
+				}
+
 				//DownInFront
 				if (victimPlayer == true)
 				{
@@ -234,26 +257,6 @@ function AllowTakeDamage(damageTable)
 							Berserker = PlayerHasCard(attacker, "Berserker");
 							Zoey = PlayerHasCard(attacker, "Zoey");
 							MeanDrunk = PlayerHasCard(attacker, "MeanDrunk");
-						}
-					}
-				}
-
-				// Headshot DMG
-				if ((damageType & DMG_HEADSHOT) == DMG_HEADSHOT)
-				{
-					if (victimPlayer == true)
-					{
-						if (corruptionRetch == "Reeker" && victim.GetZombieType() == 2)
-						{
-							HeadMultiplier = -0.75;
-						}
-						else if (victim.GetZombieType() == 8)
-						{
-							HeadMultiplier = 1.5;
-						}
-						else
-						{
-							HeadMultiplier = -0.25;
 						}
 					}
 				}

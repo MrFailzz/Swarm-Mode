@@ -128,9 +128,10 @@ function OnGameEvent_player_incapacitated_start(params)
 
 function OnGameEvent_round_start(params)
 {
+	difficulty = GetDifficulty();
 	CreateCardHud();
-	SetDifficulty();
 	InitCorruptionCards();
+	SetDifficulty();
 }
 
 function OnGameEvent_player_activate(params)
