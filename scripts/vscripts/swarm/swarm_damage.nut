@@ -136,13 +136,18 @@ function AllowTakeDamage(damageTable)
 					{
 						if (corruptionRetch == "Reeker" && victim.GetZombieType() == 2)
 						{
-							//Reduce headshot damage vs Reekers
+							//Remove headshot damage vs Reekers
 							HeadMultiplier = -0.75;
 						}
 						else if (victim.GetZombieType() == 8)
 						{
 							//Add headshot multiplier for tanks
 							HeadMultiplier = 1.5;
+						}
+						else if (weaponClass == "weapon_melee")
+						{
+							//2x DMG for melee headshots
+							HeadMultiplier = 1;
 						}
 						else
 						{

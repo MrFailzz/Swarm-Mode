@@ -9,11 +9,17 @@ swarmHudLineH <- 0.0275;
 swarmHudMidBoxW <- 0.5;
 swarmHudGapY <- 0.01;
 
+/*
+Free HUD Panels:
+	- HUD_FAR_RIGHT
+	- HUD_SCORE_TITLE
+*/
+
 swarmHUD <-
 {
 	Fields = 
 	{
-		corruptionCards = {name = "corruptionCards", slot = HUD_FAR_RIGHT, dataval = "", flags = HUD_FLAG_ALIGN_LEFT},
+		corruptionCards = {name = "corruptionCards", slot = HUD_SCORE_4, dataval = "", flags = HUD_FLAG_ALIGN_LEFT},
 		corruptionCardsInfected = {name = "corruptionCardsInfected", slot = HUD_SCORE_1, dataval = "", flags = HUD_FLAG_ALIGN_LEFT},
 		corruptionCardsMission = {name = "corruptionCardsMission", slot = HUD_SCORE_2, dataval = "", flags = HUD_FLAG_ALIGN_LEFT},
 		corruptionCardsHorde = {name = "corruptionCardsHorde", slot = HUD_SCORE_3, dataval = "", flags = HUD_FLAG_ALIGN_LEFT},
@@ -45,7 +51,149 @@ function IsHudElementVisible(hudName)
 }
 
 ///////////////////////////////////////////////
-//                  CARD HUD                 //
+//            CORRUPTION CARD HUD            //
+///////////////////////////////////////////////
+function UpdateCorruptionCardHUD()
+{
+	local returnString = "";
+	local returnStringInf = "";
+	local returnStringMission = "";
+	local returnStringHorde = "";
+	local cardName = null;
+	local iList = 0;
+	local iInf = 0;
+	local iMission = 0;
+	local iHorde = 0;
+	local missionGoal = "";
+	local missionStatus = "";
+	local hordeTimer = "";
+
+	foreach(cardID in corruptionCards_List)
+	{
+		cardName = GetCorruptionCardName(cardID);
+
+		if (cardName != "None" && cardName != null)
+		{
+			if (returnString == "")
+			{
+				returnString = cardName;
+			}
+			else
+			{
+				returnString = returnString + "\n" + cardName;
+				iList++;
+			}
+		}
+	}
+
+	foreach(cardID in corruptionCards_ListInf)
+	{
+		cardName = GetCorruptionCardName(cardID);
+
+		if (cardName != "None" && cardName != null)
+		{
+			if (returnStringInf == "")
+			{
+				returnStringInf = cardName;
+			}
+			else
+			{
+				returnStringInf = returnStringInf + "\n" + cardName;
+				iInf++;
+			}
+		}
+	}
+
+	foreach(cardID in corruptionCards_ListMission)
+	{
+		cardName = GetCorruptionCardName(cardID);
+
+		if (cardName != "None" && cardName != null)
+		{
+			if (returnStringMission == "")
+			{
+				returnStringMission = cardName;
+			}
+			else
+			{
+				returnStringMission = returnStringMission + "\n" + cardName;
+				iMission++;
+			}
+
+			missionGoal = GetMissionGoal();
+			missionStatus = GetMissionStatus();
+
+			if (missionGoal != "")
+			{
+				returnStringMission = returnStringMission + "\n" + missionGoal;
+				iMission++;
+			}
+
+			if (missionStatus != "")
+			{
+				returnStringMission = returnStringMission + "\n" + missionStatus;
+				iMission++;
+			}
+		}
+	}
+
+	if (returnStringMission == "")
+	{
+		returnStringMission = "No Objective";
+	}
+
+	foreach(cardID in corruptionCards_ListHorde)
+	{
+		cardName = GetCorruptionCardName(cardID);
+
+		if (cardName != "None" && cardName != null)
+		{
+			if (returnStringHorde == "")
+			{
+				returnStringHorde = cardName;
+			}
+			else
+			{
+				returnStringHorde = returnStringHorde + "\n" + cardName;
+				iHorde++;
+			}
+
+			hordeTimer = GetHordeTimer();
+
+			if (hordeTimer != "")
+			{
+				returnStringHorde = returnStringHorde + "\n" + hordeTimer;
+				iHorde++;
+			}
+		}
+	}
+
+	if (returnStringHorde == "")
+	{
+		returnStringHorde = "No Horde";
+	}
+
+	swarmHUD.Fields["corruptionCards"].dataval = returnString;
+	swarmHUD.Fields["corruptionCardsInfected"].dataval = returnStringInf;
+	swarmHUD.Fields["corruptionCardsMission"].dataval = returnStringMission;
+	swarmHUD.Fields["corruptionCardsHorde"].dataval = returnStringHorde;
+
+	local hudY = swarmHudY;
+	local hudH = swarmHudH + (swarmHudLineH * (iMission == 0 ? 1 : iMission))
+	HUDPlace(HUD_SCORE_2, 1 - swarmHudW - swarmHudX, hudY, swarmHudW, hudH);
+	hudY = hudY + hudH + swarmHudGapY;
+	hudH = swarmHudH + (swarmHudLineH * (iHorde == 0 ? 1 : iHorde))
+	HUDPlace(HUD_SCORE_3, 1 - swarmHudW - swarmHudX, hudY, swarmHudW, hudH);
+	hudY = hudY + hudH + swarmHudGapY;
+	hudH = swarmHudH + (swarmHudLineH * (iList == 0 ? 1 : iList))
+	HUDPlace(HUD_SCORE_4, 1 - swarmHudW - swarmHudX, hudY, swarmHudW, hudH);
+	hudY = hudY + hudH + swarmHudGapY;
+	hudH = swarmHudH + (swarmHudLineH * (iInf == 0 ? 1 : iInf))
+	HUDPlace(HUD_SCORE_1, 1 - swarmHudW - swarmHudX, hudY, swarmHudW, hudH);
+}
+
+///////////////////////////////////////////////
+//              CARD HUD CONTROL             //
 ///////////////////////////////////////////////
 function CardHudUpdate()
 {

@@ -146,8 +146,18 @@ function GetPickableCardsString(cardArray, cardCount, prefix, hudName, hudPlacem
 
 	swarmHUD.Fields[hudName].dataval = cardsString;
 
-	local hudH = swarmHudH + (swarmHudLineH * (i == 0 ? 1 : i))
-	HUDPlace(hudPlacement, 0.5 - (swarmHudMidBoxW / 2), hudY, swarmHudMidBoxW, hudH);
+	local hudH = swarmHudH + (swarmHudLineH * (i == 0 ? 1 : i));
+	local placementHudY = 0;
+	if (hudPlacement == HUD_MID_BOX)
+	{
+		placementHudY = 0.014;
+	}
+	else
+	{
+		placementHudY = hudY;
+	}
+
+	HUDPlace(hudPlacement, 0.5 - (swarmHudMidBoxW / 2), placementHudY, swarmHudMidBoxW, hudH);
 	hudY = hudY + hudH + swarmHudGapY;
 	return hudY;
 }

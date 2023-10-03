@@ -239,146 +239,6 @@ function ChooseCorruptionCard_ListHorde(cardArray)
 	return cardSlot;
 }
 
-function UpdateCorruptionCardHUD()
-{
-	local returnString = "";
-	local returnStringInf = "";
-	local returnStringMission = "";
-	local returnStringHorde = "";
-	local cardName = null;
-	local iList = 0;
-	local iInf = 0;
-	local iMission = 0;
-	local iHorde = 0;
-	local missionGoal = "";
-	local missionStatus = "";
-	local hordeTimer = "";
-
-	foreach(cardID in corruptionCards_List)
-	{
-		cardName = GetCorruptionCardName(cardID);
-
-		if (cardName != "None" && cardName != null)
-		{
-			if (returnString == "")
-			{
-				returnString = cardName;
-			}
-			else
-			{
-				returnString = returnString + "\n" + cardName;
-				iList++;
-			}
-		}
-	}
-
-	foreach(cardID in corruptionCards_ListInf)
-	{
-		cardName = GetCorruptionCardName(cardID);
-
-		if (cardName != "None" && cardName != null)
-		{
-			if (returnStringInf == "")
-			{
-				returnStringInf = cardName;
-			}
-			else
-			{
-				returnStringInf = returnStringInf + "\n" + cardName;
-				iInf++;
-			}
-		}
-	}
-
-	foreach(cardID in corruptionCards_ListMission)
-	{
-		cardName = GetCorruptionCardName(cardID);
-
-		if (cardName != "None" && cardName != null)
-		{
-			if (returnStringMission == "")
-			{
-				returnStringMission = cardName;
-			}
-			else
-			{
-				returnStringMission = returnStringMission + "\n" + cardName;
-				iMission++;
-			}
-
-			missionGoal = GetMissionGoal();
-			missionStatus = GetMissionStatus();
-
-			if (missionGoal != "")
-			{
-				returnStringMission = returnStringMission + "\n" + missionGoal;
-				iMission++;
-			}
-
-			if (missionStatus != "")
-			{
-				returnStringMission = returnStringMission + "\n" + missionStatus;
-				iMission++;
-			}
-		}
-	}
-
-	if (returnStringMission == "")
-	{
-		returnStringMission = "No Objective";
-	}
-
-	foreach(cardID in corruptionCards_ListHorde)
-	{
-		cardName = GetCorruptionCardName(cardID);
-
-		if (cardName != "None" && cardName != null)
-		{
-			if (returnStringHorde == "")
-			{
-				returnStringHorde = cardName;
-			}
-			else
-			{
-				returnStringHorde = returnStringHorde + "\n" + cardName;
-				iHorde++;
-			}
-
-			hordeTimer = GetHordeTimer();
-
-			if (hordeTimer != "")
-			{
-				returnStringHorde = returnStringHorde + "\n" + hordeTimer;
-				iHorde++;
-			}
-		}
-	}
-
-	if (returnStringHorde == "")
-	{
-		returnStringHorde = "No Horde";
-	}
-
-	swarmHUD.Fields["corruptionCards"].dataval = returnString;
-	swarmHUD.Fields["corruptionCardsInfected"].dataval = returnStringInf;
-	swarmHUD.Fields["corruptionCardsMission"].dataval = returnStringMission;
-	swarmHUD.Fields["corruptionCardsHorde"].dataval = returnStringHorde;
-
-	local hudY = swarmHudY;
-	local hudH = swarmHudH + (swarmHudLineH * (iMission == 0 ? 1 : iMission))
-	HUDPlace(HUD_SCORE_2, 1 - swarmHudW - swarmHudX, hudY, swarmHudW, hudH);
-	hudY = hudY + hudH + swarmHudGapY;
-	hudH = swarmHudH + (swarmHudLineH * (iHorde == 0 ? 1 : iHorde))
-	HUDPlace(HUD_SCORE_3, 1 - swarmHudW - swarmHudX, hudY, swarmHudW, hudH);
-	hudY = hudY + hudH + swarmHudGapY;
-	hudH = swarmHudH + (swarmHudLineH * (iList == 0 ? 1 : iList))
-	HUDPlace(HUD_FAR_RIGHT, 1 - swarmHudW - swarmHudX, hudY, swarmHudW, hudH);
-	hudY = hudY + hudH + swarmHudGapY;
-	hudH = swarmHudH + (swarmHudLineH * (iInf == 0 ? 1 : iInf))
-	HUDPlace(HUD_SCORE_1, 1 - swarmHudW - swarmHudX, hudY, swarmHudW, hudH);
-	
-}
-
 function GetCorruptionCardName(cardID)
 {
 	if (swarmSettingsTable["language"] == "English")
@@ -1082,7 +942,7 @@ function HuntedTimerFunc()
 // Onslaught
 function CorruptionCard_Onslaught()
 {
-	DirectorOptions.cm_CommonLimit = 30
+	DirectorOptions.cm_CommonLimit = 30;
 }
 
 function OnslaughtTimerFunc()
@@ -1135,31 +995,29 @@ function GetHordeTimer()
 	{
 		case "None":
 			return "";
-			break;
+		break;
 		case "hordeHunted":
 			if (HuntedTimer == null)
 			{
 				return IntToTime(HuntedTimerDefault + 30);
-				break;
 			}
 			else
 			{
 				return IntToTime(HuntedTimer - Time());
-				break;
 			}
-			break;
+		break;
+
 		case "hordeOnslaught":
 			if (OnslaughtTimer == null)
 			{
 				return IntToTime(OnslaughtTimerDefault + 30);
-				break;
 			}
 			else
 			{
 				return IntToTime(OnslaughtTimer - Time());
-				break;
 			}
-			break;
+		break;
+
 		case "hordeTallboy":
 		case "hordeCrusher":
 		case "hordeBruiser":
@@ -1172,14 +1030,13 @@ function GetHordeTimer()
 			if (SpecialHordeTimer == null)
 			{
 				return IntToTime(SpecialHordeTimerDefault + 30);
-				break;
 			}
 			else
 			{
 				return IntToTime(SpecialHordeTimer - Time());
-				break;
 			}
-			break;
+		break;
+
 		default:
 			return "";
 			break;
@@ -1433,17 +1290,17 @@ function ApplyTallboyCard()
 
 function CorruptionCard_Tallboy()
 {
-	tallboyRunSpeed = 240
+	tallboyRunSpeed = 240;
 }
 
 function CorruptionCard_Crusher()
 {
-	tallboyRunSpeed = 210
+	tallboyRunSpeed = 210;
 }
 
 function CorruptionCard_Bruiser()
 {
-	tallboyRunSpeed = 190
+	tallboyRunSpeed = 190;
 }
 
 // Hocker
@@ -1465,20 +1322,20 @@ function ApplyHockerCard()
 
 function CorruptionCard_Hocker()
 {
-	DirectorOptions.JockeyLimit = 0
-	Convars.SetValue("tongue_release_fatigue_penalty", 2500)
+	DirectorOptions.JockeyLimit = 0;
+	Convars.SetValue("tongue_release_fatigue_penalty", 2500);
 }
 
 function CorruptionCard_Stinger()
 {
-	DirectorOptions.JockeyLimit = 0
-	Convars.SetValue("tongue_release_fatigue_penalty", 0)
+	DirectorOptions.JockeyLimit = 0;
+	Convars.SetValue("tongue_release_fatigue_penalty", 0);
 }
 
 function CorruptionCard_Stalker()
 {
-	DirectorOptions.SmokerLimit = 0
-	Convars.SetValue("tongue_release_fatigue_penalty", 2500)
+	DirectorOptions.SmokerLimit = 0;
+	Convars.SetValue("tongue_release_fatigue_penalty", 2500);
 }
 
 // Retches
@@ -1532,7 +1389,7 @@ function CorruptionCard_Reeker()
 	Convars.SetValue("z_exploding_inner_radius", 130);
 	Convars.SetValue("z_exploding_outer_radius", 200);
 	Convars.SetValue("z_exploding_splat_radius", 200);
-	DirectorOptions.BileMobSize = 20
+	DirectorOptions.BileMobSize = 20;
 }
 
 ///////////////////////////////////////////////
