@@ -123,6 +123,7 @@ function InitCorruptionCards()
 	cardsEnvironmental.append("environmentSwarmStream");
 	cardsEnvironmental.append("environmentDark");
 	cardsEnvironmental.append("environmentFog");
+	//cardsEnvironmental.append("environmentBiohazard");
 	cardsEnvironmental.append("environmentFrozen");
 	corruptionEnvironmental = ChooseCorruptionCard_List(cardsEnvironmental);
 	ApplyEnvironmentalCard();
@@ -271,6 +272,9 @@ function GetCorruptionCardName(cardID)
 				break;
 			case "environmentFog":
 				return "The Fog";
+				break;
+			case "environmentBiohazard":
+				return "Biohazard";
 				break;
 			case "environmentFrozen":
 				return "Frigid Outskirts";
@@ -449,6 +453,9 @@ function GetCorruptionCardName(cardID)
 			case "environmentFog":
 				return "Туман";
 				break;
+			case "environmentBiohazard":
+				return "Biohazard";
+				break;
 			case "environmentFrozen":
 				return "Холодные окраины";
 				break;
@@ -615,6 +622,9 @@ function ApplyEnvironmentalCard()
 		case "environmentFog":
 			CorruptionCard_TheFog();
 			break;
+		case "environmentBiohazard":
+			CorruptionCard_Biohazard();
+			break;
 		case "environmentFrozen":
 			CorruptionCard_FrigidOutskirts();
 			break;
@@ -736,6 +746,29 @@ function CorruptionCard_TheFog()
 	{
 		NetProps.SetPropInt(player, "m_Local.m_skybox3d.fog.colorPrimary", GetColorInt(Vector(255, 255, 255)));
 	}
+}
+
+function CorruptionCard_Biohazard()
+{
+	local fog = null;
+	while ((fog = Entities.FindByClassname(fog, "env_fog_controller")) != null)
+	{
+		DoEntFire("!self", "SetStartDistLerpTo", "-250", 0, fog, fog);
+		DoEntFire("!self", "SetEndDistLerpTo", "1400", 0, fog, fog);
+		DoEntFire("!self", "SetFarZ", "3500", 5, fog, fog);
+		DoEntFire("!self", "SetColorLerpTo", "1 56 1", 0, fog, fog);
+		DoEntFire("!self", "SetMaxDensityLerpTo", "0.8", 0, fog, fog);
+		DoEntFire("!self", "Set2DSkyboxFogFactorLerpTo", "0.8", 0, fog, fog);
+		DoEntFire("!self", "StartFogTransition", "", 0, fog, fog);
+	}
+
+	local player = null;
+	while ((player = Entities.FindByClassname(player, "player")) != null)
+	{
+		NetProps.SetPropInt(player, "m_Local.m_skybox3d.fog.colorPrimary", GetColorInt(Vector(1, 56, 1)));
+	}
+
+	biohazardEnabled = true;
 }
 
 // Frigid Outskirts
