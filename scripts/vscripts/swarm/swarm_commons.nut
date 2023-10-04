@@ -41,9 +41,9 @@ function ZombieDeath(params)
 			if ("attacker" in params)
 			{
 				local player = EntIndexToHScript(params.attacker);
-				local FaceYourFears = PlayerHasCard(player, "FaceYourFears");
 
-				// FaceYourFears
+				// FaceYourFears|
+				local FaceYourFears = PlayerHasCard(player, "FaceYourFears");
 				if (GetVectorDistance(player.GetOrigin(), common.GetOrigin()) < 100)
 				{
 					if (FaceYourFears > 0)
@@ -52,10 +52,20 @@ function ZombieDeath(params)
 					}
 				}
 
+				//Headhunter
+				local Headhunter = PlayerHasCard(attacker, "Headhunter");
+				if (Headhunter > 0)
+				{
+					if (params.headshot == 1)
+					{
+						HeadhunterCounter[GetSurvivorID(attacker)]++;
+					}
+				}
+
 				// Biohazard
 				if (biohazardEnabled == true)
 				{
-					Heal_TempHealth(player, 0.5);
+					Heal_TempHealth(player, 0.75);
 				}
 			}
 
