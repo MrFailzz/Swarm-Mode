@@ -58,6 +58,15 @@ function HealSuccess(params)
 	}
 
 	Heal_GroupTherapy(player, healAmount, false);
+
+	local ExperiencedEMT = PlayerHasCard(healer, "ExperiencedEMT");
+	if (ExperiencedEMT > 0)
+	{
+		if (experiencedEMT[GetSurvivorID(player)] < ExperiencedEMT)
+		{
+			experiencedEMT[GetSurvivorID(player)] = ExperiencedEMT;
+		}
+	}
 }
 
 function PillsUsed(params)

@@ -75,6 +75,7 @@ disciplineCards <-
 	"Cannoneer",
 	"DownInFront",
 	"Headhunter",
+	"ExperiencedEMT",
 ];
 
 fortuneCards <-

@@ -380,12 +380,13 @@ function CalcMaxHealth(heal = true)
 	{
 		if (player.IsSurvivor())
 		{
+			local playerID = GetSurvivorID(player);
 			local Gambler = PlayerHasCard(player, "Gambler");
 			//local CombatMedic = TeamHasCard("CombatMedic");
-			local TraumaResistance = 1 //+ (-0.2 * CombatMedic);
+			local TraumaResistance = 1; //+ (-0.2 * CombatMedic);
 			if (Gambler > 0)
 			{
-				TraumaResistance += ApplyGamblerValue(GetSurvivorID(player), 2, Gambler);
+				TraumaResistance += ApplyGamblerValue(playerID, 2, Gambler);
 			}
 			if (TraumaResistance < 0)
 			{
@@ -428,10 +429,11 @@ function CalcMaxHealth(heal = true)
 							+ (40 * SelfishPlayer)
 							+ (-5 * SelfishTeam)
 							+ (-10 * NeedsOfTheMany)
-							+ (20 * MeanDrunk));
+							+ (20 * MeanDrunk)
+							+ (25 * experiencedEMT[playerID]));
 			if (Gambler > 0)
 			{
-				newMax += ApplyGamblerValue(GetSurvivorID(player), 0, Gambler);
+				newMax += ApplyGamblerValue(playerID, 0, Gambler);
 			}
 			local currentHealth = player.GetHealth();
 			local healthAdjustment = newMax - currentMax;

@@ -707,6 +707,14 @@ function Translation_EN(msg)
 			return "Precision kills increase DMG by 5%, Resets when DMG taken"
 		break;
 
+		case "#name_ExperiencedEMT":
+			return "Experienced EMT"
+		break;
+
+		case "#desc_ExperiencedEMT":
+			return "Cleaners you heal gain +25 Max HP"
+		break;
+
 		default:
 			return msg;
 		break;
@@ -1397,6 +1405,14 @@ function Translation_RU(msg)
 
 		case "#desc_Headhunter":
 			return "Precision kills increase DMG by 5%, Resets when DMG taken"
+		break;
+
+		case "#name_ExperiencedEMT":
+			return "Experienced EMT"
+		break;
+
+		case "#desc_ExperiencedEMT":
+			return "Cleaners you heal gain +25 Max HP"
 		break;
 
 		default:
