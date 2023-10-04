@@ -79,6 +79,7 @@ function PlayerDeath(params)
 							if (attacker.IsSurvivor())
 							{
 								ApplyCardsOnMutationKill(attacker, player);
+								ApplyBiohazardMutationKill(attacker, player);
 							}
 						}
 					}
@@ -330,6 +331,11 @@ function Update()
 	}
 
 	CommonsUpdate();
+
+	if (corruptionEnvironmental == "environmentBiohazard")
+	{
+		BiohazardTimer();
+	}
 
 	if (corruptionEnvironmental == "environmentFrozen")
 	{

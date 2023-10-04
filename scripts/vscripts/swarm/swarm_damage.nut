@@ -103,6 +103,7 @@ function AllowTakeDamage(damageTable)
 	local ShredderMultiplier = 0;
 	local RunLikeHell = 0;
 	local MeanDrunk = 0;
+	local Headhunter = 0;
 
 	//Modify Attacker damage
 	if (attacker.IsValid())
@@ -291,6 +292,9 @@ function AllowTakeDamage(damageTable)
 					Heal_TempHealth(attacker, 0.25 * BuckshotBruiser);
 				}
 
+				//Headhunter
+				Headhunter = PlayerHasCard(attacker, "Headhunter");
+
 				damageModifier = (damageModifier
 								 + (0.3 * GlassCannonAttacker)
 								 + (0.25 * Sharpshooter)
@@ -309,6 +313,7 @@ function AllowTakeDamage(damageTable)
 								 + (0.05 * Nick)
 								 + (ShredderMultiplier * Shredder)
 								 + (0.2 * MeanDrunk)
+								 + (0.05 * Headhunter * HeadhunterCounter[GetSurvivorID(attacker)])
 								 + (HeadMultiplier));
 				if (GamblerAttacker > 0)
 				{

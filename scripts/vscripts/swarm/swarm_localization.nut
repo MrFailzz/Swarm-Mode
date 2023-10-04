@@ -699,6 +699,14 @@ function Translation_EN(msg)
 			return "+1% DMG per shot fired until reload"
 		break;
 
+		case "#name_Headhunter":
+			return "Headhunter"
+		break;
+
+		case "#desc_Headhunter":
+			return "Precision kills increase DMG by 5%, Resets when DMG taken"
+		break;
+
 		default:
 			return msg;
 		break;
@@ -1381,6 +1389,14 @@ function Translation_RU(msg)
 
 		case "#desc_Shredder":
 			return "+1% DMG per shot fired until reload"
+		break;
+
+		case "#name_Headhunter":
+			return "Headhunter"
+		break;
+
+		case "#desc_Headhunter":
+			return "Precision kills increase DMG by 5%, Resets when DMG taken"
 		break;
 
 		default:

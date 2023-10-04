@@ -940,6 +940,16 @@ function ApplyCardsOnMutationKill(attacker, victim)
 			Heal_TempHealth(attacker, 2 * FaceYourFears);
 		}
 	}
+
+	//Headhunter
+	local Headhunter = PlayerHasCard(attacker, "Headhunter");
+	if (Headhunter > 0)
+	{
+		if (params.headshot == 1)
+		{
+			HeadhunterCounter[GetSurvivorID(attacker)]++;
+		}
+	}
 }
 
 function UpdateAddict(player)

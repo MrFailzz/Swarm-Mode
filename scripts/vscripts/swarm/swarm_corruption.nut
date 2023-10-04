@@ -123,7 +123,7 @@ function InitCorruptionCards()
 	cardsEnvironmental.append("environmentSwarmStream");
 	cardsEnvironmental.append("environmentDark");
 	cardsEnvironmental.append("environmentFog");
-	//cardsEnvironmental.append("environmentBiohazard");
+	cardsEnvironmental.append("environmentBiohazard");
 	cardsEnvironmental.append("environmentFrozen");
 	corruptionEnvironmental = ChooseCorruptionCard_List(cardsEnvironmental);
 	ApplyEnvironmentalCard();
@@ -748,6 +748,7 @@ function CorruptionCard_TheFog()
 	}
 }
 
+// Biohazard
 function CorruptionCard_Biohazard()
 {
 	local fog = null;
@@ -769,6 +770,41 @@ function CorruptionCard_Biohazard()
 	}
 
 	biohazardEnabled = true;
+}
+
+function BiohazardTimer()
+{
+	if (biohazardEnabled == false)
+	{
+		biohazardTickTime = Time();
+		return;
+	}
+
+	if ((Time() - biohazardTickTime) >= biohazardTickInterval)
+	{
+		biohazardTickTime = Time();
+
+		local allSurvivors = null;
+		while ((allSurvivors = Entities.FindByClassname(allSurvivors, "player")) != null)
+		{
+			if (allSurvivors.IsSurvivor())
+			{
+				if (allSurvivors.IsDead() == false)
+				{
+					// DMG_POISON (131072) does not show directional indicator
+					allSurvivors.TakeDamage(biohazardDamagerPerTick, 131072, null);
+				}
+			}
+		}
+	}
+}
+
+function ApplyBiohazardMutationKill(attacker, victim)
+{
+	if (biohazardEnabled == true)
+	{
+		Heal_TempHealth(attacker, 0.75);
+	}
 }
 
 // Frigid Outskirts
@@ -860,6 +896,19 @@ function FrigidOutskirtsTimer()
 				DoEntFire("!self", "SetMaxDensityLerpTo", "1", 0, fog, fog);
 				DoEntFire("!self", "Set2DSkyboxFogFactorLerpTo", "1", 0, fog, fog);
 				DoEntFire("!self", "StartFogTransition", "", 0, fog, fog);
+			}
+
+			local allSurvivors = null;
+			while ((allSurvivors = Entities.FindByClassname(allSurvivors, "player")) != null)
+			{
+				if (allSurvivors.IsSurvivor())
+				{
+					if (allSurvivors.IsDead() == false)
+					{
+						// Slow survivors during storm
+						allSurvivors.OverrideFriction(16,1.35);
+					}
+				}
 			}
 
 			EntFire("__frigid_outskirts_wind_snd", "PlaySound", "", 3);

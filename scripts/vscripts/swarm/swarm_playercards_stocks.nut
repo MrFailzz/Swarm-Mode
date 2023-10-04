@@ -74,6 +74,7 @@ disciplineCards <-
 	"NeedsOfTheMany",
 	"Cannoneer",
 	"DownInFront",
+	//"Headhunter",
 ];
 
 fortuneCards <-

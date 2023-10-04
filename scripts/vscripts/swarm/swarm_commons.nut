@@ -38,18 +38,24 @@ function ZombieDeath(params)
 		{
 			local commonName = common.GetName();
 
-			//FaceYourFears
 			if ("attacker" in params)
 			{
 				local player = EntIndexToHScript(params.attacker);
 				local FaceYourFears = PlayerHasCard(player, "FaceYourFears");
 
+				// FaceYourFears
 				if (GetVectorDistance(player.GetOrigin(), common.GetOrigin()) < 100)
 				{
 					if (FaceYourFears > 0)
 					{
 						Heal_TempHealth(player, 2 * FaceYourFears);
 					}
+				}
+
+				// Biohazard
+				if (biohazardEnabled == true)
+				{
+					Heal_TempHealth(player, 0.5);
 				}
 			}
 

@@ -77,6 +77,12 @@ corruptionGameplay <- null;
 corruptionPlayer <- null;
 corruptionMission <- null;
 
+//Corruption - Biohazard
+biohazardEnabled <- false;
+biohazardTickTime <- 0;
+biohazardTickInterval <- 5;
+biohazardDamagerPerTick <- 1
+
 //Corruption - Frigid Outskirts
 frigidOutskirtsEnabled <- false;
 frigidOutskirtsStormActive <- false;
@@ -192,6 +198,7 @@ pickableCards <- array(cardsPerCategory * 4);
 addictPlaySound <- false;
 ConfidentKillerCounter <- 0;
 ::MethHeadCounter <- [0, 0, 0, 0];
+::HeadhunterCounter <- [0, 0, 0, 0];
 cardHudTimeout <- 8;
 ::AmpedUpCooldown <- 0;
 BaseTempHealthDecayRate <- 0.27;
