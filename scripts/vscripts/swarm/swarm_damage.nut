@@ -422,6 +422,16 @@ function AllowTakeDamage(damageTable)
 				//RunLikeHell
 				RunLikeHell = PlayerHasCard(victim, "RunLikeHell");
 
+				//Headhunter
+				Headhunter = PlayerHasCard(victim, "Headhunter");
+				if (Headhunter > 0)
+				{
+					if (attacker.IsValid())
+					{
+						HeadhunterCounter[GetSurvivorID(victim)] = 0;
+					}
+				}
+
 				damageModifier = (damageModifier
 								+ (0.2 * GlassCannonVictim)
 								+ (OverconfidentMultiplier * Overconfident)

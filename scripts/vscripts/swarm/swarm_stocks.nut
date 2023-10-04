@@ -72,13 +72,14 @@ function PlayerDeath(params)
 				if ("attacker" in params)
 				{
 					local attacker = GetPlayerFromUserID(params["attacker"]);
+					local headshot = params.headshot;
 					if (attacker.IsValid())
 					{
 						if (attacker.IsPlayer())
 						{
 							if (attacker.IsSurvivor())
 							{
-								ApplyCardsOnMutationKill(attacker, player);
+								ApplyCardsOnMutationKill(attacker, player, headshot);
 								ApplyBiohazardMutationKill(attacker, player);
 							}
 						}

@@ -783,7 +783,7 @@ function SurvivorPickupItem(params)
 	}
 }
 
-function ApplyCardsOnMutationKill(attacker, victim)
+function ApplyCardsOnMutationKill(attacker, victim, headshot)
 {
 	//MethHead
 	local MethHead = PlayerHasCard(attacker, "MethHead");
@@ -815,7 +815,7 @@ function ApplyCardsOnMutationKill(attacker, victim)
 	local Headhunter = PlayerHasCard(attacker, "Headhunter");
 	if (Headhunter > 0)
 	{
-		if (params.headshot == 1)
+		if (headshot == 1)
 		{
 			HeadhunterCounter[GetSurvivorID(attacker)]++;
 		}
