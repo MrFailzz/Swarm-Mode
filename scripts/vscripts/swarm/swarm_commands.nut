@@ -19,12 +19,6 @@ if (!IsSoundPrecached("UI/Menu_Enter05.wav"))
 	PrecacheSound("UI/Menu_Enter05.wav");
 }
 
-//BoomerZombie.Detonate - sound 09 or 10 or 14
-/*if (!IsSoundPrecached("player/Boomer/explode/Explo_Medium_10.wav"))
-{
-	PrecacheSound("player/Boomer/explode/Explo_Medium_10.wav");
-}*/
-
 function InterceptChat(message, speaker)
 {
 	// Remove player name from message

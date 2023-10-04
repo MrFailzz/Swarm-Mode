@@ -315,6 +315,42 @@ function ChooseCrowAnim()
 	return returnValue;
 }
 
+function ExplodeCrows(groupID, moveEnt)
+{
+	local location = moveEnt.GetOrigin();
+	local particle = SpawnEntityFromTable("info_particle_system",
+	{
+		targetname = "__crow_particle" + groupID,
+		origin = Vector(location.x, location.y, location.z),
+		angles = Vector(0, 0, 0),
+		effect_name = "crows_gravelpile",
+		start_active = 1
+	});
+	local particle2 = SpawnEntityFromTable("info_particle_system",
+	{
+		targetname = "__crow_particle" + groupID,
+		origin = Vector(location.x, location.y, location.z),
+		angles = Vector(0, 180, 0),
+		effect_name = "crows_gravelpile",
+		start_active = 1
+	});
+
+	EntFire("__crow_particle" + groupID, "Kill", "", 5);
+
+	if (!IsSoundPrecached("JockeyZombie.Pain"))
+	{
+		PrecacheSound("JockeyZombie.Pain");
+	}
+	EmitAmbientSoundOn("JockeyZombie.Pain", 1, 120, RandomInt(130, 150), particle);
+	EmitAmbientSoundOn("JockeyZombie.Pain", 1, 120, RandomInt(130, 150), particle);
+	EmitAmbientSoundOn("JockeyZombie.Pain", 1, 120, RandomInt(130, 150), particle);
+	EmitAmbientSoundOn("JockeyZombie.Pain", 1, 120, RandomInt(130, 150), particle);
+	EmitAmbientSoundOn("JockeyZombie.Pain", 1, 120, RandomInt(130, 150), particle);
+
+	moveEnt.Kill();
+	EntFire("__crow_group_" + groupID + "_trigger", "Kill");
+}
+
 
 ///////////////////////////////////////////////
 //                 HITTABLES                 //

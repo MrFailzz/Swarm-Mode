@@ -454,8 +454,7 @@ function AllowTakeDamage(damageTable)
 					{
 						if (moveEnt.IsValid())
 						{
-							//EmitAmbientSoundOn("player/Boomer/explode/Explo_Medium_10.wav", 1, 100, 170, moveEnt);
-							moveEnt.Kill();
+							ExplodeCrows(nameArray[2], moveEnt);
 						}
 					}
 				}
