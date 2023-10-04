@@ -38,16 +38,19 @@ function HealBegin(params)
 	local player = GetPlayerFromUserID(params.subject);
 	local currentTempHealth = player.GetHealthBuffer();
 	survivorHealthBuffer[GetSurvivorID(player)] = currentTempHealth; //Store temp health at time of heal
+	survivorReviveCount[GetSurvivorID(player)] = NetProps.GetPropInt(player, "m_currentReviveCount");
 }
 
 function HealSuccess(params)
 {
 	local healer = GetPlayerFromUserID(params.userid);
 	local player = GetPlayerFromUserID(params.subject);
+	local playerID = GetSurvivorID(player);
 	local healMultiplier = CalcHealingMultiplier(healer);
+	local MedicalProfessional = PlayerHasCard(healer, "MedicalProfessional");
 
-	local healAmount = medkitHealAmount * healMultiplier;
-	Heal_PermaHealth(player, healAmount, survivorHealthBuffer[GetSurvivorID(player)]);
+	local healAmount = (medkitHealAmount + (10 * MedicalProfessional)) * healMultiplier;
+	Heal_PermaHealth(player, healAmount, survivorHealthBuffer[playerID]);
 
 	local AntibioticOintment = PlayerHasCard(healer, "AntibioticOintment");
 	if (AntibioticOintment > 0)
@@ -62,10 +65,22 @@ function HealSuccess(params)
 	local ExperiencedEMT = PlayerHasCard(healer, "ExperiencedEMT");
 	if (ExperiencedEMT > 0)
 	{
-		if (experiencedEMT[GetSurvivorID(player)] < ExperiencedEMT)
+		if (experiencedEMT[playerID] < ExperiencedEMT)
 		{
-			experiencedEMT[GetSurvivorID(player)] = ExperiencedEMT;
+			experiencedEMT[playerID] = ExperiencedEMT;
 		}
+	}
+
+	//Restore lives
+	if (survivorReviveCount[playerID] != 0)
+	{
+		local lifeRestoreAmount = survivorReviveCount[playerID] - (1 + MedicalProfessional);
+		if (lifeRestoreAmount < 0)
+		{
+			lifeRestoreAmount = 0;
+		}
+
+		NetProps.SetPropInt(player, "m_currentReviveCount", lifeRestoreAmount);
 	}
 }
 
@@ -196,13 +211,34 @@ function DefibrillatorUsed(params)
 	local player = GetPlayerFromUserID(params.userid);
 	local subject = GetPlayerFromUserID(params.subject);
 	local maxHealth = subject.GetMaxHealth();
+	local MedicalProfessional = PlayerHasCard(player, "MedicalProfessional");
+
+	if (MedicalProfessional > 0)
+	{
+		Heal_PermaHealth(subject, 10 * MedicalProfessional, 0);
+	}
 
 	local CombatMedic = TeamHasCard("CombatMedic");
 
 	if (CombatMedic > 0)
 	{
 		local CombatMedicAmount = 15 * CombatMedic;
-		Heal_PermaHealth(subject, CombatMedicAmount, reviveHealth);
+		Heal_PermaHealth(subject, CombatMedicAmount, 0);
+	}
+
+	//Set lives
+	local lifeRestoreAmount = DirectorOptions.SurvivorMaxIncapacitatedCount - MedicalProfessional;
+	if (lifeRestoreAmount < 0)
+	{
+		lifeRestoreAmount = 0;
+	}
+
+	NetProps.SetPropInt(subject, "m_currentReviveCount", lifeRestoreAmount);
+
+	if (lifeRestoreAmount == DirectorOptions.SurvivorMaxIncapacitatedCount)
+	{
+		NetProps.SetPropInt(subject, "m_bIsOnThirdStrike", 1);
+		NetProps.SetPropInt(subject, "m_isGoingToDie", 1);
 	}
 }
 
@@ -220,26 +256,7 @@ function Heal_AmpedUp()
 				{
 					if (ValidAliveSurvivor(player))
 					{
-						local currentTempHealth = player.GetHealthBuffer();
-						local currentHealth = player.GetHealth();
-						local maxHealth = player.GetMaxHealth();
-
-						local healAmount = 20 * AmpedUp;
-
-						if (healAmount + currentHealth > maxHealth)
-						{
-							player.SetHealth(maxHealth);
-						}
-						else
-						{
-							player.SetHealth(healAmount + currentHealth);
-						}
-
-						local currentHealth = player.GetHealth();
-						if (currentHealth + currentTempHealth > maxHealth)
-						{
-							player.SetHealthBuffer(maxHealth - currentHealth)
-						}
+						Heal_PermaHealth(player, 20 * AmpedUp, player.GetHealthBuffer());
 					}
 				}
 			}

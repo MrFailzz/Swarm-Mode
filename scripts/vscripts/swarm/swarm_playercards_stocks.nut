@@ -45,7 +45,6 @@ brawnCards <-
 	//"HeavyHitter",
 	//"Rampage",
 	"SwanSong",
-	//"Overcrowded",
 	"LastLegs",
 	"BuckshotBruiser",
 	"Lumberjack",
@@ -77,6 +76,7 @@ disciplineCards <-
 	"DownInFront",
 	"Headhunter",
 	"ExperiencedEMT",
+	"MedicalProfessional",
 ];
 
 fortuneCards <-

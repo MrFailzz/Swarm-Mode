@@ -387,14 +387,6 @@ function Translation_EN(msg)
 			return "+100% CRIT chance while incapped"
 		break;
 
-		case "#name_Overcrowded":
-			return "Overcrowded"
-		break;
-
-		case "#desc_Overcrowded":
-			return "+0.5% DMG / +1% DEF per Ridden in 5m"
-		break;
-
 		case "#name_LastLegs":
 			return "Last Legs"
 		break;
@@ -721,6 +713,14 @@ function Translation_EN(msg)
 
 		case "#desc_WellFed":
 			return "+10 Team Max HP"
+		break;
+
+		case "#name_MedicalProfessional":
+			return "Medical Professional"
+		break;
+
+		case "#desc_MedicalProfessional":
+			return "Medkits and Defibs heal +10 HP and 1 Extra Life"
 		break;
 
 		default:
@@ -1095,14 +1095,6 @@ function Translation_RU(msg)
 			return "+100% CRIT chance while incapped"
 		break;
 
-		case "#name_Overcrowded":
-			return "Overcrowded"
-		break;
-
-		case "#desc_Overcrowded":
-			return "+0.5% DMG / +1% DEF per Ridden in 5m"
-		break;
-
 		case "#name_LastLegs":
 			return "Last Legs"
 		break;
@@ -1429,6 +1421,14 @@ function Translation_RU(msg)
 
 		case "#desc_WellFed":
 			return "+10 Team Max HP"
+		break;
+
+		case "#name_MedicalProfessional":
+			return "Medical Professional"
+		break;
+
+		case "#desc_MedicalProfessional":
+			return "Medkits and Defibs heal +10 HP and 1 Extra Life"
 		break;
 
 		default:

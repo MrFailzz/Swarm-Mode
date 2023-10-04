@@ -26,6 +26,11 @@ function InterceptChat(message, speaker)
 	local text = strip(message.slice(message.find(name) + name.len()));
 	local textArgs = [];
 	textArgs = split(text, " ");
+	if (textArgs.len() == 0)
+	{
+		return;
+	}
+	
 	local command = textArgs[0].tolower().slice(1);
 	local commandPrefix = textArgs[0].slice(0, 1);
 

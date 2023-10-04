@@ -213,6 +213,7 @@ bChargerSpawned <- false;
 //Stocks
 firstLeftCheckpoint <- false;
 survivorHealthBuffer <- [0, 0, 0, 0];
+survivorReviveCount <- [0, 0, 0, 0];
 
 ///////////////////////////////////////////////
 //                  CONVARS                  //
