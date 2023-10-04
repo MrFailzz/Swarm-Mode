@@ -25,10 +25,21 @@ function BossSettings_Ogre()
 
 function TankSpawn(params)
 {
-	if (!bTankHudExists)
+	if (tankHudTanks[0] == null)
 	{
-		tankHudTankID = GetPlayerFromUserID(params["userid"]);
-		CreateTankHealthHud();
+		tankHudTanks[0] = GetPlayerFromUserID(params["userid"]);
+		if (!bTankHudExists)
+		{
+			CreateTankHealthHud();
+		}
+	}
+	else if (tankHudTanks[1] == null)
+	{
+		tankHudTanks[1] = GetPlayerFromUserID(params["userid"]);
+		if (!bTankHudExists)
+		{
+			CreateTankHealthHud();
+		}
 	}
 
 	if (corruptionBoss == "hazardOgreRaging")
@@ -40,10 +51,10 @@ function TankSpawn(params)
 ///////////////////////////////////////////////
 //               SWARM CIRCLE                //
 ///////////////////////////////////////////////
-function TankDeath()
+function TankDeath(player)
 {
 	KillSwarmCircle();
-	DestroyTankHud();
+	DestroyTankHud(player);
 }
 
 function TankKicked(params)
@@ -55,7 +66,7 @@ function TankKicked(params)
 		if (params.team == 0 && params.disconnect && params.isbot && GetPlayerFromUserID(params.userid).GetZombieType() == 8)
 		{
 			KillSwarmCircle();
-			DestroyTankHud();
+			DestroyTankHud(params.userid);
 		}
 	}
 }

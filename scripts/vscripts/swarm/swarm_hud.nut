@@ -339,46 +339,128 @@ function CreateTankHealthHud(startStr = "FROM THE CREATORS OF BACK 4 BLOOD")
 {
    Ticker_AddToHud(swarmHUD, startStr);
    HUDSetLayout(swarmHUD);
-   HUDPlace(HUD_TICKER, 0.25, 0.05, 0.5, 0.04);
+   HUDPlace(HUD_TICKER, 0.25, 0.05, 0.5, 0.05);
 
    bTankHudExists = true;
 }
 
 function CalculateTankHudString()
 {
-	if (tankHudTankID == null || bTankHudExists == false)
+	if (tankHudTanks[0] != null)
 	{
-		Ticker_NewStr("");
+		if (!tankHudTanks[0].IsValid())
+		{
+			tankHudTanks[0] = null;
+		}
+	}
+	if (tankHudTanks[1] != null)
+	{
+		if (!tankHudTanks[1].IsValid())
+		{
+			tankHudTanks[1] = null;
+		}
+	}
+
+	if ((tankHudTanks[0] == null && tankHudTanks[1] == null) || bTankHudExists == false)
+	{
+		Ticker_Hide();
 	}
 	else
 	{
-		local healthCur = tankHudTankID.GetHealth();
-		local healthMax = tankHudTankID.GetMaxHealth();
 		local maxBlocks = 40;
-		local healthPerBlock = healthMax / maxBlocks;
-		local fullBlocks = ceil(healthCur / healthPerBlock);
-		local emptyBlocks = maxBlocks - fullBlocks;
-		local hudString = "";
+		if (tankHudTanks[0] != null && tankHudTanks[1] != null)
+		{
+			maxBlocks = 21;
+		}
 
-		local i = 0;
-		for (i = 0; i < fullBlocks; i++)
+		local healthCurrent = [tankHudTanks[0] == null ? 8000 : tankHudTanks[0].GetHealth(), tankHudTanks[1] == null ? 8000 : tankHudTanks[1].GetHealth()];
+		local healthMax = [tankHudTanks[0] == null ? 8000 : tankHudTanks[0].GetMaxHealth(), tankHudTanks[1] == null ? 8000 : tankHudTanks[1].GetMaxHealth()];
+		
+		local healthPerBlock = [healthMax[0] / maxBlocks, healthMax[1] / maxBlocks];
+		local fullBlocks = [ceil(healthCurrent[0] / healthPerBlock[0]), ceil(healthCurrent[1] / healthPerBlock[1])];
+		local emptyBlocks = [maxBlocks - fullBlocks[0], maxBlocks - fullBlocks[1]];
+		local hudString = ["", ""];
+
+		local finalString = "";
+		local i0 = 0;
+		local i1 = 0;
+		if (tankHudTanks[0] != null)
 		{
-			hudString = hudString + "■";
+			for (i0 = 0; i0 < fullBlocks[0]; i0++)
+			{
+				hudString[0] = hudString[0] + "■";
+			}
+			for (i0 = 0; i0 < emptyBlocks[0]; i0++)
+			{
+				hudString[0] = hudString[0] + "□";
+			}
+			finalString = hudString[0];
 		}
-		for (i = 0; i < emptyBlocks; i++)
+		if (tankHudTanks[1] != null)
 		{
-			hudString = hudString + "□";
+			for (i1 = 0; i1 < fullBlocks[1]; i1++)
+			{
+				hudString[1] = hudString[1] + "■";
+			}
+			for (i1 = 0; i1 < emptyBlocks[1]; i1++)
+			{
+				hudString[1] = hudString[1] + "□";
+			}
+			finalString = hudString[1];
 		}
-		Ticker_NewStr(hudString);
+		
+		if (tankHudTanks[0] != null && tankHudTanks[1] != null)
+		{
+			finalString = hudString[0] + "\n" + hudString[1];
+		}
+
+		Ticker_NewStr(finalString);
 	}
 }
 
-function DestroyTankHud()
+function DestroyTankHud(oldTankID)
 {
 	if (bTankHudExists == true)
 	{
-		bTankHudExists = false;
-		tankHudTankID = null;
-		Ticker_Hide();
+		//Remove old tank
+		if (tankHudTanks[0] == oldTankID)
+		{
+			tankHudTanks[0] = null;
+		}
+		else if (tankHudTanks[1] == oldTankID)
+		{
+			tankHudTanks[1] = null;
+		}
+
+		//Look for a new tank
+		local player = null;
+		while ((player = Entities.FindByClassname(player, "player")) != null)
+		{
+			if (player == oldTankID)
+			{
+				continue;
+			}
+
+			//Add a new tank
+			if (player.GetZombieType() == 8)
+			{
+				if (tankHudTanks[0] == null)
+				{
+					tankHudTanks[0] = player;
+				}
+				else if (tankHudTanks[1] == null)
+				{
+					tankHudTanks[1] = player;
+				}
+				return;
+			}
+		}
+
+		//No more tanks left, so remove the HUD
+		if (tankHudTanks[0] == null && tankHudTanks[1] == null)
+		{
+			bTankHudExists = false;
+			Ticker_Hide();
+		}
 	}
 }

@@ -1,6 +1,47 @@
 ///////////////////////////////////////////////
 //               HEALING EVENTS              //
 ///////////////////////////////////////////////
+function Heal_PermaHealth(player, healAmount, currentTempHealth)
+{
+	local currentHealth = player.GetHealth();
+	local maxHealth = player.GetMaxHealth();
+
+	if (currentHealth + healAmount > maxHealth)
+	{
+		player.SetHealth(maxHealth);
+		player.SetHealthBuffer(0);
+	}
+	else
+	{
+		player.SetHealth(currentHealth + healAmount);
+
+		if (currentTempHealth + (currentHealth + healAmount) > maxHealth)
+		{
+			player.SetHealthBuffer(maxHealth - (currentHealth + healAmount));
+		}
+		else
+		{
+			player.SetHealthBuffer(currentTempHealth);
+		}
+	}
+}
+
+function Heal_TempHealth(player, healAmount)
+{
+	local currentHealth = player.GetHealth();
+	local currentTempHealth = player.GetHealthBuffer();
+	local maxHealth = player.GetMaxHealth();
+
+	if (currentHealth + currentTempHealth + healAmount > maxHealth)
+	{
+		player.SetHealthBuffer(maxHealth - currentHealth);
+	}
+	else
+	{
+		player.SetHealthBuffer(healAmount + currentTempHealth);
+	}
+}
+
 function CalcHealingMultiplier(player, tempHealth = false)
 {
 	local Gambler = PlayerHasCard(player, "Gambler");
@@ -110,44 +151,57 @@ function AdrenalineUsed(params)
 	Heal_GroupTherapy(player, healAmount, true);
 }
 
-function Heal_PermaHealth(player, healAmount, currentTempHealth)
+function ReviveSuccess(params)
 {
-	local currentHealth = player.GetHealth();
-	local maxHealth = player.GetMaxHealth();
-
-	if (currentHealth + healAmount > maxHealth)
+	local ledgeHang = params.ledge_hang;
+	if (ledgeHang == 0)
 	{
-		player.SetHealth(maxHealth);
-		player.SetHealthBuffer(0);
-	}
-	else
-	{
-		player.SetHealth(currentHealth + healAmount);
+		local player = GetPlayerFromUserID(params.userid);
+		local subject = GetPlayerFromUserID(params.subject);
+		local maxHealth = subject.GetMaxHealth();
+		local reviveHealth = Convars.GetFloat("survivor_revive_health");
 
-		if (currentTempHealth + (currentHealth + healAmount) > maxHealth)
+		local CombatMedic = TeamHasCard("CombatMedic");
+
+		if (CombatMedic > 0)
 		{
-			player.SetHealthBuffer(maxHealth - (currentHealth + healAmount));
-		}
-		else
-		{
-			player.SetHealthBuffer(currentTempHealth);
+			Heal_PermaHealth(subject, 15 * CombatMedic, reviveHealth);
 		}
 	}
 }
 
-function Heal_TempHealth(player, healAmount)
+function DefibrillatorUsed(params)
 {
-	local currentHealth = player.GetHealth();
-	local currentTempHealth = player.GetHealthBuffer();
-	local maxHealth = player.GetMaxHealth();
+	local player = GetPlayerFromUserID(params.userid);
+	local subject = GetPlayerFromUserID(params.subject);
+	local maxHealth = subject.GetMaxHealth();
+	local MedicalProfessional = PlayerHasCard(player, "MedicalProfessional");
 
-	if (currentHealth + currentTempHealth + healAmount > maxHealth)
+	if (MedicalProfessional > 0)
 	{
-		player.SetHealthBuffer(maxHealth - currentHealth);
+		Heal_PermaHealth(subject, 10 * MedicalProfessional, 0);
 	}
-	else
+
+	local CombatMedic = TeamHasCard("CombatMedic");
+
+	if (CombatMedic > 0)
 	{
-		player.SetHealthBuffer(healAmount + currentTempHealth);
+		Heal_PermaHealth(subject, 15 * CombatMedic, 0);
+	}
+
+	//Set lives
+	local lifeRestoreAmount = DirectorOptions.SurvivorMaxIncapacitatedCount - MedicalProfessional;
+	if (lifeRestoreAmount < 0)
+	{
+		lifeRestoreAmount = 0;
+	}
+
+	NetProps.SetPropInt(subject, "m_currentReviveCount", lifeRestoreAmount);
+
+	if (lifeRestoreAmount == DirectorOptions.SurvivorMaxIncapacitatedCount)
+	{
+		NetProps.SetPropInt(subject, "m_bIsOnThirdStrike", 1);
+		NetProps.SetPropInt(subject, "m_isGoingToDie", 1);
 	}
 }
 
@@ -183,62 +237,6 @@ function Heal_GroupTherapy(healTarget, healAmount, isTempHealth)
 				}
 			}
 		}
-	}
-}
-
-function ReviveSuccess(params)
-{
-	local ledgeHang = params.ledge_hang;
-	if (ledgeHang == 0)
-	{
-		local player = GetPlayerFromUserID(params.userid);
-		local subject = GetPlayerFromUserID(params.subject);
-		local maxHealth = subject.GetMaxHealth();
-		local reviveHealth = Convars.GetFloat("survivor_revive_health");
-
-		local CombatMedic = TeamHasCard("CombatMedic");
-
-		if (CombatMedic > 0)
-		{
-			local CombatMedicAmount = 15 * CombatMedic;
-			Heal_PermaHealth(subject, CombatMedicAmount, reviveHealth);
-		}
-	}
-}
-
-function DefibrillatorUsed(params)
-{
-	local player = GetPlayerFromUserID(params.userid);
-	local subject = GetPlayerFromUserID(params.subject);
-	local maxHealth = subject.GetMaxHealth();
-	local MedicalProfessional = PlayerHasCard(player, "MedicalProfessional");
-
-	if (MedicalProfessional > 0)
-	{
-		Heal_PermaHealth(subject, 10 * MedicalProfessional, 0);
-	}
-
-	local CombatMedic = TeamHasCard("CombatMedic");
-
-	if (CombatMedic > 0)
-	{
-		local CombatMedicAmount = 15 * CombatMedic;
-		Heal_PermaHealth(subject, CombatMedicAmount, 0);
-	}
-
-	//Set lives
-	local lifeRestoreAmount = DirectorOptions.SurvivorMaxIncapacitatedCount - MedicalProfessional;
-	if (lifeRestoreAmount < 0)
-	{
-		lifeRestoreAmount = 0;
-	}
-
-	NetProps.SetPropInt(subject, "m_currentReviveCount", lifeRestoreAmount);
-
-	if (lifeRestoreAmount == DirectorOptions.SurvivorMaxIncapacitatedCount)
-	{
-		NetProps.SetPropInt(subject, "m_bIsOnThirdStrike", 1);
-		NetProps.SetPropInt(subject, "m_isGoingToDie", 1);
 	}
 }
 

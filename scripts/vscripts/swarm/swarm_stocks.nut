@@ -49,7 +49,7 @@ function PlayerDeath(params)
 		{
 			if (params.victimname == "Tank")
 			{
-				TankDeath();
+				TankDeath(player);
 			}
 			else if (params.victimname == "Boomer")
 			{

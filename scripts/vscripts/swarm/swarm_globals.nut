@@ -43,7 +43,7 @@ safeSurvivors <- array(4);
 
 //Tank HUD
 bTankHudExists <- false;
-tankHudTankID <- null;
+tankHudTanks <- [null, null];
 
 //Commons
 commonVarList <- array(50, null);
