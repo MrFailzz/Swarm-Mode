@@ -50,6 +50,7 @@ brawnCards <-
 	"BuckshotBruiser",
 	"Lumberjack",
 	//"Kneecapper",
+	"WellFed",
 ];
 
 disciplineCards <-

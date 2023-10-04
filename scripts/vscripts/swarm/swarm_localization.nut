@@ -715,6 +715,14 @@ function Translation_EN(msg)
 			return "Cleaners you heal gain +25 Max HP"
 		break;
 
+		case "#name_WellFed":
+			return "Well Fed"
+		break;
+
+		case "#desc_WellFed":
+			return "+10 Team Max HP"
+		break;
+
 		default:
 			return msg;
 		break;
@@ -1413,6 +1421,14 @@ function Translation_RU(msg)
 
 		case "#desc_ExperiencedEMT":
 			return "Cleaners you heal gain +25 Max HP"
+		break;
+
+		case "#name_WellFed":
+			return "Well Fed"
+		break;
+
+		case "#desc_WellFed":
+			return "+10 Team Max HP"
 		break;
 
 		default:
