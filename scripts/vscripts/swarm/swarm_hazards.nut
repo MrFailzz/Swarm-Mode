@@ -297,22 +297,14 @@ function CrowFlyAway(groupID)
 
 function ChooseCrowAnim()
 {
-	local returnValue = null;
-	local randomAnim = RandomInt(0, 1);
-	switch (randomAnim)
+	if (RandomInt(0, 1) == 0)
 	{
-		case 0:
-			returnValue = "Standing_Idle";
-			break;
-		case 1:
-			returnValue = "Crouch_Idle";
-			break;
-		default:
-			returnValue = "Standing_Idle";
-			break;
+		return "Standing_Idle";
 	}
-
-	return returnValue;
+	else
+	{
+		return "Crouch_Idle";
+	}
 }
 
 function ExplodeCrows(groupID, moveEnt)

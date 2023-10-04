@@ -64,13 +64,13 @@ function OnGameEvent_ability_use(params)
 		case "ability_throw":
 			BreakerJump(player);
 		break;
+
 		case "ability_vomit":
 			ExploderAbility(player);
 		break;
+		
 		case "ability_lunge":
 			SleeperLunge(player);
-		break;
-		default:
 		break;
 	}
 }
