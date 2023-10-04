@@ -58,7 +58,7 @@ disciplineCards <-
 	//"BOOM",
 	"FireProof",
 	"Brazen",
-	//"MarkedForDeath",
+	"MarkedForDeath",
 	"PackMule",
 	//"Suppression",
 	"EyeOfTheSwarm",

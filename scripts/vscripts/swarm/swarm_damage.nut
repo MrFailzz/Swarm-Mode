@@ -104,6 +104,7 @@ function AllowTakeDamage(damageTable)
 	local RunLikeHell = 0;
 	local MeanDrunk = 0;
 	local Headhunter = 0;
+	local MarkedForDeath = 0;
 
 	//Modify Attacker damage
 	if (attacker.IsValid())
@@ -206,10 +207,22 @@ function AllowTakeDamage(damageTable)
 					{
 						Broken = PlayerHasCard(attacker, "Broken");
 					}
+
+					//MarkedForDeath
+					if (NetProps.GetPropInt(victim, "m_Glow.m_iGlowType") == 3 && !victim.IsSurvivor())
+					{
+						MarkedForDeath = TeamHasCard("MarkedForDeath");
+					}
 				}
 				else if (victimType == "witch")
 				{
 					Broken = PlayerHasCard(attacker, "Broken");
+
+					//MarkedForDeath
+					if (NetProps.GetPropInt(victim, "m_Glow.m_iGlowType") == 3)
+					{
+						MarkedForDeath = TeamHasCard("MarkedForDeath");
+					}
 				}
 				
 				//Pyromaniac
@@ -314,6 +327,7 @@ function AllowTakeDamage(damageTable)
 								 + (ShredderMultiplier * Shredder)
 								 + (0.2 * MeanDrunk)
 								 + (0.05 * Headhunter * HeadhunterCounter[GetSurvivorID(attacker)])
+								 + (0.1 * MarkedForDeath)
 								 + (HeadMultiplier));
 				if (GamblerAttacker > 0)
 				{

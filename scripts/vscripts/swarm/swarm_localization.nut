@@ -704,7 +704,7 @@ function Translation_EN(msg)
 		break;
 
 		case "#desc_Headhunter":
-			return "Precision kills increase DMG by 5%, Resets when DMG taken"
+			return "Precision kills give +5% DMG, Resets when DMG taken"
 		break;
 
 		case "#name_ExperiencedEMT":
@@ -1404,7 +1404,7 @@ function Translation_RU(msg)
 		break;
 
 		case "#desc_Headhunter":
-			return "Precision kills increase DMG by 5%, Resets when DMG taken"
+			return "Precision kills give +5% DMG, Resets when DMG taken"
 		break;
 
 		case "#name_ExperiencedEMT":
