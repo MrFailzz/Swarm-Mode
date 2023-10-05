@@ -904,31 +904,32 @@ function UpdateShovePenalty(player)
 function UpdateBreakoutTimer(player)
 {
 	local survivorID = GetSurvivorID(player);
-	local startBreakout = false;
-	local startBreakoutTime = null;
+	local startBreakoutTime = 0;
+
+	// Check if survivor is grabbed
+	local survivorSmoke = NetProps.GetPropInt(player, "m_tongueOwner");
+	local survivorPummel = NetProps.GetPropInt(player, "m_pummelAttacker");
+	local survivorCarry = NetProps.GetPropInt(player, "m_carryAttacker");
+	local survivorPounce = NetProps.GetPropInt(player, "m_pounceAttacker");
+	local survivorJockey = NetProps.GetPropInt(player, "m_jockeyAttacker");
 
 	if (PlayerHasCard(player, "Breakout"))
 	{
-		local survivorSmoke = NetProps.GetPropInt(player, "m_tongueOwner");
-		local survivorPummel = NetProps.GetPropInt(player, "m_pummelAttacker");
-		local survivorCarry = NetProps.GetPropInt(player, "m_carryAttacker");
-		local survivorPounce = NetProps.GetPropInt(player, "m_pounceAttacker");
-		local survivorJockey = NetProps.GetPropInt(player, "m_jockeyAttacker");
-
-		if (survivorSmoke == 1 || survivorPummel == 1 || survivorCarry == 1 || survivorPounce == 1 || survivorJockey == 1) // This just stops it from continuing???
+		if (survivorSmoke != -1 || survivorPummel != -1 || survivorCarry != -1 || survivorPounce != -1 || survivorJockey != -1)
 		{
-			if ((player.GetButtonMask() & IN_ATTACK2) && startBreakout == false)
+			if ((player.GetButtonMask() & IN_ATTACK2) && BreakoutTimer[survivorID] == 0 && BreakoutUsed[survivorID] == false)
 			{
-				BreakoutTimer[survivorID]++;
-				startBreakout = true;
 				startBreakoutTime = Time();
-				NetProps.SetPropFloat(player, "m_flProgressBarStartTime", StartBreakoutTime); // Can add progress bars this way...start time needs to be set properly though
+				BreakoutTimer[survivorID]++;
+
+				// Add progress bar for breakout
+				NetProps.SetPropFloat(player, "m_flProgressBarStartTime", startBreakoutTime);
 				NetProps.SetPropFloat(player, "m_flProgressBarDuration", BreakoutTimerDefault);
 			}
-			else if ((player.GetButtonMask() & IN_ATTACK2) && startBreakout == true)
+			else if ((player.GetButtonMask() & IN_ATTACK2) && BreakoutTimer[survivorID] > 0)
 			{
 				BreakoutTimer[survivorID]++;
-				if (BreakoutTimer[survivorID] >= BreakoutTimerDefault && BreakoutUsed[survivorID] == false)
+				if (BreakoutTimer[survivorID] > BreakoutTimerDefault && BreakoutUsed[survivorID] == false)
 				{
 					// Staggering survivor gets them out of grabs
 					player.Stagger(Vector(-1, -1, -1));
@@ -939,7 +940,6 @@ function UpdateBreakoutTimer(player)
 			}
 			else
 			{
-				startBreakout = false;
 				BreakoutTimer[survivorID] = 0;
 				NetProps.SetPropFloat(player, "m_flProgressBarDuration", 0);
 			}
