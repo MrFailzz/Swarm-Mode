@@ -768,8 +768,6 @@ function CorruptionCard_Biohazard()
 	{
 		NetProps.SetPropInt(player, "m_Local.m_skybox3d.fog.colorPrimary", GetColorInt(Vector(1, 56, 1)));
 	}
-
-	biohazardEnabled = true;
 }
 
 function BiohazardTimer()
@@ -867,8 +865,6 @@ function CorruptionCard_FrigidOutskirts()
 		radius = 10000,
 		health = 10
 	});
-
-	frigidOutskirtsEnabled = true;
 }
 
 function FrigidOutskirtsTimer()

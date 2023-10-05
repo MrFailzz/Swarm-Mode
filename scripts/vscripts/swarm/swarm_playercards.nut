@@ -815,13 +815,13 @@ function ApplyCardsOnMutationKill(attacker, victim, headshot)
 		}
 	}
 
-	//Headhunter
-	local Headhunter = PlayerHasCard(attacker, "Headhunter");
-	if (Headhunter > 0)
+	//CleanKill
+	local CleanKill = PlayerHasCard(attacker, "CleanKill");
+	if (CleanKill > 0)
 	{
 		if (headshot == 1)
 		{
-			HeadhunterCounter[GetSurvivorID(attacker)]++;
+			CleanKillCounter[GetSurvivorID(attacker)]++;
 		}
 	}
 }
@@ -901,6 +901,34 @@ function UpdateShovePenalty(player)
 	}
 }
 
+// Not functional
+function UpdateBreakoutTimer(player)
+{
+	if (PlayerHasCard(player, "Breakout"))
+	{
+		if ((player.GetButtonMask() & IN_ATTACK2))
+		{
+			BreakoutTimer[GetSurvivorID(player)]++;
+
+			if (BreakoutTimer[GetSurvivorID(player)] > 5 && BreakoutUsed[GetSurvivorID(player)] == 0)
+			{
+				// Unsure if changing this will break the SI without also altering their state
+				NetProps.SetPropInt(player, "m_tongueOwner", 0);
+				NetProps.SetPropInt(player, "m_pummelVictim", 0);
+				NetProps.SetPropInt(player, "m_carryVictim", 0);
+				NetProps.SetPropInt(player, "m_pounceVictim", 0);
+				NetProps.SetPropInt(player, "m_jockeyVictim", 0);
+
+				BreakoutUsed[GetSurvivorID(player)] = 1;
+			}
+		}
+		else
+		{
+			BreakoutTimer[GetSurvivorID(player)] = 0;
+		}
+	}
+}
+
 function CardPickReminder()
 {
 	if (cardReminderTimer > 0)
@@ -971,6 +999,7 @@ function Update_PlayerCards()
 				}
 
 				UpdateShovePenalty(player);
+				//UpdateBreakoutTimer(player);
 			}
 		}
 	}

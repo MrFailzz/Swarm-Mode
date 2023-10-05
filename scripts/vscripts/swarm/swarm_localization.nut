@@ -691,11 +691,11 @@ function Translation_EN(msg)
 			return "+1% DMG per shot fired until reload"
 		break;
 
-		case "#name_Headhunter":
-			return "Headhunter"
+		case "#name_CleanKill":
+			return "Clean Kill"
 		break;
 
-		case "#desc_Headhunter":
+		case "#desc_CleanKill":
 			return "Precision kills give +5% DMG, Resets when DMG taken"
 		break;
 
@@ -1399,11 +1399,11 @@ function Translation_RU(msg)
 			return "+1% DMG per shot fired until reload"
 		break;
 
-		case "#name_Headhunter":
-			return "Headhunter"
+		case "#name_CleanKill":
+			return "Clean Kill"
 		break;
 
-		case "#desc_Headhunter":
+		case "#desc_CleanKill":
 			return "Precision kills give +5% DMG, Resets when DMG taken"
 		break;
 
