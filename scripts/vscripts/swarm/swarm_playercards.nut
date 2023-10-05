@@ -904,6 +904,8 @@ function UpdateShovePenalty(player)
 function UpdateBreakoutTimer(player)
 {
 	local survivorID = GetSurvivorID(player);
+	local startBreakout = false;
+	local startBreakoutTime = null;
 
 	if (PlayerHasCard(player, "Breakout"))
 	{
@@ -915,12 +917,17 @@ function UpdateBreakoutTimer(player)
 
 		if (survivorSmoke == 1 || survivorPummel == 1 || survivorCarry == 1 || survivorPounce == 1 || survivorJockey == 1) // This just stops it from continuing???
 		{
-			if ((player.GetButtonMask() & IN_ATTACK2))
+			if ((player.GetButtonMask() & IN_ATTACK2) && startBreakout == false)
 			{
 				BreakoutTimer[survivorID]++;
-				NetProps.SetPropFloat(player, "m_flProgressBarStartTime", Time()); // Can add progress bars this way...start time needs to be set properly though
-				NetProps.SetPropFloat(player, "m_flProgressBarDuration", 3);
-
+				startBreakout = true;
+				startBreakoutTime = Time();
+				NetProps.SetPropFloat(player, "m_flProgressBarStartTime", StartBreakoutTime); // Can add progress bars this way...start time needs to be set properly though
+				NetProps.SetPropFloat(player, "m_flProgressBarDuration", BreakoutTimerDefault);
+			}
+			else if ((player.GetButtonMask() & IN_ATTACK2) && startBreakout == true)
+			{
+				BreakoutTimer[survivorID]++;
 				if (BreakoutTimer[survivorID] >= BreakoutTimerDefault && BreakoutUsed[survivorID] == false)
 				{
 					// Staggering survivor gets them out of grabs
@@ -932,7 +939,9 @@ function UpdateBreakoutTimer(player)
 			}
 			else
 			{
+				startBreakout = false;
 				BreakoutTimer[survivorID] = 0;
+				NetProps.SetPropFloat(player, "m_flProgressBarDuration", 0);
 			}
 		}
 	}
