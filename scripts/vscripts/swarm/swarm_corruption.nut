@@ -123,8 +123,11 @@ function InitCorruptionCards()
 	cardsEnvironmental.append("environmentSwarmStream");
 	cardsEnvironmental.append("environmentDark");
 	cardsEnvironmental.append("environmentFog");
-	cardsEnvironmental.append("environmentBiohazard");
-	cardsEnvironmental.append("environmentFrozen");
+	if (difficulty > 1)
+	{
+		cardsEnvironmental.append("environmentBiohazard");
+		cardsEnvironmental.append("environmentFrozen");
+	}
 	corruptionEnvironmental = ChooseCorruptionCard_List(cardsEnvironmental);
 	ApplyEnvironmentalCard();
 
@@ -164,7 +167,7 @@ function InitCorruptionCards()
 	cardsGameplay.append("None");
 	cardsGameplay.append("gameplayNoGrenades");
 	//cardsGameplay.append("gameplayNoOutlines");
-	if ( difficulty > 1 )
+	if (difficulty > 1)
 	{
 		cardsGameplay.append("None");
 		cardsGameplay.append("None");
@@ -178,7 +181,7 @@ function InitCorruptionCards()
 	local cardsPlayer = array(1, null);
 	cardsPlayer.clear();
 	cardsPlayer.append("None");
-	if ( difficulty > 1 )
+	if (difficulty > 1)
 	{
 		cardsPlayer.append("None");
 		cardsPlayer.append("None");
