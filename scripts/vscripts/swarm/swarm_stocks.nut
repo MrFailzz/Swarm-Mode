@@ -193,6 +193,16 @@ function PlayerLeftSafeArea(params)
 					break;
 			}
 
+			switch(corruptionEnvironmental)
+			{
+				case "environmentBiohazard":
+					biohazardEnabled = true;
+					break;
+				case "environmentFrozen":
+					frigidOutskirtsEnabled = true;
+					break;
+			}
+
 			firstLeftCheckpoint = true;
 
 			ModifyHittables();

@@ -901,30 +901,39 @@ function UpdateShovePenalty(player)
 	}
 }
 
-// Not functional
 function UpdateBreakoutTimer(player)
 {
+	local survivorID = GetSurvivorID(player);
+
 	if (PlayerHasCard(player, "Breakout"))
 	{
-		if ((player.GetButtonMask() & IN_ATTACK2))
-		{
-			BreakoutTimer[GetSurvivorID(player)]++;
+		local survivorSmoke = NetProps.GetPropInt(player, "m_tongueOwner");
+		local survivorPummel = NetProps.GetPropInt(player, "m_pummelAttacker");
+		local survivorCarry = NetProps.GetPropInt(player, "m_carryAttacker");
+		local survivorPounce = NetProps.GetPropInt(player, "m_pounceAttacker");
+		local survivorJockey = NetProps.GetPropInt(player, "m_jockeyAttacker");
 
-			if (BreakoutTimer[GetSurvivorID(player)] > 5 && BreakoutUsed[GetSurvivorID(player)] == 0)
+		if (survivorSmoke == 1 || survivorPummel == 1 || survivorCarry == 1 || survivorPounce == 1 || survivorJockey == 1) // This just stops it from continuing???
+		{
+			if ((player.GetButtonMask() & IN_ATTACK2))
 			{
-				// Unsure if changing this will break the SI without also altering their state
-				NetProps.SetPropInt(player, "m_tongueOwner", 0);
-				NetProps.SetPropInt(player, "m_pummelVictim", 0);
-				NetProps.SetPropInt(player, "m_carryVictim", 0);
-				NetProps.SetPropInt(player, "m_pounceVictim", 0);
-				NetProps.SetPropInt(player, "m_jockeyVictim", 0);
+				BreakoutTimer[survivorID]++;
+				NetProps.SetPropFloat(player, "m_flProgressBarStartTime", Time()); // Can add progress bars this way...start time needs to be set properly though
+				NetProps.SetPropFloat(player, "m_flProgressBarDuration", 3);
 
-				BreakoutUsed[GetSurvivorID(player)] = 1;
+				if (BreakoutTimer[survivorID] >= BreakoutTimerDefault && BreakoutUsed[survivorID] == false)
+				{
+					// Staggering survivor gets them out of grabs
+					player.Stagger(Vector(-1, -1, -1));
+
+					// Limit use to once per map
+					BreakoutUsed[survivorID] = true;
+				}
 			}
-		}
-		else
-		{
-			BreakoutTimer[GetSurvivorID(player)] = 0;
+			else
+			{
+				BreakoutTimer[survivorID] = 0;
+			}
 		}
 	}
 }
@@ -999,7 +1008,7 @@ function Update_PlayerCards()
 				}
 
 				UpdateShovePenalty(player);
-				//UpdateBreakoutTimer(player);
+				UpdateBreakoutTimer(player);
 			}
 		}
 	}

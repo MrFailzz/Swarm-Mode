@@ -53,12 +53,12 @@ function ZombieDeath(params)
 				}
 
 				//CleanKill
-				local CleanKill = PlayerHasCard(attacker, "CleanKill");
+				local CleanKill = PlayerHasCard(player, "CleanKill");
 				if (CleanKill > 0)
 				{
 					if (params.headshot == 1)
 					{
-						CleanKillCounter[GetSurvivorID(attacker)]++;
+						CleanKillCounter[GetSurvivorID(player)]++;
 					}
 				}
 
