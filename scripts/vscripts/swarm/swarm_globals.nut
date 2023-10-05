@@ -274,167 +274,87 @@ function SetDifficulty()
 	{
 		//Easy
 		case 0:
-			if (corruptionTallboy == "Tallboy")
-			{
-				Convars.SetValue("z_charger_health", 900);
-			}
-			else if (corruptionTallboy == "Crusher")
-			{
-				Convars.SetValue("z_charger_health", 1000);
-			}
-			else if (corruptionTallboy == "Bruiser")
-			{
-				Convars.SetValue("z_charger_health", 1250);
-			}
-
-			if (corruptionRetch == "Retch")
-			{
-				Convars.SetValue("z_exploding_health", 500);
-			}
-			else if (corruptionRetch == "Exploder")
-			{
-				Convars.SetValue("z_exploding_health", 500);
-			}
-			else if (corruptionRetch == "Reeker")
-			{
-				Convars.SetValue("z_exploding_health", 550);
-			}
-			Convars.SetValue("z_jockey_health", 300);
-			Convars.SetValue("z_gas_health", 200);
-			Convars.SetValue("z_witch_health", 500);
 			BaseMaxIncaps = 3;
 			MaxTraumaDamage = 0;
 			stagger_dmg = 4000;
 			DirectorOptions.MobSpawnSize = 30;
 			DirectorOptions.MegaMobSize = 50;
+			difficultyDamageScale = 0.5;
+			difficultyHealthScale = 0.75;
+			hazardDifficultyScale = 0.5;
 		break;
 
 		//Normal
 		case 1:
-			if (corruptionTallboy == "Tallboy")
-			{
-				Convars.SetValue("z_charger_health", 1000);
-			}
-			else if (corruptionTallboy == "Crusher")
-			{
-				Convars.SetValue("z_charger_health", 1200);
-			}
-			else if (corruptionTallboy == "Bruiser")
-			{
-				Convars.SetValue("z_charger_health", 1500);
-			}
-
-			if (corruptionRetch == "Retch")
-			{
-				Convars.SetValue("z_exploding_health", 550);
-			}
-			else if (corruptionRetch == "Exploder")
-			{
-				Convars.SetValue("z_exploding_health", 550);
-			}
-			else if (corruptionRetch == "Reeker")
-			{
-				Convars.SetValue("z_exploding_health", 650);
-			}
-			Convars.SetValue("z_jockey_health", 350);
-			Convars.SetValue("z_gas_health", 250);
-			Convars.SetValue("z_witch_health", 750);
 			BaseMaxIncaps = 3;
 			MaxTraumaDamage = 20;
 			stagger_dmg = 4000;
 			DirectorOptions.MobSpawnSize = 30;
 			DirectorOptions.MegaMobSize = 50;
+			difficultyDamageScale = 1;
+			difficultyHealthScale = 1;
+			hazardDifficultyScale = 1;
 		break;
 
 		//Advanced
 		case 2:
-			if (corruptionTallboy == "Tallboy")
-			{
-				Convars.SetValue("z_charger_health", 1400);
-			}
-			else if (corruptionTallboy == "Crusher")
-			{
-				Convars.SetValue("z_charger_health", 1500);
-			}
-			else if (corruptionTallboy == "Bruiser")
-			{
-				Convars.SetValue("z_charger_health", 1900);
-			}
-
-			if (corruptionRetch == "Retch")
-			{
-				Convars.SetValue("z_exploding_health", 700);
-			}
-			else if (corruptionRetch == "Exploder")
-			{
-				Convars.SetValue("z_exploding_health", 700);
-			}
-			else if (corruptionRetch == "Reeker")
-			{
-				Convars.SetValue("z_exploding_health", 850);
-			}
-			Convars.SetValue("z_jockey_health", 450);
-			Convars.SetValue("z_gas_health", 300);
-			Convars.SetValue("z_witch_health", 1000);
 			BaseMaxIncaps = 2;
 			MaxTraumaDamage = 30;
 			stagger_dmg = 10000;
 			DirectorOptions.MobSpawnSize = 35;
 			DirectorOptions.MegaMobSize = 60;
+			difficultyDamageScale = 1.5;
+			difficultyHealthScale = 1.25;
+			hazardDifficultyScale = 1.5;
 		break;
 
 		//Expert
 		case 3:
-			if (corruptionTallboy == "Tallboy")
-			{
-				Convars.SetValue("z_charger_health", 1400);
-			}
-			else if (corruptionTallboy == "Crusher")
-			{
-				Convars.SetValue("z_charger_health", 1500);
-			}
-			else if (corruptionTallboy == "Bruiser")
-			{
-				Convars.SetValue("z_charger_health", 1900);
-			}
-
-			if (corruptionRetch == "Retch")
-			{
-				Convars.SetValue("z_exploding_health", 700);
-			}
-			else if (corruptionRetch == "Exploder")
-			{
-				Convars.SetValue("z_exploding_health", 700);
-			}
-			else if (corruptionRetch == "Reeker")
-			{
-				Convars.SetValue("z_exploding_health", 850);
-			}
-			Convars.SetValue("z_jockey_health", 450);
-			Convars.SetValue("z_gas_health", 300);
-			Convars.SetValue("z_exploding_health", 700);
-			Convars.SetValue("z_witch_health", 1000);
 			BaseMaxIncaps = 2;
 			MaxTraumaDamage = 40;
 			stagger_dmg = 10000;
 			DirectorOptions.MobSpawnSize = 40;
 			DirectorOptions.MegaMobSize = 70;
 			DirectorOptions.TankHitDamageModifierCoop = 0.48;
+			difficultyDamageScale = 2;
+			difficultyHealthScale = 1.5;
+			hazardDifficultyScale = 2;
 		break;
 	}
+
+	if (corruptionTallboy == "Tallboy")
+	{
+		Convars.SetValue("z_charger_health", 1000 * (difficultyHealthScale * cardHealthScale));
+	}
+	else if (corruptionTallboy == "Crusher")
+	{
+		Convars.SetValue("z_charger_health", 1200 * (difficultyHealthScale * cardHealthScale));
+	}
+	else if (corruptionTallboy == "Bruiser")
+	{
+		Convars.SetValue("z_charger_health", 1500 * (difficultyHealthScale * cardHealthScale));
+	}
+
+	if (corruptionRetch == "Retch")
+	{
+		Convars.SetValue("z_exploding_health", 550 * (difficultyHealthScale * cardHealthScale));
+	}
+	else if (corruptionRetch == "Exploder")
+	{
+		Convars.SetValue("z_exploding_health", 550 * (difficultyHealthScale * cardHealthScale));
+	}
+	else if (corruptionRetch == "Reeker")
+	{
+		Convars.SetValue("z_exploding_health", 650 * (difficultyHealthScale * cardHealthScale));
+	}
+	Convars.SetValue("z_jockey_health", 350 * (difficultyHealthScale * cardHealthScale));
+	Convars.SetValue("z_gas_health", 250 * (difficultyHealthScale * cardHealthScale));
+	Convars.SetValue("z_witch_health", 750 * (difficultyHealthScale * cardHealthScale));
 
 	SetSpeedrunTimer();
 }
 
 DirectorOptions.SurvivorMaxIncapacitatedCount = BaseMaxIncaps;
-
-///////////////////////////////////////////////
-//              GAMEMODE OPTIONS             //
-///////////////////////////////////////////////
-if (swarmMode == "survival" || swarmMode == "survival_vs")
-{
-	DirectorOptions.cm_TankLimit = 2;
-}
 
 ///////////////////////////////////////////////
 //             SETTINGS / OPTIONS            //
@@ -463,7 +383,9 @@ exploderRunSpeed <- 320;			// Run speed while using explosion ability
 tallboyPunchKnockback <- 350;		// Max knockback
 tallboyRunSpeed <- 250;
 
-difficultyDamageScale <- (difficulty + 1) / 2
+cardHealthScale <- 1				// Ferocious (1.25x), Monstrous (1.5x)
+difficultyHealthScale <- 1; 		// (Easy (0): 0.75x, Normal (1): 1x, Advanced (2): 1.25x, Expert (3): 1.5x)
+difficultyDamageScale <- 1; 		// (Easy (0): 0.5x, Normal (1): 1x, Advanced (2): 1.5x, Expert (3): 2x)
 
 // COMMON //
 acidCommonsMax <- 4;
@@ -493,7 +415,7 @@ uncommonFallenMax <- 3;
 uncommonFallenSpawnAmount <- 3;			// Size of group to spawn
 
 // HAZARDS //
-hazardDifficultyScale <- (difficulty + 1) / 2;	// Number of hazards to be scaled with difficulty (Easy (0): 0.5x, Normal (1): 1x, Advanced (2): 1.5x, Expert (3): 2x)
+hazardDifficultyScale <- 1;			// Number of hazards to be scaled with difficulty (Easy (0): 0.5x, Normal (1): 1x, Advanced (2): 1.5x, Expert (3): 2x)
 alarmDoorCountMin <- 2;				// Min number of alarm doors to spawn per map
 alarmDoorCountMax <- 2;				// Max number of alarm doors to spawn per map
 crowGroupCountMin <- 4;				// Mix number of crow groups to spawn
