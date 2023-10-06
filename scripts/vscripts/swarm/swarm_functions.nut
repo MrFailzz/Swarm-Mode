@@ -134,6 +134,24 @@ function GetColorInt(col)
 	}
 }
 
+// From VSLib - Get rendercolor of a prop
+/**
+ * Gets a table of RGBA colors from 32 bit format to 8 bit.
+ */
+function GetColor32( color32 )
+{
+	local t = {};
+	local readColor = color32;
+	
+	// Reads the 8 bit color values by rightshifting and masking the lowest byte out with bitwise AND.
+	// The >>> makes it consider the input value unsigned.
+	t.red <- (readColor & 0xFF);
+	t.green <- ((readColor >>> 8) & 0xFF);
+	t.blue <- ((readColor >>> 16) & 0xFF);
+	t.alpha <- ((readColor >>> 24) & 0xFF);
+	return t;
+}
+
 function CreateSurvivorFilter()
 {
 	SpawnEntityFromTable("filter_activator_team",
@@ -155,24 +173,6 @@ function CreateInfectedFilter()
 	});
 }
 CreateInfectedFilter();
-
-// From VSLib - Get rendercolor of a prop
-/**
- * Gets a table of RGBA colors from 32 bit format to 8 bit.
- */
-function GetColor32( color32 )
-{
-	local t = {};
-	local readColor = color32;
-	
-	// Reads the 8 bit color values by rightshifting and masking the lowest byte out with bitwise AND.
-	// The >>> makes it consider the input value unsigned.
-	t.red <- (readColor & 0xFF);
-	t.green <- ((readColor >>> 8) & 0xFF);
-	t.blue <- ((readColor >>> 16) & 0xFF);
-	t.alpha <- ((readColor >>> 24) & 0xFF);
-	return t;
-}
 
 function IntToTime(integer)
 {

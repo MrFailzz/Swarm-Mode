@@ -24,6 +24,7 @@ function OnGameEvent_zombie_death(params)
 function OnGameEvent_map_transition(params)
 {
 	MapTransition(params);
+	//RestoreTable("savedFogSettings", savedFogSettings); //Clear saved fog settings table for next map
 }
 
 function OnGameEvent_round_freeze_end(params)
