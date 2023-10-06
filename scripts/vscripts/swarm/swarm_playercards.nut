@@ -907,15 +907,15 @@ function UpdateBreakoutTimer(player)
 	local startBreakoutTime = 0;
 
 	// Check if survivor is grabbed
-	local survivorSmoke = NetProps.GetPropInt(player, "m_tongueOwner");
-	local survivorPummel = NetProps.GetPropInt(player, "m_pummelAttacker");
-	local survivorCarry = NetProps.GetPropInt(player, "m_carryAttacker");
-	local survivorPounce = NetProps.GetPropInt(player, "m_pounceAttacker");
-	local survivorJockey = NetProps.GetPropInt(player, "m_jockeyAttacker");
+	local survivorSmoke = NetProps.GetPropEntity(player, "m_tongueOwner");
+	local survivorPummel = NetProps.GetPropEntity(player, "m_pummelAttacker");
+	local survivorCarry = NetProps.GetPropEntity(player, "m_carryAttacker");
+	local survivorPounce = NetProps.GetPropEntity(player, "m_pounceAttacker");
+	local survivorJockey = NetProps.GetPropEntity(player, "m_jockeyAttacker");
 
 	if (PlayerHasCard(player, "Breakout"))
 	{
-		if (survivorSmoke != -1 || survivorPummel != -1 || survivorCarry != -1 || survivorPounce != -1 || survivorJockey != -1)
+		if (survivorSmoke != null || survivorPummel != null || survivorCarry != null || survivorPounce != null || survivorJockey != null)
 		{
 			if ((player.GetButtonMask() & IN_ATTACK2) && BreakoutTimer[survivorID] == 0 && BreakoutUsed[survivorID] == false)
 			{
@@ -929,8 +929,16 @@ function UpdateBreakoutTimer(player)
 			else if ((player.GetButtonMask() & IN_ATTACK2) && BreakoutTimer[survivorID] > 0)
 			{
 				BreakoutTimer[survivorID]++;
+
 				if (BreakoutTimer[survivorID] > BreakoutTimerDefault && BreakoutUsed[survivorID] == false)
 				{
+					// Free survivor from capper
+					//FreeCapperVictim(player, survivorSmoke, "m_tongueOwner", "m_tongueVictim");
+					//FreeCapperVictim(player, survivorPummel, "m_pummelAttacker", "m_pummelVictim");
+					//FreeCapperVictim(player, survivorCarry, "m_carryAttacker", "m_carryAttacker");
+					//FreeCapperVictim(player, survivorPounce, "m_pounceAttacker", "m_pounceVictim");
+					//FreeCapperVictim(player, survivorJockey, "m_jockeyAttacker", "m_jockeyVictim");
+
 					// Staggering survivor gets them out of grabs
 					player.Stagger(Vector(-1, -1, -1));
 
@@ -944,6 +952,23 @@ function UpdateBreakoutTimer(player)
 				NetProps.SetPropFloat(player, "m_flProgressBarDuration", 0);
 			}
 		}
+	}
+}
+
+function FreeCapperVictim(player, attacker, attackerProp, victimProp)
+{
+	if (attacker == null)
+	{
+		return;
+	}
+
+	if (NetProps.GetPropEntity(attacker, victimProp) == player)
+	{
+		NetProps.SetPropEntity(attacker, victimProp, null);
+		NetProps.SetPropEntity(player, attackerProp, null);
+
+		//Stumble the infected so they aren't right on top of the survivor
+		//attacker.Stagger(Vector(-1, -1, -1));
 	}
 }
 

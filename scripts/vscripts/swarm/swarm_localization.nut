@@ -160,7 +160,7 @@ function Translation_EN(msg)
 		break;
 
 		case "#desc_Breakout":
-			return "Escape Grabs (60s CD) [+use]"
+			return "Hold [Mouse 2] to escape grabs once per map"
 		break;
 
 		case "#name_AdrenalineRush":
@@ -1089,7 +1089,7 @@ function Translation_RU(msg)
 		break;
 
 		case "#desc_Breakout":
-			return "Escape Grabs (60s CD) [+use]"
+			return "Hold [Mouse 2] to escape grabs once per map"
 		break;
 
 		case "#name_AdrenalineRush":
