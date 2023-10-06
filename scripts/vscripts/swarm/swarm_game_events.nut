@@ -80,6 +80,7 @@ function OnGameEvent_tongue_grab(params)
 	TongueGrab(params);
 	StingerProjectile(params);
 	CappedAlert();
+	BreakoutMsg(params);
 }
 
 function OnGameEvent_witch_harasser_set(params)
@@ -91,6 +92,7 @@ function OnGameEvent_lunge_pounce(params)
 {
 	SleeperLanded(params);
 	CappedAlert();
+	BreakoutMsg(params);
 }
 
 function OnGameEvent_player_now_it(params)
@@ -101,11 +103,13 @@ function OnGameEvent_player_now_it(params)
 function OnGameEvent_jockey_ride(params)
 {
 	CappedAlert();
+	BreakoutMsg(params);
 }
 
 function OnGameEvent_charger_carry_start(params)
 {
 	CappedAlert();
+	BreakoutMsg(params);
 }
 
 //Stocks

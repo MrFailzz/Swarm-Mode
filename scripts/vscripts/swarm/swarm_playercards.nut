@@ -972,6 +972,21 @@ function FreeCapperVictim(player, attacker, attackerProp, victimProp)
 	}
 }
 
+function BreakoutMsg(params)
+{
+	local player = GetPlayerFromUserID(params["victim"]);
+	local survivorID = GetSurvivorID(player);
+
+	if (PlayerHasCard(player, "Breakout"))
+	{
+		if (BreakoutUsed[survivorID] == false)
+		{
+			ClientPrint(player, 3,  Loc("#breakout_msg"));
+		}
+	}
+
+}
+
 function CardPickReminder()
 {
 	if (cardReminderTimer > 0)

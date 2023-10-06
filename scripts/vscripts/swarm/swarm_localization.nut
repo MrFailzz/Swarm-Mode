@@ -34,6 +34,10 @@ function Translation_EN(msg)
 			return "\x01" + "Type " + "\x03" + "!giveup" + "\x01" + " to die...";
 		break;
 
+		case "#breakout_msg":
+			return "\x01" + "Hold " + "\x03" + "MOUSE2" + "\x01" + " to break out!";
+		break;
+
 		//PLAYER CARDS
 		case "#name_Nick":
 			return "Nick (+5% DMG)"
@@ -961,6 +965,10 @@ function Translation_RU(msg)
 
 		case "#giveup_msg":
 			return "\x01" + "Type " + "\x03" + "!giveup" + "\x01" + " to die...";
+		break;
+
+		case "#breakout_msg":
+			return "\x01" + "Hold " + "\x03" + "MOUSE2" + "\x01" + " to break out!";
 		break;
 
 		//PLAYER CARDS
