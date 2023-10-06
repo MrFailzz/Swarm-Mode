@@ -350,8 +350,6 @@ function SetDifficulty()
 	Convars.SetValue("z_jockey_health", 350 * (difficultyHealthScale * cardHealthScale));
 	Convars.SetValue("z_gas_health", 250 * (difficultyHealthScale * cardHealthScale));
 	Convars.SetValue("z_witch_health", 750 * (difficultyHealthScale * cardHealthScale));
-
-	SetSpeedrunTimer();
 }
 
 DirectorOptions.SurvivorMaxIncapacitatedCount = BaseMaxIncaps;

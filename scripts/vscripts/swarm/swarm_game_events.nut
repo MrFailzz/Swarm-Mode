@@ -129,6 +129,7 @@ function OnGameEvent_player_incapacitated_start(params)
 function OnGameEvent_round_start(params)
 {
 	CreateCardHud();
+	SetSpeedrunTimer();
 	InitCorruptionCards();
 	SetDifficulty();
 }
