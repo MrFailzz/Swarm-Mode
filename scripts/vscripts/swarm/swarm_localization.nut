@@ -723,6 +723,227 @@ function Translation_EN(msg)
 			return "Medkits and Defibs heal +10 HP and 1 Extra Life"
 		break;
 
+		//CORRUPTION CARDS
+		case "#cor_commonAcid":
+			return "Acid Commons"
+		break;
+
+		case "#cor_commonFire":
+			return "Fire Commons"
+		break;
+
+		case "#cor_commonExplode":
+			return "Exploding Commons"
+		break;
+
+		case "#cor_hazardBirds":
+			return "The Birds"
+		break;
+
+		case "#cor_hazardLockdown":
+			return "The Lockdown"
+		break;
+
+		case "#cor_hazardSleepers":
+			return "Slumber Party"
+		break;
+
+		case "#cor_environmentDark":
+			return "The Dark"
+		break;
+
+		case "#cor_environmentFog":
+			return "The Fog"
+		break;
+
+		case "#cor_environmentBiohazard":
+			return "Biohazard"
+		break;
+
+		case "#cor_environmentFrozen":
+			return "Frigid Outskirts"
+		break;
+
+		case "#cor_environmentSwarmStream":
+			return "Swarm Stream"
+		break;
+
+		case "#cor_hordeHunted":
+			return "Hunted"
+		break;
+
+		case "#cor_hordeOnslaught":
+			return "Onslaught"
+		break;
+
+		case "#cor_hordeTallboy":
+			return "Tallboy Hordes"
+		break;
+
+		case "#cor_hordeCrusher":
+			return "Crusher Hordes"
+		break;
+
+		case "#cor_hordeBruiser":
+			return "Bruiser Hordes"
+		break;
+
+		case "#cor_hordeHocker":
+			return "Hocker Hordes"
+		break;
+
+		case "#cor_hordeStinger":
+			return "Stinger Hordes"
+		break;
+
+		case "#cor_hordeStalker":
+			return "Stalker Hordes"
+		break;
+
+		case "#cor_hordeExploder":
+			return "Exploder Hordes"
+		break;
+
+		case "#cor_hordeRetch":
+			return "Retch Hordes"
+		break;
+
+		case "#cor_hordeReeker":
+			return "Reeker Hordes"
+		break;
+
+		case "#cor_gameplayNoGrenades":
+			return "Empty Pockets"
+		break;
+
+		case "#cor_gameplayNoOutlines":
+			return "No Outlines"
+		break;
+
+		case "#cor_gameplayNoSupport":
+			return "Survival of the Fittest"
+		break;
+
+		case "#cor_gameplayNoRespawn":
+			return "Do or Die"
+		break;
+
+		case "#cor_playerLessAmmo":
+			return "Ammo Shortage"
+		break;
+
+		case "#cor_playerFatigue":
+			return "Fatigue"
+		break;
+
+		case "#cor_uncommonClown":
+			return "Clown Show"
+		break;
+
+		case "#cor_uncommonRiot":
+			return "Crowd Control"
+		break;
+
+		case "#cor_uncommonMud":
+			return "Mud Crawlers"
+		break;
+
+		case "#cor_uncommonCeda":
+			return "CEDA Operatives"
+		break;
+
+		case "#cor_uncommonConstruction":
+			return "Construction Site"
+		break;
+
+		case "#cor_uncommonJimmy":
+			return "Jimmy Gibbs and Cousins"
+		break;
+
+		case "#cor_uncommonFallen":
+			return "Fallen Cleaners"
+		break;
+
+		case "#cor_commonShamble":
+			return "Shambling Commons"
+		break;
+
+		case "#cor_commonRunning":
+			return "Running Commons"
+		break;
+
+		case "#cor_commonBlitzing":
+			return "Blitzing Commons"
+		break;
+
+		case "#cor_Tallboy":
+			return "Tallboys"
+		break;
+
+		case "#cor_Crusher":
+			return "Crushers"
+		break;
+
+		case "#cor_Bruiser":
+			return "Bruisers"
+		break;
+
+		case "#cor_Hocker":
+			return "Hockers"
+		break;
+
+		case "#cor_Stinger":
+			return "Stinger"
+		break;
+
+		case "#cor_Stalker":
+			return "Stalkers"
+		break;
+
+		case "#cor_Retch":
+			return "Retches"
+		break;
+
+		case "#cor_Exploder":
+			return "Exploders"
+		break;
+
+		case "#cor_Reeker":
+			return "Reekers"
+		break;
+
+		case "#cor_hazardSnitch":
+			return "Tattlers"
+		break;
+
+		case "#cor_hazardBreaker":
+			return "Breaker"
+		break;
+
+		case "#cor_hazardBreakerRaging":
+			return "Raging Breaker"
+		break;
+
+		case "#cor_hazardOgre":
+			return "Ogre"
+		break;
+
+		case "#cor_hazardOgreRaging":
+			return "Raging Ogre"
+		break;
+
+		case "#cor_missionSpeedrun":
+			return "Speedrun"
+		break;
+
+		case "#cor_missionAllAlive":
+			return "No One Left Behind"
+		break;
+
+		case "#cor_missionGnomeAlone":
+			return "Gnome Alone"
+		break;
+
 		default:
 			return msg;
 		break;
@@ -1429,6 +1650,227 @@ function Translation_RU(msg)
 
 		case "#desc_MedicalProfessional":
 			return "Medkits and Defibs heal +10 HP and 1 Extra Life"
+		break;
+
+		//CORRUPTION CARDS
+		case "#cor_commonAcid":
+			return "Кислотные заражённые"
+		break;
+
+		case "#cor_commonFire":
+			return "Огненные заражённые"
+		break;
+
+		case "#cor_commonExplode":
+			return "Взрывающиеся заражённые"
+		break;
+
+		case "#cor_hazardBirds":
+			return "Вороны"
+		break;
+
+		case "#cor_hazardLockdown":
+			return "Двери с сигнализацией"
+		break;
+
+		case "#cor_hazardSleepers":
+			return "Слиперы"
+		break;
+
+		case "#cor_environmentDark":
+			return "Темнота"
+		break;
+
+		case "#cor_environmentFog":
+			return "Туман"
+		break;
+
+		case "#cor_environmentBiohazard":
+			return "Biohazard"
+		break;
+
+		case "#cor_environmentFrozen":
+			return "Холодные окраины"
+		break;
+
+		case "#cor_environmentSwarmStream":
+			return "Светящийся ручей"
+		break;
+
+		case "#cor_hordeHunted":
+			return "На Охоте"
+		break;
+
+		case "#cor_hordeOnslaught":
+			return "Натиск"
+		break;
+
+		case "#cor_hordeTallboy":
+			return "Орда Толлбоев"
+		break;
+
+		case "#cor_hordeCrusher":
+			return "Орда Крашеров"
+		break;
+
+		case "#cor_hordeBruiser":
+			return "Орда Брузеров"
+		break;
+
+		case "#cor_hordeHocker":
+			return "Орда Хокеров"
+		break;
+
+		case "#cor_hordeStinger":
+			return "Орда Стингеров"
+		break;
+
+		case "#cor_hordeStalker":
+			return "Орда Сталкеров"
+		break;
+
+		case "#cor_hordeExploder":
+			return "Орда Эксплодеров"
+		break;
+
+		case "#cor_hordeRetch":
+			return "Орда Ретчей"
+		break;
+
+		case "#cor_hordeReeker":
+			return "Орда Рикеров"
+		break;
+
+		case "#cor_gameplayNoGrenades":
+			return "Опустевшие карманы"
+		break;
+
+		case "#cor_gameplayNoOutlines":
+			return "Без контуров"
+		break;
+
+		case "#cor_gameplayNoSupport":
+			return "Выживает наиболее приспособленный"
+		break;
+
+		case "#cor_gameplayNoRespawn":
+			return "Сделай или сдохни"
+		break;
+
+		case "#cor_playerLessAmmo":
+			return "Нехватка боеприпасов"
+		break;
+
+		case "#cor_playerFatigue":
+			return "Усталость"
+		break;
+
+		case "#cor_uncommonClown":
+			return "Шоу Клоунов"
+		break;
+
+		case "#cor_uncommonRiot":
+			return "Подавление толпы"
+		break;
+
+		case "#cor_uncommonMud":
+			return "Грязевики"
+		break;
+
+		case "#cor_uncommonCeda":
+			return "Сотрудники CEDA"
+		break;
+
+		case "#cor_uncommonConstruction":
+			return "Стройка"
+		break;
+
+		case "#cor_uncommonJimmy":
+			return "Джимми Гиббс и его двоюродные братья"
+		break;
+
+		case "#cor_uncommonFallen":
+			return "Павшие чистильщики"
+		break;
+
+		case "#cor_commonShamble":
+			return "Медленные заражённые"
+		break;
+
+		case "#cor_commonRunning":
+			return "Обычные заражённые"
+		break;
+
+		case "#cor_commonBlitzing":
+			return "Быстрые заражённые"
+		break;
+
+		case "#cor_Tallboy":
+			return "Толлбои"
+		break;
+
+		case "#cor_Crusher":
+			return "Крашеры"
+		break;
+
+		case "#cor_Bruiser":
+			return "Брузеры"
+		break;
+
+		case "#cor_Hocker":
+			return "Хокеры"
+		break;
+
+		case "#cor_Stinger":
+			return "Стингеры"
+		break;
+
+		case "#cor_Stalker":
+			return "Сталкеры"
+		break;
+
+		case "#cor_Retch":
+			return "Ретчи"
+		break;
+
+		case "#cor_Exploder":
+			return "Эксплодеры"
+		break;
+
+		case "#cor_Reeker":
+			return "Рикеры"
+		break;
+
+		case "#cor_hazardSnitch":
+			return "Стукачи"
+		break;
+
+		case "#cor_hazardBreaker":
+			return "Брейкер"
+		break;
+
+		case "#cor_hazardBreakerRaging":
+			return "Разгневанный Брейкер"
+		break;
+
+		case "#cor_hazardOgre":
+			return "Огр"
+		break;
+
+		case "#cor_hazardOgreRaging":
+			return "Разгневанный Огр"
+		break;
+
+		case "#cor_missionSpeedrun":
+			return "Спидран"
+		break;
+
+		case "#cor_missionAllAlive":
+			return "Своих не оставляем"
+		break;
+
+		case "#cor_missionGnomeAlone":
+			return "Один Гнома"
 		break;
 
 		default:
