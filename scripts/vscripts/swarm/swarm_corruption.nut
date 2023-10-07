@@ -295,7 +295,6 @@ function StoreFogSettings()
 		local i = 0;
 		while ((fog = Entities.FindByClassname(fog, "env_fog_controller")) != null)
 		{
-			printl("bbbbbbbbbb");
 			savedFogSettings["id" + i.tostring()] <- fog;
 			savedFogSettings["col" + i.tostring()] <- NetProps.GetPropInt(fog, "m_fog.colorPrimary");
 			savedFogSettings["density" + i.tostring()] <- NetProps.GetPropFloat(fog, "m_fog.maxdensity");
