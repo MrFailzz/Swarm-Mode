@@ -240,21 +240,20 @@ function InterceptChat(message, speaker)
 
 function ShuffleVote(speaker, cardPick = false)
 {
+	local player = null;
 	if (shuffleVoteStarted == false && cardPick == false)
 	{
 		shuffleVoteStarted = true;
 		ClientPrint(null, 3, "\x04" + speaker.GetPlayerName() + " initiated a shuffle vote!");
-		local player = null;
-		local botID = null;
+
 		while ((player = Entities.FindByClassname(player, "player")) != null)
 		{
 			if (player.IsSurvivor())
 			{
 				EmitSoundOn("Vote.Created", player);
-				if (IsPlayerABot(player));
+				if (IsPlayerABot(player) == true)
 				{
-					botID = GetSurvivorID(player);
-					cardShuffleVote[botID] = true;
+					cardShuffleVote[GetSurvivorID(player)] = true;
 					ClientPrint(null, 3, "\x04" + player.GetPlayerName() + " voted to shuffle");
 				}
 			}
@@ -266,7 +265,6 @@ function ShuffleVote(speaker, cardPick = false)
 		local speakerID = GetSurvivorID(speaker);
 		if (cardShuffleVote[speakerID] == false && shuffleVoteStarted == true && cardPick == false)
 		{
-			local player = null;
 			while ((player = Entities.FindByClassname(player, "player")) != null)
 			{
 				if (player.IsSurvivor())
@@ -303,7 +301,6 @@ function ShuffleVote(speaker, cardPick = false)
 		if (voteStatus == true)
 		{
 			ClientPrint(null, 3, "\x04" + "Shuffle vote passed!");
-			local player = null;
 			while ((player = Entities.FindByClassname(player, "player")) != null)
 			{
 				if (player.IsSurvivor())
