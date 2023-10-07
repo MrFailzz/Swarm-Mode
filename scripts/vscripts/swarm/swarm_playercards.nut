@@ -904,6 +904,7 @@ function UpdateShovePenalty(player)
 function UpdateBreakoutTimer(player)
 {
 	local survivorID = GetSurvivorID(player);
+	local Breakout = 0;
 	local startBreakoutTime = 0;
 
 	// Check if survivor is grabbed
@@ -913,11 +914,13 @@ function UpdateBreakoutTimer(player)
 	local survivorPounce = NetProps.GetPropEntity(player, "m_pounceAttacker");
 	local survivorJockey = NetProps.GetPropEntity(player, "m_jockeyAttacker");
 
-	if (PlayerHasCard(player, "Breakout"))
+	Breakout = (PlayerHasCard(player, "Breakout"));
+
+	if (Breakout > 1)
 	{
 		if (survivorSmoke != null || survivorPummel != null || survivorCarry != null || survivorPounce != null || survivorJockey != null)
 		{
-			if ((player.GetButtonMask() & IN_ATTACK2) && BreakoutTimer[survivorID] == 0 && BreakoutUsed[survivorID] == false)
+			if ((player.GetButtonMask() & IN_ATTACK2) && BreakoutTimer[survivorID] == 0 && BreakoutUsed[survivorID] < Breakout)
 			{
 				startBreakoutTime = Time();
 				BreakoutTimer[survivorID]++;
@@ -930,7 +933,7 @@ function UpdateBreakoutTimer(player)
 			{
 				BreakoutTimer[survivorID]++;
 
-				if (BreakoutTimer[survivorID] > BreakoutTimerDefault && BreakoutUsed[survivorID] == false)
+				if (BreakoutTimer[survivorID] > BreakoutTimerDefault && BreakoutUsed[survivorID] < Breakout)
 				{
 					// Free survivor from capper
 					//FreeCapperVictim(player, survivorSmoke, "m_tongueOwner", "m_tongueVictim");
@@ -943,7 +946,7 @@ function UpdateBreakoutTimer(player)
 					player.Stagger(Vector(-1, -1, -1));
 
 					// Limit use to once per map
-					BreakoutUsed[survivorID] = true;
+					BreakoutUsed[survivorID]++;
 				}
 			}
 			else

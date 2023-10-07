@@ -41,7 +41,7 @@ function TraceEye(player)
 
 function PingEntity(entity, player, tracepos, automatedPing = false)
 {
-	if (automatedPing == false && (corruptionEnvironmental != "None" && corruptionEnvironmental != "environmentSwarmStream"))
+	if (automatedPing == false && pingDisabled == true)
 	{
 		return;
 	}
@@ -120,8 +120,6 @@ function PingWorld(pingOrigin, player)
 {
     PrecacheModel( "swarm/sprites/ping01.vmt" );
 
-    if (corruptionEnvironmental == "None" || corruptionEnvironmental == "environmentSwarmStream")
-    {
         local playerID = player.GetEntityIndex();
         local pingName = "pingWorld" + playerID;
 
@@ -130,7 +128,7 @@ function PingWorld(pingOrigin, player)
         {
             targetname = pingName,
             model = "swarm/sprites/ping01.vmt",
-            scale = 0.05,
+            scale = 0.1,
             framerate = 0,
 			rendermode = 9,
 			renderamt = 255,
@@ -144,7 +142,6 @@ function PingWorld(pingOrigin, player)
         DoEntFire("!self", "Kill", "", pingDuration, null, pingWorld);
 
         EmitSoundOn("ui\\beepclear.wav", player);
-    }
 }
 
 function HeightendSensesPing(player)

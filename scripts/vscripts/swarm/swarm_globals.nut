@@ -190,9 +190,9 @@ ConfidentKillerCounter <- 0;
 ::MethHeadCounter <- [0, 0, 0, 0];
 ::CleanKillCounter <- [0, 0, 0, 0];
 ::BreakoutTimer <- [0, 0, 0, 0];
-::BreakoutUsed <- [false, false, false, false];
+::BreakoutUsed <- [0, 0, 0, 0];
 BreakoutTimerDefault <- 3;
-cardHudTimeout <- 8;
+cardHudTimeout <- 5;
 ::AmpedUpCooldown <- 0;
 BaseTempHealthDecayRate <- 0.27;
 BaseSurvivorIncapDecayRate <- 3;
@@ -423,6 +423,7 @@ antibioticHealAmount <- 15;
 // PINGING //
 pingRange <- 2000;					// Max range for pinging an object
 pingDuration <- 8;					// How many seconds do objects stay pinged
+pingDisabled <- false;
 
 // SURVIVOR //
 survivorCrawlSpeed <- 30;			// Last Legs base crawl speed

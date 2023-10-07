@@ -65,7 +65,7 @@ function ZombieDeath(params)
 				// Biohazard
 				if (biohazardEnabled == true)
 				{
-					Heal_TempHealth(player, 0.75);
+					Heal_TempHealth(player, 1.5);
 				}
 			}
 

@@ -361,6 +361,8 @@ function ResetFogCvars()
 
 function CorruptionCard_TheDark()
 {
+	pingDisabled = true;
+
 	SetFogCvar("r_flashlightconstant", "0.25");
 	SetFogCvar("r_flashlightbrightness", "10");
 	Convars.SetValue("sv_disable_glow_survivors", 1);
@@ -394,8 +396,8 @@ function CorruptionCard_TheDark()
 	local tonemap = null;
 	while ((tonemap = Entities.FindByClassname(tonemap, "env_tonemap_controller")) != null)
 	{
-		DoEntFire("!self", "SetAutoExposureMin", "0.1", 1, tonemap, tonemap);
-		DoEntFire("!self", "SetAutoExposureMax", "0.5", 1, tonemap, tonemap);
+		DoEntFire("!self", "SetAutoExposureMin", "0.25", 1, tonemap, tonemap);
+		DoEntFire("!self", "SetAutoExposureMax", "0.75", 1, tonemap, tonemap);
 	}
 
 	local sun = null;
@@ -407,6 +409,8 @@ function CorruptionCard_TheDark()
 
 function CorruptionCard_TheFog()
 {
+	pingDisabled = true;
+
 	Convars.SetValue("sv_disable_glow_survivors", 1);
 	Convars.SetValue("sv_disable_glow_faritems", 1);
 
@@ -456,6 +460,8 @@ function CorruptionCard_Biohazard()
 	{
 		NetProps.SetPropInt(player, "m_Local.m_skybox3d.fog.colorPrimary", GetColorInt(Vector(1, 56, 1)));
 	}
+	
+	DirectorOptions.TempHealthDecayRate = BaseTempHealthDecayRate * 0.5;
 }
 
 function BiohazardTimer()
@@ -489,7 +495,7 @@ function ApplyBiohazardMutationKill(attacker, victim)
 {
 	if (biohazardEnabled == true)
 	{
-		Heal_TempHealth(attacker, 0.75);
+		Heal_TempHealth(attacker, 1.5);
 	}
 }
 
@@ -569,6 +575,7 @@ function FrigidOutskirtsTimer()
 		{
 			frigidOutskirtsStormActive = true;
 			frigidOutskirtsTimer = Time();
+			pingDisabled = true;
 
 			local fog = null;
 			while ((fog = Entities.FindByClassname(fog, "env_fog_controller")) != null)
@@ -580,6 +587,13 @@ function FrigidOutskirtsTimer()
 				DoEntFire("!self", "SetMaxDensityLerpTo", "1", 0, fog, fog);
 				DoEntFire("!self", "Set2DSkyboxFogFactorLerpTo", "1", 0, fog, fog);
 				DoEntFire("!self", "StartFogTransition", "", 0, fog, fog);
+			}
+
+			local postprocess = null;
+			while ((postprocess = Entities.FindByClassname(postprocess, "postprocess_controller")) != null)
+			{
+				DoEntFire("!self", "SetLocalContrastStrength", "0.25", 1, postprocess, postprocess);
+				DoEntFire("!self", "SetLocalContrastEdgeStrength", "0.75", 1, postprocess, postprocess);
 			}
 
 			local allSurvivors = null;
@@ -608,6 +622,7 @@ function FrigidOutskirtsTimer()
 		{
 			frigidOutskirtsStormActive = false;
 			frigidOutskirtsTimer = Time();
+			pingDisabled = false;
 
 			local fog = null;
 			while ((fog = Entities.FindByClassname(fog, "env_fog_controller")) != null)
@@ -619,6 +634,13 @@ function FrigidOutskirtsTimer()
 				DoEntFire("!self", "SetMaxDensityLerpTo", "1", 0, fog, fog);
 				DoEntFire("!self", "Set2DSkyboxFogFactorLerpTo", "1", 0, fog, fog);
 				DoEntFire("!self", "StartFogTransition", "", 0, fog, fog);
+			}
+
+			local postprocess = null;
+			while ((postprocess = Entities.FindByClassname(postprocess, "postprocess_controller")) != null)
+			{
+				DoEntFire("!self", "SetLocalContrastStrength", "0", 1, postprocess, postprocess);
+				DoEntFire("!self", "SetLocalContrastEdgeStrength", "0", 1, postprocess, postprocess);
 			}
 
 			EntFire("__frigid_outskirts_wind_snd", "StopSound");

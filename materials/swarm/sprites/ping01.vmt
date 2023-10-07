@@ -8,4 +8,7 @@ UnlitGeneric
 	$nofog			1
 	$receiveflashlight	0
 	$spriteorientation	2
+	$vertexcolor	1
+	$vertexalpha	1
+	$ignorez		1
 }
