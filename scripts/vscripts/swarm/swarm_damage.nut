@@ -128,6 +128,13 @@ function AllowTakeDamage(damageTable)
 					if (originalDamageDone != 0)
 					{
 						damageTable.DamageDone *= (melee_damage.tofloat() / damageTable.DamageDone.tofloat());
+						if (victimPlayer == true)
+						{
+							if (victim.IsSurvivor())
+							{
+								damageTable.DamageDone /= 100;
+							}
+						}
 					}
 				}
 
