@@ -10,7 +10,7 @@ function HazardGetNavs()
 {
 	local navTable = {};
 	local navArray = [];
-	NavMesh.GetAllAreas(navTable)
+	NavMesh.GetAllAreas(navTable);
 	foreach(area in navTable)
 	{
 		// Attributes to exclude: 4096 (stairs), 32768 (cliff), 262144 (playerclip), 131072 (mob only) 1073741824 (has elevator)

@@ -263,7 +263,9 @@ function GetCorruptionCardName(cardID)
 ///////////////////////////////////////////////
 function ApplyEnvironmentalCard()
 {
+	StoreFogSettings();
 	ResetFogCvars();
+
 	switch(corruptionEnvironmental)
 	{
 		case "None":
@@ -283,14 +285,48 @@ function ApplyEnvironmentalCard()
 	}
 }
 
+function StoreFogSettings()
+{
+	RestoreTable("savedFogSettings", savedFogSettings);
+
+	if (savedFogSettings.len() == 0)
+	{
+		local fog = null;
+		local i = 0;
+		while ((fog = Entities.FindByClassname(fog, "env_fog_controller")) != null)
+		{
+			printl("bbbbbbbbbb");
+			savedFogSettings["id" + i.tostring()] <- fog;
+			savedFogSettings["col" + i.tostring()] <- NetProps.GetPropInt(fog, "m_fog.colorPrimary");
+			savedFogSettings["density" + i.tostring()] <- NetProps.GetPropFloat(fog, "m_fog.maxdensity");
+			savedFogSettings["start" + i.tostring()] <- NetProps.GetPropFloat(fog, "m_fog.start");
+			savedFogSettings["end" + i.tostring()] <- NetProps.GetPropFloat(fog, "m_fog.end");
+			savedFogSettings["farz" + i.tostring()] <- NetProps.GetPropFloat(fog, "m_fog.farz");
+
+			i++;
+		}
+
+		local sky = null;
+		while ((sky = Entities.FindByClassname(sky, "sky_camera")) != null)
+		{
+			savedFogSettings["skycolor"] <- NetProps.GetPropInt(sky, "m_skyboxData.fog.colorPrimary");
+		}
+	}
+
+	SaveTable("savedFogSettings", savedFogSettings);
+}
+
 function SetFogCvar(cvar, value)
 {
     Convars.SetValue(cvar, value);
-    SendToServerConsole(cvar + " " + value)
+    SendToServerConsole(cvar + " " + value);
 }
 
 function ResetFogCvars()
 {
+	RestoreTable("savedFogSettings", savedFogSettings);
+	SaveTable("savedFogSettings", savedFogSettings);
+
 	SetFogCvar("r_flashlightconstant", "0");
 	SetFogCvar("r_flashlightbrightness", "0.25");
 	SetFogCvar("mat_force_tonemap_scale", "0");
@@ -298,20 +334,21 @@ function ResetFogCvars()
 	Convars.SetValue("sv_disable_glow_faritems", 0);
 
 	local fog = null;
+	local i = 0;
 	while ((fog = Entities.FindByClassname(fog, "env_fog_controller")) != null)
 	{
-		/*
-		NetProps.SetPropInt(fog, "m_fog.colorPrimary", fogColor);
-		NetProps.SetPropFloat(fog, "m_fog.maxdensity", fogDensity);
-		NetProps.SetPropFloat(fog, "m_fog.start", fogStart);
-		NetProps.SetPropFloat(fog, "m_fog.end", fogEnd);
-		NetProps.SetPropFloat(fog, "m_fog.farz", fogZ);
-		*/
-		DoEntFire("!self", "SetStartDistLerpTo", "300", 0, fog, fog);
-		DoEntFire("!self", "SetEndDistLerpTo", "3000", 0, fog, fog);
-		DoEntFire("!self", "SetFarZ", "3500", 5, fog, fog);
-		DoEntFire("!self", "SetColorLerpTo", "18 29 33", 0, fog, fog);
-		DoEntFire("!self", "SetMaxDensityLerpTo", "1", 0, fog, fog);
+		NetProps.SetPropInt(fog, "m_fog.colorPrimary", savedFogSettings["col" + i.tostring()]);
+		NetProps.SetPropInt(fog, "m_fog.maxdensity", savedFogSettings["density" + i.tostring()]);
+		NetProps.SetPropInt(fog, "m_fog.start", savedFogSettings["start" + i.tostring()]);
+		NetProps.SetPropInt(fog, "m_fog.end", savedFogSettings["end" + i.tostring()]);
+		NetProps.SetPropInt(fog, "m_fog.farz", savedFogSettings["farz" + i.tostring()]);
+
+		local color = GetColor32(savedFogSettings["col" + i.tostring()]);
+		DoEntFire("!self", "SetStartDistLerpTo", savedFogSettings["start" + i.tostring()].tostring(), 0, fog, fog);
+		DoEntFire("!self", "SetEndDistLerpTo", savedFogSettings["end" + i.tostring()].tostring(), 0, fog, fog);
+		DoEntFire("!self", "SetFarZ", savedFogSettings["farz" + i.tostring()].tostring(), 5, fog, fog);
+		DoEntFire("!self", "SetColorLerpTo", (color.red + " " + color.green + " " + color.blue), 0, fog, fog);
+		DoEntFire("!self", "SetMaxDensityLerpTo", savedFogSettings["density" + i.tostring()].tostring(), 0, fog, fog);
 		DoEntFire("!self", "Set2DSkyboxFogFactorLerpTo", "0", 0, fog, fog);
 		DoEntFire("!self", "StartFogTransition", "", 0, fog, fog);
 	}
@@ -319,7 +356,7 @@ function ResetFogCvars()
 	local player = null;
 	while ((player = Entities.FindByClassname(player, "player")) != null)
 	{
-		NetProps.SetPropInt(player, "m_Local.m_skybox3d.fog.colorPrimary", GetColorInt(Vector(18, 29, 33)));
+		NetProps.SetPropInt(player, "m_Local.m_skybox3d.fog.colorPrimary", savedFogSettings["skycolor"])
 	}
 }
 
@@ -387,7 +424,7 @@ function CorruptionCard_TheFog()
 		DoEntFire("!self", "SetStartDistLerpTo", "242", 0, fog, fog);
 		DoEntFire("!self", "SetEndDistLerpTo", "730", 0, fog, fog);
 		DoEntFire("!self", "SetFarZ", "1500", 5, fog, fog);
-		DoEntFire("!self", "SetColorLerpTo", "255 255 255", 0, fog, fog);
+		DoEntFire("!self", "SetColorLerpTo", "200 200 200", 0, fog, fog);
 		DoEntFire("!self", "SetMaxDensityLerpTo", "1", 0, fog, fog);
 		DoEntFire("!self", "Set2DSkyboxFogFactorLerpTo", "1", 0, fog, fog);
 		DoEntFire("!self", "StartFogTransition", "", 0, fog, fog);
@@ -396,7 +433,7 @@ function CorruptionCard_TheFog()
 	local player = null;
 	while ((player = Entities.FindByClassname(player, "player")) != null)
 	{
-		NetProps.SetPropInt(player, "m_Local.m_skybox3d.fog.colorPrimary", GetColorInt(Vector(255, 255, 255)));
+		NetProps.SetPropInt(player, "m_Local.m_skybox3d.fog.colorPrimary", GetColorInt(Vector(200, 200, 200)));
 	}
 }
 
