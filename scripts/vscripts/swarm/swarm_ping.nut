@@ -118,31 +118,33 @@ function PingEntity(entity, player, tracepos, automatedPing = false)
 
 function PingWorld(pingOrigin, player)
 {
-	if (corruptionEnvironmental == "None" || corruptionEnvironmental == "environmentSwarmStream")
-	{
-		local playerID = player.GetEntityIndex();
-		local pingName = "pingWorld" + playerID;
+    PrecacheModel( "swarm/sprites/ping01.vmt" );
 
-		// Create fake prop for glow
-		local pingWorld = SpawnEntityFromTable("prop_dynamic",
-		{
-			targetname = pingName,
-			origin = pingOrigin,
-			angles = Vector(0, 0, 0),
-			model = "models/props_fortifications/concrete_post001_48.mdl",
-			solid = 0,
-			rendermode = 10
-		});
+    if (corruptionEnvironmental == "None" || corruptionEnvironmental == "environmentSwarmStream")
+    {
+        local playerID = player.GetEntityIndex();
+        local pingName = "pingWorld" + playerID;
 
-		// Apply ping glow
-		DoEntFire("!self", "StartGlowing", "", 0, null, pingWorld);
+        // Create fake prop for glow
+        local pingWorld = SpawnEntityFromTable("env_sprite",
+        {
+            targetname = pingName,
+            model = "swarm/sprites/ping01.vmt",
+            scale = 0.05,
+            framerate = 0,
+			rendermode = 9,
+			renderamt = 255,
+        });
 
-		// Remove ping
-		DoEntFire("!self", "StopGlowing", "", pingDuration, null, pingWorld);
-		DoEntFire("!self", "Kill", "", pingDuration, null, pingWorld);
+        // Apply ping glow
+        DoEntFire("!self", "ShowSprite", "", 0, null, pingWorld);
+		pingWorld.SetLocalOrigin(pingOrigin);
 
-		EmitSoundOn("ui\\beepclear.wav", player);
-	}
+        // Remove ping
+        DoEntFire("!self", "Kill", "", pingDuration, null, pingWorld);
+
+        EmitSoundOn("ui\\beepclear.wav", player);
+    }
 }
 
 function HeightendSensesPing(player)

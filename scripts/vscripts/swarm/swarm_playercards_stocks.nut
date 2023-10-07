@@ -11,7 +11,7 @@ reflexCards <-
 	"Slugger",
 	"MethHead",
 	"OpticsEnthusiast",
-	//"Breakout",
+	"Breakout",
 	"AdrenalineRush",
 	"HelpingHand",
 	"CombatMedic",
