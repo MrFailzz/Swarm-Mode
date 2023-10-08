@@ -15,7 +15,14 @@ function AllowBash(basher, bashee)
 		}
 		else
 		{
-			CalcBashDamage(basher, bashee);
+			local modelName = bashee.GetModelName();
+			if (modelName != "models/props_junk/propanecanister001a.mdl"
+				&& modelName != "models/props_junk/gascan001a.mdl"
+				&& modelName != "models/props_equipment/oxygentank01.mdl"
+				&& modelName != "models/props_junk/explosive_box001.mdl")
+			{
+				CalcBashDamage(basher, bashee);
+			}
 		}
 	}
 
