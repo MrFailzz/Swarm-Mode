@@ -23,6 +23,8 @@ reflexCards <-
 	"RunLikeHell",
 	//"Quickdraw",
 	"Shredder",
+	"Screwdriver",
+	"SmellingSalts",
 ];
 
 brawnCards <-

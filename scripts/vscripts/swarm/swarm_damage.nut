@@ -112,6 +112,7 @@ function AllowTakeDamage(damageTable)
 	local MeanDrunk = 0;
 	local CleanKill = 0;
 	local MarkedForDeath = 0;
+	local Multitool = 0;
 
 	//Modify Attacker damage
 	if (attacker.IsValid())
@@ -460,6 +461,9 @@ function AllowTakeDamage(damageTable)
 					}
 				}
 
+				//Multitool
+				Multitool = PlayerHasCard(victim, "Multitool");
+
 				damageModifier = (damageModifier
 								+ (0.2 * GlassCannonVictim)
 								+ (OverconfidentMultiplier * Overconfident)
@@ -470,6 +474,7 @@ function AllowTakeDamage(damageTable)
 								+ (-0.3 * ScarTissue)
 								+ (-0.4 * ToughSkin)
 								+ (0.15 * RunLikeHell)
+								+ (0.05 * Multitool)
 								+ (AcidMultiplier));
 				if (GamblerVictim > 0)
 				{

@@ -417,6 +417,11 @@ function CalcMaxHealth(heal = true)
 			local NeedsOfTheMany = PlayerHasCard(player, "NeedsOfTheMany");
 			local MeanDrunk = PlayerHasCard(player, "MeanDrunk");
 			local WellFed = TeamHasCard("WellFed");
+			local ExperiencedEMT = 0;
+			if (playerID > -1)
+			{
+				ExperiencedEMT = experiencedEMT[playerID];
+			}
 
 			local currentMax = player.GetMaxHealth();
 			local newMax = ((100 - TraumaDamage)
@@ -432,7 +437,7 @@ function CalcMaxHealth(heal = true)
 							+ (-10 * NeedsOfTheMany)
 							+ (20 * MeanDrunk)
 							+ (10 * WellFed)
-							+ (25 * experiencedEMT[playerID]));
+							+ (25 * ExperiencedEMT));
 			if (Gambler > 0)
 			{
 				newMax += ApplyGamblerValue(playerID, 0, Gambler);
@@ -509,19 +514,26 @@ function CalcUseSpeed()
 		fatiguePenalty = sluggishMultiplier;
 	}
 	local Multitool = TeamHasCard("Multitool");
-	local MultitoolMultiplier = 0.4 * Multitool;
+	local MultitoolMultiplier = 0.5 * Multitool;
+	local Screwdriver = TeamHasCard("Screwdriver");
+	local ScrewdriverMultiplier = 0.25 * Screwdriver;
 	local HelpingHand = TeamHasCard("HelpingHand");
-	local HelpingHandMultiplier = 0.75 * HelpingHand;
+	local HelpingHandMultiplier = 0.5 * HelpingHand;
 	local CombatMedic = TeamHasCard("CombatMedic");
 	local CombatMedicMultiplier = 0.15 * CombatMedic;
+	local SmellingSalts = TeamHasCard("SmellingSalts");
+	local SmellingSaltsMultiplier = 1.5 * SmellingSalts;
 
-	Convars.SetValue("ammo_pack_use_duration", (ammo_pack_use_duration * fatiguePenalty) / (1 + MultitoolMultiplier));
-	Convars.SetValue("cola_bottles_use_duration", (cola_bottles_use_duration * fatiguePenalty) / (1 + MultitoolMultiplier));
-	Convars.SetValue("defibrillator_use_duration", (defibrillator_use_duration * fatiguePenalty) / (1 + MultitoolMultiplier + HelpingHandMultiplier + CombatMedicMultiplier));
-	Convars.SetValue("first_aid_kit_use_duration", (first_aid_kit_use_duration * fatiguePenalty) / (1 + MultitoolMultiplier));
-	Convars.SetValue("gas_can_use_duration", (gas_can_use_duration * fatiguePenalty) / (1 + MultitoolMultiplier));
-	Convars.SetValue("upgrade_pack_use_duration", (upgrade_pack_use_duration * fatiguePenalty) / (1 + MultitoolMultiplier));
-	Convars.SetValue("survivor_revive_duration", (survivor_revive_duration * fatiguePenalty) / (1 + MultitoolMultiplier + HelpingHandMultiplier + CombatMedicMultiplier));
+	//Use Speed
+	Convars.SetValue("ammo_pack_use_duration", (ammo_pack_use_duration * fatiguePenalty) / (1 + MultitoolMultiplier + ScrewdriverMultiplier));
+	Convars.SetValue("cola_bottles_use_duration", (cola_bottles_use_duration * fatiguePenalty) / (1 + MultitoolMultiplier + ScrewdriverMultiplier));
+	Convars.SetValue("first_aid_kit_use_duration", (first_aid_kit_use_duration * fatiguePenalty) / (1 + MultitoolMultiplier + ScrewdriverMultiplier));
+	Convars.SetValue("gas_can_use_duration", (gas_can_use_duration * fatiguePenalty) / (1 + MultitoolMultiplier + ScrewdriverMultiplier));
+	Convars.SetValue("upgrade_pack_use_duration", (upgrade_pack_use_duration * fatiguePenalty) / (1 + MultitoolMultiplier + ScrewdriverMultiplier));
+
+	//Revive Speed
+	Convars.SetValue("survivor_revive_duration", (survivor_revive_duration * fatiguePenalty) / (1 + HelpingHandMultiplier + CombatMedicMultiplier + SmellingSaltsMultiplier));
+	Convars.SetValue("defibrillator_use_duration", (defibrillator_use_duration * fatiguePenalty) / (1 + HelpingHandMultiplier + CombatMedicMultiplier + SmellingSaltsMultiplier));
 }
 
 function CalcMaxAmmo()

@@ -42,6 +42,46 @@ function Heal_TempHealth(player, healAmount)
 	}
 }
 
+function Set_PermaHealth(player, healthAmount)
+{
+	local currentTempHealth = player.GetHealthBuffer();
+	local maxHealth = player.GetMaxHealth();
+
+	if (healthAmount > maxHealth)
+	{
+		player.SetHealth(maxHealth);
+		player.SetHealthBuffer(0);
+	}
+	else
+	{
+		player.SetHealth(healthAmount);
+
+		if (currentTempHealth + healthAmount > maxHealth)
+		{
+			player.SetHealthBuffer(maxHealth - healthAmount);
+		}
+		else
+		{
+			player.SetHealthBuffer(currentTempHealth);
+		}
+	}
+}
+
+function Set_TempHealth(player, healthAmount)
+{
+	local currentHealth = player.GetHealth();
+	local maxHealth = player.GetMaxHealth();
+
+	if (currentHealth + healthAmount > maxHealth)
+	{
+		player.SetHealthBuffer(maxHealth - currentHealth);
+	}
+	else
+	{
+		player.SetHealthBuffer(healthAmount);
+	}
+}
+
 function CalcHealingMultiplier(player, tempHealth = false)
 {
 	local Gambler = PlayerHasCard(player, "Gambler");
@@ -160,6 +200,13 @@ function ReviveSuccess(params)
 		local subject = GetPlayerFromUserID(params.subject);
 		local maxHealth = subject.GetMaxHealth();
 		local reviveHealth = Convars.GetFloat("survivor_revive_health");
+		local SmellingSalts = TeamHasCard("SmellingSalts");
+		if (SmellingSalts > 0)
+		{
+			reviveHealth /= (2 + SmellingSalts);
+		}
+
+		Set_TempHealth(subject, reviveHealth);
 
 		local CombatMedic = TeamHasCard("CombatMedic");
 
@@ -175,8 +222,16 @@ function DefibrillatorUsed(params)
 	local player = GetPlayerFromUserID(params.userid);
 	local subject = GetPlayerFromUserID(params.subject);
 	local maxHealth = subject.GetMaxHealth();
-	local MedicalProfessional = PlayerHasCard(player, "MedicalProfessional");
+	local reviveHealth = Convars.GetFloat("survivor_revive_health");
+	local SmellingSalts = TeamHasCard("SmellingSalts");
+	if (SmellingSalts > 0)
+	{
+		reviveHealth /= (2 + SmellingSalts);
+	}
 
+	Set_PermaHealth(subject, reviveHealth);
+
+	local MedicalProfessional = PlayerHasCard(player, "MedicalProfessional");
 	if (MedicalProfessional > 0)
 	{
 		Heal_PermaHealth(subject, 10 * MedicalProfessional, 0);

@@ -180,7 +180,7 @@ function Translation_EN(msg)
 		break;
 
 		case "#desc_HelpingHand":
-			return "+75% Team Revive Speed"
+			return "+50% Team Revive Speed"
 		break;
 
 		case "#name_CombatMedic":
@@ -228,7 +228,7 @@ function Translation_EN(msg)
 		break;
 
 		case "#desc_Multitool":
-			return "+40% Team Use Speed"
+			return "+50% Team Use Speed, -5% DEF"
 		break;
 
 		case "#name_RunLikeHell":
@@ -727,6 +727,22 @@ function Translation_EN(msg)
 			return "Medkits and Defibs heal +10 HP and 1 Extra Life"
 		break;
 
+		case "#name_Screwdriver":
+			return "Screwdriver"
+		break;
+
+		case "#desc_Screwdriver":
+			return "+25% Team Use Speed"
+		break;
+
+		case "#name_SmellingSalts":
+			return "Smelling Salts"
+		break;
+
+		case "#desc_SmellingSalts":
+			return "+150% Team Revive Speed, Reduces Revive HP"
+		break;
+
 		//CORRUPTION CARDS
 		case "#cor_commonAcid":
 			return "Acid Commons"
@@ -1185,7 +1201,7 @@ function Translation_RU(msg)
 		break;
 
 		case "#desc_HelpingHand":
-			return "+75% Team Revive Speed"
+			return "+50% Team Revive Speed"
 		break;
 
 		case "#name_CombatMedic":
@@ -1233,7 +1249,7 @@ function Translation_RU(msg)
 		break;
 
 		case "#desc_Multitool":
-			return "+40% Team Use Speed"
+			return "+50% Team Use Speed, -5% DEF"
 		break;
 
 		case "#name_RunLikeHell":
@@ -1730,6 +1746,22 @@ function Translation_RU(msg)
 
 		case "#desc_MedicalProfessional":
 			return "Medkits and Defibs heal +10 HP and 1 Extra Life"
+		break;
+
+		case "#name_Screwdriver":
+			return "Screwdriver"
+		break;
+
+		case "#desc_Screwdriver":
+			return "+25% Team Use Speed"
+		break;
+
+		case "#name_SmellingSalts":
+			return "Smelling Salts"
+		break;
+
+		case "#desc_SmellingSalts":
+			return "+150% Team Revive Speed, Reduces Revive HP"
 		break;
 
 		//CORRUPTION CARDS
