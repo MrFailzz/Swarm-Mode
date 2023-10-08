@@ -348,6 +348,20 @@ function TallboyKnockback(tallboy, survivor)
 	survivor.SetVelocity(Vector(sin(angle + 90) * tallboyPunchKnockback, sin(angle) * tallboyPunchKnockback, 180));
 }
 
+function CrusherGrab(tallboy, survivor)
+{
+	if (survivor.IsDominatedBySpecialInfected() == false)
+	{
+		local charger_ability = NetProps.GetPropEntity(tallboy,"m_customAbility")
+
+		NetProps.SetPropEntity(charger_ability, "m_hPotentialTarget", survivor)
+		NetProps.SetPropEntity(tallboy, "m_pummelVictim", survivor);
+		NetProps.SetPropEntity(survivor, "m_pummelAttacker", tallboy);
+		NetProps.SetPropEntityArray(charger_ability, "m_nextActivationTimer", 6, 0);
+		NetProps.SetPropEntityArray(charger_ability, "m_nextActivationTimer", Time() + 6, 1);
+	}
+}
+
 ///////////////////////////////////////////////
 //               SNITCH HORDE                //
 ///////////////////////////////////////////////

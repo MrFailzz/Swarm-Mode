@@ -267,6 +267,19 @@ function PlayerHurt(params)
 						}
 					}
 				}
+				/*
+				else if (params.weapon == "charger_claw" && specialTallboyType == "Crusher")
+				{
+					if ("attacker" in params)
+					{
+						local attacker = GetPlayerFromUserID(params.attacker);
+						if (attacker.IsValid() && player != attacker)
+						{
+							CrusherGrab(attacker, player);
+						}
+					}
+				}
+				*/
 			}
 		}
 		//Tank was hurt

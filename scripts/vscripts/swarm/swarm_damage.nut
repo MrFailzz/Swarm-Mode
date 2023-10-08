@@ -132,7 +132,6 @@ function AllowTakeDamage(damageTable)
 				//Override melee weapon damage
 				if (weaponClass == "weapon_melee")
 				{
-					
 					if (originalDamageDone != 0)
 					{
 						damageTable.DamageDone *= (melee_damage.tofloat() / damageTable.DamageDone.tofloat());
@@ -377,6 +376,37 @@ function AllowTakeDamage(damageTable)
 				if (attackerType == "witch")
 				{
 					return false;
+				}
+
+				// Rework infected claw DMG
+				if (victim.IsDominatedBySpecialInfected() == false)
+				{
+					if (attackerPlayer == true)
+					{
+						local zombieType = attacker.GetZombieType();
+						local baseDamage = 1;
+
+						switch(zombieType)
+						{
+							case 1:
+								baseDamage = 2.5;
+							break;
+							case 2:
+								baseDamage = 2.5;
+							break;
+							case 3:
+								baseDamage = 2.5;
+							break;
+							case 5:
+								baseDamage = 2.5;
+							break;
+							case 6:
+								baseDamage = 5;
+							break;
+						}
+
+						damageTable.DamageDone = baseDamage * difficultyDamageScale; // Add card modifiers later
+					}
 				}
 
 				//DownInFront
