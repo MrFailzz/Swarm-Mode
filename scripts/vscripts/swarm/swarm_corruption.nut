@@ -219,7 +219,6 @@ function InitCorruptionCards()
 	cardsGameplay.append("None");
 	cardsGameplay.append("None");
 	cardsGameplay.append("gameplayNoGrenades");
-	//cardsGameplay.append("gameplayNoOutlines");
 	if (difficulty > 1)
 	{
 		cardsGameplay.append("None");
@@ -895,9 +894,6 @@ function ApplyGameplayCard()
 	{
 		case "None":
 			break;
-		case "gameplayNoOutlines":
-			CorruptionCard_NoOutlines();
-			break;
 		case "gameplayNoRespawn":
 			CorruptionCard_OneLife();
 			break;
@@ -912,15 +908,7 @@ function ApplyGameplayCard()
 
 function ResetGameplayCvars()
 {
-	Convars.SetValue("sv_disable_glow_survivors", 0);
-	Convars.SetValue("sv_disable_glow_faritems", 0);
 	Convars.SetValue("sv_rescue_disabled", 0)
-}
-
-function CorruptionCard_NoOutlines()
-{
-	Convars.SetValue("sv_disable_glow_survivors", 1);
-	Convars.SetValue("sv_disable_glow_faritems", 1);
 }
 
 function CorruptionCard_OneLife()
