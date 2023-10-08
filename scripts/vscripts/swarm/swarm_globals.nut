@@ -69,6 +69,11 @@ corruptionGameplay <- null;
 corruptionPlayer <- null;
 corruptionMission <- null;
 
+//Corruption - Specials
+specialTallboyType <- null;
+specialRetchType <- null;
+specialHockerType <- null;
+
 //Corruption - Biohazard
 biohazardEnabled <- false;
 biohazardTickTime <- 0;
@@ -317,30 +322,39 @@ function SetDifficulty()
 	switch(corruptionTallboy)
 	{
 		case "Tallboy":
+			specialTallboyType = "Tallboy";
 			Convars.SetValue("z_charger_health", 725 * (difficultyHealthScale));
 		break;
 		case "Crusher":
+			specialTallboyType = "Crusher";
 			Convars.SetValue("z_charger_health", 806 * (difficultyHealthScale));
 		break;
 		case "Bruiser":
+			specialTallboyType = "Bruiser";
 			Convars.SetValue("z_charger_health", 1021 * (difficultyHealthScale));
 		break;
 		case "Fer_Tallboy":
+			specialTallboyType = "Tallboy";
 			Convars.SetValue("z_charger_health", 725 * (difficultyHealthScale * ferociousHealthScale));
 		break;
 		case "Fer_Crusher":
+			specialTallboyType = "Crusher";
 			Convars.SetValue("z_charger_health", 806 * (difficultyHealthScale * ferociousHealthScale));
 		break;
 		case "Fer_Bruiser":
+			specialTallboyType = "Bruiser";
 			Convars.SetValue("z_charger_health", 1021 * (difficultyHealthScale * ferociousHealthScale));
 		break;
 		case "Mon_Tallboy":
+			specialTallboyType = "Tallboy";
 			Convars.SetValue("z_charger_health", 725 * (difficultyHealthScale * monstrousHealthScale));
 		break;
 		case "Mon_Crusher":
+			specialTallboyType = "Crusher";
 			Convars.SetValue("z_charger_health", 806 * (difficultyHealthScale * monstrousHealthScale));
 		break;
 		case "Mon_Bruiser":
+			specialTallboyType = "Bruiser";
 			Convars.SetValue("z_charger_health", 1021 * (difficultyHealthScale * monstrousHealthScale));
 		break;
 	}
@@ -348,24 +362,39 @@ function SetDifficulty()
 	switch(corruptionRetch)
 	{
 		case "Retch":
+			specialRetchType = "Retch";
+			Convars.SetValue("z_exploding_health", 376 * (difficultyHealthScale));
+		break;
 		case "Exploder":
+			specialRetchType = "Exploder";
 			Convars.SetValue("z_exploding_health", 376 * (difficultyHealthScale));
 		break;
 		case "Reeker":
+			specialRetchType = "Reeker";
 			Convars.SetValue("z_exploding_health", 430 * (difficultyHealthScale));
 		break;
 		case "Fer_Retch":
+			specialRetchType = "Retch";
+			Convars.SetValue("z_exploding_health", 376 * (difficultyHealthScale * ferociousHealthScale));
+		break;
 		case "Fer_Exploder":
+			specialRetchType = "Exploder";
 			Convars.SetValue("z_exploding_health", 376 * (difficultyHealthScale * ferociousHealthScale));
 		break;
 		case "Fer_Reeker":
+			specialRetchType = "Reeker";
 			Convars.SetValue("z_exploding_health", 430 * (difficultyHealthScale * ferociousHealthScale));
 		break;
 		case "Mon_Retch":
+			specialRetchType = "Retch";
+			Convars.SetValue("z_exploding_health", 376 * (difficultyHealthScale * monstrousHealthScale));
+		break;
 		case "Mon_Exploder":
+			specialRetchType = "Exploder";
 			Convars.SetValue("z_exploding_health", 376 * (difficultyHealthScale * monstrousHealthScale));
 		break;
 		case "Mon_Reeker":
+			specialRetchType = "Retch";
 			Convars.SetValue("z_exploding_health", 430 * (difficultyHealthScale * monstrousHealthScale));
 		break;
 	}
@@ -373,24 +402,39 @@ function SetDifficulty()
 	switch(corruptionHocker)
 	{
 		case "Hocker":
+			specialHockerType = "Hocker";
+			Convars.SetValue("z_exploding_health", 161 * (difficultyHealthScale));
+		break;
 		case "Stinger":
+			specialHockerType = "Stinger";
 			Convars.SetValue("z_exploding_health", 161 * (difficultyHealthScale));
 		break;
 		case "Stalker":
+			specialHockerType = "Stalker";
 			Convars.SetValue("z_exploding_health", 241 * (difficultyHealthScale));
 		break;
 		case "Fer_Hocker":
+			specialHockerType = "Hocker";
+			Convars.SetValue("z_exploding_health", 161 * (difficultyHealthScale * ferociousHealthScale));
+		break;
 		case "Fer_Stinger":
+			specialHockerType = "Stinger";
 			Convars.SetValue("z_exploding_health", 161 * (difficultyHealthScale * ferociousHealthScale));
 		break;
 		case "Fer_Stalker":
+			specialHockerType = "Stalker";
 			Convars.SetValue("z_exploding_health", 241 * (difficultyHealthScale * ferociousHealthScale));
 		break;
 		case "Mon_Hocker":
+			specialHockerType = "Hocker";
+			Convars.SetValue("z_exploding_health", 161 * (difficultyHealthScale * monstrousHealthScale));
+		break;
 		case "Mon_Stinger":
+			specialHockerType = "Stinger";
 			Convars.SetValue("z_exploding_health", 161 * (difficultyHealthScale * monstrousHealthScale));
 		break;
 		case "Mon_Stalker":
+			specialHockerType = "Stalker";
 			Convars.SetValue("z_exploding_health", 241 * (difficultyHealthScale * monstrousHealthScale));
 		break;
 	}

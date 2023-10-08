@@ -204,18 +204,18 @@ function GetEntityType(entity)
 			switch(entity.GetZombieType())
 			{
 				case 1:
-					if (corruptionHocker == "Hocker")
+					if (specialHockerType == "Hocker")
 						return "Hocker";
-					else if (corruptionHocker == "Stinger")
+					else if (specialHockerType == "Stinger")
 						return "Stinger";
 				break;
 
 				case 2:
-					if (corruptionRetch == "Retch")
+					if (specialRetchType == "Retch")
 						return "Retch";
-					else if (corruptionRetch == "Exploder")
+					else if (specialRetchType == "Exploder")
 						return "Exploder";
-					else if (corruptionRetch == "Reeker")
+					else if (specialRetchType == "Reeker")
 						return "Reeker";
 				break;
 
@@ -228,11 +228,11 @@ function GetEntityType(entity)
 				break;
 
 				case 6:
-					if (corruptionTallboy == "Tallboy")
+					if (specialTallboyType == "Tallboy")
 						return "Tallboy";
-					else if (corruptionTallboy == "Crusher")
+					else if (specialTallboyType == "Crusher")
 						return "Crusher";
-					else if (corruptionTallboy == "Bruiser")
+					else if (specialTallboyType == "Bruiser")
 						return "Bruiser";
 				break;
 

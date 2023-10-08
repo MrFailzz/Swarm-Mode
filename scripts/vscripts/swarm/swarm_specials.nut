@@ -10,11 +10,11 @@ function MutationSpawn(player)
 	switch(player.GetZombieType())
 	{
 		case 1:
-			if (corruptionHocker == "Hocker")
+			if (specialHockerType == "Hocker")
 			{
 				PrecacheAndSetModel(player, "models/infected/smoker.mdl");
 			}
-			else if (corruptionHocker == "Stinger")
+			else if (specialHockerType == "Stinger")
 			{
 				PrecacheAndSetModel(player, "models/infected/smoker_l4d1.mdl");
 			}
@@ -23,15 +23,15 @@ function MutationSpawn(player)
 		break;
 
 		case 2:
-			if (corruptionRetch == "Exploder")
+			if (specialRetchType == "Exploder")
 			{
 				PrecacheAndSetModel(player, "models/swarm/infected/boomer.mdl");
 			}
-			else if (corruptionRetch == "Retch")
+			else if (specialRetchType == "Retch")
 			{
 				PrecacheAndSetModel(player, "models/swarm/infected/boomette.mdl");
 			}
-			else if (corruptionRetch == "Reeker")
+			else if (specialRetchType == "Reeker")
 			{
 				PrecacheAndSetModel(player, "models/swarm/infected/boomer_l4d1.mdl");
 			}
@@ -51,11 +51,11 @@ function MutationSpawn(player)
 		break;
 
 		case 6:
-			if (corruptionTallboy == "Tallboy")
+			if (specialTallboyType == "Tallboy")
 			{
 				PrecacheAndSetModel(player, "models/swarm/infected/charger.mdl");
 			}
-			else if (corruptionTallboy == "Bruiser")
+			else if (specialTallboyType == "Bruiser")
 			{
 				PrecacheAndSetModel(player, "models/swarm/infected/bruiser.mdl");
 			}
@@ -77,7 +77,7 @@ function MutationSpawn(player)
 ///////////////////////////////////////////////
 function TongueGrab(params)
 {
-	if (corruptionHocker == "Hocker")
+	if (specialHockerType == "Hocker")
 	{
 		local attacker = GetPlayerFromUserID(params["userid"]);
 		local victim = GetPlayerFromUserID(params["victim"]);
@@ -174,7 +174,7 @@ function VictimShoved(params)
 ///////////////////////////////////////////////
 function StingerProjectile(params)
 {
-	if (corruptionHocker == "Stinger")
+	if (specialHockerType == "Stinger")
 	{
 		local player = GetPlayerFromUserID(params["victim"]);
 		local attacker = GetPlayerFromUserID(params["userid"]);
@@ -214,11 +214,11 @@ function BoomerDeath(player)
 	local boomerOrigin = player.GetOrigin();
 	local retchName = player.GetName();
 
-	if (corruptionRetch == "Retch")
+	if (specialRetchType == "Retch")
 	{
 		DropSpit(boomerOrigin);
 	}
-	if (corruptionRetch == "Exploder")
+	if (specialRetchType == "Exploder")
 	{
 		BoomerExplosion(boomerOrigin, true, player);
 	}
@@ -228,7 +228,7 @@ function BoomerDeath(player)
 
 function ExploderAbility(player)
 {
-	if (corruptionRetch == "Exploder")
+	if (specialRetchType == "Exploder")
 	{
 		local exploderSpeed = Convars.GetFloat("z_exploding_speed");
 		NetProps.SetPropFloat(player, "m_flLaggedMovementValue", (exploderRunSpeed / exploderSpeed));
@@ -303,7 +303,7 @@ function BoomerExplosion(boomerOrigin, isExploder, exploder)
 ///////////////////////////////////////////////
 function RetchVomitHit(params)
 {
-	if (corruptionRetch == "Retch")	
+	if (specialRetchType == "Retch")	
 	{
 		local player = GetPlayerFromUserID(params["userid"]);
 		local origin = player.GetOrigin();

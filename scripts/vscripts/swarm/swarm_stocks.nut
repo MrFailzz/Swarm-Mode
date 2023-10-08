@@ -256,7 +256,7 @@ function PlayerHurt(params)
 			//Charger scratch
 			if ("weapon" in params)
 			{
-				if (params.weapon == "charger_claw" && corruptionTallboy != "Crusher")
+				if (params.weapon == "charger_claw" && specialTallboyType != "Crusher")
 				{
 					if ("attacker" in params)
 					{
@@ -333,7 +333,7 @@ function Update()
 		CancelRockAnimation();
 	}
 	
-	if (corruptionTallboy != "Crusher")
+	if (specialTallboyType != "Crusher")
 	{
 		if (bChargerSpawned)
 		{

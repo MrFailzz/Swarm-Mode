@@ -143,7 +143,7 @@ function AllowTakeDamage(damageTable)
 				{
 					if (victimPlayer == true)
 					{
-						if (corruptionRetch == "Reeker" && victim.GetZombieType() == 2 && (weaponClass != "weapon_melee"))
+						if (specialRetchType == "Reeker" && victim.GetZombieType() == 2 && (weaponClass != "weapon_melee"))
 						{
 							//Remove headshot damage vs Reekers
 							HeadMultiplier = -0.75;
