@@ -304,6 +304,12 @@ function GetMeleeSpeedModifier(player)
 						+ (0.30 * Slugger)
 						+ (0.025 * MethHead * MethHeadCounter[GetSurvivorID(player)]));
 
+	local Gambler = PlayerHasCard(player, "Gambler");
+	if (Gambler > 0)
+	{
+		meleeModifier += ApplyGamblerValue(GetSurvivorID(player), 7, Gambler);
+	}
+
 	if (meleeModifier <= 0)
 	{
 		meleeModifier = 0.01;
@@ -376,9 +382,12 @@ function PrintGamblerValue(player)
 	local reloadString = GamblerColor(reload) + "Reload Speed: " + GamblerSign(reload) + ", ";
 
 	local healEff = GetGamblerValue(GetSurvivorID(player), 6);
-	local healEffString = GamblerColor(healEff) + "Heal EFF: " + GamblerSign(healEff);
+	local healEffString = GamblerColor(healEff) + "Heal EFF: " + GamblerSign(healEff) + ", ";;
 
-	ClientPrint(player, 3, "\x03Gambler: " + maxHpString + resString + traumaResString + speedString + damageString + reloadString + healEffString);
+	local meleeSpeed = GetGamblerValue(GetSurvivorID(player), 7);
+	local meleeSpeedString = GamblerColor(meleeSpeed) + "Melee Speed: " + GamblerSign(meleeSpeed);
+
+	ClientPrint(player, 3, "\x03Gambler: " + maxHpString + resString + traumaResString + speedString + damageString + reloadString + healEffString + meleeSpeedString);
 }
 
 function GamblerSign(gambleValue, suffix = "%")
