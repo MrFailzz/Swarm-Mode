@@ -389,23 +389,97 @@ function AllowTakeDamage(damageTable)
 						switch(zombieType)
 						{
 							case 1:
-								baseDamage = 2.5;
+								switch (corruptionHocker)
+								{
+									case "Hocker":
+									case "Stinger":
+										baseDamage = 2;
+									break;
+									case "Fer_Hocker":
+									case "Fer_Stinger":
+										baseDamage = 2 * ferociousDamageScale;
+									break;
+									case "Mon_Hocker":
+									case "Mon_Stinger":
+										baseDamage = 2 * monstrousDamageScale;
+									break;
+								}
 							break;
 							case 2:
-								baseDamage = 2.5;
-							break;
-							case 3:
-								baseDamage = 2.5;
+								switch (corruptionRetch)
+								{
+									case "Retch":
+									case "Reeker":
+										baseDamage = 4;
+									break;
+									case "Exploder":
+										baseDamage = 8;
+									break;
+									case "Fer_Retch":
+									case "Fer_Reeker":
+										baseDamage = 4 * ferociousDamageScale;
+									break;
+									case "Fer_Exploder":
+										baseDamage = 8 * ferociousDamageScale;
+									break;
+									case "Mon_Retch":
+									case "Mon_Reeker":
+										baseDamage = 4 * monstrousDamageScale;
+									break;
+									case "Mon_Exploder":
+										baseDamage = 8 * monstrousDamageScale;
+									break;
+								}
 							break;
 							case 5:
-								baseDamage = 2.5;
+								switch (corruptionHocker)
+								{
+									case "Stalker":
+										baseDamage = 3;
+									break;
+									case "Fer_Stalker":
+										baseDamage = 3 * ferociousDamageScale;
+									break;
+									case "Mon_Stalker":
+										baseDamage = 3 * monstrousDamageScale;
+									break;
+								}
 							break;
 							case 6:
-								baseDamage = 5;
+								switch(corruptionTallboy)
+								{
+									case "Tallboy":
+										baseDamage = 20;
+									break;
+									case "Crusher":
+										baseDamage = 10;
+									break;
+									case "Bruiser":
+										baseDamage = 17.5;
+									break;
+									case "Fer_Tallboy":
+										baseDamage = 20 * ferociousDamageScale;
+									break;
+									case "Fer_Crusher":
+										baseDamage = 10 * ferociousDamageScale;
+									break;
+									case "Fer_Bruiser":
+										baseDamage = 17.5 * ferociousDamageScale;
+									break;
+									case "Mon_Tallboy":
+										baseDamage = 20 * monstrousDamageScale;
+									break;
+									case "Mon_Crusher":
+										baseDamage = 10 * monstrousDamageScale;
+									break;
+									case "Mon_Bruiser":
+										baseDamage = 17.5 * monstrousDamageScale;
+									break;
+								}
 							break;
 						}
 
-						damageTable.DamageDone = baseDamage * difficultyDamageScale; // Add card modifiers later
+						damageTable.DamageDone = baseDamage * difficultyDamageScale;
 					}
 				}
 
@@ -455,7 +529,7 @@ function AllowTakeDamage(damageTable)
 				if ((damageType & 262144) == 262144 && (damageType & 1024) == 1024)
 				{
 					//Reduce acid damage globally and add a slowdown effect
-					AcidMultiplier = -0.5;
+					damageTable.DamageDone = 1 * difficultyDamageScale;
 					victim.OverrideFriction(0.5,1.5);
 
 					ChemicalBarrier = PlayerHasCard(victim, "ChemicalBarrier");

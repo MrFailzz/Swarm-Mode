@@ -477,8 +477,10 @@ exploderRunSpeed <- 320;			// Run speed while using explosion ability
 tallboyPunchKnockback <- 350;		// Max knockback
 tallboyRunSpeed <- 250;
 
-ferociousHealthScale <- 1.25		// Ferocious (1.25x), Monstrous (1.5x)
-monstrousHealthScale <- 1.5
+ferociousDamageScale <- 1.3		// Ferocious (1.3x), Monstrous (1.6x)
+monstrousDamageScale <- 6
+ferociousHealthScale <- 1.3		// Ferocious (1.3x), Monstrous (1.6x)
+monstrousHealthScale <- 1.6
 difficultyHealthScale <- 1; 		// (Easy (0): 0.75x, Normal (1): 1x, Advanced (2): 1.25x, Expert (3): 1.5x)
 difficultyDamageScale <- 1; 		// (Easy (0): 0.5x, Normal (1): 1x, Advanced (2): 1.5x, Expert (3): 2x)
 
