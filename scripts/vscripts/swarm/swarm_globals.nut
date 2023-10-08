@@ -254,6 +254,7 @@ DirectorOptions <-
 	SmokerLimit = 2
 	SpitterLimit = 0
 
+	MobMaxPending = 90
 	MobSpawnSize = 30
 	MegaMobSize = 50
 	BileMobSize = 0
