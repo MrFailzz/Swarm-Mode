@@ -500,7 +500,7 @@ function Translation_EN(msg)
 		break;
 
 		case "#desc_MedicalExpert":
-			return "+30% Team Heal EFF"
+			return "+30% Team Heal EFF, +10% Team Revive Speed"
 		break;
 
 		case "#name_Cauterized":
@@ -1521,7 +1521,7 @@ function Translation_RU(msg)
 		break;
 
 		case "#desc_MedicalExpert":
-			return "+30% Team Heal EFF"
+			return "+30% Team Heal EFF, +10% Team Revive Speed"
 		break;
 
 		case "#name_Cauterized":
