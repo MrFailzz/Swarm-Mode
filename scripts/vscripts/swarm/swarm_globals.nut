@@ -324,123 +324,42 @@ function SetDifficulty()
 		break;
 	}
 
-	switch(corruptionTallboy)
+	switch(specialTallboyType)
 	{
 		case "Tallboy":
-			specialTallboyType = "Tallboy";
-			Convars.SetValue("z_charger_health", 725 * (difficultyHealthScale));
+			Convars.SetValue("z_charger_health", 725 * (difficultyHealthScale * Fer_TallboyHealthScale * Mon_TallboyHealthScale));
 		break;
 		case "Crusher":
-			specialTallboyType = "Crusher";
-			Convars.SetValue("z_charger_health", 806 * (difficultyHealthScale));
+			Convars.SetValue("z_charger_health", 806 * (difficultyHealthScale * Fer_CrusherHealthScale * Mon_CrusherHealthScale));
 		break;
 		case "Bruiser":
-			specialTallboyType = "Bruiser";
-			Convars.SetValue("z_charger_health", 1021 * (difficultyHealthScale));
-		break;
-		case "Fer_Tallboy":
-			specialTallboyType = "Tallboy";
-			Convars.SetValue("z_charger_health", 725 * (difficultyHealthScale * ferociousHealthScale));
-		break;
-		case "Fer_Crusher":
-			specialTallboyType = "Crusher";
-			Convars.SetValue("z_charger_health", 806 * (difficultyHealthScale * ferociousHealthScale));
-		break;
-		case "Fer_Bruiser":
-			specialTallboyType = "Bruiser";
-			Convars.SetValue("z_charger_health", 1021 * (difficultyHealthScale * ferociousHealthScale));
-		break;
-		case "Mon_Tallboy":
-			specialTallboyType = "Tallboy";
-			Convars.SetValue("z_charger_health", 725 * (difficultyHealthScale * monstrousHealthScale));
-		break;
-		case "Mon_Crusher":
-			specialTallboyType = "Crusher";
-			Convars.SetValue("z_charger_health", 806 * (difficultyHealthScale * monstrousHealthScale));
-		break;
-		case "Mon_Bruiser":
-			specialTallboyType = "Bruiser";
-			Convars.SetValue("z_charger_health", 1021 * (difficultyHealthScale * monstrousHealthScale));
+			Convars.SetValue("z_charger_health", 1021 * (difficultyHealthScale * Fer_BruiserHealthScale * Mon_BruiserHealthScale));
 		break;
 	}
 
-	switch(corruptionRetch)
+	switch(specialRetchType)
 	{
 		case "Retch":
-			specialRetchType = "Retch";
-			Convars.SetValue("z_exploding_health", 376 * (difficultyHealthScale));
+			Convars.SetValue("z_exploding_health", 376 * (difficultyHealthScale * Fer_RetchHealthScale * Mon_RetchHealthScale));
 		break;
 		case "Exploder":
-			specialRetchType = "Exploder";
-			Convars.SetValue("z_exploding_health", 376 * (difficultyHealthScale));
+			Convars.SetValue("z_exploding_health", 376 * (difficultyHealthScale * Fer_ExploderHealthScale * Mon_ExploderHealthScale));
 		break;
 		case "Reeker":
-			specialRetchType = "Reeker";
-			Convars.SetValue("z_exploding_health", 430 * (difficultyHealthScale));
-		break;
-		case "Fer_Retch":
-			specialRetchType = "Retch";
-			Convars.SetValue("z_exploding_health", 376 * (difficultyHealthScale * ferociousHealthScale));
-		break;
-		case "Fer_Exploder":
-			specialRetchType = "Exploder";
-			Convars.SetValue("z_exploding_health", 376 * (difficultyHealthScale * ferociousHealthScale));
-		break;
-		case "Fer_Reeker":
-			specialRetchType = "Reeker";
-			Convars.SetValue("z_exploding_health", 430 * (difficultyHealthScale * ferociousHealthScale));
-		break;
-		case "Mon_Retch":
-			specialRetchType = "Retch";
-			Convars.SetValue("z_exploding_health", 376 * (difficultyHealthScale * monstrousHealthScale));
-		break;
-		case "Mon_Exploder":
-			specialRetchType = "Exploder";
-			Convars.SetValue("z_exploding_health", 376 * (difficultyHealthScale * monstrousHealthScale));
-		break;
-		case "Mon_Reeker":
-			specialRetchType = "Retch";
-			Convars.SetValue("z_exploding_health", 430 * (difficultyHealthScale * monstrousHealthScale));
+			Convars.SetValue("z_exploding_health", 430 * (difficultyHealthScale * Fer_ReekerHealthScale * Mon_ReekerHealthScale));
 		break;
 	}
 
-	switch(corruptionHocker)
+	switch(specialHockerType)
 	{
 		case "Hocker":
-			specialHockerType = "Hocker";
-			Convars.SetValue("z_exploding_health", 161 * (difficultyHealthScale));
+			Convars.SetValue("z_exploding_health", 161 * (difficultyHealthScale * Fer_HockerHealthScale * Mon_HockerHealthScale));
 		break;
 		case "Stinger":
-			specialHockerType = "Stinger";
-			Convars.SetValue("z_exploding_health", 161 * (difficultyHealthScale));
+			Convars.SetValue("z_exploding_health", 161 * (difficultyHealthScale * Fer_StingerHealthScale * Mon_StingerHealthScale));
 		break;
 		case "Stalker":
-			specialHockerType = "Stalker";
-			Convars.SetValue("z_exploding_health", 241 * (difficultyHealthScale));
-		break;
-		case "Fer_Hocker":
-			specialHockerType = "Hocker";
-			Convars.SetValue("z_exploding_health", 161 * (difficultyHealthScale * ferociousHealthScale));
-		break;
-		case "Fer_Stinger":
-			specialHockerType = "Stinger";
-			Convars.SetValue("z_exploding_health", 161 * (difficultyHealthScale * ferociousHealthScale));
-		break;
-		case "Fer_Stalker":
-			specialHockerType = "Stalker";
-			Convars.SetValue("z_exploding_health", 241 * (difficultyHealthScale * ferociousHealthScale));
-		break;
-		case "Mon_Hocker":
-			specialHockerType = "Hocker";
-			Convars.SetValue("z_exploding_health", 161 * (difficultyHealthScale * monstrousHealthScale));
-		break;
-		case "Mon_Stinger":
-			specialHockerType = "Stinger";
-			Convars.SetValue("z_exploding_health", 161 * (difficultyHealthScale * monstrousHealthScale));
-		break;
-		case "Mon_Stalker":
-			specialHockerType = "Stalker";
-			Convars.SetValue("z_exploding_health", 241 * (difficultyHealthScale * monstrousHealthScale));
+			Convars.SetValue("z_exploding_health", 241 * (difficultyHealthScale * Fer_StalkerHealthScale * Mon_StalkerHealthScale));
 		break;
 	}
 
@@ -476,6 +395,44 @@ exploderRunSpeed <- 320;			// Run speed while using explosion ability
 
 tallboyPunchKnockback <- 350;		// Max knockback
 tallboyRunSpeed <- 250;
+
+Fer_TallboyDamageScale <- 1;
+Fer_CrusherDamageScale <- 1;
+Fer_BruiserDamageScale <- 1;
+Mon_TallboyDamageScale <- 1;
+Mon_CrusherDamageScale <- 1;
+Mon_BruiserDamageScale <- 1;
+Fer_RetchDamageScale <- 1;
+Fer_ExploderDamageScale <- 1;
+Fer_ReekerDamageScale <- 1;
+Mon_RetchDamageScale <- 1;
+Mon_ExploderDamageScale <- 1;
+Mon_ReekerDamageScale <- 1;
+Fer_HockerDamageScale <- 1;
+Fer_StingerDamageScale <- 1;
+Fer_StalkerDamageScale <- 1;
+Mon_HockerDamageScale <- 1
+Mon_StingerDamageScale <- 1;
+Mon_StalkerDamageScale <- 1;
+
+Fer_TallboyHealthScale <- 1;
+Fer_CrusherHealthScale <- 1;
+Fer_BruiserHealthScale <- 1;
+Mon_TallboyHealthScale <- 1;
+Mon_CrusherHealthScale <- 1;
+Mon_BruiserHealthScale <- 1;
+Fer_RetchHealthScale <- 1;
+Fer_ExploderHealthScale <- 1;
+Fer_ReekerHealthScale <- 1;
+Mon_RetchHealthScale <- 1;
+Mon_ExploderHealthScale <- 1;
+Mon_ReekerHealthScale <- 1;
+Fer_HockerHealthScale <- 1;
+Fer_StingerHealthScale <- 1;
+Fer_StalkerHealthScale <- 1;
+Mon_HockerHealthScale <- 1
+Mon_StingerHealthScale <- 1;
+Mon_StalkerHealthScale <- 1;
 
 ferociousDamageScale <- 1.3		// Ferocious (1.3x), Monstrous (1.6x)
 monstrousDamageScale <- 1.6

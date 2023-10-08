@@ -1101,18 +1101,51 @@ function ApplyTallboyCard()
 	switch(corruptionTallboy)
 	{
 		case "Tallboy":
+			specialTallboyType = "Tallboy";
+			CorruptionCard_Tallboy();
+			break;
 		case "Fer_Tallboy":
+			specialTallboyType = "Tallboy";
+			Fer_TallboyDamageScale = 1.3;
+			Fer_TallboyHealthScale = 1.3;
+			CorruptionCard_Tallboy();
+			break;
 		case "Mon_Tallboy":
+			specialTallboyType = "Tallboy";
+			Mon_TallboyDamageScale = 1.6;
+			Mon_TallboyHealthScale = 1.6;
 			CorruptionCard_Tallboy();
 			break;
 		case "Crusher":
+			specialTallboyType = "Crusher";
+			CorruptionCard_Crusher();
+			break;
 		case "Fer_Crusher":
+			specialTallboyType = "Crusher";
+			CorruptionCard_Crusher();
+			Fer_CrusherDamageScale = 1.3;
+			Fer_CrusherHealthScale = 1.3;
+			break;
 		case "Mon_Crusher":
+			specialTallboyType = "Crusher";
+			Mon_CrusherDamageScale = 1.3;
+			Mon_CrusherHealthScale = 1.3;
 			CorruptionCard_Crusher();
 			break;
 		case "Bruiser":
+			specialTallboyType = "Bruiser";
+			CorruptionCard_Bruiser();
+			break;
 		case "Fer_Bruiser":
+			specialTallboyType = "Bruiser";
+			Fer_BruiserDamageScale = 1.3;
+			Fer_BruiserHealthScale = 1.3;
+			CorruptionCard_Bruiser();
+			break;
 		case "Mon_Bruiser":
+			specialTallboyType = "Bruiser";
+			Mon_BruiserDamageScale = 1.6;
+			Mon_BruiserHealthScale = 1.6;
 			CorruptionCard_Bruiser();
 			break;
 	}

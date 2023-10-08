@@ -391,91 +391,49 @@ function AllowTakeDamage(damageTable)
 							switch(zombieType)
 							{
 								case 1:
-									switch (corruptionHocker)
+									switch(specialHockerType)
 									{
 										case "Hocker":
+											baseDamage = 2 * Fer_HockerDamageScale * Mon_HockerDamageScale;
+										break;
 										case "Stinger":
-											baseDamage = 2;
-										break;
-										case "Fer_Hocker":
-										case "Fer_Stinger":
-											baseDamage = 2 * ferociousDamageScale;
-										break;
-										case "Mon_Hocker":
-										case "Mon_Stinger":
-											baseDamage = 2 * monstrousDamageScale;
+											baseDamage = 2 * Fer_StingerDamageScale * Mon_StingerDamageScale;
 										break;
 									}
 								break;
 								case 2:
-									switch (corruptionRetch)
+									switch(specialRetchType)
 									{
 										case "Retch":
-										case "Reeker":
-											baseDamage = 4;
+											baseDamage = 4 * Fer_RetchDamageScale * Mon_RetchDamageScale;
 										break;
 										case "Exploder":
-											baseDamage = 8;
+											baseDamage = 8 * Fer_ExploderDamageScale * Mon_ExploderDamageScale;
 										break;
-										case "Fer_Retch":
-										case "Fer_Reeker":
-											baseDamage = 4 * ferociousDamageScale;
-										break;
-										case "Fer_Exploder":
-											baseDamage = 8 * ferociousDamageScale;
-										break;
-										case "Mon_Retch":
-										case "Mon_Reeker":
-											baseDamage = 4 * monstrousDamageScale;
-										break;
-										case "Mon_Exploder":
-											baseDamage = 8 * monstrousDamageScale;
+										case "Reeker":
+											baseDamage = 4 * Fer_ReekerDamageScale * Mon_ReekerDamageScale;
 										break;
 									}
 								break;
 								case 5:
-									switch (corruptionHocker)
+									switch (specialHockerType)
 									{
 										case "Stalker":
-											baseDamage = 3;
-										break;
-										case "Fer_Stalker":
-											baseDamage = 3 * ferociousDamageScale;
-										break;
-										case "Mon_Stalker":
-											baseDamage = 3 * monstrousDamageScale;
+											baseDamage = 3 * Fer_StalkerDamageScale * Mon_StalkerDamageScale;
 										break;
 									}
 								break;
 								case 6:
-									switch(corruptionTallboy)
+									switch(specialTallboyType)
 									{
 										case "Tallboy":
-											baseDamage = 20;
+											baseDamage = 20 * Fer_TallboyDamageScale * Mon_TallboyDamageScale;
 										break;
 										case "Crusher":
-											baseDamage = 10;
+											baseDamage = 10 * Fer_CrusherDamageScale * Mon_CrusherDamageScale;
 										break;
 										case "Bruiser":
-											baseDamage = 17.5;
-										break;
-										case "Fer_Tallboy":
-											baseDamage = 20 * ferociousDamageScale;
-										break;
-										case "Fer_Crusher":
-											baseDamage = 10 * ferociousDamageScale;
-										break;
-										case "Fer_Bruiser":
-											baseDamage = 17.5 * ferociousDamageScale;
-										break;
-										case "Mon_Tallboy":
-											baseDamage = 20 * monstrousDamageScale;
-										break;
-										case "Mon_Crusher":
-											baseDamage = 10 * monstrousDamageScale;
-										break;
-										case "Mon_Bruiser":
-											baseDamage = 17.5 * monstrousDamageScale;
+											baseDamage = 17.5 * Fer_CrusherDamageScale * Mon_CrusherDamageScale;
 										break;
 									}
 								break;
@@ -486,47 +444,35 @@ function AllowTakeDamage(damageTable)
 							switch(zombieType)
 							{
 								case 1:
-									switch (corruptionHocker)
+									switch(specialHockerType)
 									{
 										case "Hocker":
+											baseDamage = 8 * Fer_HockerDamageScale * Mon_HockerDamageScale;
+										break;
 										case "Stinger":
-											baseDamage = 8;
-										break;
-										case "Fer_Hocker":
-										case "Fer_Stinger":
-											baseDamage = 8 * ferociousDamageScale;
-										break;
-										case "Mon_Hocker":
-										case "Mon_Stinger":
-											baseDamage = 8 * monstrousDamageScale;
+											baseDamage = 8 * Fer_StingerDamageScale * Mon_StingerDamageScale;
 										break;
 									}
 								break;
 								case 5:
-									switch (corruptionHocker)
+									switch (specialHockerType)
 									{
 										case "Stalker":
-											baseDamage = 8;
-										break;
-										case "Fer_Stalker":
-											baseDamage = 8 * ferociousDamageScale;
-										break;
-										case "Mon_Stalker":
-											baseDamage = 8 * monstrousDamageScale;
+											baseDamage = 8 * Fer_StalkerDamageScale * Mon_StalkerDamageScale;
 										break;
 									}
 								break;
 								case 6:
-									switch(corruptionTallboy)
+									switch(specialTallboyType)
 									{
+										case "Tallboy":
+											baseDamage = 20 * Fer_TallboyDamageScale * Mon_TallboyDamageScale;
+										break;
 										case "Crusher":
-											baseDamage = 15;
+											baseDamage = 15 * Fer_CrusherDamageScale * Mon_CrusherDamageScale;
 										break;
-										case "Fer_Crusher":
-											baseDamage = 15 * ferociousDamageScale;
-										break;
-										case "Mon_Crusher":
-											baseDamage = 15 * monstrousDamageScale;
+										case "Bruiser":
+											baseDamage = 17.5 * Fer_CrusherDamageScale * Mon_CrusherDamageScale;
 										break;
 									}
 								break;
