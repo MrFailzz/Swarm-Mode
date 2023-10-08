@@ -82,6 +82,7 @@ function InterceptChat(message, speaker)
 				}
 			break;
 
+/*
 			case "гивеуп":
 			case "giveup":
 				if (speaker.IsSurvivor() && speaker.IsIncapacitated())
@@ -103,6 +104,7 @@ function InterceptChat(message, speaker)
 					}
 				}
 			break;
+*/
 
 			case "карты":
 			case "cards":

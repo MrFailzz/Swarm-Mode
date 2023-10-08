@@ -325,6 +325,7 @@ function WeaponFireM60(params)
 ///////////////////////////////////////////////
 function Update()
 {
+	UpdateGiveupTimer();
 	Update_PlayerCards();
 
 	if (bSwarmCircleActive)
@@ -538,4 +539,48 @@ function PropModels()
 	{
 		PrecacheAndSetModel(ince_pack, "models/swarm/props/w_eq_incendiary_ammopack.mdl");
 	}	
+}
+
+function UpdateGiveupTimer()
+{
+	local player = null;
+	while ((player = Entities.FindByClassname(player, "player")) != null)
+	{
+		if (player.IsValid())
+		{
+			if (player.IsSurvivor())
+			{
+				local survivorID = GetSurvivorID(player);
+				local startGiveupTime = 0;
+
+				if (player.IsIncapacitated())
+				{
+					if ((player.GetButtonMask() & IN_DUCK) && GiveupTimer[survivorID] == 0)
+					{
+						startGiveupTime = Time();
+						GiveupTimer[survivorID]++;
+
+						// Add progress bar for giving up
+						NetProps.SetPropFloat(player, "m_flProgressBarStartTime", startGiveupTime);
+						NetProps.SetPropFloat(player, "m_flProgressBarDuration", GiveupTimerDefault);
+					}
+					else if ((player.GetButtonMask() & IN_DUCK) && GiveupTimer[survivorID] > 0)
+					{
+						GiveupTimer[survivorID]++;
+
+						if (GiveupTimer[survivorID] > GiveupTimerDefault)
+						{
+							// Kill player
+							player.TakeDamage(9999, 0, null);
+						}
+					}
+					else
+					{
+						GiveupTimer[survivorID] = 0;
+						NetProps.SetPropFloat(player, "m_flProgressBarDuration", 0);
+					}
+				}
+			}
+		}
+	}
 }

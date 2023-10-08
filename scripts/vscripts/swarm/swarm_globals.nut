@@ -217,6 +217,8 @@ bChargerSpawned <- false;
 firstLeftCheckpoint <- false;
 survivorHealthBuffer <- [0, 0, 0, 0];
 survivorReviveCount <- [0, 0, 0, 0];
+::GiveupTimer <- [0, 0, 0, 0];
+GiveupTimerDefault <- 3;
 
 ///////////////////////////////////////////////
 //                  CONVARS                  //

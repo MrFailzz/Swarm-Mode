@@ -31,7 +31,7 @@ function Translation_EN(msg)
 		break;
 
 		case "#giveup_msg":
-			return "\x01" + "Type " + "\x03" + "!giveup" + "\x01" + " to die...";
+			return "\x01" + "Hold " + "\x03" + "[CROUCH]" + "\x01" + " to die...";
 		break;
 
 		case "#breakout_msg":
@@ -1052,7 +1052,7 @@ function Translation_RU(msg)
 		break;
 
 		case "#giveup_msg":
-			return "\x01" + "Type " + "\x03" + "!giveup" + "\x01" + " to die...";
+			return "\x01" + "Hold " + "\x03" + "[CROUCH]" + "\x01" + " to die...";
 		break;
 
 		case "#breakout_msg":
