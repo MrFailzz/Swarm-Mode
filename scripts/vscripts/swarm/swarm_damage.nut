@@ -379,104 +379,158 @@ function AllowTakeDamage(damageTable)
 				}
 
 				// Rework infected claw DMG
-				if (victim.IsDominatedBySpecialInfected() == false)
+				if (attackerPlayer == true)
 				{
-					if (attackerPlayer == true)
+					if ((damageType & 128) == 128)
 					{
 						local zombieType = attacker.GetZombieType();
 						local baseDamage = 1;
 
-						switch(zombieType)
+						if (victim.IsDominatedBySpecialInfected() == false)
 						{
-							case 1:
-								switch (corruptionHocker)
-								{
-									case "Hocker":
-									case "Stinger":
-										baseDamage = 2;
-									break;
-									case "Fer_Hocker":
-									case "Fer_Stinger":
-										baseDamage = 2 * ferociousDamageScale;
-									break;
-									case "Mon_Hocker":
-									case "Mon_Stinger":
-										baseDamage = 2 * monstrousDamageScale;
-									break;
-								}
-							break;
-							case 2:
-								switch (corruptionRetch)
-								{
-									case "Retch":
-									case "Reeker":
-										baseDamage = 4;
-									break;
-									case "Exploder":
-										baseDamage = 8;
-									break;
-									case "Fer_Retch":
-									case "Fer_Reeker":
-										baseDamage = 4 * ferociousDamageScale;
-									break;
-									case "Fer_Exploder":
-										baseDamage = 8 * ferociousDamageScale;
-									break;
-									case "Mon_Retch":
-									case "Mon_Reeker":
-										baseDamage = 4 * monstrousDamageScale;
-									break;
-									case "Mon_Exploder":
-										baseDamage = 8 * monstrousDamageScale;
-									break;
-								}
-							break;
-							case 5:
-								switch (corruptionHocker)
-								{
-									case "Stalker":
-										baseDamage = 3;
-									break;
-									case "Fer_Stalker":
-										baseDamage = 3 * ferociousDamageScale;
-									break;
-									case "Mon_Stalker":
-										baseDamage = 3 * monstrousDamageScale;
-									break;
-								}
-							break;
-							case 6:
-								switch(corruptionTallboy)
-								{
-									case "Tallboy":
-										baseDamage = 20;
-									break;
-									case "Crusher":
-										baseDamage = 10;
-									break;
-									case "Bruiser":
-										baseDamage = 17.5;
-									break;
-									case "Fer_Tallboy":
-										baseDamage = 20 * ferociousDamageScale;
-									break;
-									case "Fer_Crusher":
-										baseDamage = 10 * ferociousDamageScale;
-									break;
-									case "Fer_Bruiser":
-										baseDamage = 17.5 * ferociousDamageScale;
-									break;
-									case "Mon_Tallboy":
-										baseDamage = 20 * monstrousDamageScale;
-									break;
-									case "Mon_Crusher":
-										baseDamage = 10 * monstrousDamageScale;
-									break;
-									case "Mon_Bruiser":
-										baseDamage = 17.5 * monstrousDamageScale;
-									break;
-								}
-							break;
+							switch(zombieType)
+							{
+								case 1:
+									switch (corruptionHocker)
+									{
+										case "Hocker":
+										case "Stinger":
+											baseDamage = 2;
+										break;
+										case "Fer_Hocker":
+										case "Fer_Stinger":
+											baseDamage = 2 * ferociousDamageScale;
+										break;
+										case "Mon_Hocker":
+										case "Mon_Stinger":
+											baseDamage = 2 * monstrousDamageScale;
+										break;
+									}
+								break;
+								case 2:
+									switch (corruptionRetch)
+									{
+										case "Retch":
+										case "Reeker":
+											baseDamage = 4;
+										break;
+										case "Exploder":
+											baseDamage = 8;
+										break;
+										case "Fer_Retch":
+										case "Fer_Reeker":
+											baseDamage = 4 * ferociousDamageScale;
+										break;
+										case "Fer_Exploder":
+											baseDamage = 8 * ferociousDamageScale;
+										break;
+										case "Mon_Retch":
+										case "Mon_Reeker":
+											baseDamage = 4 * monstrousDamageScale;
+										break;
+										case "Mon_Exploder":
+											baseDamage = 8 * monstrousDamageScale;
+										break;
+									}
+								break;
+								case 5:
+									switch (corruptionHocker)
+									{
+										case "Stalker":
+											baseDamage = 3;
+										break;
+										case "Fer_Stalker":
+											baseDamage = 3 * ferociousDamageScale;
+										break;
+										case "Mon_Stalker":
+											baseDamage = 3 * monstrousDamageScale;
+										break;
+									}
+								break;
+								case 6:
+									switch(corruptionTallboy)
+									{
+										case "Tallboy":
+											baseDamage = 20;
+										break;
+										case "Crusher":
+											baseDamage = 10;
+										break;
+										case "Bruiser":
+											baseDamage = 17.5;
+										break;
+										case "Fer_Tallboy":
+											baseDamage = 20 * ferociousDamageScale;
+										break;
+										case "Fer_Crusher":
+											baseDamage = 10 * ferociousDamageScale;
+										break;
+										case "Fer_Bruiser":
+											baseDamage = 17.5 * ferociousDamageScale;
+										break;
+										case "Mon_Tallboy":
+											baseDamage = 20 * monstrousDamageScale;
+										break;
+										case "Mon_Crusher":
+											baseDamage = 10 * monstrousDamageScale;
+										break;
+										case "Mon_Bruiser":
+											baseDamage = 17.5 * monstrousDamageScale;
+										break;
+									}
+								break;
+							}
+						}
+						else
+						{
+							switch(zombieType)
+							{
+								case 1:
+									switch (corruptionHocker)
+									{
+										case "Hocker":
+										case "Stinger":
+											baseDamage = 8;
+										break;
+										case "Fer_Hocker":
+										case "Fer_Stinger":
+											baseDamage = 8 * ferociousDamageScale;
+										break;
+										case "Mon_Hocker":
+										case "Mon_Stinger":
+											baseDamage = 8 * monstrousDamageScale;
+										break;
+									}
+								break;
+								case 5:
+									switch (corruptionHocker)
+									{
+										case "Stalker":
+											baseDamage = 8;
+										break;
+										case "Fer_Stalker":
+											baseDamage = 8 * ferociousDamageScale;
+										break;
+										case "Mon_Stalker":
+											baseDamage = 8 * monstrousDamageScale;
+										break;
+									}
+								break;
+								case 6:
+									switch(corruptionTallboy)
+									{
+										case "Crusher":
+											baseDamage = 15;
+										break;
+										case "Fer_Crusher":
+											baseDamage = 15 * ferociousDamageScale;
+										break;
+										case "Mon_Crusher":
+											baseDamage = 15 * monstrousDamageScale;
+										break;
+									}
+								break;
+							}
 						}
 
 						damageTable.DamageDone = baseDamage * difficultyDamageScale;

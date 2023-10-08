@@ -135,7 +135,7 @@ function TongueGrab(params)
 			local victim_entityscript = hockerThinker.GetScriptScope();
 			victim_entityscript["victim"] <- victim;
 			victim_entityscript["tongueVictim"] <- 0;
-			victim_entityscript["damagePerTick"] <- (5 * difficultyDamageScale) * RETHINK_TIME_HOCKER;
+			victim_entityscript["damagePerTick"] <- 8 * RETHINK_TIME_HOCKER;
 			victim_entityscript["HockerSelfDamage"] <- function()
 			{
 				if (victim_entityscript["victim"].IsValid())
@@ -143,7 +143,7 @@ function TongueGrab(params)
 					victim_entityscript["tongueVictim"] = NetProps.GetPropInt(victim_entityscript["victim"], "m_tongueOwner");
 					if (victim_entityscript["tongueVictim"] != 0)
 					{
-						victim_entityscript["victim"].TakeDamage(victim_entityscript["damagePerTick"], 0, attacker);
+						victim_entityscript["victim"].TakeDamage(victim_entityscript["damagePerTick"], DMG_CLUB, attacker);
 						return RETHINK_TIME_HOCKER;
 					}
 					else
@@ -180,8 +180,8 @@ function StingerProjectile(params)
 		local attacker = GetPlayerFromUserID(params["userid"]);
 
 		// DMG victim
-		player.TakeDamage(5 * difficultyDamageScale, 0, attacker)
-		player.OverrideFriction(0.5,1.25);
+		player.TakeDamage(8, DMG_CLUB, attacker)
+		player.OverrideFriction(0.5,1.35);
 		
 		// Break Tongue
 		Convars.SetValue("tongue_force_break", 1);

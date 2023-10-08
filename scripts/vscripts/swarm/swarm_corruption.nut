@@ -640,7 +640,7 @@ function FrigidOutskirtsTimer()
 					if (allSurvivors.IsDead() == false)
 					{
 						// Slow survivors during storm
-						allSurvivors.OverrideFriction(16,1.35);
+						allSurvivors.OverrideFriction(16,1.4);
 					}
 				}
 			}

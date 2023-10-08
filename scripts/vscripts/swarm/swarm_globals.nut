@@ -478,7 +478,7 @@ tallboyPunchKnockback <- 350;		// Max knockback
 tallboyRunSpeed <- 250;
 
 ferociousDamageScale <- 1.3		// Ferocious (1.3x), Monstrous (1.6x)
-monstrousDamageScale <- 6
+monstrousDamageScale <- 1.6
 ferociousHealthScale <- 1.3		// Ferocious (1.3x), Monstrous (1.6x)
 monstrousHealthScale <- 1.6
 difficultyHealthScale <- 1; 		// (Easy (0): 0.75x, Normal (1): 1x, Advanced (2): 1.25x, Expert (3): 1.5x)
