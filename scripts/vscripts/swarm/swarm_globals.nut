@@ -14,6 +14,7 @@ swarmSettingsTable <-
 //Globals
 difficulty <- GetDifficulty();
 survivorSet <- Director.GetSurvivorSet();
+mapNumber <- Director.GetMapNumber();
 z_speed <- Convars.GetFloat("z_speed");
 BaseMaxIncaps <- 2;
 
@@ -46,6 +47,7 @@ fireCommonsTimer <- 1;
 explodingCommonsTimer <- 3;
 explodingCommonsFiltersExist <- false;
 uncommonsTimer <- 0;
+BaseCommonDamage <- 2.5;
 
 //Corruption
 corruptionCards <- array(1, null);
@@ -129,7 +131,7 @@ survivor_revive_duration <- 5;
 
 //Melee
 melee_damage <- 400;
-shove_damage <- 15;
+shove_damage <- 10;
 
 //Chainsaw
 chainsaw_damage <- 100;
@@ -312,34 +314,89 @@ function SetDifficulty()
 		break;
 	}
 
-	if (corruptionTallboy == "Tallboy")
+	switch(corruptionTallboy)
 	{
-		Convars.SetValue("z_charger_health", 1000 * (difficultyHealthScale * cardHealthScale));
-	}
-	else if (corruptionTallboy == "Crusher")
-	{
-		Convars.SetValue("z_charger_health", 1200 * (difficultyHealthScale * cardHealthScale));
-	}
-	else if (corruptionTallboy == "Bruiser")
-	{
-		Convars.SetValue("z_charger_health", 1500 * (difficultyHealthScale * cardHealthScale));
+		case "Tallboy":
+			Convars.SetValue("z_charger_health", 725 * (difficultyHealthScale));
+		break;
+		case "Crusher":
+			Convars.SetValue("z_charger_health", 806 * (difficultyHealthScale));
+		break;
+		case "Bruiser":
+			Convars.SetValue("z_charger_health", 1021 * (difficultyHealthScale));
+		break;
+		case "Fer_Tallboy":
+			Convars.SetValue("z_charger_health", 725 * (difficultyHealthScale * ferociousHealthScale));
+		break;
+		case "Fer_Crusher":
+			Convars.SetValue("z_charger_health", 806 * (difficultyHealthScale * ferociousHealthScale));
+		break;
+		case "Fer_Bruiser":
+			Convars.SetValue("z_charger_health", 1021 * (difficultyHealthScale * ferociousHealthScale));
+		break;
+		case "Mon_Tallboy":
+			Convars.SetValue("z_charger_health", 725 * (difficultyHealthScale * monstrousHealthScale));
+		break;
+		case "Mon_Crusher":
+			Convars.SetValue("z_charger_health", 806 * (difficultyHealthScale * monstrousHealthScale));
+		break;
+		case "Mon_Bruiser":
+			Convars.SetValue("z_charger_health", 1021 * (difficultyHealthScale * monstrousHealthScale));
+		break;
 	}
 
-	if (corruptionRetch == "Retch")
+	switch(corruptionRetch)
 	{
-		Convars.SetValue("z_exploding_health", 550 * (difficultyHealthScale * cardHealthScale));
+		case "Retch":
+		case "Exploder":
+			Convars.SetValue("z_exploding_health", 376 * (difficultyHealthScale));
+		break;
+		case "Reeker":
+			Convars.SetValue("z_exploding_health", 430 * (difficultyHealthScale));
+		break;
+		case "Fer_Retch":
+		case "Fer_Exploder":
+			Convars.SetValue("z_exploding_health", 376 * (difficultyHealthScale * ferociousHealthScale));
+		break;
+		case "Fer_Reeker":
+			Convars.SetValue("z_exploding_health", 430 * (difficultyHealthScale * ferociousHealthScale));
+		break;
+		case "Mon_Retch":
+		case "Mon_Exploder":
+			Convars.SetValue("z_exploding_health", 376 * (difficultyHealthScale * monstrousHealthScale));
+		break;
+		case "Mon_Reeker":
+			Convars.SetValue("z_exploding_health", 430 * (difficultyHealthScale * monstrousHealthScale));
+		break;
 	}
-	else if (corruptionRetch == "Exploder")
+
+	switch(corruptionHocker)
 	{
-		Convars.SetValue("z_exploding_health", 550 * (difficultyHealthScale * cardHealthScale));
+		case "Hocker":
+		case "Stinger":
+			Convars.SetValue("z_exploding_health", 161 * (difficultyHealthScale));
+		break;
+		case "Stalker":
+			Convars.SetValue("z_exploding_health", 241 * (difficultyHealthScale));
+		break;
+		case "Fer_Hocker":
+		case "Fer_Stinger":
+			Convars.SetValue("z_exploding_health", 161 * (difficultyHealthScale * ferociousHealthScale));
+		break;
+		case "Fer_Stalker":
+			Convars.SetValue("z_exploding_health", 241 * (difficultyHealthScale * ferociousHealthScale));
+		break;
+		case "Mon_Hocker":
+		case "Mon_Stinger":
+			Convars.SetValue("z_exploding_health", 161 * (difficultyHealthScale * monstrousHealthScale));
+		break;
+		case "Mon_Stalker":
+			Convars.SetValue("z_exploding_health", 241 * (difficultyHealthScale * monstrousHealthScale));
+		break;
 	}
-	else if (corruptionRetch == "Reeker")
-	{
-		Convars.SetValue("z_exploding_health", 650 * (difficultyHealthScale * cardHealthScale));
-	}
-	Convars.SetValue("z_jockey_health", 350 * (difficultyHealthScale * cardHealthScale));
-	Convars.SetValue("z_gas_health", 250 * (difficultyHealthScale * cardHealthScale));
-	Convars.SetValue("z_witch_health", 750 * (difficultyHealthScale * cardHealthScale));
+
+	Convars.SetValue("z_witch_health", 1000);
+	Convars.SetValue("z_health", 50 * (difficultyHealthScale));
 }
 
 DirectorOptions.SurvivorMaxIncapacitatedCount = BaseMaxIncaps;
@@ -371,7 +428,8 @@ exploderRunSpeed <- 320;			// Run speed while using explosion ability
 tallboyPunchKnockback <- 350;		// Max knockback
 tallboyRunSpeed <- 250;
 
-cardHealthScale <- 1				// Ferocious (1.25x), Monstrous (1.5x)
+ferociousHealthScale <- 1.25		// Ferocious (1.25x), Monstrous (1.5x)
+monstrousHealthScale <- 1.5
 difficultyHealthScale <- 1; 		// (Easy (0): 0.75x, Normal (1): 1x, Advanced (2): 1.25x, Expert (3): 1.5x)
 difficultyDamageScale <- 1; 		// (Easy (0): 0.5x, Normal (1): 1x, Advanced (2): 1.5x, Expert (3): 2x)
 

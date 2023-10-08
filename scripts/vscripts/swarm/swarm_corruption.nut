@@ -55,6 +55,18 @@ function InitCorruptionCards()
 	cardsTallboy.append("Tallboy");
 	cardsTallboy.append("Crusher");
 	cardsTallboy.append("Bruiser");
+	if (mapNumber > 0)
+	{
+		cardsTallboy.append("Fer_Tallboy");
+		cardsTallboy.append("Fer_Crusher");
+		cardsTallboy.append("Fer_Bruiser");
+	}
+	if (mapNumber > 1 && difficulty > 1)
+	{
+		cardsTallboy.append("Mon_Tallboy");
+		cardsTallboy.append("Mon_Crusher");
+		cardsTallboy.append("Mon_Bruiser");
+	}
 	corruptionTallboy = ChooseCorruptionCard_ListInf(cardsTallboy);
 	ApplyTallboyCard();
 
@@ -64,6 +76,18 @@ function InitCorruptionCards()
 	cardsHocker.append("Hocker");
 	cardsHocker.append("Stinger");
 	cardsHocker.append("Stalker");
+	if (mapNumber > 0)
+	{
+		cardsTallboy.append("Fer_Hocker");
+		cardsTallboy.append("Fer_Stinger");
+		cardsTallboy.append("Fer_Stalker");
+	}
+	if (mapNumber > 1 && difficulty > 1)
+	{
+		cardsTallboy.append("Mon_Hocker");
+		cardsTallboy.append("Mon_Stinger");
+		cardsTallboy.append("Mon_Stalker");
+	}
 	corruptionHocker = ChooseCorruptionCard_ListInf(cardsHocker);
 	ApplyHockerCard();
 
@@ -73,6 +97,18 @@ function InitCorruptionCards()
 	cardsRetch.append("Retch");
 	cardsRetch.append("Exploder");
 	cardsRetch.append("Reeker");
+	if (mapNumber > 0)
+	{
+		cardsTallboy.append("Fer_Retch");
+		cardsTallboy.append("Fer_Exploder");
+		cardsTallboy.append("Fer_Reeker");
+	}
+	if (mapNumber > 1 && difficulty > 1)
+	{
+		cardsTallboy.append("Mon_Retch");
+		cardsTallboy.append("Mon_Exploder");
+		cardsTallboy.append("Mon_Reeker");
+	}
 	corruptionRetch = ChooseCorruptionCard_ListInf(cardsRetch);
 	ApplyRetchCard();
 
@@ -136,7 +172,7 @@ function InitCorruptionCards()
 	cardsHordes.clear();
 	cardsHordes.append("None");
 	// Only allow horde cards on non-finale levels?
-	if ( IsMissionFinalMap() == false && difficulty > 1)
+	if (IsMissionFinalMap() == false && difficulty > 1)
 	{
 		cardsHordes.append("None");
 		cardsHordes.append("None");
@@ -1065,12 +1101,18 @@ function ApplyTallboyCard()
 	switch(corruptionTallboy)
 	{
 		case "Tallboy":
+		case "Fer_Tallboy":
+		case "Mon_Tallboy":
 			CorruptionCard_Tallboy();
 			break;
 		case "Crusher":
+		case "Fer_Crusher":
+		case "Mon_Crusher":
 			CorruptionCard_Crusher();
 			break;
 		case "Bruiser":
+		case "Fer_Bruiser":
+		case "Mon_Bruiser":
 			CorruptionCard_Bruiser();
 			break;
 	}

@@ -128,6 +128,11 @@
 		z_hear_gunfire_range 500
 		z_hear_runner_far_range 1000
 		z_hear_runner_near_range 750
+		z_non_head_damage_factor_easy 1
+		z_non_head_damage_factor_normal 1
+		z_non_head_damage_factor_hard 1
+		z_non_head_damage_factor_expert 1
+		z_non_head_damage_factor_multiplier 1
 		
 		ammo_m60_max 150
 

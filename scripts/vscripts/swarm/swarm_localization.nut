@@ -884,36 +884,108 @@ function Translation_EN(msg)
 			return "Tallboys"
 		break;
 
+		case "#cor_Fer_Tallboy":
+			return "Ferocious Tallboys"
+		break;
+
+		case "#cor_Mon_Tallboy":
+			return "Monstrous Tallboys"
+		break;
+
 		case "#cor_Crusher":
 			return "Crushers"
+		break;
+
+		case "#cor_Fer_Crusher":
+			return "Ferocious Crushers"
+		break;
+
+		case "#cor_Mon_Crusher":
+			return "Monstrous Crushers"
 		break;
 
 		case "#cor_Bruiser":
 			return "Bruisers"
 		break;
 
+		case "#cor_Fer_Bruiser":
+			return "Ferocious Bruisers"
+		break;
+
+		case "#cor_Mon_Bruiser":
+			return "Monstrous Bruisers"
+		break;
+
 		case "#cor_Hocker":
 			return "Hockers"
 		break;
 
+		case "#cor_Fer_Hocker":
+			return "Ferocious Hockers"
+		break;
+
+		case "#cor_Mon_Hocker":
+			return "Monstrous Hockers"
+		break;
+
 		case "#cor_Stinger":
-			return "Stinger"
+			return "Stingers"
+		break;
+
+		case "#cor_Fer_Stinger":
+			return "Ferocious Stingers"
+		break;
+
+		case "#cor_Mon_Stinger":
+			return "Monstrous Stingers"
 		break;
 
 		case "#cor_Stalker":
 			return "Stalkers"
 		break;
 
+		case "#cor_Fer_Stalker":
+			return "Ferocious Stalkers"
+		break;
+
+		case "#cor_Mon_Stalker":
+			return "Monstrous Stalkers"
+		break;
+
 		case "#cor_Retch":
 			return "Retches"
+		break;
+
+		case "#cor_Fer_Retch":
+			return "Ferocious Retches"
+		break;
+
+		case "#cor_Mon_Retch":
+			return "Monstrous Retches"
 		break;
 
 		case "#cor_Exploder":
 			return "Exploders"
 		break;
 
+		case "#cor_Fer_Exploder":
+			return "Ferocious Exploders"
+		break;
+
+		case "#cor_Mon_Exploder":
+			return "Monstrous Exploders"
+		break;
+
 		case "#cor_Reeker":
 			return "Reekers"
+		break;
+
+		case "#cor_Fer_Reeker":
+			return "Ferocious Reekers"
+		break;
+
+		case "#cor_Mon_Reeker":
+			return "Monstrous Reekers"
 		break;
 
 		case "#cor_hazardSnitch":
@@ -1817,36 +1889,108 @@ function Translation_RU(msg)
 			return "Толлбои"
 		break;
 
+		case "#cor_Fer_Tallboy":
+			return "Ferocious Tallboys"
+		break;
+
+		case "#cor_Mon_Tallboy":
+			return "Monstrous Tallboys"
+		break;
+
 		case "#cor_Crusher":
 			return "Крашеры"
+		break;
+
+		case "#cor_Fer_Crusher":
+			return "Ferocious Crushers"
+		break;
+
+		case "#cor_Mon_Crusher":
+			return "Monstrous Crushers"
 		break;
 
 		case "#cor_Bruiser":
 			return "Брузеры"
 		break;
 
+		case "#cor_Fer_Bruiser":
+			return "Ferocious Bruisers"
+		break;
+
+		case "#cor_Mon_Bruiser":
+			return "Monstrous Bruisers"
+		break;
+
 		case "#cor_Hocker":
 			return "Хокеры"
+		break;
+
+		case "#cor_Fer_Hocker":
+			return "Ferocious Hockers"
+		break;
+
+		case "#cor_Mon_Hocker":
+			return "Monstrous Hockers"
 		break;
 
 		case "#cor_Stinger":
 			return "Стингеры"
 		break;
 
+		case "#cor_Fer_Stinger":
+			return "Ferocious Stingers"
+		break;
+
+		case "#cor_Mon_Stinger":
+			return "Monstrous Stingers"
+		break;
+
 		case "#cor_Stalker":
 			return "Сталкеры"
+		break;
+
+		case "#cor_Fer_Stalker":
+			return "Ferocious Stalkers"
+		break;
+
+		case "#cor_Mon_Stalker":
+			return "Monstrous Stalkers"
 		break;
 
 		case "#cor_Retch":
 			return "Ретчи"
 		break;
 
+		case "#cor_Fer_Retch":
+			return "Ferocious Retches"
+		break;
+
+		case "#cor_Mon_Retch":
+			return "Monstrous Retches"
+		break;
+
 		case "#cor_Exploder":
 			return "Эксплодеры"
 		break;
 
+		case "#cor_Fer_Exploder":
+			return "Ferocious Exploders"
+		break;
+
+		case "#cor_Mon_Exploder":
+			return "Monstrous Exploders"
+		break;
+
 		case "#cor_Reeker":
 			return "Рикеры"
+		break;
+
+		case "#cor_Fer_Reeker":
+			return "Ferocious Reekers"
+		break;
+
+		case "#cor_Mon_Reeker":
+			return "Monstrous Reekers"
 		break;
 
 		case "#cor_hazardSnitch":

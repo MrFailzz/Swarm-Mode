@@ -160,8 +160,8 @@ function AllowTakeDamage(damageTable)
 						}
 						else
 						{
-							//Reduce headshot damage to 3x (default: 4x)
-							HeadMultiplier = -0.25;
+							//Reduce headshot damage to 2x (default: 4x)
+							HeadMultiplier = -0.5;
 						}
 					}
 				}
