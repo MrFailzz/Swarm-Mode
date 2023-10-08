@@ -384,7 +384,7 @@ function AllowTakeDamage(damageTable)
 					if ((damageType & 128) == 128)
 					{
 						local zombieType = attacker.GetZombieType();
-						local baseDamage = 1;
+						local baseDamage = 0;
 
 						if (victim.IsDominatedBySpecialInfected() == false)
 						{

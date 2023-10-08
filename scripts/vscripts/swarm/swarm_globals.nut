@@ -434,10 +434,6 @@ Mon_HockerHealthScale <- 1
 Mon_StingerHealthScale <- 1;
 Mon_StalkerHealthScale <- 1;
 
-ferociousDamageScale <- 1.3		// Ferocious (1.3x), Monstrous (1.6x)
-monstrousDamageScale <- 1.6
-ferociousHealthScale <- 1.3		// Ferocious (1.3x), Monstrous (1.6x)
-monstrousHealthScale <- 1.6
 difficultyHealthScale <- 1; 		// (Easy (0): 0.75x, Normal (1): 1x, Advanced (2): 1.25x, Expert (3): 1.5x)
 difficultyDamageScale <- 1; 		// (Easy (0): 0.5x, Normal (1): 1x, Advanced (2): 1.5x, Expert (3): 2x)
 

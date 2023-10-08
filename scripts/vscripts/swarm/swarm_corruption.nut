@@ -55,13 +55,19 @@ function InitCorruptionCards()
 	cardsTallboy.append("Tallboy");
 	cardsTallboy.append("Crusher");
 	cardsTallboy.append("Bruiser");
+	cardsTallboy.append("Tallboy");
+	cardsTallboy.append("Crusher");
+	cardsTallboy.append("Bruiser");
 	if (mapNumber > 0)
 	{
 		cardsTallboy.append("Fer_Tallboy");
 		cardsTallboy.append("Fer_Crusher");
 		cardsTallboy.append("Fer_Bruiser");
+		cardsTallboy.append("Fer_Tallboy");
+		cardsTallboy.append("Fer_Crusher");
+		cardsTallboy.append("Fer_Bruiser");
 	}
-	if (mapNumber > 1 && difficulty > 1)
+	if (mapNumber > 0 && difficulty > 1)
 	{
 		cardsTallboy.append("Mon_Tallboy");
 		cardsTallboy.append("Mon_Crusher");
@@ -76,17 +82,23 @@ function InitCorruptionCards()
 	cardsHocker.append("Hocker");
 	cardsHocker.append("Stinger");
 	cardsHocker.append("Stalker");
+	cardsHocker.append("Hocker");
+	cardsHocker.append("Stinger");
+	cardsHocker.append("Stalker");
 	if (mapNumber > 0)
 	{
-		cardsTallboy.append("Fer_Hocker");
-		cardsTallboy.append("Fer_Stinger");
-		cardsTallboy.append("Fer_Stalker");
+		cardsHocker.append("Fer_Hocker");
+		cardsHocker.append("Fer_Stinger");
+		cardsHocker.append("Fer_Stalker");
+		cardsHocker.append("Fer_Hocker");
+		cardsHocker.append("Fer_Stinger");
+		cardsHocker.append("Fer_Stalker");
 	}
-	if (mapNumber > 1 && difficulty > 1)
+	if (mapNumber > 0 && difficulty > 1)
 	{
-		cardsTallboy.append("Mon_Hocker");
-		cardsTallboy.append("Mon_Stinger");
-		cardsTallboy.append("Mon_Stalker");
+		cardsHocker.append("Mon_Hocker");
+		cardsHocker.append("Mon_Stinger");
+		cardsHocker.append("Mon_Stalker");
 	}
 	corruptionHocker = ChooseCorruptionCard_ListInf(cardsHocker);
 	ApplyHockerCard();
@@ -97,17 +109,23 @@ function InitCorruptionCards()
 	cardsRetch.append("Retch");
 	cardsRetch.append("Exploder");
 	cardsRetch.append("Reeker");
+	cardsRetch.append("Retch");
+	cardsRetch.append("Exploder");
+	cardsRetch.append("Reeker");
 	if (mapNumber > 0)
 	{
-		cardsTallboy.append("Fer_Retch");
-		cardsTallboy.append("Fer_Exploder");
-		cardsTallboy.append("Fer_Reeker");
+		cardsRetch.append("Fer_Retch");
+		cardsRetch.append("Fer_Exploder");
+		cardsRetch.append("Fer_Reeker");
+		cardsRetch.append("Fer_Retch");
+		cardsRetch.append("Fer_Exploder");
+		cardsRetch.append("Fer_Reeker");
 	}
-	if (mapNumber > 1 && difficulty > 1)
+	if (mapNumber > 0 && difficulty > 1)
 	{
-		cardsTallboy.append("Mon_Retch");
-		cardsTallboy.append("Mon_Exploder");
-		cardsTallboy.append("Mon_Reeker");
+		cardsRetch.append("Mon_Retch");
+		cardsRetch.append("Mon_Exploder");
+		cardsRetch.append("Mon_Reeker");
 	}
 	corruptionRetch = ChooseCorruptionCard_ListInf(cardsRetch);
 	ApplyRetchCard();
@@ -1122,9 +1140,9 @@ function ApplyTallboyCard()
 			break;
 		case "Fer_Crusher":
 			specialTallboyType = "Crusher";
-			CorruptionCard_Crusher();
 			Fer_CrusherDamageScale = 1.3;
 			Fer_CrusherHealthScale = 1.3;
+			CorruptionCard_Crusher();
 			break;
 		case "Mon_Crusher":
 			specialTallboyType = "Crusher";
@@ -1172,12 +1190,51 @@ function ApplyHockerCard()
 	switch(corruptionHocker)
 	{
 		case "Hocker":
+			specialHockerType = "Hocker";
+			CorruptionCard_Hocker();
+			break;
+		case "Fer_Hocker":
+			specialHockerType = "Hocker";
+			Fer_HockerDamageScale = 1.3;
+			Fer_HockerHealthScale = 1.3;
+			CorruptionCard_Hocker();
+			break;
+		case "Mon_Hocker":
+			specialHockerType = "Hocker";
+			Mon_HockerDamageScale = 1.6;
+			Mon_HockerHealthScale = 1.6;
 			CorruptionCard_Hocker();
 			break;
 		case "Stinger":
+			specialHockerType = "Stinger";
+			CorruptionCard_Stinger();
+			break;
+		case "Fer_Stinger":
+			specialHockerType = "Stinger";
+			Fer_StingerDamageScale = 1.3;
+			Fer_StingerHealthScale = 1.3;
+			CorruptionCard_Stinger();
+			break;
+		case "Mon_Stinger":
+			specialHockerType = "Stinger";
+			Mon_StingerDamageScale = 1.3;
+			Mon_StingerHealthScale = 1.3;
 			CorruptionCard_Stinger();
 			break;
 		case "Stalker":
+			specialHockerType = "Stalker";
+			CorruptionCard_Stalker();
+			break;
+		case "Fer_Stalker":
+			specialHockerType = "Stalker";
+			Fer_StalkerDamageScale = 1.3;
+			Fer_StalkerHealthScale = 1.3;
+			CorruptionCard_Stalker();
+			break;
+		case "Mon_Stalker":
+			specialHockerType = "Stalker";
+			Mon_StalkerDamageScale = 1.6;
+			Mon_StalkerHealthScale = 1.6;
 			CorruptionCard_Stalker();
 			break;
 	}
@@ -1207,12 +1264,51 @@ function ApplyRetchCard()
 	switch(corruptionRetch)
 	{
 		case "Retch":
+			specialRetchType = "Retch";
+			CorruptionCard_Retch();
+			break;
+		case "Fer_Retch":
+			specialRetchType = "Retch";
+			Fer_RetchDamageScale = 1.3;
+			Fer_RetchHealthScale = 1.3;
+			CorruptionCard_Retch();
+			break;
+		case "Mon_Retch":
+			specialRetchType = "Retch";
+			Mon_RetchDamageScale = 1.6;
+			Mon_RetchHealthScale = 1.6;
 			CorruptionCard_Retch();
 			break;
 		case "Exploder":
+			specialHockerType = "Exploder";
+			CorruptionCard_Exploder();
+			break;
+		case "Fer_Exploder":
+			specialHockerType = "Exploder";
+			Fer_ExploderDamageScale = 1.3;
+			Fer_ExploderHealthScale = 1.3;
+			CorruptionCard_Exploder();
+			break;
+		case "Mon_Exploder":
+			specialHockerType = "Exploder";
+			Mon_ExploderDamageScale = 1.3;
+			Mon_ExploderHealthScale = 1.3;
 			CorruptionCard_Exploder();
 			break;
 		case "Reeker":
+			specialHockerType = "Reeker";
+			CorruptionCard_Reeker();
+			break;
+		case "Fer_Reeker":
+			specialHockerType = "Reeker";
+			Fer_ReekerDamageScale = 1.3;
+			Fer_ReekerHealthScale = 1.3;
+			CorruptionCard_Reeker();
+			break;
+		case "Mon_Reeker":
+			specialHockerType = "Reeker";
+			Mon_ReekerDamageScale = 1.6;
+			Mon_ReekerHealthScale = 1.6;
 			CorruptionCard_Reeker();
 			break;
 	}
