@@ -339,6 +339,7 @@ function WeaponFireM60(params)
 function Update()
 {
 	Update_GiveupTimer();
+	//Update_CheckpointWarp();
 	Update_PlayerCards();
 
 	if (bSwarmCircleActive)
@@ -595,5 +596,37 @@ function Update_GiveupTimer()
 				}
 			}
 		}
+	}
+}
+
+function Update_CheckpointWarp()
+{
+	local player = null;
+	while ((player = Entities.FindByClassname(player, "player")) != null)
+	{
+		if (player.IsSurvivor())
+		{
+				local survivorID = GetSurvivorID(player);
+				local flow = GetCurrentFlowPercentForPlayer(player);
+
+				if (flow == 100)
+				{
+					survivorCheckpointCount[survivorID] = true;
+				}
+				else if (IsPlayerABot(player))
+				{
+					survivorCheckpointCount[survivorID] = true;
+				}
+				else
+				{
+					survivorCheckpointCount[survivorID] = false;
+				}
+					
+				if (survivorCheckpointCount == true && survivorCheckpointWarped == false)
+				{
+					Director.WarpAllSurvivorsToCheckpoint();
+					survivorCheckpointWarped = true;
+				}
+			}
 	}
 }

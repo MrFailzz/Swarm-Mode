@@ -217,6 +217,8 @@ bChargerSpawned <- false;
 firstLeftCheckpoint <- false;
 survivorHealthBuffer <- [0, 0, 0, 0];
 survivorReviveCount <- [0, 0, 0, 0];
+survivorCheckpointCount <- [false, false, false, false];
+survivorCheckpointWarped <- false;
 ::GiveupTimer <- [0, 0, 0, 0];
 GiveupTimerDefault <- 3;
 
