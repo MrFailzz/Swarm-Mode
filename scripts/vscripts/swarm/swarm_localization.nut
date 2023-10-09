@@ -35,7 +35,7 @@ function Translation_EN(msg)
 		break;
 
 		case "#breakout_msg":
-			return "\x01" + "Hold " + "\x03" + "[MOUSE2]" + "\x01" + " to break out!";
+			return "\x01" + "Hold " + "\x03" + "[SHOVE]" + "\x01" + " to break out!";
 		break;
 
 		//PLAYER CARDS
@@ -164,7 +164,7 @@ function Translation_EN(msg)
 		break;
 
 		case "#desc_Breakout":
-			return "Hold [MOUSE2] to escape grabs, +1 Breakout attempts"
+			return "Hold [SHOVE] to escape grabs, +1 Breakout attempts"
 		break;
 
 		case "#name_AdrenalineRush":
@@ -1056,7 +1056,7 @@ function Translation_RU(msg)
 		break;
 
 		case "#breakout_msg":
-			return "\x01" + "Hold " + "\x03" + "[MOUSE2]" + "\x01" + " to break out!";
+			return "\x01" + "Hold " + "\x03" + "[SHOVE]" + "\x01" + " to break out!";
 		break;
 
 		//PLAYER CARDS
@@ -1185,7 +1185,7 @@ function Translation_RU(msg)
 		break;
 
 		case "#desc_Breakout":
-			return "Hold [MOUSE2] to escape grabs, +1 Breakout attempts"
+			return "Hold [SHOVE] to escape grabs, +1 Breakout attempts"
 		break;
 
 		case "#name_AdrenalineRush":

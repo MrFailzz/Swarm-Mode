@@ -247,16 +247,16 @@ function InitCorruptionCards()
 	// Missions
 	local cardsMission = array(1, null);
 	cardsMission.clear();
-	cardsMission.append("None");
-	if (IsMissionFinalMap() == false)
+	if (IsMissionFinalMap())
 	{
-		cardsMission.append("missionSpeedrun");
-		cardsMission.append("missionSpeedrun");
-		cardsMission.append("missionAllAlive");
-		cardsMission.append("missionAllAlive");
-		cardsMission.append("missionGnomeAlone");
-		cardsMission.append("missionGnomeAlone");
+		cardsMission.append("None");
 	}
+	cardsMission.append("missionSpeedrun");
+	cardsMission.append("missionSpeedrun");
+	cardsMission.append("missionAllAlive");
+	cardsMission.append("missionAllAlive");
+	cardsMission.append("missionGnomeAlone");
+	cardsMission.append("missionGnomeAlone");
 	corruptionMission = ChooseCorruptionCard_ListMission(cardsMission);
 	ApplyMissionCorruptionCard();
 

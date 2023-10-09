@@ -569,29 +569,34 @@ function Update_GiveupTimer()
 
 				if (player.IsIncapacitated())
 				{
-					if ((player.GetButtonMask() & IN_DUCK) && GiveupTimer[survivorID] == 0)
-					{
-						startGiveupTime = Time();
-						GiveupTimer[survivorID]++;
+					local survivorRevive = NetProps.GetPropEntity(player, "m_reviveOwner");
 
-						// Add progress bar for giving up
-						NetProps.SetPropFloat(player, "m_flProgressBarStartTime", startGiveupTime);
-						NetProps.SetPropFloat(player, "m_flProgressBarDuration", GiveupTimerDefault);
-					}
-					else if ((player.GetButtonMask() & IN_DUCK) && GiveupTimer[survivorID] > 0)
+					if (survivorRevive == null)
 					{
-						GiveupTimer[survivorID]++;
-
-						if (GiveupTimer[survivorID] > GiveupTimerDefault)
+						if ((player.GetButtonMask() & IN_DUCK) && GiveupTimer[survivorID] == 0)
 						{
-							// Kill player
-							player.TakeDamage(9999, 0, null);
+							startGiveupTime = Time();
+							GiveupTimer[survivorID]++;
+
+							// Add progress bar for giving up
+							NetProps.SetPropFloat(player, "m_flProgressBarStartTime", startGiveupTime);
+							NetProps.SetPropFloat(player, "m_flProgressBarDuration", GiveupTimerDefault);
 						}
-					}
-					else
-					{
-						GiveupTimer[survivorID] = 0;
-						NetProps.SetPropFloat(player, "m_flProgressBarDuration", 0);
+						else if ((player.GetButtonMask() & IN_DUCK) && GiveupTimer[survivorID] > 0)
+						{
+							GiveupTimer[survivorID]++;
+
+							if (GiveupTimer[survivorID] > GiveupTimerDefault)
+							{
+								// Kill player
+								player.TakeDamage(9999, 0, null);
+							}
+						}
+						else
+						{
+							GiveupTimer[survivorID] = 0;
+							NetProps.SetPropFloat(player, "m_flProgressBarDuration", 0);
+						}
 					}
 				}
 			}
