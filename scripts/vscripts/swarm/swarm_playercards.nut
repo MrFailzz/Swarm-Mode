@@ -94,6 +94,16 @@ function InitCardPicking(shuffle = false)
 	if (shuffle == false)
 	{
 		local cardPicks = 1 + missionsCompleted["completed"];
+
+		if (Director.IsSessionStartMap() == true)
+		{
+			cardPicks = 2 + missionsCompleted["completed"];
+		}
+		else
+		{
+			cardPicks = 1 + missionsCompleted["completed"];
+		}
+		
 		cardPickingAllowed = [cardPicks, cardPicks, cardPicks, cardPicks];
 		ClientPrint(null, 3, "\x01" + "Use " + "\x03" + "!pick [A-H]\x01" + " to choose a card (" + "\x03" + cardPicks + " remaining" + "\x01" + ")");
 	}

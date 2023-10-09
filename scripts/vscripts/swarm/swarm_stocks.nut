@@ -338,7 +338,7 @@ function WeaponFireM60(params)
 ///////////////////////////////////////////////
 function Update()
 {
-	UpdateGiveupTimer();
+	Update_GiveupTimer();
 	Update_PlayerCards();
 
 	if (bSwarmCircleActive)
@@ -554,7 +554,7 @@ function PropModels()
 	}	
 }
 
-function UpdateGiveupTimer()
+function Update_GiveupTimer()
 {
 	local player = null;
 	while ((player = Entities.FindByClassname(player, "player")) != null)
