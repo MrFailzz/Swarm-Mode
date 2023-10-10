@@ -35,7 +35,7 @@ function Translation_EN(msg)
 		break;
 
 		case "#breakout_msg":
-			return "\x01" + "Hold " + "\x03" + "[SHOVE]" + "\x01" + " to break out!";
+			return "\x01" + "Hold " + "\x03" + "[MOUSE2]" + "\x01" + " to break out!";
 		break;
 
 		//PLAYER CARDS
@@ -164,7 +164,7 @@ function Translation_EN(msg)
 		break;
 
 		case "#desc_Breakout":
-			return "Hold [SHOVE] to escape grabs, +1 Breakout attempts"
+			return "Hold [MOUSE2] to escape grabs, +1 Breakout attempts"
 		break;
 
 		case "#name_AdrenalineRush":
@@ -268,7 +268,7 @@ function Translation_EN(msg)
 		break;
 
 		case "#desc_BombSquad":
-			return "+150% Explosive DMG"
+			return "+150% Explosive Team DMG"
 		break;
 
 		case "#name_ConfidentKiller":
@@ -1048,216 +1048,216 @@ function Translation_RU(msg)
 	{
 		//CHAT MESSAGES
 		case "#lang_localization":
-			return "Русский localization";
+			return "Русская локализация";
 		break;
 
 		case "#giveup_msg":
-			return "\x01" + "Hold " + "\x03" + "[CROUCH]" + "\x01" + " to die...";
+			return "\x01" + "Удерживайте " + "\x03" + "[CROUCH]" + "\x01" + " чтобы умереть...";
 		break;
 
 		case "#breakout_msg":
-			return "\x01" + "Hold " + "\x03" + "[SHOVE]" + "\x01" + " to break out!";
+			return "\x01" + "Удерживайте " + "\x03" + "[MOUSE2]" + "\x01" + " чтобы вырваться!";
 		break;
 
 		//PLAYER CARDS
 		case "#name_Nick":
-			return "Nick (+5% DMG)"
+			return "Ник (+5% к УРН)"
 		break;
 
 		case "#desc_Nick":
-			return "+5% DMG"
+			return "+5% к УРН"
 		break;
 
 		case "#name_Rochelle":
-			return "Rochelle (+10% Heal EFF)"
+			return "Рошелль (+10% к Эффективности от Лечения)"
 		break;
 
 		case "#desc_Rochelle":
-			return "+10% Heal EFF"
+			return "+10% к Эффективности от Лечения"
 		break;
 
 		case "#name_Coach":
-			return "Coach (+10 Max HP)"
+			return "Тренер (+10 к МАКС ХП)"
 		break;
 
 		case "#desc_Coach":
-			return "+10 Max HP"
+			return "+10 к МАКС ХП"
 		break;
 
 		case "#name_Ellis":
-			return "Ellis (+5% CRIT Chance)"
+			return "Эллис (+5% шанс на КРИТ)"
 		break;
 
 		case "#desc_Ellis":
-			return "+5% CRIT Chance"
+			return "+5% шанс на КРИТ"
 		break;
 
 		case "#name_Bill":
-			return "Bill (+10% Reload Speed)"
+			return "Билл (+10% к Скорости перезарядки)"
 		break;
 
 		case "#desc_Bill":
-			return "+10% Reload Speed"
+			return "+10% к Скорости перезарядки"
 		break;
 
 		case "#name_Zoey":
-			return "Zoey (+10% Melee DMG)"
+			return "Зои (+10% УРН к Рукопашному бою)"
 		break;
 
 		case "#desc_Zoey":
-			return "+10% Melee DMG"
+			return "+10% УРН к Рукопашному бою"
 		break;
 
 		case "#name_Louis":
-			return "Louis (+10% Move Speed)"
+			return "Луис (+10% к Скорости Передвижения)"
 		break;
 
 		case "#desc_Louis":
-			return "+10% Move Speed"
+			return "+10% к Скорости Передвижения"
 		break;
 
 		case "#name_Francis":
-			return "Francis (+10% DEF)"
+			return "Френсис (+10% ЗЩТ)"
 		break;
 
 		case "#desc_Francis":
-			return "+10% DEF"
+			return "+10% ЗЩТ"
 		break;
 
 		case "#name_GlassCannon":
-			return "Glass Cannon"
+			return "Стеклянная Пушка"
 		break;
 
 		case "#desc_GlassCannon":
-			return "+30% DMG, -20% DEF"
+			return "+30% УРН, -20% ЗЩТ"
 		break;
 
 		case "#name_Sharpshooter":
-			return "Sharpshooter"
+			return "Меткий стрелок"
 		break;
 
 		case "#desc_Sharpshooter":
-			return "+25% DMG past 10m"
+			return "+25% к УРН после 10м"
 		break;
 
 		case "#name_Outlaw":
-			return "Outlaw"
+			return "Ковбой вне закона"
 		break;
 
 		case "#desc_Outlaw":
-			return "+100% Pistol / Magnum DMG"
+			return "+100% к УРН Пистолетами / Магнумом"
 		break;
 
 		case "#name_Overconfident":
-			return "Overconfident"
+			return "Излишне Самоуверенный"
 		break;
 
 		case "#desc_Overconfident":
-			return "+25% DEF at max lives"
+			return "+25% к ЗЩТ в состоянии всех жизней (без инкапов)"
 		break;
 
 		case "#name_Slugger":
-			return "Slugger"
+			return "Слаггер"
 		break;
 
 		case "#desc_Slugger":
-			return "+30% Melee Speed"
+			return "+30% к Скорости рукопашного оружия"
 		break;
 
 		case "#name_MethHead":
-			return "Meth Head"
+			return "Метамфетаминоголовый"
 		break;
 
 		case "#desc_MethHead":
-			return "+2.5% Move / Melee Speed per Mutation kill"
+			return "+2.5% к скорости Передвижения / Использования Рукопашного оружия за каждое убийство Мутанта"
 		break;
 
 		case "#name_OpticsEnthusiast":
-			return "Optics Enthusiast"
+			return "Энтузиаст в оптике"
 		break;
 
 		case "#desc_OpticsEnthusiast":
-			return "Gain laser sights (+60% ACC)"
+			return "Получить лазерный прицел (+60% Точности)"
 		break;
 
 		case "#name_Breakout":
-			return "Breakout"
+			return "Вырваться"
 		break;
 
 		case "#desc_Breakout":
-			return "Hold [SHOVE] to escape grabs, +1 Breakout attempts"
+			return "Удерживайте [MOUSE2] чтобы вырваться из захвата, +1 попытка к карте Вырваться"
 		break;
 
 		case "#name_AdrenalineRush":
-			return "Adrenaline Rush"
+			return "Выброс Адреналина"
 		break;
 
 		case "#desc_AdrenalineRush":
-			return "Adrenaline on Team incap"
+			return "Адреналин для всей Комманды после инкапа"
 		break;
 
 		case "#name_HelpingHand":
-			return "Helping Hand"
+			return "Рука Помощи"
 		break;
 
 		case "#desc_HelpingHand":
-			return "+50% Team Revive Speed"
+			return "+50% к Скорости поднятия для всей Команды"
 		break;
 
 		case "#name_CombatMedic":
-			return "Combat Medic"
+			return "Полевой Медик"
 		break;
 
 		case "#desc_CombatMedic":
-			return "+15 HP on all revives, +15% Team Revive Speed"
+			return "+15 ХП на каждый ривайв, +15% к Командной скорости ривайвов"
 		break;
 
 		case "#name_AmpedUp":
-			return "Amped Up"
+			return "Подзарядка"
 		break;
 
 		case "#desc_AmpedUp":
-			return "Non-event hordes heal +20 Team HP (5s CD)"
+			return "Спавн орды не на евенте лечит +20 ХП Команде (5c откат)"
 		break;
 
 		case "#name_Addict":
-			return "Addict"
+			return "Накроман"
 		break;
 
 		case "#desc_Addict":
-			return "+50% Temp Heal EFF, perks by Temp HP level"
+			return "+50% к ЭФФ Лечения Быстрым Здоровьем, кратно уровню ХП Команды"
 		break;
 
 		case "#name_FleetOfFoot":
-			return "Fleet of Foot"
+			return "Ноги скороходы"
 		break;
 
 		case "#desc_FleetOfFoot":
-			return "+12.5% Move Speed, -10 Max HP"
+			return "+12.5% Скорости Передвижения, -10 МАКС ХП"
 		break;
 
 		case "#name_CrossTrainers":
-			return "Cross Trainers"
+			return "Кроссовки"
 		break;
 
 		case "#desc_CrossTrainers":
-			return "+7% Move Speed, +5 Max HP"
+			return "+7% Скорости Передвижения, +5 МАКС ХП"
 		break;
 
 		case "#name_Multitool":
-			return "Multitool"
+			return "Мультитул"
 		break;
 
 		case "#desc_Multitool":
-			return "+50% Team Use Speed, -5% DEF"
+			return "+50% к Скорости Применения для всей Команды, -5% ЗЩТ"
 		break;
 
 		case "#name_RunLikeHell":
-			return "Run Like Hell"
+			return "Бежать со всех сил"
 		break;
 
 		case "#desc_RunLikeHell":
-			return "+30% Move Speed, -15% DEF, +75% Shove CD"
+			return "+30% Скорости Передвижения, -15% ЗЩТ, +75% к откату Отталкивания"
 		break;
 
 		case "#name_Quickdraw":
@@ -1269,83 +1269,83 @@ function Translation_RU(msg)
 		break;
 
 		case "#name_Broken":
-			return "Boss Killer"
+			return "Убийца Боссов"
 		break;
 
 		case "#desc_Broken":
-			return "+20% DMG vs Bosses"
+			return "+20% УРН на Боссов"
 		break;
 
 		case "#name_Pyromaniac":
-			return "Pyromaniac"
+			return "Пироман"
 		break;
 
 		case "#desc_Pyromaniac":
-			return "+150% Fire DMG"
+			return "+150% УРН Огнём"
 		break;
 
 		case "#name_BombSquad":
-			return "Bomb Squad"
+			return "Отряд Подрывников"
 		break;
 
 		case "#desc_BombSquad":
-			return "+150% Explosive DMG"
+			return "+150% к УРН Взрывами Команды"
 		break;
 
 		case "#name_ConfidentKiller":
-			return "Confident Killer"
+			return "Уверенный Убийца"
 		break;
 
 		case "#desc_ConfidentKiller":
-			return "+2.5% DMG per Mutation death"
+			return "+2.5% УРН за каждого убитого Мутанта"
 		break;
 
 		case "#name_CannedGoods":
-			return "Canned Goods"
+			return "Банка здоровья"
 		break;
 
 		case "#desc_CannedGoods":
-			return "+40 Max HP, +25% Shove CD"
+			return "+40 МАКС ХП, +25% откат Отталкивания"
 		break;
 
 		case "#name_SlowAndSteady":
-			return "Slow and Steady"
+			return "Медленно, но уверенно"
 		break;
 
 		case "#desc_SlowAndSteady":
-			return "+50 Max HP, -10% Move Speed"
+			return "+50 МАКС ХП, -10% к Скорости Передвижения"
 		break;
 
 		case "#name_ToughSkin":
-			return "Tough Skin"
+			return "Толстокожий"
 		break;
 
 		case "#desc_ToughSkin":
-			return "+40% DEF vs Commons"
+			return "+40% ЗЩТ от обычных зараженных"
 		break;
 
 		case "#name_ScarTissue":
-			return "Scar Tissue"
+			return "Рубцовая Кожа"
 		break;
 
 		case "#desc_ScarTissue":
-			return "+30% DEF, -50% Heal EFF"
+			return "+30% ЗЩТ, -50% к Эффективности от Лечения"
 		break;
 
 		case "#name_ChemicalBarrier":
-			return "Chemical Barrier"
+			return "Поверхностный барьер"
 		break;
 
 		case "#desc_ChemicalBarrier":
-			return "+50% Acid DEF"
+			return "+50% ЗЩТ от Кислоты"
 		break;
 
 		case "#name_FaceYourFears":
-			return "Face Your Fears"
+			return "Лицом к Страху"
 		break;
 
 		case "#desc_FaceYourFears":
-			return "+2 Temp HP on kill within 2.5m"
+			return "+2 временного ХП на убийства в пределе 2.5м"
 		break;
 
 		case "#name_Numb":
@@ -1357,11 +1357,11 @@ function Translation_RU(msg)
 		break;
 
 		case "#name_MeanDrunk":
-			return "Mean Drunk"
+			return "Злой Пьяница"
 		break;
 
 		case "#desc_MeanDrunk":
-			return "+20% Melee DMG, +20 Max HP"
+			return "+20% Рукопашного УРН, +20 МАКС ХП"
 		break;
 
 		case "#name_BattleLust":
@@ -1373,19 +1373,19 @@ function Translation_RU(msg)
 		break;
 
 		case "#name_Brawler":
-			return "Brawler"
+			return "Дебошир"
 		break;
 
 		case "#desc_Brawler":
-			return "+50 Shove DMG"
+			return "+50 УРН Отталкиванием"
 		break;
 
 		case "#name_Berserker":
-			return "Berserker"
+			return "Берсерк"
 		break;
 
 		case "#desc_Berserker":
-			return "+25% Melee DMG, +5% Move Speed"
+			return "+25% УРН Рукопашным боем, +5% Скорости Передвижения"
 		break;
 
 		case "#name_HeavyHitter":
@@ -1405,43 +1405,43 @@ function Translation_RU(msg)
 		break;
 
 		case "#name_SwanSong":
-			return "Swan Song"
+			return "Лебединая Песня"
 		break;
 
 		case "#desc_SwanSong":
-			return "+100% CRIT chance while incapped"
+			return "+100% к шансу на КРИТ когда в инкапе"
 		break;
 
 		case "#name_LastLegs":
-			return "Last Legs"
+			return "Ползунком"
 		break;
 
 		case "#desc_LastLegs":
-			return "Team can crawl while incapped"
+			return "Команда может ползти когда в инкапе"
 		break;
 
 		case "#name_StrengthInNumbers":
-			return "Strength In Numbers"
+			return "Сила в количестве"
 		break;
 
 		case "#desc_StrengthInNumbers":
-			return "+2.5% Team DMG per alive Cleaner"
+			return "+2.5% к УРН Команды за каждого живого Чистильщика"
 		break;
 
 		case "#name_BOOM":
-			return "BOOM!"
+			return "БУМ!"
 		break;
 
 		case "#desc_BOOM":
-			return "Headshot kills cause an explosion"
+			return "Убийство в голову приводит к взрыву"
 		break;
 
 		case "#name_FireProof":
-			return "Fire Proof"
+			return "Защита от огня"
 		break;
 
 		case "#desc_FireProof":
-			return "+50% Fire DEF"
+			return "+50% ЗЩТ от огня"
 		break;
 
 		case "#name_Kneecapper":
@@ -1453,35 +1453,35 @@ function Translation_RU(msg)
 		break;
 
 		case "#name_Brazen":
-			return "Brazen"
+			return "Наглость"
 		break;
 
 		case "#desc_Brazen":
-			return "+40% Melee DMG, -25% Reload Speed"
+			return "+40% УРН Рукопашным боем, -25% Скорости перезарядки"
 		break;
 
 		case "#name_MarkedForDeath":
-			return "Marked for Death"
+			return "Смертельно помечен"
 		break;
 
 		case "#desc_MarkedForDeath":
-			return "+10% Team DMG vs Pinged Mutations"
+			return "+10% к УРН Команды на Помеченных Мутантов"
 		break;
 
 		case "#name_PackMule":
-			return "Pack Mule"
+			return "Загруженный мул"
 		break;
 
 		case "#desc_PackMule":
-			return "+40% Team Max Ammo"
+			return "+40% к МАКС патронам Команды"
 		break;
 
 		case "#name_Resupply":
-			return "Resupply"
+			return "Подзапаска"
 		break;
 
 		case "#desc_Resupply":
-			return "+10% Ammo on Mutation kill"
+			return "+10% Патронов на убийство Мутанта"
 		break;
 
 		case "#name_Suppression":
@@ -1493,99 +1493,99 @@ function Translation_RU(msg)
 		break;
 
 		case "#name_EyeOfTheSwarm":
-			return "Eye of the Swarm"
+			return "Под Куполом Сворма"
 		break;
 
 		case "#desc_EyeOfTheSwarm":
-			return "+50% DMG in the Swarm Circle"
+			return "+50% к УРН внутри пределов купола Сворма"
 		break;
 
 		case "#name_EMTBag":
-			return "EMT Bag"
+			return "Аптечка Первой Помощи"
 		break;
 
 		case "#desc_EMTBag":
-			return "+50% Heal EFF"
+			return "+50% к Эффективности лечения"
 		break;
 
 		case "#name_AntibioticOintment":
-			return "Antibiotic Ointment"
+			return "Антибактериальная Смазка"
 		break;
 
 		case "#desc_AntibioticOintment":
-			return "+25% Heal EFF, +15 Temp HP to target"
+			return "+25% к Эффективности лечения, +15 временного ХП на цель"
 		break;
 
 		case "#name_MedicalExpert":
-			return "Medical Expert"
+			return "Экспертный Медик"
 		break;
 
 		case "#desc_MedicalExpert":
-			return "+30% Team Heal EFF, +10% Team Revive Speed"
+			return "+30% к Эффективности лечения Команды, +10% к Скорости ривайва Команды"
 		break;
 
 		case "#name_Cauterized":
-			return "Cauterized"
+			return "Прижигание"
 		break;
 
 		case "#desc_Cauterized":
-			return "+50% Slower Team Temp HP Decay"
+			return "+50% к замедлению убывания временного ХП Команды"
 		break;
 
 		case "#name_GroupTherapy":
-			return "Group Therapy"
+			return "Групповая Терапия"
 		break;
 
 		case "#desc_GroupTherapy":
-			return "Team shares 20% of health item uses"
+			return "Команда делит 20% здоровья после использования предметов лечения"
 		break;
 
 		case "#name_InspiringSacrifice":
-			return "Inspiring Sacrifice"
+			return "Вдохновляющая Жертва"
 		break;
 
 		case "#desc_InspiringSacrifice":
-			return "+25 Team Temp HP after incap"
+			return "+25 к временному ХП Команды после инкапа"
 		break;
 
 		case "#name_ReloadDrills":
-			return "Reload Drills"
+			return "Навыки Перезярядки"
 		break;
 
 		case "#desc_ReloadDrills":
-			return "+25% Reload Speed"
+			return "+25% к Скорости Перезарядки"
 		break;
 
 		case "#name_MagCoupler":
-			return "Mag Coupler"
+			return "Модифицированный Магазин"
 		break;
 
 		case "#desc_MagCoupler":
-			return "+75% Reload Speed, +100% Shove CD"
+			return "+75% к Скорости Перезарядки, +100% к откату Отталкивания"
 		break;
 
 		case "#name_LuckyShot":
-			return "Lucky Shot"
+			return "Удачный выстрел"
 		break;
 
 		case "#desc_LuckyShot":
-			return "+7% Team CRIT Chance (+400% DMG)"
+			return "+7% шанс на КРИТ у всей Команды (+400% УРН)"
 		break;
 
 		case "#name_Selfless":
-			return "Selfless"
+			return "Самопожертвование"
 		break;
 
 		case "#desc_Selfless":
-			return "-15 Max HP, +20 Team Max HP"
+			return "-15 МАКС ХП, +20 МАКС ХП Команды"
 		break;
 
 		case "#name_Selfish":
-			return "Selfish"
+			return "Самолюбие"
 		break;
 
 		case "#desc_Selfish":
-			return "+40 Max HP, -5 Team Max HP"
+			return "+40 МАКС ХП, -5 МАКС ХП Команды"
 		break;
 
 		case "#name_OutWithABang":
@@ -1597,27 +1597,27 @@ function Translation_RU(msg)
 		break;
 
 		case "#name_HeightendSenses":
-			return "Heightend Senses"
+			return "Обострённые чувства"
 		break;
 
 		case "#desc_HeightendSenses":
-			return "Ping Mutations, Hazards and Items in 7.5m"
+			return "Пометить Мутантов, Ловушки и Предметы в пределе 7.5м"
 		break;
 
 		case "#name_HotShot":
-			return "Hot Shot"
+			return "Отличный стрелок"
 		break;
 
 		case "#desc_HotShot":
-			return "Apply Ammo Upgrade on Mutation kill"
+			return "Апргейд патронов за убийство Мутанта"
 		break;
 
 		case "#name_Pinata":
-			return "Piñata"
+			return "Пиньята"
 		break;
 
 		case "#desc_Pinata":
-			return "+15% chance of item on Mutation death"
+			return "+15% шанс получить предмет после убийства Мутанта"
 		break;
 
 		case "#name_RefundPolicy":
@@ -1645,123 +1645,123 @@ function Translation_RU(msg)
 		break;
 
 		case "#name_WellRested":
-			return "Well Rested"
+			return "Хорошо отдохнувший"
 		break;
 
 		case "#desc_WellRested":
-			return "Team fully heals each chapter"
+			return "Команда полностью вылечена после каждой главы"
 		break;
 
 		case "#name_BuckshotBruiser":
-			return "Buckshot Bruiser"
+			return "Картечь"
 		break;
 
 		case "#desc_BuckshotBruiser":
-			return "+0.25 Temp HP per Shotgun pellet"
+			return "+0.25 к временному ХП за каджую дробинку Дробовика"
 		break;
 
 		case "#name_Arsonist":
-			return "Arsonist"
+			return "Поджигатель"
 		break;
 
 		case "#desc_Arsonist":
-			return "+0.1 Temp HP per Fire DMG"
+			return "+0.1 временного ХП на каждый УРН Огнём"
 		break;
 
 		case "#name_NeedsOfTheMany":
-			return "Needs of the Many"
+			return "Потребности многих"
 		break;
 
 		case "#desc_NeedsOfTheMany":
-			return "+1 Team Life, -10 Max HP"
+			return "+1 к жизням Команды, -10 МАКС ХП"
 		break;
 
 		case "#name_Lumberjack":
-			return "Lumberjack"
+			return "Лесоруб"
 		break;
 
 		case "#desc_Lumberjack":
-			return "+200% Team Chainsaw DMG"
+			return "+200% к УРН бензопилой Команды"
 		break;
 
 		case "#name_Cannoneer":
-			return "Cannoneer"
+			return "Пушечник"
 		break;
 
 		case "#desc_Cannoneer":
-			return "+200% Team Grenade Launcher DMG"
+			return "+200% к УРН гранатомётом Команды"
 		break;
 
 		case "#name_Gambler":
-			return "Gambler"
+			return "Азартный Игрок"
 		break;
 
 		case "#desc_Gambler":
-			return "Randomized stats each map!"
+			return "Рандомные статы каждую карту!"
 		break;
 
 		case "#name_DownInFront":
-			return "Down In Front"
+			return "Отойти с пути"
 		break;
 
 		case "#desc_DownInFront":
-			return "No FF DMG when crouched"
+			return "Не наносить УРН своим когда приседаешь"
 		break;
 
 		case "#name_Shredder":
-			return "Shredder"
+			return "Шреддер"
 		break;
 
 		case "#desc_Shredder":
-			return "+1% DMG per shot fired until reload"
+			return "+1% УРН за выстрел вплоть до перезарядки"
 		break;
 
 		case "#name_CleanKill":
-			return "Clean Kill"
+			return "Чистое Убийство"
 		break;
 
 		case "#desc_CleanKill":
-			return "Precision kills give +5% DMG, Resets when DMG taken"
+			return "Точное добивание в голову даёт +5% к УРН, Обнуляется когда УРН был получен"
 		break;
 
 		case "#name_ExperiencedEMT":
-			return "Experienced EMT"
+			return "Опытный Медэксперт"
 		break;
 
 		case "#desc_ExperiencedEMT":
-			return "Cleaners you heal gain +25 Max HP"
+			return "Чистильщиков которых вы лечите получают +25 к МАКС ХП"
 		break;
 
 		case "#name_WellFed":
-			return "Well Fed"
+			return "Хорошо накормлен"
 		break;
 
 		case "#desc_WellFed":
-			return "+10 Team Max HP"
+			return "+10 к МАКС ХП Команды"
 		break;
 
 		case "#name_MedicalProfessional":
-			return "Medical Professional"
+			return "Медик Профессионал"
 		break;
 
 		case "#desc_MedicalProfessional":
-			return "Medkits and Defibs heal +10 HP and 1 Extra Life"
+			return "Аптечки и Дефибприляторы дают +10 ХП и 1 Жизнь"
 		break;
 
 		case "#name_Screwdriver":
-			return "Screwdriver"
+			return "Отвёртка"
 		break;
 
 		case "#desc_Screwdriver":
-			return "+25% Team Use Speed"
+			return "+25% к Скорости Использования Команды"
 		break;
 
 		case "#name_SmellingSalts":
-			return "Smelling Salts"
+			return "Нюхательная соль"
 		break;
 
 		case "#desc_SmellingSalts":
-			return "+150% Team Revive Speed, Reduces Revive HP"
+			return "+150% к скорости ривайва Команды, Уменьшает кол-во ХП у поднятого"
 		break;
 
 		//CORRUPTION CARDS
@@ -1922,11 +1922,11 @@ function Translation_RU(msg)
 		break;
 
 		case "#cor_Fer_Tallboy":
-			return "Ferocious Tallboys"
+			return "Свирепые Толлбои"
 		break;
 
 		case "#cor_Mon_Tallboy":
-			return "Monstrous Tallboys"
+			return "Монструозные Толлбои"
 		break;
 
 		case "#cor_Crusher":
@@ -1934,11 +1934,11 @@ function Translation_RU(msg)
 		break;
 
 		case "#cor_Fer_Crusher":
-			return "Ferocious Crushers"
+			return "Свирепые Крашеры"
 		break;
 
 		case "#cor_Mon_Crusher":
-			return "Monstrous Crushers"
+			return "Монструозные Крашеры"
 		break;
 
 		case "#cor_Bruiser":
@@ -1946,11 +1946,11 @@ function Translation_RU(msg)
 		break;
 
 		case "#cor_Fer_Bruiser":
-			return "Ferocious Bruisers"
+			return "Свирепые Брузеры"
 		break;
 
 		case "#cor_Mon_Bruiser":
-			return "Monstrous Bruisers"
+			return "Монструозные Брузеры"
 		break;
 
 		case "#cor_Hocker":
@@ -1958,11 +1958,11 @@ function Translation_RU(msg)
 		break;
 
 		case "#cor_Fer_Hocker":
-			return "Ferocious Hockers"
+			return "Свирепые Хокеры"
 		break;
 
 		case "#cor_Mon_Hocker":
-			return "Monstrous Hockers"
+			return "Монструозные Хокеры"
 		break;
 
 		case "#cor_Stinger":
@@ -1970,11 +1970,11 @@ function Translation_RU(msg)
 		break;
 
 		case "#cor_Fer_Stinger":
-			return "Ferocious Stingers"
+			return "Свирепые Стингеры"
 		break;
 
 		case "#cor_Mon_Stinger":
-			return "Monstrous Stingers"
+			return "Монструозные Стингеры"
 		break;
 
 		case "#cor_Stalker":
@@ -1982,11 +1982,11 @@ function Translation_RU(msg)
 		break;
 
 		case "#cor_Fer_Stalker":
-			return "Ferocious Stalkers"
+			return "Свирепые Сталкеры"
 		break;
 
 		case "#cor_Mon_Stalker":
-			return "Monstrous Stalkers"
+			return "Монструозные Сталкеры"
 		break;
 
 		case "#cor_Retch":
@@ -1994,11 +1994,11 @@ function Translation_RU(msg)
 		break;
 
 		case "#cor_Fer_Retch":
-			return "Ferocious Retches"
+			return "Свирепые Ретчи"
 		break;
 
 		case "#cor_Mon_Retch":
-			return "Monstrous Retches"
+			return "Монструозные Ретчи"
 		break;
 
 		case "#cor_Exploder":
@@ -2006,11 +2006,11 @@ function Translation_RU(msg)
 		break;
 
 		case "#cor_Fer_Exploder":
-			return "Ferocious Exploders"
+			return "Свирепые Эксплодеры"
 		break;
 
 		case "#cor_Mon_Exploder":
-			return "Monstrous Exploders"
+			return "Монструозные Эксплодеры"
 		break;
 
 		case "#cor_Reeker":
@@ -2018,11 +2018,11 @@ function Translation_RU(msg)
 		break;
 
 		case "#cor_Fer_Reeker":
-			return "Ferocious Reekers"
+			return "Свирепые Рикеры"
 		break;
 
 		case "#cor_Mon_Reeker":
-			return "Monstrous Reekers"
+			return "Монструозные Рикеры"
 		break;
 
 		case "#cor_hazardSnitch":
