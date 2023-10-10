@@ -73,7 +73,7 @@ function MutationSpawn(player)
 
 
 ///////////////////////////////////////////////
-//             HOCKER KNOCKBACK              //
+//                  HOCKER                   //
 ///////////////////////////////////////////////
 function TongueGrab(params)
 {
@@ -169,9 +169,6 @@ function VictimShoved(params)
 	}
 }
 
-///////////////////////////////////////////////
-//             STINGER PROJECTILE            //
-///////////////////////////////////////////////
 function StingerProjectile(params)
 {
 	if (specialHockerType == "Stinger")
@@ -346,6 +343,29 @@ function TallboyKnockback(tallboy, survivor)
 	local angle = GetVectorAngle(survivorOrigin, tallboyOrigin);
 	survivor.SetOrigin(Vector(survivorOrigin.x, survivorOrigin.y, survivorOrigin.z + 1));
 	survivor.SetVelocity(Vector(sin(angle + 90) * tallboyPunchKnockback, sin(angle) * tallboyPunchKnockback, 180));
+}
+
+function BruiserKnockback(bruiser)
+{
+	if (specialTallboyType == "Bruiser")
+	{
+		local survivor = null;
+		local tallboyOrigin = bruiser.GetOrigin();
+
+		bruiser.Stagger(Vector(0, 0, 0));
+		while ((survivor = Entities.FindByClassnameWithin(survivor, "bruiser", tallboyOrigin, 224)) != null)
+		{
+			if (survivor.IsSurvivor())
+			{
+				local survivorOrigin = survivor.GetOrigin();
+				local angle = GetVectorAngle(survivorOrigin, tallboyOrigin);
+
+				survivor.TakeDamage(12.5, DMG_CLUB, bruiser)
+				survivor.SetOrigin(Vector(survivorOrigin.x, survivorOrigin.y, survivorOrigin.z + 1));
+				survivor.SetVelocity(Vector(sin(angle + 90) * tallboyPunchKnockback, sin(angle) * tallboyPunchKnockback, 180));
+			}
+		}
+	}
 }
 
 function CrusherGrab(tallboy, survivor)

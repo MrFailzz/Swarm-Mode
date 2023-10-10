@@ -11,7 +11,6 @@
 
 	convar
 	{
-		charger_pz_claw_dmg 10
 		z_charge_duration 1
 		z_charge_interval 6
 		z_charge_max_speed 400
@@ -19,7 +18,6 @@
 		z_charge_min_force 0
 
 		z_jockey_speed 210
-		z_jockey_ride_damage 2
 		z_jockey_ride_damage_interval 0.5
 		z_pounce_stumble_radius 180
 		z_jockey_control_variance 0
@@ -28,7 +26,6 @@
 		z_jockey_leap_range 500
 		z_leap_power 600
 		z_leap_interval_post_incap 10
-		jockey_pz_claw_dmg 4
 		
 		tongue_victim_max_speed 0
 		tongue_bullet_radius 0
@@ -38,17 +35,12 @@
 		tongue_dropping_to_ground_time 0.5
 		tongue_los_forgiveness_time 1.5
 		tongue_no_progress_choke_early_delay 1.0
-		tongue_choke_damage_amount 5
-		smoker_pz_claw_dmg 4
 
-		boomer_pz_claw_dmg 4
 		z_vomit_velocity 4000
 		z_vomit_velocityfadestart 1.8
 		z_vomit_velocityfadeend 2.5
 		z_vomit_lifetime 2.5
 		z_vomit_maxdamagedist 1800
-		z_exploding_shove_max 99
-		z_exploding_shove_min 99
 		z_vomit_interval 8
 		z_vomit_hit_pitch_max 0
 		z_vomit_hit_pitch_min 0

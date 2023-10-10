@@ -35,7 +35,7 @@ function Translation_EN(msg)
 		break;
 
 		case "#breakout_msg":
-			return "\x01" + "Hold " + "\x03" + "[MOUSE2]" + "\x01" + " to break out!";
+			return "\x01" + "Hold " + "\x03" + "[SHOVE]" + "\x01" + " to break out!";
 		break;
 
 		//PLAYER CARDS
@@ -164,7 +164,7 @@ function Translation_EN(msg)
 		break;
 
 		case "#desc_Breakout":
-			return "Hold [MOUSE2] to escape grabs, +1 Breakout attempts"
+			return "Hold [SHOVE] to escape grabs, +1 Breakout attempts"
 		break;
 
 		case "#name_AdrenalineRush":
@@ -1052,11 +1052,11 @@ function Translation_RU(msg)
 		break;
 
 		case "#giveup_msg":
-			return "\x01" + "Удерживайте " + "\x03" + "[CROUCH]" + "\x01" + " чтобы умереть...";
+			return "\x01" + "Удерживайте " + "\x03" + "[УТКА]" + "\x01" + " чтобы умереть...";
 		break;
 
 		case "#breakout_msg":
-			return "\x01" + "Удерживайте " + "\x03" + "[MOUSE2]" + "\x01" + " чтобы вырваться!";
+			return "\x01" + "Удерживайте " + "\x03" + "[ПИХАТЬ]" + "\x01" + " чтобы вырваться!";
 		break;
 
 		//PLAYER CARDS
@@ -1169,7 +1169,7 @@ function Translation_RU(msg)
 		break;
 
 		case "#desc_MethHead":
-			return "+2.5% к скорости Передвижения / Использования Рукопашного оружия за каждое убийство Мутанта"
+			return "+2.5% Движение/Оружие ближнего боя за каждое убийство мутанта"
 		break;
 
 		case "#name_OpticsEnthusiast":
@@ -1185,7 +1185,7 @@ function Translation_RU(msg)
 		break;
 
 		case "#desc_Breakout":
-			return "Удерживайте [MOUSE2] чтобы вырваться из захвата, +1 попытка к карте Вырваться"
+			return "Удерживайте [ПИХАТЬ], чтобы вырваться на свободу, +1 попытка вырваться"
 		break;
 
 		case "#name_AdrenalineRush":
@@ -1249,7 +1249,7 @@ function Translation_RU(msg)
 		break;
 
 		case "#desc_Multitool":
-			return "+50% к Скорости Применения для всей Команды, -5% ЗЩТ"
+			return "+50% командной скорости сотворения чар, -5% ЗАЩ."
 		break;
 
 		case "#name_RunLikeHell":
