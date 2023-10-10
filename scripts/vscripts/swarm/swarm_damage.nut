@@ -254,7 +254,7 @@ function AllowTakeDamage(damageTable)
 				//BombSquad
 				if ((damageType & DMG_BLAST) == DMG_BLAST || (damageType & DMG_BLAST_SURFACE) == DMG_BLAST_SURFACE)
 				{
-					BombSquad = PlayerHasCard(attacker, "BombSquad");
+					BombSquad = TeamHasCard(attacker, "BombSquad");
 				}
 
 				//LuckyShot
@@ -328,7 +328,7 @@ function AllowTakeDamage(damageTable)
 								 + (1 * Outlaw)
 								 + (0.2 * Broken)
 								 + (1.5 * Pyromaniac)
-								 + (1.5 * BombSquad)
+								 + (1 * BombSquad)
 								 + (3 * LuckyShotRoll)
 								 + (0.5 * EyeOfTheSwarmAttacker)
 								 + (0.4 * Brazen)

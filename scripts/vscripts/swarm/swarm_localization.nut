@@ -268,7 +268,7 @@ function Translation_EN(msg)
 		break;
 
 		case "#desc_BombSquad":
-			return "+150% Explosive Team DMG"
+			return "+100% Team Explosive DMG"
 		break;
 
 		case "#name_ConfidentKiller":
@@ -1289,7 +1289,7 @@ function Translation_RU(msg)
 		break;
 
 		case "#desc_BombSquad":
-			return "+150% к УРН Взрывами Команды"
+			return "+100% к УРН Взрывами Команды"
 		break;
 
 		case "#name_ConfidentKiller":
