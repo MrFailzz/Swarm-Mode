@@ -254,7 +254,7 @@ function AllowTakeDamage(damageTable)
 				//BombSquad
 				if ((damageType & DMG_BLAST) == DMG_BLAST || (damageType & DMG_BLAST_SURFACE) == DMG_BLAST_SURFACE)
 				{
-					BombSquad = TeamHasCard(attacker, "BombSquad");
+					BombSquad = TeamHasCard("BombSquad");
 				}
 
 				//LuckyShot
@@ -439,6 +439,7 @@ function AllowTakeDamage(damageTable)
 								break;
 							}
 						}
+						// Rework infected grab DMG
 						else
 						{
 							switch(zombieType)
