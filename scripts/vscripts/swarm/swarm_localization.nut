@@ -1052,11 +1052,11 @@ function Translation_RU(msg)
 		break;
 
 		case "#giveup_msg":
-			return "\x01" + "Удерживайте " + "\x03" + "[УТКА]" + "\x01" + " чтобы умереть...";
+			return "\x01" + "Удерживайте " + "\x03" + "[ПРИСЕДАНИЕ]" + "\x01" + " чтобы умереть...";
 		break;
 
 		case "#breakout_msg":
-			return "\x01" + "Удерживайте " + "\x03" + "[ПИХАТЬ]" + "\x01" + " чтобы вырваться!";
+			return "\x01" + "Удерживайте " + "\x03" + "[ОТТАЛКИВАНИЕ]" + "\x01" + " чтобы вырваться!";
 		break;
 
 		//PLAYER CARDS
@@ -1169,7 +1169,7 @@ function Translation_RU(msg)
 		break;
 
 		case "#desc_MethHead":
-			return "+2.5% Движение/Оружие ближнего боя за каждое убийство мутанта"
+			return "+2.5% к Скорости Передвижения/Рукопашного оружия за каждое убийство мутанта"
 		break;
 
 		case "#name_OpticsEnthusiast":
@@ -1185,7 +1185,7 @@ function Translation_RU(msg)
 		break;
 
 		case "#desc_Breakout":
-			return "Удерживайте [ПИХАТЬ], чтобы вырваться на свободу, +1 попытка вырваться"
+			return "Удерживайте [ОТТАЛКИВАНИЕ], чтобы освободиться, +1 к попыткам"
 		break;
 
 		case "#name_AdrenalineRush":
@@ -1249,7 +1249,7 @@ function Translation_RU(msg)
 		break;
 
 		case "#desc_Multitool":
-			return "+50% командной скорости сотворения чар, -5% ЗАЩ."
+			return "+50% к командной скорости использования, -5% ЗЩТ"
 		break;
 
 		case "#name_RunLikeHell":

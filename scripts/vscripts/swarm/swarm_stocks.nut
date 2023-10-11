@@ -267,7 +267,6 @@ function PlayerHurt(params)
 						}
 					}
 				}
-				/*
 				else if (params.weapon == "charger_claw" && specialTallboyType == "Crusher")
 				{
 					if ("attacker" in params)
@@ -275,11 +274,10 @@ function PlayerHurt(params)
 						local attacker = GetPlayerFromUserID(params.attacker);
 						if (attacker.IsValid() && player != attacker)
 						{
-							CrusherGrab(attacker, player);
+							//CrusherGrab(attacker, player);
 						}
 					}
 				}
-				*/
 			}
 		}
 		//Tank was hurt
@@ -339,7 +337,7 @@ function WeaponFireM60(params)
 function Update()
 {
 	Update_GiveupTimer();
-	//Update_CheckpointWarp();
+	Update_CheckpointWarp();
 	Update_PlayerCards();
 
 	if (bSwarmCircleActive)
@@ -612,26 +610,39 @@ function Update_CheckpointWarp()
 		if (player.IsSurvivor())
 		{
 				local survivorID = GetSurvivorID(player);
-				local flow = GetCurrentFlowPercentForPlayer(player);
+				local flowPct = GetCurrentFlowPercentForPlayer(player);
 
-				if (flow == 100)
+				// Set the survivorAtCheckpoint flag based on the flow percentage or if the player is a bot
+				if (flowPct == 100)
 				{
-					survivorCheckpointCount[survivorID] = true;
+					survivorAtCheckpoint[survivorID] = true;
 				}
 				else if (IsPlayerABot(player))
 				{
-					survivorCheckpointCount[survivorID] = true;
+					survivorAtCheckpoint[survivorID] = true;
 				}
 				else
 				{
-					survivorCheckpointCount[survivorID] = false;
+					survivorAtCheckpoint[survivorID] = false;
 				}
-					
-				if (survivorCheckpointCount == true && survivorCheckpointWarped == false)
+
+				// Count the number of survivors at the checkpoint
+				local numSurvivor = 0;
+				foreach(survivor in survivorAtCheckpoint)
+				{
+					if (survivor == true)
+					{
+						numSurvivor += 1;
+					}
+				}
+
+				// Warp all survivors to the checkpoint if there are more than 3 and the survivorWarped flag is false
+				if (numSurvivor > 3 && survivorWarped == false)
 				{
 					Director.WarpAllSurvivorsToCheckpoint();
-					survivorCheckpointWarped = true;
+					survivorWarped = true;
 				}
-			}
+		}
 	}
+}
 }

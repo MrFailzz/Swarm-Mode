@@ -66,6 +66,10 @@ function OnGameEvent_ability_use(params)
 			BreakerJump(player);
 		break;
 
+		case "ability_charge":
+			//BruiserKnockback(player);
+		break;
+
 		case "ability_vomit":
 			ExploderAbility(player);
 		break;

@@ -368,20 +368,14 @@ function StoreFogSettings()
 	SaveTable("savedFogSettings", savedFogSettings);
 }
 
-function SetFogCvar(cvar, value)
-{
-    Convars.SetValue(cvar, value);
-    SendToServerConsole(cvar + " " + value);
-}
-
 function ResetFogCvars()
 {
 	RestoreTable("savedFogSettings", savedFogSettings);
 	SaveTable("savedFogSettings", savedFogSettings);
 
-	SetFogCvar("r_flashlightconstant", "0");
-	SetFogCvar("r_flashlightbrightness", "0.25");
-	SetFogCvar("mat_force_tonemap_scale", "0");
+	Convars.SetValue("r_flashlightconstant", "0");
+	Convars.SetValue("r_flashlightbrightness", "0.25");
+	Convars.SetValue("mat_force_tonemap_scale", "0");
 	Convars.SetValue("sv_disable_glow_survivors", 0);
 	Convars.SetValue("sv_disable_glow_faritems", 0);
 
@@ -416,21 +410,14 @@ function CorruptionCard_TheDark()
 {
 	pingDisabled = true;
 
-	SetFogCvar("r_flashlightconstant", "0.25");
-	SetFogCvar("r_flashlightbrightness", "10");
+	Convars.SetValue("r_flashlightconstant", "0.25");
+	Convars.SetValue("r_flashlightbrightness", "10");
 	Convars.SetValue("sv_disable_glow_survivors", 1);
 	Convars.SetValue("sv_disable_glow_faritems", 1);
 	
 	local fog = null;
 	while ((fog = Entities.FindByClassname(fog, "env_fog_controller")) != null)
 	{
-		/*
-		NetProps.SetPropInt(fog, "m_fog.colorPrimary", GetColorInt(Vector(1, 1, 1)));
-		NetProps.SetPropFloat(fog, "m_fog.maxdensity", 1);
-		NetProps.SetPropFloat(fog, "m_fog.start", 242);
-		NetProps.SetPropFloat(fog, "m_fog.end", 730);
-		NetProps.SetPropFloat(fog, "m_fog.farz", 1200);
-		*/
 		DoEntFire("!self", "SetStartDistLerpTo", "0", 0, fog, fog);
 		DoEntFire("!self", "SetEndDistLerpTo", "512", 0, fog, fog);
 		DoEntFire("!self", "SetFarZ", "1500", 5, fog, fog);
@@ -470,13 +457,6 @@ function CorruptionCard_TheFog()
 	local fog = null;
 	while ((fog = Entities.FindByClassname(fog, "env_fog_controller")) != null)
 	{
-		/*
-		NetProps.SetPropInt(fog, "m_fog.colorPrimary", GetColorInt(Vector(255, 255, 255)));
-		NetProps.SetPropFloat(fog, "m_fog.maxdensity", 1);
-		NetProps.SetPropFloat(fog, "m_fog.start", 242);
-		NetProps.SetPropFloat(fog, "m_fog.end", 730);
-		NetProps.SetPropFloat(fog, "m_fog.farz", 1200);
-		*/
 		DoEntFire("!self", "SetStartDistLerpTo", "242", 0, fog, fog);
 		DoEntFire("!self", "SetEndDistLerpTo", "730", 0, fog, fog);
 		DoEntFire("!self", "SetFarZ", "1500", 5, fog, fog);
@@ -664,7 +644,7 @@ function FrigidOutskirtsTimer()
 
 			EntFire("__frigid_outskirts_wind_snd", "PlaySound", "", 3);
 			EntFire("__frigid_outskirts_wind_snd2", "PlaySound", "", 10);
-			SetFogCvar("r_flashlightbrightness", "2");
+			Convars.SetValue("r_flashlightbrightness", "2");
 			Convars.SetValue("sv_disable_glow_survivors", 1);
 			Convars.SetValue("sv_disable_glow_faritems", 1);
 		}
@@ -698,7 +678,7 @@ function FrigidOutskirtsTimer()
 
 			EntFire("__frigid_outskirts_wind_snd", "StopSound");
 			EntFire("__frigid_outskirts_wind_snd2", "StopSound");
-			SetFogCvar("r_flashlightbrightness", "0.5");
+			Convars.SetValue("r_flashlightbrightness", "0.5");
 			Convars.SetValue("sv_disable_glow_survivors", 0);
 			Convars.SetValue("sv_disable_glow_faritems", 0);
 		}
