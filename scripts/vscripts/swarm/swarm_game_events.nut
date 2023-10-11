@@ -67,7 +67,7 @@ function OnGameEvent_ability_use(params)
 		break;
 
 		case "ability_charge":
-			//BruiserKnockback(player);
+			BruiserKnockback(player);
 		break;
 
 		case "ability_vomit":

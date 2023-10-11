@@ -1140,16 +1140,22 @@ function ApplyTallboyCard()
 function CorruptionCard_Tallboy()
 {
 	tallboyRunSpeed = 240;
+	Convars.SetValue("z_charge_duration", 0);
+	Convars.SetValue("z_charger_impact_epsilon", 8);
 }
 
 function CorruptionCard_Crusher()
 {
 	tallboyRunSpeed = 210;
+	Convars.SetValue("z_charge_duration", 1);
+	Convars.SetValue("z_charger_impact_epsilon", 8);
 }
 
 function CorruptionCard_Bruiser()
 {
 	tallboyRunSpeed = 190;
+	Convars.SetValue("z_charge_duration", 0.5);
+	Convars.SetValue("z_charger_impact_epsilon", 9999);
 }
 
 // Hocker
@@ -1248,33 +1254,33 @@ function ApplyRetchCard()
 			CorruptionCard_Retch();
 			break;
 		case "Exploder":
-			specialHockerType = "Exploder";
+			specialRetchType = "Exploder";
 			CorruptionCard_Exploder();
 			break;
 		case "Fer_Exploder":
-			specialHockerType = "Exploder";
+			specialRetchType = "Exploder";
 			Fer_ExploderDamageScale = 1.3;
 			Fer_ExploderHealthScale = 1.3;
 			CorruptionCard_Exploder();
 			break;
 		case "Mon_Exploder":
-			specialHockerType = "Exploder";
+			specialRetchType = "Exploder";
 			Mon_ExploderDamageScale = 1.3;
 			Mon_ExploderHealthScale = 1.3;
 			CorruptionCard_Exploder();
 			break;
 		case "Reeker":
-			specialHockerType = "Reeker";
+			specialRetchType = "Reeker";
 			CorruptionCard_Reeker();
 			break;
 		case "Fer_Reeker":
-			specialHockerType = "Reeker";
+			specialRetchType = "Reeker";
 			Fer_ReekerDamageScale = 1.3;
 			Fer_ReekerHealthScale = 1.3;
 			CorruptionCard_Reeker();
 			break;
 		case "Mon_Reeker":
-			specialHockerType = "Reeker";
+			specialRetchType = "Reeker";
 			Mon_ReekerDamageScale = 1.6;
 			Mon_ReekerHealthScale = 1.6;
 			CorruptionCard_Reeker();

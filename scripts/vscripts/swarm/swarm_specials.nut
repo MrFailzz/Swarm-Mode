@@ -143,7 +143,7 @@ function TongueGrab(params)
 					victim_entityscript["tongueVictim"] = NetProps.GetPropInt(victim_entityscript["victim"], "m_tongueOwner");
 					if (victim_entityscript["tongueVictim"] != 0)
 					{
-						victim_entityscript["victim"].TakeDamage(victim_entityscript["damagePerTick"], DMG_CLUB, attacker);
+						victim_entityscript["victim"].TakeDamage(victim_entityscript["damagePerTick"], 128, attacker);
 						return RETHINK_TIME_HOCKER;
 					}
 					else
@@ -177,7 +177,7 @@ function StingerProjectile(params)
 		local attacker = GetPlayerFromUserID(params["userid"]);
 
 		// DMG victim
-		player.TakeDamage(8, DMG_CLUB, attacker)
+		player.TakeDamage(8, 128, attacker)
 		player.OverrideFriction(0.5,1.35);
 		
 		// Break Tongue
@@ -204,7 +204,7 @@ function StingerProjectile(params)
 
 
 ///////////////////////////////////////////////
-//                   BOOMER                  //
+//                   RETCH                   //
 ///////////////////////////////////////////////
 function BoomerDeath(player)
 {
@@ -295,9 +295,6 @@ function BoomerExplosion(boomerOrigin, isExploder, exploder)
 	}
 }
 
-///////////////////////////////////////////////
-//                   RETCH                   //
-///////////////////////////////////////////////
 function RetchVomitHit(params)
 {
 	if (specialRetchType == "Retch")	
@@ -350,17 +347,16 @@ function BruiserKnockback(bruiser)
 	if (specialTallboyType == "Bruiser")
 	{
 		local survivor = null;
-		local tallboyOrigin = bruiser.GetOrigin();
+		local bruiserOrigin = bruiser.GetOrigin();
 
-		bruiser.Stagger(Vector(0, 0, 0));
-		while ((survivor = Entities.FindByClassnameWithin(survivor, "player", tallboyOrigin, 224)) != null)
+		while ((survivor = Entities.FindByClassnameWithin(survivor, "player", bruiserOrigin, 200)) != null)
 		{
 			if (survivor.IsSurvivor())
 			{
 				local survivorOrigin = survivor.GetOrigin();
-				local angle = GetVectorAngle(survivorOrigin, tallboyOrigin);
+				local angle = GetVectorAngle(survivorOrigin, bruiserOrigin);
 
-				survivor.TakeDamage(12.5, DMG_CLUB, bruiser)
+				survivor.TakeDamage(12.5, 128, bruiser)
 				survivor.SetOrigin(Vector(survivorOrigin.x, survivorOrigin.y, survivorOrigin.z + 1));
 				survivor.SetVelocity(Vector(sin(angle + 90) * tallboyPunchKnockback, sin(angle) * tallboyPunchKnockback, 180));
 			}

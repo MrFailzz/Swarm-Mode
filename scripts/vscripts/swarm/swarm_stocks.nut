@@ -346,7 +346,7 @@ function Update()
 		CancelRockAnimation();
 	}
 	
-	if (specialTallboyType != "Crusher")
+	if (specialTallboyType == "Tallboy")
 	{
 		if (bChargerSpawned)
 		{
@@ -609,40 +609,48 @@ function Update_CheckpointWarp()
 	{
 		if (player.IsSurvivor())
 		{
-				local survivorID = GetSurvivorID(player);
-				local flowPct = GetCurrentFlowPercentForPlayer(player);
+			local survivorID = GetSurvivorID(player);
+			local survivorOrigin = player.GetOrigin();
+			local flowPct = GetCurrentFlowPercentForPlayer(player);
 
-				// Set the survivorAtCheckpoint flag based on the flow percentage or if the player is a bot
-				if (flowPct == 100)
-				{
-					survivorAtCheckpoint[survivorID] = true;
-				}
-				else if (IsPlayerABot(player))
-				{
-					survivorAtCheckpoint[survivorID] = true;
-				}
-				else
-				{
-					survivorAtCheckpoint[survivorID] = false;
-				}
+			// Set the survivorAtCheckpoint flag based on the flow percentage or if the player is a bot
+			if (flowPct == 100)
+			{
+				survivorAtCheckpoint[survivorID] = true;
+			}
+			else if (IsPlayerABot(player))
+			{
+				survivorAtCheckpoint[survivorID] = true;
+			}
+			else
+			{
+				survivorAtCheckpoint[survivorID] = false;
+			}
 
-				// Count the number of survivors at the checkpoint
-				local numSurvivor = 0;
-				foreach(survivor in survivorAtCheckpoint)
+			// Count the number of survivors at the checkpoint
+			local numSurvivor = 0;
+			foreach(survivor in survivorAtCheckpoint)
+			{
+				if (survivor == true)
 				{
-					if (survivor == true)
+					numSurvivor += 1;
+				}
+			}
+
+			// Warp all survivors to the checkpoint if there are more than 3 and the survivorWarped flag is false
+			if (numSurvivor > 3 && survivorWarped == false)
+			{
+				local safedoor = null;
+				while ((safedoor = Entities.FindByClassnameWithin(safedoor, "prop_door_rotating_checkpoint", survivorOrigin, 1024)) != null)
+				{
+					// Only use closed doors and doors without names
+					if (NetProps.GetPropInt(safedoor, "m_eDoorState") == 0)
 					{
-						numSurvivor += 1;
+						Director.WarpAllSurvivorsToCheckpoint();
+						survivorWarped = true;
 					}
 				}
-
-				// Warp all survivors to the checkpoint if there are more than 3 and the survivorWarped flag is false
-				if (numSurvivor > 3 && survivorWarped == false)
-				{
-					Director.WarpAllSurvivorsToCheckpoint();
-					survivorWarped = true;
-				}
+			}
 		}
 	}
-}
 }

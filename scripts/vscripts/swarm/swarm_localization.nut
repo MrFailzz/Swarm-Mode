@@ -748,7 +748,7 @@ function Translation_EN(msg)
 		break;
 
 		case "#desc_Overwatch":
-			return "Kills from 10m heal cleaners within 10m to target"
+			return "Kills from 10m heal cleaners within 10m of target"
 		break;
 
 		case "#name_HyperFocused":
