@@ -62,6 +62,22 @@ function ZombieDeath(params)
 					}
 				}
 
+				//Overwatch
+				local Overwatch = PlayerHasCard(player, "Overwatch");
+				if (GetVectorDistance(player.GetOrigin(), common.GetOrigin()) > 600)
+				{
+					local survivor = null;
+					local commonOrigin = common.GetOrigin();
+
+					while ((survivor = Entities.FindByClassnameWithin(survivor, "player", commonOrigin, 600)) != null)
+					{
+						if (survivor.IsSurvivor())
+						{
+							Heal_TempHealth(survivor, 5 * Overwatch);
+						}
+					}
+				}
+
 				// Biohazard
 				if (biohazardEnabled == true)
 				{

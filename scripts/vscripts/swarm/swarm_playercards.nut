@@ -848,6 +848,34 @@ function ApplyCardsOnMutationKill(attacker, victim, headshot)
 			CleanKillCounter[GetSurvivorID(attacker)]++;
 		}
 	}
+
+	//Overwatch
+	local Overwatch = PlayerHasCard(attacker, "Overwatch");
+	if (GetVectorDistance(attacker.GetOrigin(), victim.GetOrigin()) > 600)
+	{
+		local survivor = null;
+		local victimOrigin = victim.GetOrigin();
+
+		while ((survivor = Entities.FindByClassnameWithin(survivor, "player", victimOrigin, 600)) != null)
+		{
+			if (survivor.IsSurvivor())
+			{
+				Heal_TempHealth(survivor, 5 * Overwatch);
+			}
+		}
+	}
+}
+
+function ApplyCardsOnWeaponFire(params)
+{
+	local player = GetPlayerFromUserID(params.userid);
+
+	//HyperFocused
+	local HyperFocused = PlayerHasCard(player, "HyperFocused");
+	if (HyperFocused > 0)
+	{
+		NetProps.SetPropFloat(player, "m_flVelocityModifier", 0.75);
+	}
 }
 
 function UpdateAddict(player)

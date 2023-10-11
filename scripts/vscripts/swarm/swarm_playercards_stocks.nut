@@ -25,6 +25,7 @@ reflexCards <-
 	"Shredder",
 	"Screwdriver",
 	"SmellingSalts",
+	"HyperFocused",
 ];
 
 brawnCards <-
@@ -52,6 +53,7 @@ brawnCards <-
 	"Lumberjack",
 	//"Kneecapper",
 	"WellFed",
+	"Overwatch",
 ];
 
 disciplineCards <-

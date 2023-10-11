@@ -113,6 +113,8 @@ function AllowTakeDamage(damageTable)
 	local CleanKill = 0;
 	local MarkedForDeath = 0;
 	local Multitool = 0;
+	local HyperFocused = 0;
+	local HyperFocusedMultiplier = 0;
 
 	//Modify Attacker damage
 	if (attacker.IsValid())
@@ -171,6 +173,8 @@ function AllowTakeDamage(damageTable)
 							HeadMultiplier = -0.5;
 						}
 					}
+					//HyperFocused
+					HyperFocused = PlayerHasCard(attacker, "HyperFocused");
 				}
 
 				//DownInFront
@@ -342,6 +346,7 @@ function AllowTakeDamage(damageTable)
 								 + (0.2 * MeanDrunk)
 								 + (0.025 * CleanKill * CleanKillCounter[GetSurvivorID(attacker)])
 								 + (0.1 * MarkedForDeath)
+								 + (1 * HyperFocused)
 								 + (HeadMultiplier));
 				if (GamblerAttacker > 0)
 				{

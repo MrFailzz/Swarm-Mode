@@ -219,5 +219,6 @@ function OnGameEvent_difficulty_changed(params)
 
 function OnGameEvent_weapon_fire(params)
 {
+	ApplyCardsOnWeaponFire(params);
 	WeaponFireM60(params);
 }

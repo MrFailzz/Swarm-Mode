@@ -743,6 +743,23 @@ function Translation_EN(msg)
 			return "+150% Team Revive Speed, Reduces Revive HP"
 		break;
 
+		case "#name_Overwatch":
+			return "Overwatch"
+		break;
+
+		case "#desc_Overwatch":
+			return "Kills from 10m heal cleaners within 10m to target"
+		break;
+
+		case "#name_HyperFocused":
+			return "Hyper Focused"
+		break;
+
+		case "#desc_HyperFocused":
+			return "100% Weakspot DMG, Movement slower while shooting"
+		break;
+
+
 		//CORRUPTION CARDS
 		case "#cor_commonAcid":
 			return "Acid Commons"
@@ -1762,6 +1779,22 @@ function Translation_RU(msg)
 
 		case "#desc_SmellingSalts":
 			return "+150% к скорости ривайва Команды, Уменьшает кол-во ХП у поднятого"
+		break;
+
+		case "#name_Овервотч":
+			return "Овервотч"
+		break;
+
+		case "#desc_Овервотч":
+			return "Убийства с 10 м лечат уборщиков в радиусе 10 м от цели"
+		break;
+
+		case "#name_HyperFocused":
+			return "Гиперфокусированный"
+		break;
+
+		case "#desc_HyperFocused":
+			return "100% урон по слабым местам, замедление движения при стрельбе"
 		break;
 
 		//CORRUPTION CARDS

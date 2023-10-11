@@ -353,7 +353,7 @@ function BruiserKnockback(bruiser)
 		local tallboyOrigin = bruiser.GetOrigin();
 
 		bruiser.Stagger(Vector(0, 0, 0));
-		while ((survivor = Entities.FindByClassnameWithin(survivor, "bruiser", tallboyOrigin, 224)) != null)
+		while ((survivor = Entities.FindByClassnameWithin(survivor, "player", tallboyOrigin, 224)) != null)
 		{
 			if (survivor.IsSurvivor())
 			{
