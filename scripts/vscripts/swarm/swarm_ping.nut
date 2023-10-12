@@ -41,7 +41,7 @@ function TraceEye(player)
 
 function PingEntity(entity, player, tracepos, automatedPing = false)
 {
-	if (automatedPing == false && pingDisabled == true)
+	if (!automatedPing && pingDisabled)
 	{
 		return;
 	}
@@ -51,9 +51,9 @@ function PingEntity(entity, player, tracepos, automatedPing = false)
 	local applyPingDuration = pingDuration;
 
 	// Create ping object in the world if we hit an entity we don't want to highlight
-	if (automatedPing == false)
+	if (!automatedPing)
 	{
-		if (entityReturnName == false)
+		if (!entityReturnName)
 		{
 			PingWorld(tracepos, player);
 			return;
@@ -109,7 +109,7 @@ function PingEntity(entity, player, tracepos, automatedPing = false)
 	}
 
 	// Notifications
-	if (automatedPing == false)
+	if (!automatedPing)
 	{
 		ClientPrint(null, 3, "\x04" + player.GetPlayerName() + "\x01 pinged \x03" + entityReturnName);
 		EmitSoundOn("ui\\beepclear.wav", player);
@@ -157,7 +157,7 @@ function HeightendSensesPing(player)
 	{
 		//Ignore invalid entities
 		local entityReturnName = GetEntityType(entity);
-		if (entityReturnName == false)
+		if (!entityReturnName)
 		{
 			continue;
 		}
@@ -186,7 +186,7 @@ function HeightendSensesPing(player)
 				}
 			}
 		}
-		if (skipInventory == true)
+		if (skipInventory)
 		{
 			continue;
 		}
@@ -237,9 +237,9 @@ function GetEntityType(entity)
 				break;
 
 				case 8:
-					if (bossBreakerEnable == true)
+					if (bossBreakerEnable)
 						return "Breaker";
-					if (bossOgreEnable == true)
+					if (bossOgreEnable)
 						return "Ogre";
 				break;
 

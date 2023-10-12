@@ -284,7 +284,7 @@ function BoomerExplosion(boomerOrigin, isExploder, exploder)
 				survivor.SetVelocity(Vector(sin(angle + 90) * boomerExplosionKnockback, sin(angle) * boomerExplosionKnockback, 300));
 
 				// Explosion damage
-				if (isExploder == true)
+				if (isExploder)
 				{
 					distanceVector = GetVectorDistance(survivorOrigin, boomerOrigin);
 					damage = (1 - (distanceVector / boomerExplosionRange)) * boomerExplosionDamage;
@@ -366,7 +366,7 @@ function BruiserKnockback(bruiser)
 
 function CrusherGrab(tallboy, survivor)
 {
-	if (survivor.IsDominatedBySpecialInfected() == false)
+	if (!survivor.IsDominatedBySpecialInfected())
 	{
 		local charger_ability = NetProps.GetPropEntity(tallboy,"m_customAbility")
 

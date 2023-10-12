@@ -243,7 +243,7 @@ function InterceptChat(message, speaker)
 function ShuffleVote(speaker, cardPick = false)
 {
 	local player = null;
-	if (shuffleVoteStarted == false && cardPick == false)
+	if (!shuffleVoteStartede && !cardPick)
 	{
 		shuffleVoteStarted = true;
 		ClientPrint(null, 3, "\x04" + speaker.GetPlayerName() + " initiated a shuffle vote!");
@@ -253,7 +253,7 @@ function ShuffleVote(speaker, cardPick = false)
 			if (player.IsSurvivor())
 			{
 				EmitSoundOn("Vote.Created", player);
-				if (IsPlayerABot(player) == true)
+				if (IsPlayerABot(player))
 				{
 					cardShuffleVote[GetSurvivorID(player)] = true;
 					ClientPrint(null, 3, "\x04" + player.GetPlayerName() + " voted to shuffle");
@@ -262,10 +262,10 @@ function ShuffleVote(speaker, cardPick = false)
 		}
 	}
 
-	if (cardShuffled == false && shuffleVoteStarted == true)
+	if (!cardShuffled && shuffleVoteStarted)
 	{
 		local speakerID = GetSurvivorID(speaker);
-		if (cardShuffleVote[speakerID] == false && shuffleVoteStarted == true && cardPick == false)
+		if (!cardShuffleVote[speakerID] && shuffleVoteStarted && !cardPick)
 		{
 			while ((player = Entities.FindByClassname(player, "player")) != null)
 			{
@@ -287,11 +287,11 @@ function ShuffleVote(speaker, cardPick = false)
 		local voteCount = 0;
 		foreach(vote in cardShuffleVote)
 		{
-			if (vote == false)
+			if (!vote)
 			{
 				voteStatus = false;
 			}
-			else if (vote == true)
+			else if (vote)
 			{
 				voteCount += 1;
 			}
@@ -300,7 +300,7 @@ function ShuffleVote(speaker, cardPick = false)
 		//ClientPrint(null, 3, "\x01" + "Use " + "\x03" + "!shuffle\x01" + " to vote for a new set of cards (" + "\x03" + voteCount + "/4" + "\x01" + " votes"  + ")");
 
 		//Vote passed, shuffle cards
-		if (voteStatus == true)
+		if (voteStatus)
 		{
 			ClientPrint(null, 3, "\x04" + "Shuffle vote passed!");
 			while ((player = Entities.FindByClassname(player, "player")) != null)

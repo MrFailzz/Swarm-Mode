@@ -153,7 +153,7 @@ function RandomItemDrop(origin)
 
 function PlayerLeftSafeArea(params)
 {
-	if (firstLeftCheckpoint == false)
+	if (!firstLeftCheckpoint)
 	{
 		local player = GetPlayerFromUserID(params["userid"]);
 
@@ -285,7 +285,7 @@ function PlayerHurt(params)
 		{
 			if ("type" in params)
 			{
-				if (params.type == 2 && bossOgreEnable == true && params.health < stagger_dmg)
+				if (params.type == 2 && bossOgreEnable && params.health < stagger_dmg)
 				{
 					//Stagger tank
 					player.Stagger(Vector(-1, -1, -1));
@@ -408,12 +408,12 @@ function Update()
 		}
 	}
 
-	if (bTankHudExists == true)
+	if (bTankHudExists)
 	{
 		CalculateTankHudString();
 	}
 
-	if (firstLeftCheckpoint == true)
+	if (firstLeftCheckpoint)
 	{
 		CardHudUpdate();
 	}
@@ -631,14 +631,14 @@ function Update_CheckpointWarp()
 			local numSurvivor = 0;
 			foreach(survivor in survivorAtCheckpoint)
 			{
-				if (survivor == true)
+				if (survivor)
 				{
 					numSurvivor += 1;
 				}
 			}
 
 			// Warp all survivors to the checkpoint if there are more than 3 and the survivorWarped flag is false
-			if (numSurvivor > 3 && survivorWarped == false)
+			if (numSurvivor > 3 && !survivorWarped)
 			{
 				local safedoor = null;
 				while ((safedoor = Entities.FindByClassnameWithin(safedoor, "prop_door_rotating_checkpoint", survivorOrigin, 1024)) != null)

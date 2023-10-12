@@ -128,7 +128,7 @@ function InitCorruptionCards()
 	local cardsHazards = [];
 	cardsHazards.append("None");
 	cardsHazards.append("None");
-	if (IsMissionFinalMap() == false)
+	if (!IsMissionFinalMap())
 	{
 		cardsHazards.append("hazardBirds");
 		cardsHazards.append("hazardLockdown");
@@ -145,7 +145,7 @@ function InitCorruptionCards()
 	cardsBoss.append("None");
 	cardsBoss.append("None");
 	cardsBoss.append("None");
-	if (IsMissionFinalMap() == false)
+	if (!IsMissionFinalMap())
 	{
 		cardsBoss.append("hazardBreaker");
 		cardsBoss.append("hazardBreaker");
@@ -180,7 +180,7 @@ function InitCorruptionCards()
 	local cardsHordes = [];
 	cardsHordes.append("None");
 	// Only allow horde cards on non-finale levels?
-	if (IsMissionFinalMap() == false && difficulty > 1)
+	if (!IsMissionFinalMap() && difficulty > 1)
 	{
 		cardsHordes.append("None");
 		cardsHordes.append("None");
@@ -486,7 +486,7 @@ function CorruptionCard_Biohazard()
 
 function BiohazardTimer()
 {
-	if (biohazardEnabled == false)
+	if (!biohazardEnabled)
 	{
 		biohazardTickTime = Time();
 		return;
@@ -513,7 +513,7 @@ function BiohazardTimer()
 
 function ApplyBiohazardMutationKill(attacker, victim)
 {
-	if (biohazardEnabled == true)
+	if (biohazardEnabled)
 	{
 		Heal_TempHealth(attacker, 1.5);
 	}
@@ -583,13 +583,13 @@ function CorruptionCard_FrigidOutskirts()
 
 function FrigidOutskirtsTimer()
 {
-	if (frigidOutskirtsEnabled == false)
+	if (!frigidOutskirtsEnabled)
 	{
 		frigidOutskirtsTimer = Time();
 		return;
 	}
 
-	if (frigidOutskirtsStormActive == false)
+	if (!frigidOutskirtsStormActive)
 	{
 		if ((Time() - frigidOutskirtsTimer) >= frigidOutskirtsCalmTime)
 		{
@@ -621,7 +621,7 @@ function FrigidOutskirtsTimer()
 			{
 				if (allSurvivors.IsSurvivor())
 				{
-					if (allSurvivors.IsDead() == false)
+					if (!allSurvivors.IsDead())
 					{
 						// Slow survivors during storm
 						allSurvivors.OverrideFriction(16,1.4);
@@ -735,13 +735,13 @@ function CorruptionCard_Hunted()
 
 function HuntedTimerFunc()
 {
-	if (HuntedTimer < Time() && HuntedEnabled == true && HuntedTimer != null)
+	if (HuntedTimer < Time() && HuntedEnabled && HuntedTimer != null)
 	{
 		SpawnMob();
 		HuntedTimer = Time() + HuntedTimerDefault;
 		ClientPrint(null, 3, "\x04" + "Here comes the horde!");
 	}
-	else if (HuntedTimer < Time() + 5 && HuntedEnabled == true && HuntedTimer != null)
+	else if (HuntedTimer < Time() + 5 && HuntedEnabled && HuntedTimer != null)
 	{
 		ClientPrint(null, 3, "\x01" + "Prepare for the horde in \x04" + ceil(HuntedTimer - Time()) + "...");
 	}
@@ -761,7 +761,7 @@ function OnslaughtTimerFunc()
 		OnslaughtTimer = Time() + OnslaughtTimerDefault;
 		ClientPrint(null, 3, "\x04" + "Here comes the horde!");
 	}
-	else if (OnslaughtTimer < Time() + 5 && OnslaughtEnabled == true && OnslaughtTimer != null)
+	else if (OnslaughtTimer < Time() + 5 && OnslaughtEnabled && OnslaughtTimer != null)
 	{
 		ClientPrint(null, 3, "\x01" + "Prepare for the horde in \x04" + ceil(OnslaughtTimer - Time()) + "...");
 	}
@@ -1483,7 +1483,7 @@ function GetGnomeStatus()
 		}
 	}
 
-	if (gnomeHeld == false)
+	if (!gnomeHeld)
 	{
 		//heldGnomeEnt = null;
 		heldGnomePlayer = null;

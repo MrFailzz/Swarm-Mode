@@ -73,7 +73,7 @@ function AddCardToTable(cardTable, player, card)
 
 function InitCardPicking(shuffle = false)
 {
-	if (shuffle == true)
+	if (shuffle)
 	{
 		reflexCardsPick = array(cardsPerCategory);
 		brawnCardsPick = array(cardsPerCategory);
@@ -91,11 +91,11 @@ function InitCardPicking(shuffle = false)
 	hudY = GetPickableCardsString(disciplineCardsPick, 1 + (cardsPerCategory * 2), "DISCIPLINE\n", "cardPickDiscipline", HUD_RIGHT_TOP, hudY);
 	hudY = GetPickableCardsString(fortuneCardsPick, 1 + (cardsPerCategory * 3), "FORTUNE\n", "cardPickFortune", HUD_RIGHT_BOT, hudY);
 
-	if (shuffle == false)
+	if (!shuffle)
 	{
 		local cardPicks = 1 + missionsCompleted["completed"];
 
-		if (Director.IsSessionStartMap() == true)
+		if (Director.IsSessionStartMap())
 		{
 			cardPicks = 2 + missionsCompleted["completed"];
 		}
@@ -284,7 +284,7 @@ function LoadMissions()
 function RoundStartPostNav(params)
 {
 	//Clear saved cards on new session
-	if (Director.IsSessionStartMap() == true)
+	if (Director.IsSessionStartMap())
 	{
 		SavePlayerCards()
 
@@ -465,7 +465,7 @@ function CalcMaxHealth(heal = true)
 			{
 				player.SetMaxHealth(newMax);
 
-				if ((healthAdjustment > 0 && heal == true) || currentHealth == currentMax)
+				if ((healthAdjustment > 0 && heal) || currentHealth == currentMax)
 				{
 					player.SetHealth(currentHealth + healthAdjustment);
 				}
@@ -891,7 +891,7 @@ function UpdateAddict(player)
 			ScreenFade(player, 0, 0, 0, 140, 1, 1, 1 | 2);
 			ScreenShake(Vector(playerOrigin.x, playerOrigin.y, playerOrigin.z + 34), RandomInt(4, 7), 10, 2, 5, 0, true);
 
-			if (addictPlaySound == false)
+			if (!addictPlaySound)
 			{
 				StopSoundOn("Player.Heartbeat", player);
 				StopSoundOn("Player.Heartbeat", player);
@@ -1034,7 +1034,7 @@ function BreakoutMsg(params)
 
 	if (PlayerHasCard(player, "Breakout"))
 	{
-		if (BreakoutUsed[survivorID] == false)
+		if (!BreakoutUsed[survivorID])
 		{
 			ClientPrint(player, 3,  Loc("#breakout_msg"));
 		}
@@ -1064,7 +1064,7 @@ function CardPickReminder()
 					local voteCount = 0;
 					foreach(vote in cardShuffleVote)
 					{
-						if (vote == true)
+						if (vote)
 						{
 							voteCount += 1;
 						}

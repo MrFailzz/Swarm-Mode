@@ -79,7 +79,7 @@ function ZombieDeath(params)
 				}
 
 				// Biohazard
-				if (biohazardEnabled == true)
+				if (biohazardEnabled)
 				{
 					Heal_TempHealth(player, 1.5);
 				}
@@ -271,7 +271,7 @@ if (!IsModelPrecached("models/swarm/propanecanister001a_head.mdl"))
 
 function ExplodingCommonsFilters()
 {
-	if (explodingCommonsFiltersExist == false)
+	if (!explodingCommonsFiltersExist)
 	{
 		SpawnEntityFromTable("filter_damage_type",
 		{

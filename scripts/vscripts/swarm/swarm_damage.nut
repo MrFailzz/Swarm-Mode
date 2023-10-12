@@ -137,7 +137,7 @@ function AllowTakeDamage(damageTable)
 					if (originalDamageDone != 0)
 					{
 						damageTable.DamageDone *= (melee_damage.tofloat() / damageTable.DamageDone.tofloat());
-						if (victimPlayer == true)
+						if (victimPlayer)
 						{
 							if (victim.IsSurvivor())
 							{
@@ -150,7 +150,7 @@ function AllowTakeDamage(damageTable)
 				// Headshot DMG
 				if ((damageType & DMG_HEADSHOT) == DMG_HEADSHOT)
 				{
-					if (victimPlayer == true)
+					if (victimPlayer)
 					{
 						if (specialRetchType == "Reeker" && victim.GetZombieType() == 2 && (weaponClass != "weapon_melee"))
 						{
@@ -178,7 +178,7 @@ function AllowTakeDamage(damageTable)
 				}
 
 				//DownInFront
-				if (victimPlayer == true)
+				if (victimPlayer)
 				{
 					if (victim.IsSurvivor())
 					{
@@ -219,7 +219,7 @@ function AllowTakeDamage(damageTable)
 				}
 
 				//Broken
-				if (victimPlayer == true)
+				if (victimPlayer)
 				{
 					if (victim.GetZombieType() == 8)
 					{
@@ -266,7 +266,7 @@ function AllowTakeDamage(damageTable)
 				LuckyShot = TeamHasCard("LuckyShot");
 				Ellis = PlayerHasCard(attacker, "Ellis");
 				SwanSong = PlayerHasCard(attacker, "SwanSong");
-				local SwanSongMultiplier = (attacker.IsIncapacitated() == true ? 1 : 0);
+				local SwanSongMultiplier = (attacker.IsIncapacitated() ? 1 : 0);
 				local critChance = (7 * LuckyShot) + (5 * Ellis) + (100 * SwanSongMultiplier * SwanSong);
 
 				if (RandomInt(1, 100) <= critChance)
@@ -286,9 +286,9 @@ function AllowTakeDamage(damageTable)
 				//Zoey Perk
 				if ((damageType & DMG_MELEE) == DMG_MELEE)
 				{
-					if (victimPlayer == true)
+					if (victimPlayer)
 					{
-						if (victim.IsSurvivor() == false)
+						if (!victim.IsSurvivor())
 						{
 							Brazen = PlayerHasCard(attacker, "Brazen");
 							Berserker = PlayerHasCard(attacker, "Berserker");
@@ -384,14 +384,14 @@ function AllowTakeDamage(damageTable)
 				}
 
 				// Rework infected claw DMG
-				if (attackerPlayer == true)
+				if (attackerPlayer)
 				{
 					if ((damageType & 128) == 128)
 					{
 						local zombieType = attacker.GetZombieType();
 						local baseDamage = 0;
 
-						if (victim.IsDominatedBySpecialInfected() == false)
+						if (!victim.IsDominatedBySpecialInfected())
 						{
 							switch(zombieType)
 							{
@@ -490,7 +490,7 @@ function AllowTakeDamage(damageTable)
 				}
 
 				//DownInFront
-				if (attackerPlayer == true)
+				if (attackerPlayer)
 				{
 					if (attacker.IsSurvivor())
 					{

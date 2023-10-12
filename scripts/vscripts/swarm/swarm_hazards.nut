@@ -141,7 +141,7 @@ function CreateAlarmDoor(door)
 
 function AlarmDoorActivate(doorIndex)
 {
-	if (alarmDoorStatus[doorIndex.tostring()] == false)
+	if (!alarmDoorStatus[doorIndex.tostring()])
 	{
 		alarmDoorStatus[doorIndex.tostring()] = true;
 		
@@ -745,10 +745,10 @@ function SpawnBoss()
 
 	if (corruptionBoss == "hazardOgreRaging")
 	{
-		if (ogreAggro == false)
+		if (!ogreAggro)
 		{
 			ogreAggro = Director.IsTankInPlay();
-			if (ogreAggro == true)
+			if (ogreAggro)
 			{
 				SpawnMob();
 			}

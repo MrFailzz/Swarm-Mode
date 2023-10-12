@@ -92,7 +92,7 @@ function CalcHealingMultiplier(player, tempHealth = false)
 	local ScarTissue = PlayerHasCard(player, "ScarTissue");
 
 	local Addict = 0;
-	if (tempHealth == true)
+	if (tempHealth)
 	{
 		Addict = PlayerHasCard(player, "Addict");
 	}
@@ -279,7 +279,7 @@ function Heal_GroupTherapy(healTarget, healAmount, isTempHealth)
 					{
 						if (player != healTarget)
 						{
-							if (isTempHealth == false)
+							if (!isTempHealth)
 							{
 								Heal_PermaHealth(player, healAmount, player.GetHealthBuffer());
 							}

@@ -60,7 +60,7 @@ function TankDeath(player)
 function TankKicked(params)
 {
 	// Called when a tank is kicked
-	if (Director.IsTankInPlay() == false)
+	if (!Director.IsTankInPlay())
 	{
 		// Player is a disconnecting bot tank
 		if (params.team == 0 && params.disconnect && params.isbot && GetPlayerFromUserID(params.userid).GetZombieType() == 8)
@@ -76,7 +76,7 @@ function CreateSwarmCircle(tankID)
 	if (!IsModelPrecached("models/swarm/props/swarmcircle.mdl"))
 		PrecacheModel("models/swarm/props/swarmcircle.mdl");
 
-	if (bSwarmCircleActive == false)
+	if (!bSwarmCircleActive)
 	{
 		local tankOrigin = tankID.GetOrigin();
 		local survivor = null;
@@ -125,7 +125,7 @@ function CreateSwarmCircle(tankID)
 
 function KillSwarmCircle()
 {
-	if (bSwarmCircleActive == true)
+	if (bSwarmCircleActive)
 	{
 		EntFire("swarm_circle", "Kill");
 	}
@@ -158,7 +158,7 @@ function SwarmCircleApplyDamage()
 			{
 				if (allSurvivors.IsSurvivor())
 				{
-					if (allSurvivors.IsDead() == false)
+					if (!allSurvivors.IsDead())
 					{
 						if (safeSurvivors.find(allSurvivors) == null)
 						{
@@ -183,7 +183,7 @@ if (!IsSoundPrecached("player/tank/voice/pain/tank_fire_06.wav"))
 
 function BreakerJump(player)
 {
-	if (bossBreakerEnable == true)
+	if (bossBreakerEnable)
 	{
 		//Apply the jump
 		local eyeAngles = player.EyeAngles();
@@ -201,7 +201,7 @@ function BreakerJump(player)
 		player.Stagger(Vector(0, 0, 0));
 		Convars.SetValue("z_max_stagger_duration", staggerDuration);
 
-		if (bSwarmCircleActive == false)
+		if (!bSwarmCircleActive)
 		{
 			EmitSoundOn("player/tank/voice/pain/tank_fire_06.wav", player)
 		}
