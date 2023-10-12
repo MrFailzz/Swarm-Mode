@@ -243,7 +243,7 @@ function InterceptChat(message, speaker)
 function ShuffleVote(speaker, cardPick = false)
 {
 	local player = null;
-	if (!shuffleVoteStartede && !cardPick)
+	if (!shuffleVoteStarted && !cardPick)
 	{
 		shuffleVoteStarted = true;
 		ClientPrint(null, 3, "\x04" + speaker.GetPlayerName() + " initiated a shuffle vote!");

@@ -130,6 +130,9 @@
 	
 #### The Fog
 * A heavy fog has surrounded the area.
+
+### Biohazard
+* A toxic fog damages the survivors periodically. Killing infected grants a small amount of Temp HP.
 	
 #### Frigid Outskirts
 * A winter storm is passing through the area.
@@ -140,9 +143,6 @@
 ### Player
 #### Empty Pockets
 * All offensive accessories have been looted in the area.
-	
-#### No Outlines
-* Outlines for your fellow survivors are removed. Communication is key.
 	
 #### Survival of the Fittest
 * All healing accessories have been looted in the area.
@@ -195,14 +195,20 @@
 * +100% Pistol / Magnum DMG
 #### Overconfident
 * +25% RES at max lives
+#### Slugger
+* +30% Melee Speed
 #### Meth Head
 * +2.5% Move Speed per Mutation kill
+#### Optics Enthusiast
+* Gain laser sights (+60% ACC)
+#### Breakout
+* Hold [SHOVE] to escape grabs, +1 Breakout attempts
 #### Adrenaline Rush
 * Adrenaline on Team incap
 #### Helping Hand
-* +75% Team Revive Speed
+* +50% Team Revive Speed
 #### Combat Medic
-* +30 Temp HP on revive, +20% Team Trauma RES
+* +15 HP on all revives, +15% Team Revive Speed
 #### Amped Up
 * Non-event hordes heal +20 Team HP (5s CD)
 #### Addict
@@ -212,7 +218,13 @@
 #### Cross Trainers
 * +7% Move Speed, +5 Max HP
 #### Multitool
-* +40% Team Use Speed
+* +50% Team Use Speed, -5% DEF
+#### Shredder
+* +1% DMG per shot fired until reload
+#### Screwdriver
+* +25% Team Use Speed
+#### Smelling Salts
+* +150% Team Revive Speed, Reduces Revive HP
 
 ### Brawn
 #### Boss Killer
@@ -220,7 +232,7 @@
 #### Pyromaniac
 * +150% Fire DMG
 #### Bomb Squad
-* +150% Explosive DMG
+* +100% Team Explosive DMG
 #### Confident Killer
 * +2.5% DMG per Mutation death
 #### Canned Goods
@@ -233,6 +245,12 @@
 * +30% RES, -50% Heal EFF
 #### Chemical Barrier
 * +50% Acid RES
+#### Face Your Fears
+* +2 Temp HP on kill within 2.5m
+#### Mean Drunk
+* +20% Melee DMG, +20 Max HP
+#### Brawler
+* +50 Shove DMG
 #### Berserker
 * +25% Melee DMG, +5% Move Speed
 #### Swan Song
@@ -243,6 +261,10 @@
 * +0.25 Temp HP per Shotgun pellet
 #### Lumberjack
 * +200% Team Chainsaw DMG
+#### Well Fed
+* +10 Team Max HP
+#### Overwatch
+* Kills from 10m heal cleaners within 10m of target
 
 ### Discipline
 #### Strength In Numbers
@@ -251,6 +273,8 @@
 * +50% Fire RES
 #### Brazen
 * +40% Melee DMG, -25% Reload Speed
+#### Marked for Death
+* +10% Team DMG vs Pinged Mutations
 #### Pack Mule
 * +40% Team Max Ammo
 #### Eye of the Swarm
@@ -258,9 +282,9 @@
 #### EMT Bag
 * +50% Heal EFF
 #### Antibiotic Ointment
-* +25% Heal EFF, +10 Temp HP to target
+* +25% Heal EFF, +15 Temp HP to target
 #### Medical Expert
-* +30% Team Heal EFF
+* +30% Team Heal EFF, +10% Team Revive Speed
 #### Cauterized
 * +50% Slower Team HP Decay
 #### Group Therapy
@@ -278,15 +302,21 @@
 #### Cannoneer
 * +200% Team Grenade Launcher DMG
 #### Down In Front
-* No longer receive nor deal FF DMG while crouched
+* No FF DMG when crouched
+#### Clean Kill
+* Precision kills give +5% DMG, Resets when DMG taken
+#### Experienced EMT
+* Cleaners you heal gain +25 Max HP
+#### Medical Professional
+* Medkits and Defibs heal +10 HP and 1 Extra Life
 
 ### Fortune
 #### Lucky Shot
 * +7% Team CRIT Chance (+400% DMG)
 #### Selfless
-* -15 Max HP, +15 Team Max HP
+* -15 Max HP, +20 Team Max HP
 #### Selfish
-* +30 Max HP, -5 Team Max HP
+* +40 Max HP, -5 Team Max HP
 #### Heightend Senses
 * Ping Mutations, Hazards and Items in 7.5m
 #### Hot Shot
