@@ -6,8 +6,7 @@ function InitCorruptionCards()
 	corruptionCards.clear();
 
 	// ZSpeed
-	local cardsZSpeed = array(1, null);
-	cardsZSpeed.clear();
+	local cardsZSpeed = [];
 	if (difficulty < 1)
 	{
 		cardsZSpeed.append("commonShamble");
@@ -22,8 +21,7 @@ function InitCorruptionCards()
 	ApplyZSpeedCard();
 
 	// Special Commons
-	local cardsCommons = array(1, null);
-	cardsCommons.clear();
+	local cardsCommons = [];
 	// Always choose a special common type on expert
 	if (difficulty != 3)
 	{
@@ -35,8 +33,7 @@ function InitCorruptionCards()
 	corruptionCommons = ChooseCorruptionCard_List(cardsCommons);
 
 	// Uncommons
-	local cardsUncommons = array(1, null);
-	cardsUncommons.clear();
+	local cardsUncommons = [];
 	cardsUncommons.append("None");
 	cardsUncommons.append("None");
 	cardsUncommons.append("None");
@@ -50,8 +47,7 @@ function InitCorruptionCards()
 	corruptionUncommons = ChooseCorruptionCard_List(cardsUncommons);
 
 	// Tallboys
-	local cardsTallboy = array(1, null);
-	cardsTallboy.clear();
+	local cardsTallboy = [];
 	cardsTallboy.append("Tallboy");
 	cardsTallboy.append("Crusher");
 	cardsTallboy.append("Bruiser");
@@ -77,8 +73,7 @@ function InitCorruptionCards()
 	ApplyTallboyCard();
 
 	// Hockers
-	local cardsHocker = array(1, null);
-	cardsHocker.clear();
+	local cardsHocker = [];
 	cardsHocker.append("Hocker");
 	cardsHocker.append("Stinger");
 	cardsHocker.append("Stalker");
@@ -104,8 +99,7 @@ function InitCorruptionCards()
 	ApplyHockerCard();
 
 	// Retches
-	local cardsRetch = array(1, null);
-	cardsRetch.clear();
+	local cardsRetch = [];
 	cardsRetch.append("Retch");
 	cardsRetch.append("Exploder");
 	cardsRetch.append("Reeker");
@@ -131,8 +125,7 @@ function InitCorruptionCards()
 	ApplyRetchCard();
 
 	// Hazards
-	local cardsHazards = array(1, null);
-	cardsHazards.clear();
+	local cardsHazards = [];
 	cardsHazards.append("None");
 	cardsHazards.append("None");
 	if (IsMissionFinalMap() == false)
@@ -145,8 +138,7 @@ function InitCorruptionCards()
 	corruptionHazards = ChooseCorruptionCard_List(cardsHazards);
 
 	// Boss
-	local cardsBoss = array(1, null);
-	cardsBoss.clear();
+	local cardsBoss = [];
 	cardsBoss.append("None");
 	cardsBoss.append("None");
 	cardsBoss.append("None");
@@ -166,8 +158,7 @@ function InitCorruptionCards()
 	ApplyBossCard();
 
 	// Environmental
-	local cardsEnvironmental = array(1, null);
-	cardsEnvironmental.clear();
+	local cardsEnvironmental = [];
 	cardsEnvironmental.append("None");
 	cardsEnvironmental.append("None");
 	cardsEnvironmental.append("None");
@@ -186,8 +177,7 @@ function InitCorruptionCards()
 	ApplyEnvironmentalCard();
 
 	// Hordes
-	local cardsHordes = array(1, null);
-	cardsHordes.clear();
+	local cardsHordes = [];
 	cardsHordes.append("None");
 	// Only allow horde cards on non-finale levels?
 	if (IsMissionFinalMap() == false && difficulty > 1)
@@ -214,8 +204,7 @@ function InitCorruptionCards()
 	ApplyHordeCard();
 
 	// Gameplay
-	local cardsGameplay = array(1, null);
-	cardsGameplay.clear();
+	local cardsGameplay = [];
 	cardsGameplay.append("None");
 	cardsGameplay.append("None");
 	cardsGameplay.append("gameplayNoGrenades");
@@ -230,8 +219,7 @@ function InitCorruptionCards()
 	ApplyGameplayCard();
 
 	// Player
-	local cardsPlayer = array(1, null);
-	cardsPlayer.clear();
+	local cardsPlayer = [];
 	cardsPlayer.append("None");
 	if (difficulty > 1)
 	{
@@ -245,8 +233,7 @@ function InitCorruptionCards()
 	ApplyPlayerCorruptionCard();
 
 	// Missions
-	local cardsMission = array(1, null);
-	cardsMission.clear();
+	local cardsMission = [];
 	if (IsMissionFinalMap())
 	{
 		cardsMission.append("None");

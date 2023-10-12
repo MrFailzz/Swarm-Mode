@@ -47,7 +47,7 @@ function InitAlarmDoors()
 
 	local remainingDoors = null;
 	local door = null;
-	local doorList = array(1, null);
+	local doorList = [];
 	doorList.clear();
 
 	while ((door = Entities.FindByClassname(door, "prop_door_rotating")) != null)

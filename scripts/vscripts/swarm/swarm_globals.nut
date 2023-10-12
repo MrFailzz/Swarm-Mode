@@ -50,11 +50,11 @@ uncommonsTimer <- 0;
 BaseCommonDamage <- 2.5;
 
 //Corruption
-corruptionCards <- array(1, null);
-corruptionCards_List <- array(1, null);
-corruptionCards_ListInf <- array(1, null);
-corruptionCards_ListMission <- array(1, null);
-corruptionCards_ListHorde <- array(1, null);
+corruptionCards <- [];
+corruptionCards_List <- [];
+corruptionCards_ListInf <- [];
+corruptionCards_ListMission <- [];
+corruptionCards_ListHorde <- [];
 corruptionCommons <- null;
 corruptionUncommons <- null;
 corruptionZSpeed <- null;
