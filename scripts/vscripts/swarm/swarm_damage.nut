@@ -198,7 +198,7 @@ function AllowTakeDamage(damageTable)
 				}
 
 				//Gambler
-				local GamblerAttacker = PlayerHasCard(attacker, "Gambler");
+				GamblerAttacker = PlayerHasCard(attacker, "Gambler");
 
 				//Nick Perk
 				Nick = PlayerHasCard(attacker, "Nick");
@@ -502,7 +502,7 @@ function AllowTakeDamage(damageTable)
 				}
 
 				//Gambler
-				local GamblerVictim = PlayerHasCard(victim, "Gambler");
+				GamblerVictim = PlayerHasCard(victim, "Gambler");
 
 				//Francis Perk
 				Francis = PlayerHasCard(victim, "Francis");
@@ -588,7 +588,7 @@ function AllowTakeDamage(damageTable)
 								+ (AcidMultiplier));
 				if (GamblerVictim > 0)
 				{
-					damageModifier += ApplyGamblerValue(GetSurvivorID(victim), 1, GamblerVictim);
+					damageModifier -= ApplyGamblerValue(GetSurvivorID(victim), 1, GamblerVictim);
 				}
 				damageDone = damageTable.DamageDone * damageModifier;
 			}
