@@ -442,6 +442,19 @@ function AllowTakeDamage(damageTable)
 										break;
 									}
 								break;
+								case 8:
+									switch(corruptionBoss)
+									{
+										case "hazardBreaker":
+										case "hazardBreakerRaging":
+											baseDamage = 20;
+										break;
+										case "hazardOgre":
+										case "hazardOgreRaging":
+											baseDamage = 20;
+										break;
+									}
+								break;
 							}
 						}
 						// Rework infected grab DMG
@@ -457,6 +470,20 @@ function AllowTakeDamage(damageTable)
 										break;
 										case "Stinger":
 											baseDamage = 8 * Fer_StingerDamageScale * Mon_StingerDamageScale;
+										break;
+									}
+								break;
+								case 2:
+									switch(specialRetchType)
+									{
+										case "Retch":
+											baseDamage = 4 * Fer_RetchDamageScale * Mon_RetchDamageScale;
+										break;
+										case "Exploder":
+											baseDamage = 8 * Fer_ExploderDamageScale * Mon_ExploderDamageScale;
+										break;
+										case "Reeker":
+											baseDamage = 4 * Fer_ReekerDamageScale * Mon_ReekerDamageScale;
 										break;
 									}
 								break;
@@ -479,6 +506,19 @@ function AllowTakeDamage(damageTable)
 										break;
 										case "Bruiser":
 											baseDamage = 17.5 * Fer_CrusherDamageScale * Mon_CrusherDamageScale;
+										break;
+									}
+								break;
+								case 8:
+									switch(corruptionBoss)
+									{
+										case "hazardBreaker":
+										case "hazardBreakerRaging":
+											baseDamage = 20;
+										break;
+										case "hazardOgre":
+										case "hazardOgreRaging":
+											baseDamage = 20;
 										break;
 									}
 								break;
@@ -535,7 +575,7 @@ function AllowTakeDamage(damageTable)
 				if ((damageType & 262144) == 262144 && (damageType & 1024) == 1024)
 				{
 					//Reduce acid damage globally and add a slowdown effect
-					damageTable.DamageDone = 1 * difficultyDamageScale;
+					damageTable.DamageDone = 0.5 * difficultyDamageScale;
 					victim.OverrideFriction(0.5,1.5);
 
 					ChemicalBarrier = PlayerHasCard(victim, "ChemicalBarrier");

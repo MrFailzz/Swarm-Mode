@@ -234,16 +234,16 @@ function InitCorruptionCards()
 
 	// Missions
 	local cardsMission = [];
-	if (IsMissionFinalMap())
+	cardsMission.append("None");
+	if (!IsMissionFinalMap())
 	{
-		cardsMission.append("None");
+		cardsMission.append("missionSpeedrun");
+		cardsMission.append("missionSpeedrun");
+		cardsMission.append("missionAllAlive");
+		cardsMission.append("missionAllAlive");
+		cardsMission.append("missionGnomeAlone");
+		cardsMission.append("missionGnomeAlone");
 	}
-	cardsMission.append("missionSpeedrun");
-	cardsMission.append("missionSpeedrun");
-	cardsMission.append("missionAllAlive");
-	cardsMission.append("missionAllAlive");
-	cardsMission.append("missionGnomeAlone");
-	cardsMission.append("missionGnomeAlone");
 	corruptionMission = ChooseCorruptionCard_ListMission(cardsMission);
 	ApplyMissionCorruptionCard();
 
@@ -1079,14 +1079,14 @@ function ApplyTallboyCard()
 			break;
 		case "Fer_Tallboy":
 			specialTallboyType = "Tallboy";
-			Fer_TallboyDamageScale = 1.3;
-			Fer_TallboyHealthScale = 1.3;
+			Fer_TallboyDamageScale = 1.25;
+			Fer_TallboyHealthScale = 1.25;
 			CorruptionCard_Tallboy();
 			break;
 		case "Mon_Tallboy":
 			specialTallboyType = "Tallboy";
-			Mon_TallboyDamageScale = 1.6;
-			Mon_TallboyHealthScale = 1.6;
+			Mon_TallboyDamageScale = 1.5;
+			Mon_TallboyHealthScale = 1.5;
 			CorruptionCard_Tallboy();
 			break;
 		case "Crusher":
@@ -1095,14 +1095,14 @@ function ApplyTallboyCard()
 			break;
 		case "Fer_Crusher":
 			specialTallboyType = "Crusher";
-			Fer_CrusherDamageScale = 1.3;
-			Fer_CrusherHealthScale = 1.3;
+			Fer_CrusherDamageScale = 1.25;
+			Fer_CrusherHealthScale = 1.25;
 			CorruptionCard_Crusher();
 			break;
 		case "Mon_Crusher":
 			specialTallboyType = "Crusher";
-			Mon_CrusherDamageScale = 1.3;
-			Mon_CrusherHealthScale = 1.3;
+			Mon_CrusherDamageScale = 1.25;
+			Mon_CrusherHealthScale = 1.25;
 			CorruptionCard_Crusher();
 			break;
 		case "Bruiser":
@@ -1111,14 +1111,14 @@ function ApplyTallboyCard()
 			break;
 		case "Fer_Bruiser":
 			specialTallboyType = "Bruiser";
-			Fer_BruiserDamageScale = 1.3;
-			Fer_BruiserHealthScale = 1.3;
+			Fer_BruiserDamageScale = 1.25;
+			Fer_BruiserHealthScale = 1.25;
 			CorruptionCard_Bruiser();
 			break;
 		case "Mon_Bruiser":
 			specialTallboyType = "Bruiser";
-			Mon_BruiserDamageScale = 1.6;
-			Mon_BruiserHealthScale = 1.6;
+			Mon_BruiserDamageScale = 1.5;
+			Mon_BruiserHealthScale = 1.5;
 			CorruptionCard_Bruiser();
 			break;
 	}
@@ -1156,14 +1156,14 @@ function ApplyHockerCard()
 			break;
 		case "Fer_Hocker":
 			specialHockerType = "Hocker";
-			Fer_HockerDamageScale = 1.3;
-			Fer_HockerHealthScale = 1.3;
+			Fer_HockerDamageScale = 1.25;
+			Fer_HockerHealthScale = 1.25;
 			CorruptionCard_Hocker();
 			break;
 		case "Mon_Hocker":
 			specialHockerType = "Hocker";
-			Mon_HockerDamageScale = 1.6;
-			Mon_HockerHealthScale = 1.6;
+			Mon_HockerDamageScale = 1.5;
+			Mon_HockerHealthScale = 1.5;
 			CorruptionCard_Hocker();
 			break;
 		case "Stinger":
@@ -1172,14 +1172,14 @@ function ApplyHockerCard()
 			break;
 		case "Fer_Stinger":
 			specialHockerType = "Stinger";
-			Fer_StingerDamageScale = 1.3;
-			Fer_StingerHealthScale = 1.3;
+			Fer_StingerDamageScale = 1.25;
+			Fer_StingerHealthScale = 1.25;
 			CorruptionCard_Stinger();
 			break;
 		case "Mon_Stinger":
 			specialHockerType = "Stinger";
-			Mon_StingerDamageScale = 1.3;
-			Mon_StingerHealthScale = 1.3;
+			Mon_StingerDamageScale = 1.25;
+			Mon_StingerHealthScale = 1.25;
 			CorruptionCard_Stinger();
 			break;
 		case "Stalker":
@@ -1188,14 +1188,14 @@ function ApplyHockerCard()
 			break;
 		case "Fer_Stalker":
 			specialHockerType = "Stalker";
-			Fer_StalkerDamageScale = 1.3;
-			Fer_StalkerHealthScale = 1.3;
+			Fer_StalkerDamageScale = 1.25;
+			Fer_StalkerHealthScale = 1.25;
 			CorruptionCard_Stalker();
 			break;
 		case "Mon_Stalker":
 			specialHockerType = "Stalker";
-			Mon_StalkerDamageScale = 1.6;
-			Mon_StalkerHealthScale = 1.6;
+			Mon_StalkerDamageScale = 1.5;
+			Mon_StalkerHealthScale = 1.5;
 			CorruptionCard_Stalker();
 			break;
 	}
@@ -1230,14 +1230,14 @@ function ApplyRetchCard()
 			break;
 		case "Fer_Retch":
 			specialRetchType = "Retch";
-			Fer_RetchDamageScale = 1.3;
-			Fer_RetchHealthScale = 1.3;
+			Fer_RetchDamageScale = 1.25;
+			Fer_RetchHealthScale = 1.25;
 			CorruptionCard_Retch();
 			break;
 		case "Mon_Retch":
 			specialRetchType = "Retch";
-			Mon_RetchDamageScale = 1.6;
-			Mon_RetchHealthScale = 1.6;
+			Mon_RetchDamageScale = 1.5;
+			Mon_RetchHealthScale = 1.5;
 			CorruptionCard_Retch();
 			break;
 		case "Exploder":
@@ -1246,14 +1246,14 @@ function ApplyRetchCard()
 			break;
 		case "Fer_Exploder":
 			specialRetchType = "Exploder";
-			Fer_ExploderDamageScale = 1.3;
-			Fer_ExploderHealthScale = 1.3;
+			Fer_ExploderDamageScale = 1.25;
+			Fer_ExploderHealthScale = 1.25;
 			CorruptionCard_Exploder();
 			break;
 		case "Mon_Exploder":
 			specialRetchType = "Exploder";
-			Mon_ExploderDamageScale = 1.3;
-			Mon_ExploderHealthScale = 1.3;
+			Mon_ExploderDamageScale = 1.25;
+			Mon_ExploderHealthScale = 1.25;
 			CorruptionCard_Exploder();
 			break;
 		case "Reeker":
@@ -1262,14 +1262,14 @@ function ApplyRetchCard()
 			break;
 		case "Fer_Reeker":
 			specialRetchType = "Reeker";
-			Fer_ReekerDamageScale = 1.3;
-			Fer_ReekerHealthScale = 1.3;
+			Fer_ReekerDamageScale = 1.25;
+			Fer_ReekerHealthScale = 1.25;
 			CorruptionCard_Reeker();
 			break;
 		case "Mon_Reeker":
 			specialRetchType = "Reeker";
-			Mon_ReekerDamageScale = 1.6;
-			Mon_ReekerHealthScale = 1.6;
+			Mon_ReekerDamageScale = 1.5;
+			Mon_ReekerHealthScale = 1.5;
 			CorruptionCard_Reeker();
 			break;
 	}
@@ -1413,7 +1413,7 @@ function SetSpeedrunTimer()
 	local distanceMultiplier = 1;
 	if (GetMaxFlowDistance() >= 25000)
 	{
-		distanceMultiplier = 1.5;
+		distanceMultiplier = 1.75;
 	}
 
 	switch(difficulty)
