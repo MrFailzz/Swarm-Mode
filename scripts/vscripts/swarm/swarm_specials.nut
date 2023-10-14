@@ -116,7 +116,7 @@ function TongueGrab(params)
 					Convars.SetValue("tongue_victim_acceleration", 0);
 					Convars.SetValue("tongue_victim_max_speed", 0);
 				}
-				else if (hocker_entityscript["TickCount"] > 36)
+				else if (hocker_entityscript["TickCount"] > 32)
 				{
 					NetProps.SetPropInt(victim, "m_tongueOwner", 0);
 					return

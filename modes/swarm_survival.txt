@@ -27,9 +27,9 @@
 		
 		tongue_victim_max_speed 0
 		tongue_bullet_radius 0
-		tongue_miss_delay 3
-		tongue_hit_delay 6
-		tongue_fly_speed 1000
+		tongue_miss_delay 5
+		tongue_hit_delay 8
+		tongue_fly_speed 900
 		tongue_dropping_to_ground_time 0.5
 		tongue_los_forgiveness_time 1.5
 		tongue_no_progress_choke_early_delay 1.0
