@@ -360,9 +360,6 @@ function ResetFogCvars()
 	RestoreTable("savedFogSettings", savedFogSettings);
 	SaveTable("savedFogSettings", savedFogSettings);
 
-	Convars.SetValue("r_flashlightconstant", "0");
-	Convars.SetValue("r_flashlightbrightness", "0.25");
-	Convars.SetValue("mat_force_tonemap_scale", "0");
 	Convars.SetValue("sv_disable_glow_survivors", 0);
 	Convars.SetValue("sv_disable_glow_faritems", 0);
 
@@ -395,10 +392,9 @@ function ResetFogCvars()
 
 function CorruptionCard_TheDark()
 {
-	pingDisabled = true;
+	pingRange = 1000;
+	pingDuration = 4;
 
-	Convars.SetValue("r_flashlightconstant", "0.25");
-	Convars.SetValue("r_flashlightbrightness", "10");
 	Convars.SetValue("sv_disable_glow_survivors", 1);
 	Convars.SetValue("sv_disable_glow_faritems", 1);
 	
@@ -423,8 +419,8 @@ function CorruptionCard_TheDark()
 	local tonemap = null;
 	while ((tonemap = Entities.FindByClassname(tonemap, "env_tonemap_controller")) != null)
 	{
-		DoEntFire("!self", "SetAutoExposureMin", "0.25", 1, tonemap, tonemap);
-		DoEntFire("!self", "SetAutoExposureMax", "0.75", 1, tonemap, tonemap);
+		DoEntFire("!self", "SetAutoExposureMin", "0.5", 1, tonemap, tonemap);
+		DoEntFire("!self", "SetAutoExposureMax", "1.5", 1, tonemap, tonemap);
 	}
 
 	local sun = null;
@@ -436,7 +432,8 @@ function CorruptionCard_TheDark()
 
 function CorruptionCard_TheFog()
 {
-	pingDisabled = true;
+	pingRange = 1000;
+	pingDuration = 4;
 
 	Convars.SetValue("sv_disable_glow_survivors", 1);
 	Convars.SetValue("sv_disable_glow_faritems", 1);
@@ -448,7 +445,7 @@ function CorruptionCard_TheFog()
 		DoEntFire("!self", "SetEndDistLerpTo", "730", 0, fog, fog);
 		DoEntFire("!self", "SetFarZ", "1500", 5, fog, fog);
 		DoEntFire("!self", "SetColorLerpTo", "200 200 200", 0, fog, fog);
-		DoEntFire("!self", "SetMaxDensityLerpTo", "1", 0, fog, fog);
+		DoEntFire("!self", "SetMaxDensityLerpTo", "0.97", 0, fog, fog);
 		DoEntFire("!self", "Set2DSkyboxFogFactorLerpTo", "1", 0, fog, fog);
 		DoEntFire("!self", "StartFogTransition", "", 0, fog, fog);
 	}
@@ -595,7 +592,8 @@ function FrigidOutskirtsTimer()
 		{
 			frigidOutskirtsStormActive = true;
 			frigidOutskirtsTimer = Time();
-			pingDisabled = true;
+			pingRange = 2000;
+			pingDuration = 8;
 
 			local fog = null;
 			while ((fog = Entities.FindByClassname(fog, "env_fog_controller")) != null)
@@ -631,7 +629,6 @@ function FrigidOutskirtsTimer()
 
 			EntFire("__frigid_outskirts_wind_snd", "PlaySound", "", 3);
 			EntFire("__frigid_outskirts_wind_snd2", "PlaySound", "", 10);
-			Convars.SetValue("r_flashlightbrightness", "2");
 			Convars.SetValue("sv_disable_glow_survivors", 1);
 			Convars.SetValue("sv_disable_glow_faritems", 1);
 		}
@@ -642,7 +639,8 @@ function FrigidOutskirtsTimer()
 		{
 			frigidOutskirtsStormActive = false;
 			frigidOutskirtsTimer = Time();
-			pingDisabled = false;
+			pingRange = 1000;
+			pingDuration = 4;
 
 			local fog = null;
 			while ((fog = Entities.FindByClassname(fog, "env_fog_controller")) != null)

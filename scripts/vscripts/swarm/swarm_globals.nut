@@ -201,7 +201,7 @@ ConfidentKillerCounter <- 0;
 ::CleanKillCounter <- [0, 0, 0, 0];
 ::BreakoutTimer <- [0, 0, 0, 0];
 ::BreakoutUsed <- [0, 0, 0, 0];
-BreakoutTimerDefault <- 3;
+BreakoutTimerDefault <- 2;
 cardHudTimeout <- 5;
 ::AmpedUpCooldown <- 0;
 BaseTempHealthDecayRate <- 0.27;
@@ -414,7 +414,7 @@ Mon_ReekerDamageScale <- 1;
 Fer_HockerDamageScale <- 1;
 Fer_StingerDamageScale <- 1;
 Fer_StalkerDamageScale <- 1;
-Mon_HockerDamageScale <- 1
+Mon_HockerDamageScale <- 1;
 Mon_StingerDamageScale <- 1;
 Mon_StalkerDamageScale <- 1;
 
@@ -433,7 +433,7 @@ Mon_ReekerHealthScale <- 1;
 Fer_HockerHealthScale <- 1;
 Fer_StingerHealthScale <- 1;
 Fer_StalkerHealthScale <- 1;
-Mon_HockerHealthScale <- 1
+Mon_HockerHealthScale <- 1;
 Mon_StingerHealthScale <- 1;
 Mon_StalkerHealthScale <- 1;
 
@@ -488,7 +488,6 @@ antibioticHealAmount <- 15;
 // PINGING //
 pingRange <- 2000;					// Max range for pinging an object
 pingDuration <- 8;					// How many seconds do objects stay pinged
-pingDisabled <- false;
 
 // SURVIVOR //
 survivorCrawlSpeed <- 30;			// Last Legs base crawl speed

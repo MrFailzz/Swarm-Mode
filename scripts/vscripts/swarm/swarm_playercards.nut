@@ -824,6 +824,7 @@ function ApplyCardsOnMutationKill(attacker, victim, headshot)
 	{
 		MethHeadCounter[GetSurvivorID(attacker)]++;
 		CalcSpeedMultiplier(attacker);
+		printl("Meth Head: " + MethHeadCounter[GetSurvivorID(attacker)]);
 	}
 
 	//HotShot
@@ -851,6 +852,7 @@ function ApplyCardsOnMutationKill(attacker, victim, headshot)
 		if (headshot == 1)
 		{
 			CleanKillCounter[GetSurvivorID(attacker)]++;
+			printl("Clean Kill: " + CleanKillCounter[GetSurvivorID(player)]);
 		}
 	}
 
@@ -879,7 +881,7 @@ function ApplyCardsOnWeaponFire(params)
 	local HyperFocused = PlayerHasCard(player, "HyperFocused");
 	if (HyperFocused > 0)
 	{
-		NetProps.SetPropFloat(player, "m_flVelocityModifier", 0.75);
+		NetProps.SetPropFloat(player, "m_flVelocityModifier", 0.8);
 	}
 }
 

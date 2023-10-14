@@ -59,6 +59,7 @@ function ZombieDeath(params)
 					if (params.headshot == 1)
 					{
 						CleanKillCounter[GetSurvivorID(player)]++;
+						printl("Clean Kill: " + CleanKillCounter[GetSurvivorID(player)]);
 					}
 				}
 
