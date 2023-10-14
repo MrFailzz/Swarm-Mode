@@ -39,30 +39,35 @@ function InterceptChat(message, speaker)
 		switch(command)
 		{
 			case "language":
-				switch(textArgs[1].tolower())
+				if (textArgs.len() < 2)
 				{
-					case "english":
-					case "en":
-						if (GetListenServerHost() == speaker)
-						{
+					return;
+				}
+				if (GetListenServerHost() == speaker || swarmSettingsTable["debug_mode"] > 0)
+				{
+					local success = false;
+					switch(textArgs[1].tolower())
+					{
+						case "english":
+						case "en":
 							swarmSettingsTable["language"] = "English";
-							UpdateLanguage();
-							SaveSettingsTable();
-							ClientPrint(null, 3, "\x04" + Loc("#lang_localization"));
-						}
-					break;
+							success = true;
+						break;
 
-					case "русский":
-					case "russian":
-					case "ru":
-						if (GetListenServerHost() == speaker)
-						{
+						case "русский":
+						case "russian":
+						case "ru":
 							swarmSettingsTable["language"] = "Russian";
-							UpdateLanguage();
-							SaveSettingsTable();
-							ClientPrint(null, 3, "\x04" + Loc("#lang_localization"));
-						}
-					break;
+							success = true;
+						break;
+					}
+
+					if (success)
+					{
+						UpdateLanguage();
+						SaveSettingsTable();
+						ClientPrint(null, 3, "\x04" + Loc("#lang_localization"));
+					}
 				}
 			break;
 
@@ -224,7 +229,7 @@ function InterceptChat(message, speaker)
 			break;
 
 			case "debugpick":
-				if (Convars.GetFloat("sv_cheats") == 1 || swarmSettingsTable["debug_mode"])
+				if (Convars.GetFloat("sv_cheats") == 1 || swarmSettingsTable["debug_mode"] > 0)
 				{
 					AddCardToTable(GetSurvivorCardTable(GetSurvivorID(speaker)), speaker, textArgs[1]);
 					GetAllPlayerCards();
@@ -355,6 +360,8 @@ function LoadSettingsTable()
 function UpdateLanguage()
 {
 	UpdateCorruptionCardHUD();
+	UpdateCardPickHUD();
+	GetAllPlayerCards();
 }
 
 function UpdateHardcore()

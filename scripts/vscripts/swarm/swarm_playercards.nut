@@ -85,11 +85,7 @@ function InitCardPicking(shuffle = false)
 	disciplineCardsPick = ReduceCardArray(disciplineCardsPick, disciplineCards);
 	fortuneCardsPick = ReduceCardArray(fortuneCardsPick, fortuneCards);
 
-	local hudY = swarmHudY;
-	hudY = GetPickableCardsString(reflexCardsPick, 1, "REFLEX\n", "cardPickReflex", HUD_MID_BOX, hudY);
-	hudY = GetPickableCardsString(brawnCardsPick, 1 + cardsPerCategory, "BRAWN\n", "cardPickBrawn", HUD_MID_BOT, hudY);
-	hudY = GetPickableCardsString(disciplineCardsPick, 1 + (cardsPerCategory * 2), "DISCIPLINE\n", "cardPickDiscipline", HUD_RIGHT_TOP, hudY);
-	hudY = GetPickableCardsString(fortuneCardsPick, 1 + (cardsPerCategory * 3), "FORTUNE\n", "cardPickFortune", HUD_RIGHT_BOT, hudY);
+	UpdateCardPickHUD();
 
 	if (!shuffle)
 	{
@@ -107,6 +103,15 @@ function InitCardPicking(shuffle = false)
 		cardPickingAllowed = [cardPicks, cardPicks, cardPicks, cardPicks];
 		ClientPrint(null, 3, "\x01" + "Use " + "\x03" + "!pick [A-H]\x01" + " to choose a card (" + "\x03" + cardPicks + " remaining" + "\x01" + ")");
 	}
+}
+
+function UpdateCardPickHUD()
+{
+	local hudY = swarmHudY;
+	hudY = GetPickableCardsString(reflexCardsPick, 1, "REFLEX\n", "cardPickReflex", HUD_MID_BOX, hudY);
+	hudY = GetPickableCardsString(brawnCardsPick, 1 + cardsPerCategory, "BRAWN\n", "cardPickBrawn", HUD_MID_BOT, hudY);
+	hudY = GetPickableCardsString(disciplineCardsPick, 1 + (cardsPerCategory * 2), "DISCIPLINE\n", "cardPickDiscipline", HUD_RIGHT_TOP, hudY);
+	hudY = GetPickableCardsString(fortuneCardsPick, 1 + (cardsPerCategory * 3), "FORTUNE\n", "cardPickFortune", HUD_RIGHT_BOT, hudY);
 }
 
 function ReduceCardArray(pickArray, refArray)
@@ -138,7 +143,7 @@ function GetPickableCardsString(cardArray, cardCount, prefix, hudName, hudPlacem
 
 	while (i < cardsPerCategory)
 	{
-		card = cardArray.pop();
+		card = cardArray[i];
 
 		if (i == cardsPerCategory - 1)
 		{
