@@ -389,7 +389,7 @@ function AllowTakeDamage(damageTable)
 					if ((damageType & 128) == 128)
 					{
 						local zombieType = attacker.GetZombieType();
-						local baseDamage = 0;
+						local baseDamage = -1;
 
 						if (!victim.IsDominatedBySpecialInfected())
 						{
@@ -525,7 +525,11 @@ function AllowTakeDamage(damageTable)
 							}
 						}
 
-						damageTable.DamageDone = baseDamage * difficultyDamageScale;
+						//Only change damage when we specifically want to
+						if (baseDamage != -1)
+						{
+							damageTable.DamageDone = baseDamage * difficultyDamageScale;
+						}
 					}
 				}
 

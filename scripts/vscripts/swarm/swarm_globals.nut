@@ -9,6 +9,21 @@ swarmSettingsTable <-
 	language = "English",
 	hardcore = false,
 	debug_mode = 0,
+
+	//Forced Corruption Cards
+	cardsZSpeed = "null",
+	cardsCommons = "null",
+	cardsUncommons = "null",
+	cardsTallboy = "null",
+	cardsHocker = "null",
+	cardsRetch = "null",
+	cardsHazards = "null",
+	cardsBoss = "null",
+	cardsEnvironmental = "null",
+	cardsHordes = "null",
+	cardsGameplay = "null",
+	cardsPlayer = "null",
+	cardsMission = "null",
 }
 
 //Globals
@@ -109,6 +124,8 @@ MissionSpeedrun_Timer <- 0;
 MissionGnomeAlone_Status <- 0;
 MissionGnomeAlone_CalloutTimerInterval <- 10;
 MissionGnomeAlone_CalloutTimer <- MissionGnomeAlone_CalloutTimerInterval;
+::MissionSilenceFailed <- false;
+MissionSafetyFirstIncaps <- 0;
 
 swarm_stream_chance <- 25;	//Percentage chance
 

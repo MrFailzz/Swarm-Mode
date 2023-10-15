@@ -750,7 +750,7 @@ function SpawnBoss()
 			ogreAggro = Director.IsTankInPlay();
 			if (ogreAggro)
 			{
-				SpawnMob();
+				SpawnMob(1, 10, false);
 			}
 		}
 	}

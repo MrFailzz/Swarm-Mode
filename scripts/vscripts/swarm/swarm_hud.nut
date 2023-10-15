@@ -68,6 +68,7 @@ function UpdateCorruptionCardHUD()
 	local missionStatus = "";
 	local hordeTimer = "";
 
+	//General Corruption Cards
 	foreach(cardID in corruptionCards_List)
 	{
 		cardName = GetCorruptionCardName(cardID);
@@ -86,6 +87,7 @@ function UpdateCorruptionCardHUD()
 		}
 	}
 
+	//Infected Type Corruption Cards
 	foreach(cardID in corruptionCards_ListInf)
 	{
 		cardName = GetCorruptionCardName(cardID);
@@ -104,6 +106,7 @@ function UpdateCorruptionCardHUD()
 		}
 	}
 
+	//Objective card
 	foreach(cardID in corruptionCards_ListMission)
 	{
 		cardName = GetCorruptionCardName(cardID);
@@ -142,6 +145,7 @@ function UpdateCorruptionCardHUD()
 		returnStringMission = "No Objective";
 	}
 
+	//Horde cards
 	foreach(cardID in corruptionCards_ListHorde)
 	{
 		cardName = GetCorruptionCardName(cardID);

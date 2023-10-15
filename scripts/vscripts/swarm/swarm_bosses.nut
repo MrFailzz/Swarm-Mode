@@ -115,7 +115,7 @@ function CreateSwarmCircle(tankID)
 
 			if (corruptionBoss == "hazardBreakerRaging")
 			{
-				SpawnMob();
+				SpawnMob(1, 10, false);
 			}
 
 			bSwarmCircleActive = true;

@@ -1,7 +1,7 @@
 ///////////////////////////////////////////////
 //             GENERAL FUNCTIONS             //
 ///////////////////////////////////////////////
-function SpawnMob(count = 1, zType = 10)
+function SpawnMob(count = 1, zType = 10, hazardTrigger = true)
 {
 	//count = Number of groups to spawn
 	//zType = Infected type to spawn, defaults to MOB if zType is not specified
@@ -29,6 +29,11 @@ function SpawnMob(count = 1, zType = 10)
 
 	Heal_AmpedUp();
 	Director.PlayMegaMobWarningSounds();
+
+	if (hazardTrigger == true)
+	{
+		MissionSilenceFailed = true;
+	}
 }
 ::ZSpawnMob <- SpawnMob;
 

@@ -118,15 +118,27 @@ function InterceptChat(message, speaker)
 
 			case "нарвать":
 			case "pick":
-				if (textArgs[1].len() == 1 && speaker.IsSurvivor())
+				if (textArgs.len() < 2)
 				{
-					PickCard(speaker, textArgs[1].toupper())
+					return;
+				}
+
+				local cardPick = textArgs[1].tointeger();
+				if (cardPick <= 8 && cardPick >= 1 && speaker.IsSurvivor())
+				{
+					PickCard(speaker, cardPick);
 				}
 			break;
 
 			case "ботнарвать":
 			case "botpick":
-				if (textArgs[1].len() == 1 && speaker.IsSurvivor())
+				if (textArgs.len() < 2)
+				{
+					return;
+				}
+
+				local cardPick = textArgs[1].tointeger();
+				if (cardPick <= 8 && cardPick >= 1 && speaker.IsSurvivor())
 				{
 					local player = null;
 					while ((player = Entities.FindByClassname(player, "player")) != null)
@@ -135,7 +147,7 @@ function InterceptChat(message, speaker)
 						{
 							if (IsPlayerABot(player))
 							{
-								PickCard(player, textArgs[1].toupper())
+								PickCard(player, cardPick);
 							}
 						}
 					}
@@ -238,6 +250,25 @@ function InterceptChat(message, speaker)
 					{
 						PrintGamblerValue(speaker);
 					}
+				}
+			break;
+
+			case "debugcorruption":
+				if (Convars.GetFloat("sv_cheats") == 1 || swarmSettingsTable["debug_mode"] > 0)
+				{
+					if (textArgs.len() < 3)
+					{
+						ClientPrint(speaker, 3, "\x01" + "Forces specific corruption cards, usage: /debugcorruption [Card Array Name, e.g. cardsMission] [Forced Card Name, e.g. missionSpeedrun]");
+						return;
+					}
+					local corruptionCardArrayName = textArgs[1];
+					local newCorruptionCard = textArgs[2];
+					swarmSettingsTable[corruptionCardArrayName] = newCorruptionCard;
+
+					ClientPrint(speaker, 3, "\x04" + corruptionCardArrayName + "\x01" + " set to: " + "\x04" + newCorruptionCard);
+					ClientPrint(speaker, 3, "\x01" + "Reset the map to activate, set to 'null' to use normal picking behavior");
+
+					SaveSettingsTable();
 				}
 			break;
 		}

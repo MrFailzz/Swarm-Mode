@@ -17,7 +17,17 @@ function InitCorruptionCards()
 	cardsZSpeed.append("commonRunning");
 	cardsZSpeed.append("commonRunning");
 	cardsZSpeed.append("commonBlitzing");
-	corruptionZSpeed = ChooseCorruptionCard_List(cardsZSpeed);
+	
+	if (swarmSettingsTable["cardsZSpeed"] != "null")
+	{
+		corruptionZSpeed = swarmSettingsTable["cardsZSpeed"];
+		corruptionCards.append(corruptionZSpeed);
+		corruptionCards_List.append(corruptionZSpeed);
+	}
+	else
+	{
+		corruptionZSpeed = ChooseCorruptionCard_List(cardsZSpeed);
+	}
 	ApplyZSpeedCard();
 
 	// Special Commons
@@ -30,7 +40,17 @@ function InitCorruptionCards()
 	cardsCommons.append("commonAcid");
 	cardsCommons.append("commonFire");
 	cardsCommons.append("commonExplode");
-	corruptionCommons = ChooseCorruptionCard_List(cardsCommons);
+	
+	if (swarmSettingsTable["cardsCommons"] != "null")
+	{
+		corruptionCommons = swarmSettingsTable["cardsCommons"];
+		corruptionCards.append(corruptionCommons);
+		corruptionCards_List.append(corruptionCommons);
+	}
+	else
+	{
+		corruptionCommons = ChooseCorruptionCard_List(cardsCommons);
+	}
 
 	// Uncommons
 	local cardsUncommons = [];
@@ -44,7 +64,17 @@ function InitCorruptionCards()
 	cardsUncommons.append("uncommonConstruction");
 	cardsUncommons.append("uncommonJimmy");
 	cardsUncommons.append("uncommonFallen");
-	corruptionUncommons = ChooseCorruptionCard_List(cardsUncommons);
+	
+	if (swarmSettingsTable["cardsUncommons"] != "null")
+	{
+		corruptionUncommons = swarmSettingsTable["cardsUncommons"];
+		corruptionCards.append(corruptionUncommons);
+		corruptionCards_List.append(corruptionUncommons);
+	}
+	else
+	{
+		corruptionUncommons = ChooseCorruptionCard_List(cardsUncommons);
+	}
 
 	// Tallboys
 	local cardsTallboy = [];
@@ -69,7 +99,17 @@ function InitCorruptionCards()
 		cardsTallboy.append("Mon_Crusher");
 		cardsTallboy.append("Mon_Bruiser");
 	}
-	corruptionTallboy = ChooseCorruptionCard_ListInf(cardsTallboy);
+	
+	if (swarmSettingsTable["cardsTallboy"] != "null")
+	{
+		corruptionTallboy = swarmSettingsTable["cardsTallboy"];
+		corruptionCards.append(corruptionTallboy);
+		corruptionCards_ListInf.append(corruptionTallboy);
+	}
+	else
+	{
+		corruptionTallboy = ChooseCorruptionCard_ListInf(cardsTallboy);
+	}
 	ApplyTallboyCard();
 
 	// Hockers
@@ -95,7 +135,17 @@ function InitCorruptionCards()
 		cardsHocker.append("Mon_Stinger");
 		cardsHocker.append("Mon_Stalker");
 	}
-	corruptionHocker = ChooseCorruptionCard_ListInf(cardsHocker);
+	
+	if (swarmSettingsTable["cardsHocker"] != "null")
+	{
+		corruptionHocker = swarmSettingsTable["cardsHocker"];
+		corruptionCards.append(corruptionHocker);
+		corruptionCards_ListInf.append(corruptionHocker);
+	}
+	else
+	{
+		corruptionHocker = ChooseCorruptionCard_ListInf(cardsHocker);
+	}
 	ApplyHockerCard();
 
 	// Retches
@@ -121,7 +171,17 @@ function InitCorruptionCards()
 		cardsRetch.append("Mon_Exploder");
 		cardsRetch.append("Mon_Reeker");
 	}
-	corruptionRetch = ChooseCorruptionCard_ListInf(cardsRetch);
+	
+	if (swarmSettingsTable["cardsRetch"] != "null")
+	{
+		corruptionRetch = swarmSettingsTable["cardsRetch"];
+		corruptionCards.append(corruptionRetch);
+		corruptionCards_ListInf.append(corruptionRetch);
+	}
+	else
+	{
+		corruptionRetch = ChooseCorruptionCard_ListInf(cardsRetch);
+	}
 	ApplyRetchCard();
 
 	// Hazards
@@ -135,7 +195,18 @@ function InitCorruptionCards()
 		cardsHazards.append("hazardSleepers");
 		cardsHazards.append("hazardSnitch");
 	}
-	corruptionHazards = ChooseCorruptionCard_List(cardsHazards);
+	
+	if (swarmSettingsTable["cardsHazards"] != "null")
+	{
+		corruptionHazards = swarmSettingsTable["cardsHazards"];
+		corruptionCards.append(corruptionHazards);
+		corruptionCards_List.append(corruptionHazards);
+	}
+	else
+	{
+		corruptionHazards = ChooseCorruptionCard_List(cardsHazards);
+	}
+
 
 	// Boss
 	local cardsBoss = [];
@@ -154,7 +225,17 @@ function InitCorruptionCards()
 		cardsBoss.append("hazardOgre");
 		cardsBoss.append("hazardOgreRaging");
 	}
-	corruptionBoss = ChooseCorruptionCard_ListInf(cardsBoss);
+	
+	if (swarmSettingsTable["cardsBoss"] != "null")
+	{
+		corruptionBoss = swarmSettingsTable["cardsBoss"];
+		corruptionCards.append(corruptionBoss);
+		corruptionCards_ListInf.append(corruptionBoss);
+	}
+	else
+	{
+		corruptionBoss = ChooseCorruptionCard_ListInf(cardsBoss);
+	}
 	ApplyBossCard();
 
 	// Environmental
@@ -173,7 +254,17 @@ function InitCorruptionCards()
 		cardsEnvironmental.append("environmentBiohazard");
 		cardsEnvironmental.append("environmentFrozen");
 	}
-	corruptionEnvironmental = ChooseCorruptionCard_List(cardsEnvironmental);
+	
+	if (swarmSettingsTable["cardsEnvironmental"] != "null")
+	{
+		corruptionEnvironmental = swarmSettingsTable["cardsEnvironmental"];
+		corruptionCards.append(corruptionEnvironmental);
+		corruptionCards_List.append(corruptionEnvironmental);
+	}
+	else
+	{
+		corruptionEnvironmental = ChooseCorruptionCard_List(cardsEnvironmental);
+	}
 	ApplyEnvironmentalCard();
 
 	// Hordes
@@ -200,7 +291,17 @@ function InitCorruptionCards()
 		cardsHordes.append("horde" + corruptionHocker);
 		cardsHordes.append("horde" + corruptionRetch);
 	}
-	corruptionHordes = ChooseCorruptionCard_ListHorde(cardsHordes);
+	
+	if (swarmSettingsTable["cardsHordes"] != "null")
+	{
+		corruptionHordes = swarmSettingsTable["cardsHordes"];
+		corruptionCards.append(corruptionHordes);
+		corruptionCards_ListHorde.append(corruptionHordes);
+	}
+	else
+	{
+		corruptionHordes = ChooseCorruptionCard_ListHorde(cardsHordes);
+	}
 	ApplyHordeCard();
 
 	// Gameplay
@@ -215,7 +316,17 @@ function InitCorruptionCards()
 		cardsGameplay.append("gameplayNoSupport");
 		cardsGameplay.append("gameplayNoRespawn");
 	}
-	corruptionGameplay = ChooseCorruptionCard_List(cardsGameplay);
+	
+	if (swarmSettingsTable["cardsGameplay"] != "null")
+	{
+		corruptionGameplay = swarmSettingsTable["cardsGameplay"];
+		corruptionCards.append(corruptionGameplay);
+		corruptionCards_List.append(corruptionGameplay);
+	}
+	else
+	{
+		corruptionGameplay = ChooseCorruptionCard_List(cardsGameplay);
+	}
 	ApplyGameplayCard();
 
 	// Player
@@ -229,22 +340,41 @@ function InitCorruptionCards()
 		cardsPlayer.append("playerFatigue");
 		//cardsPlayer.append("playerWhiteWeapons");
 	}
-	corruptionPlayer = ChooseCorruptionCard_List(cardsPlayer);
+	
+	if (swarmSettingsTable["cardsPlayer"] != "null")
+	{
+		corruptionPlayer = swarmSettingsTable["cardsPlayer"];
+		corruptionCards.append(corruptionPlayer);
+		corruptionCards_List.append(corruptionPlayer);
+	}
+	else
+	{
+		corruptionPlayer = ChooseCorruptionCard_List(cardsPlayer);
+	}
 	ApplyPlayerCorruptionCard();
 
 	// Missions
 	local cardsMission = [];
-	cardsMission.append("None");
+	//cardsMission.append("None");
 	if (!IsMissionFinalMap())
 	{
 		cardsMission.append("missionSpeedrun");
-		cardsMission.append("missionSpeedrun");
-		cardsMission.append("missionAllAlive");
 		cardsMission.append("missionAllAlive");
 		cardsMission.append("missionGnomeAlone");
-		cardsMission.append("missionGnomeAlone");
+		cardsMission.append("missionSilenceIsGolden");
+		cardsMission.append("missionSafetyFirst");
 	}
-	corruptionMission = ChooseCorruptionCard_ListMission(cardsMission);
+	
+	if (swarmSettingsTable["cardsMission"] != "null")
+	{
+		corruptionMission = swarmSettingsTable["cardsMission"];
+		corruptionCards.append(corruptionMission);
+		corruptionCards_ListMission.append(corruptionMission);
+	}
+	else
+	{
+		corruptionMission = ChooseCorruptionCard_ListMission(cardsMission);
+	}
 	ApplyMissionCorruptionCard();
 
 	UpdateCorruptionCardHUD();
@@ -735,7 +865,7 @@ function HuntedTimerFunc()
 {
 	if (HuntedTimer < Time() && HuntedEnabled && HuntedTimer != null)
 	{
-		SpawnMob();
+		SpawnMob(1, 10, false);
 		HuntedTimer = Time() + HuntedTimerDefault;
 		ClientPrint(null, 3, "\x04" + "Here comes the horde!");
 	}
@@ -755,7 +885,7 @@ function OnslaughtTimerFunc()
 {
 	if (OnslaughtTimer < Time() && OnslaughtEnabled == true && OnslaughtTimer != null)
 	{
-		SpawnMob();
+		SpawnMob(1, 10, false);
 		OnslaughtTimer = Time() + OnslaughtTimerDefault;
 		ClientPrint(null, 3, "\x04" + "Here comes the horde!");
 	}
@@ -1399,6 +1529,12 @@ function GetMissionStatus()
 		case "missionGnomeAlone":
 			return GnomeStatus();
 			break;
+		case "missionSilenceIsGolden":
+			return SilenceIsGoldenStatus();
+			break;
+		case "missionSafetyFirst":
+			return SafetyFirstStatus();
+			break;
 		default:
 			return "";
 			break;
@@ -1872,5 +2008,29 @@ function GnomeStatus()
 	{
 		//Held, in saferoom OR dropped in saferoom
 		return "Gnome Rescued";
+	}
+}
+
+function SilenceIsGoldenStatus()
+{
+	if (MissionSilenceFailed == false)
+	{
+		return "Don't set off any hazards";
+	}
+	else
+	{
+		return "Objective Failed";
+	}
+}
+
+function SafetyFirstStatus()
+{
+	if (MissionSafetyFirstIncaps > 4)
+	{
+		return "Failed";
+	}
+	else
+	{
+		return "Incaps Remaining: " + (4 - MissionSafetyFirstIncaps);
 	}
 }

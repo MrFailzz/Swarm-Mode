@@ -6,7 +6,7 @@ if (!IsSoundPrecached("Christmas.GiftPickup"))
 
 function PickCard(player, cardID)
 {
-	local cardNumber = LetterToInt(cardID);
+	local cardNumber = cardID;
 	local card = null;
 	local cardName = null;
 	local cardTable = {};
@@ -147,11 +147,11 @@ function GetPickableCardsString(cardArray, cardCount, prefix, hudName, hudPlacem
 
 		if (i == cardsPerCategory - 1)
 		{
-			cardsString = cardsString + IntToLetter(cardCount) + ") " + GetPlayerCardName(card) + ": " + GetPlayerCardName(card, "desc");
+			cardsString = cardsString + cardCount + ") " + GetPlayerCardName(card) + ": " + GetPlayerCardName(card, "desc");
 		}
 		else
 		{
-			cardsString = cardsString + IntToLetter(cardCount) + ") " + GetPlayerCardName(card) + ": " + GetPlayerCardName(card, "desc") + "\n";
+			cardsString = cardsString + cardCount + ") " + GetPlayerCardName(card) + ": " + GetPlayerCardName(card, "desc") + "\n";
 		}
 
 		pickableCards[cardCount - 1] = card;
@@ -218,31 +218,68 @@ function SavePlayerCards()
 
 function SaveMissions()
 {
-	switch(corruptionMission)
+	if (swarmMode != "vs" && swarmMode != "survival_vs")
 	{
-		case "None":
+		local completed = false;
+		switch(corruptionMission)
+		{
+			case "None":
 			break;
-		case "missionSpeedrun":
-			if (MissionSpeedrun_Timer <= MissionSpeedrun_Goal)
-			{
-				CompletedMission(corruptionMission);
-			}
+			case "missionSpeedrun":
+				if (MissionSpeedrun_Timer <= MissionSpeedrun_Goal)
+				{
+					completed = true;
+				}
 			break;
-		case "missionAllAlive":
-			if (GetAliveCleaners() == GetTotalCleaners())
-			{
-				CompletedMission(corruptionMission);
-			}
-			break;
-		case "missionGnomeAlone":
-			if (MissionGnomeAlone_Status == 3)
-			{
-				CompletedMission(corruptionMission);
-			}
-			break;
-	}
 
-	SaveTable("missionsCompleted", missionsCompleted);
+			case "missionAllAlive":
+				if (GetAliveCleaners() == GetTotalCleaners())
+				{
+					completed = true;
+				}
+			break;
+
+			case "missionGnomeAlone":
+				if (MissionGnomeAlone_Status == 3)
+				{
+					completed = true;
+				}
+			break;
+
+			case "missionGnomeAlone":
+				if (MissionGnomeAlone_Status == 3)
+				{
+					completed = true;
+				}
+			break;
+
+			case "missionSilenceIsGolden":
+				if (MissionSilenceFailed == false)
+				{
+					completed = true;
+				}
+			break;
+
+			case "missionSafetyFirst":
+				if (MissionSafetyFirstIncaps <= 4)
+				{
+					completed = true;
+				}
+			break;
+		}
+
+		if (completed == true)
+		{
+			CompletedMission(corruptionMission);
+		}
+		else
+		{
+			//TODO: Always returns mission as null for some reason, fix
+			//FailedMission(corruptionMission);
+		}
+
+		SaveTable("missionsCompleted", missionsCompleted);
+	}
 }
 
 function CompletedMission(cardID)
@@ -250,6 +287,12 @@ function CompletedMission(cardID)
 	missionsCompleted["completed"] = 1;
 	local cardName = GetCorruptionCardName(cardID);
 	ClientPrint(null, 3, "\x01" + "Objective: " + "\x03" + cardName + "\x01" + " completed!");
+}
+
+function FailedMission(cardID)
+{
+	local cardName = GetCorruptionCardName(cardID);
+	ClientPrint(null, 3, "\x01" + "Objective: " + "\x03" + cardName + "\x01" + " failed.");
 }
 
 function RoundFreezeEnd(params)
@@ -300,10 +343,10 @@ function RoundStartPostNav(params)
 
 function GetAllPlayerCards()
 {
-	local survivorNameArray = ["BILL", "ZOEY", "LOUIS", "FRANCIS"];
+	local survivorNameArray = [Loc("#bot_Bill"), Loc("#bot_Zoey"), Loc("#bot_Louis"), Loc("#bot_Francis")];
 	if (survivorSet == 2)
 	{
-		survivorNameArray = ["NICK", "ROCHELLE", "COACH", "ELLIS"];
+		survivorNameArray = [Loc("#bot_Nick"), Loc("#bot_Rochelle"), Loc("#bot_Coach"), Loc("#bot_Ellis")];
 	}
 
 	local player = null;

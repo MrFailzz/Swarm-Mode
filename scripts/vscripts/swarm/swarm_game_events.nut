@@ -133,10 +133,13 @@ function OnGameEvent_player_incapacitated_start(params)
 	ApplyAdrenalineRush();
 	ApplyInspiringSacrifice();
 	IncapMsg(params);
+	MissionSafetyFirstIncaps += 1;
+	printl(MissionSafetyFirstIncaps)
 }
 
 function OnGameEvent_round_start(params)
 {
+	LoadSettingsTable();
 	CreateCardHud();
 	SetSpeedrunTimer();
 	InitCorruptionCards();

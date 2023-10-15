@@ -51,6 +51,16 @@ EN_TranslationTable <- {
 	"#giveup_msg": "\x01" + "Hold " + "\x03" + "[CROUCH]" + "\x01" + " to die..."
 	"#breakout_msg": "\x01" + "Hold " + "\x03" + "[SHOVE]" + "\x01" + " to break out!"
 
+	//BOT NAMES
+	"#bot_Nick": "NICK"
+	"#bot_Rochelle": "ROCHELLE"
+	"#bot_Coach": "COACH"
+	"#bot_Ellis": "ELLIS"
+	"#bot_Bill": "BILL"
+	"#bot_Zoey": "ZOEY"
+	"#bot_Louis": "LOUIS"
+	"#bot_Francis": "FRANCIS"
+
 	//PLAYER CARDS
 	"#name_Nick": "Nick (+5% DMG)"
 	"#desc_Nick": "+5% DMG"
@@ -414,6 +424,8 @@ EN_TranslationTable <- {
 	"#cor_missionSpeedrun": "Speedrun"
 	"#cor_missionAllAlive": "No One Left Behind"
 	"#cor_missionGnomeAlone": "Gnome Alone"
+	"#cor_missionSilenceIsGolden": "Silence Is Golden"
+	"#cor_missionSafetyFirst": "Safety First"
 }
 
 RU_TranslationTable <- {
@@ -421,6 +433,16 @@ RU_TranslationTable <- {
  	"#lang_localization": "Русская локализация"
  	"#giveup_msg": "\x01" + "Удерживайте " + "\x03" + "[ПРИСЕДАНИЕ]" + "\x01" + " чтобы умереть..."
  	"#breakout_msg": "\x01" + "Удерживайте " + "\x03" + "[ОТТАЛКИВАНИЕ]" + "\x01" + " чтобы вырваться!"
+
+ 	//BOT NAMES
+	"#bot_Nick": "НИК"
+	"#bot_Rochelle": "РОШЕЛЛЬ"
+	"#bot_Coach": "ТРЕНЕР"
+	"#bot_Ellis": "ЭЛЛИС"
+	"#bot_Bill": "БИЛЛ"
+	"#bot_Zoey": "ЗОИ"
+	"#bot_Louis": "ЛУИС"
+	"#bot_Francis": "ФРЕНСИС"
 
 	//PLAYER CARDS
  	"#name_Nick": "Ник (+5% к УРН)"
@@ -785,4 +807,6 @@ RU_TranslationTable <- {
  	"#cor_missionSpeedrun": "Спидран"
  	"#cor_missionAllAlive": "Своих не оставляем"
  	"#cor_missionGnomeAlone": "Один Гнома"
+ 	"#cor_missionSilenceIsGolden": "Silence Is Golden"
+ 	"#cor_missionSafetyFirst": "Safety First"
 }
