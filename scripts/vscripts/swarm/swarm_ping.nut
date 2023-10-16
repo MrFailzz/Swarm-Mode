@@ -41,11 +41,6 @@ function TraceEye(player)
 
 function PingEntity(entity, player, tracepos, automatedPing = false)
 {
-	if (!automatedPing && pingDisabled)
-	{
-		return;
-	}
-
 	// Get entity info
 	local entityReturnName = GetEntityType(entity);
 	local applyPingDuration = pingDuration;

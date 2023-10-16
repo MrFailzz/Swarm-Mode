@@ -511,12 +511,7 @@ function AllowTakeDamage(damageTable)
 				//DMG_RADIATION + DMG_ENERGYBEAM = Spitter Acid
 				if ((damageType & 262144) == 262144 && (damageType & 1024) == 1024)
 				{
-					//Reduce acid damage globally and add a slowdown effect
-					if (Mon_Retch)
-					{
-						victim.OverrideFriction(0.5,1.5);
-					}
-
+					//Reduce acid damage globally
 					damageTable.DamageDone = 1 * difficultyDamageScale;
 					ChemicalBarrier = PlayerHasCard(victim, "ChemicalBarrier");
 				}

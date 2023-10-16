@@ -286,19 +286,14 @@ function RetchVomitHit(params)
 	local player = GetPlayerFromUserID(params["userid"]);
 	local origin = player.GetOrigin();
 
-	if (specialRetchType == "Retch")	
+	if (player.IsSurvivor())
 	{
-		if (player.IsSurvivor())
+		if (specialRetchType == "Retch")
 		{
 			DropSpit(origin);
 		}
-	}
-	else if (specialRetchType == "Reeker")
-	{
-		if (player.IsSurvivor() && Mon_Retch)
-		{
-			player.OverrideFriction(0.5,1.5);
-		}
+
+		player.OverrideFriction(0.5,1.5);
 	}
 }
 
