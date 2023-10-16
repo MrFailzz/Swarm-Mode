@@ -87,6 +87,7 @@ function TongueGrab(params)
 		Convars.SetValue("tongue_victim_acceleration", -450);
 		Convars.SetValue("tongue_victim_max_speed", 450);
 		NetProps.SetPropInt(attacker, "m_tongueVictim", 0);
+		victim.TakeDamage((8 * difficultyDamageScale * HockerDamageScale), 128, attacker)
 
 		if (attacker.ValidateScriptScope())
 		{
@@ -116,7 +117,7 @@ function TongueGrab(params)
 					Convars.SetValue("tongue_victim_acceleration", 0);
 					Convars.SetValue("tongue_victim_max_speed", 0);
 				}
-				else if (hocker_entityscript["TickCount"] > 32)
+				else if (hocker_entityscript["TickCount"] > 36)
 				{
 					NetProps.SetPropInt(victim, "m_tongueOwner", 0);
 					return
@@ -126,34 +127,6 @@ function TongueGrab(params)
 			}
 
 			AddThinkToEnt(attacker, "TongueSpeedReset");
-		}
-
-		local hockerThinker = SpawnEntityFromTable("info_target", { targetname = "hockerThinker" });
-		if (hockerThinker.ValidateScriptScope())
-		{
-			const RETHINK_TIME_HOCKER = 1;
-			local victim_entityscript = hockerThinker.GetScriptScope();
-			victim_entityscript["victim"] <- victim;
-			victim_entityscript["tongueVictim"] <- 0;
-			victim_entityscript["damagePerTick"] <- 8 * RETHINK_TIME_HOCKER;
-			victim_entityscript["HockerSelfDamage"] <- function()
-			{
-				if (victim_entityscript["victim"].IsValid())
-				{
-					victim_entityscript["tongueVictim"] = NetProps.GetPropInt(victim_entityscript["victim"], "m_tongueOwner");
-					if (victim_entityscript["tongueVictim"] != 0)
-					{
-						victim_entityscript["victim"].TakeDamage(victim_entityscript["damagePerTick"], 128, attacker);
-						return RETHINK_TIME_HOCKER;
-					}
-					else
-					{
-						self.Kill();
-					}
-				}
-			}
-
-			AddThinkToEnt(hockerThinker, "HockerSelfDamage");
 		}
 	}	
 }
@@ -177,7 +150,7 @@ function StingerProjectile(params)
 		local attacker = GetPlayerFromUserID(params["userid"]);
 
 		// DMG victim
-		player.TakeDamage(8, 128, attacker)
+		player.TakeDamage((6 * difficultyDamageScale * HockerDamageScale), 128, attacker)
 		player.OverrideFriction(0.5,1.35);
 		
 		// Break Tongue
@@ -200,6 +173,14 @@ function StingerProjectile(params)
 			AddThinkToEnt(attacker, "TongueKill");
 		}
 	}
+}
+
+function StalkerGrab(params)
+{
+	local player = GetPlayerFromUserID(params["victim"]);
+	local attacker = GetPlayerFromUserID(params["userid"]);
+
+	player.TakeDamage((15 * difficultyDamageScale * HockerDamageScale), 128, attacker)
 }
 
 
@@ -289,6 +270,11 @@ function BoomerExplosion(boomerOrigin, isExploder, exploder)
 					distanceVector = GetVectorDistance(survivorOrigin, boomerOrigin);
 					damage = (1 - (distanceVector / boomerExplosionRange)) * boomerExplosionDamage;
 					survivor.TakeDamage(damage, DMG_BLAST_SURFACE, exploder);
+					
+					if (Mon_Retch)
+					{
+						survivor.OverrideFriction(0.5,1.5);
+					}
 				}
 			}
 		}
@@ -297,14 +283,21 @@ function BoomerExplosion(boomerOrigin, isExploder, exploder)
 
 function RetchVomitHit(params)
 {
+	local player = GetPlayerFromUserID(params["userid"]);
+	local origin = player.GetOrigin();
+
 	if (specialRetchType == "Retch")	
 	{
-		local player = GetPlayerFromUserID(params["userid"]);
-		local origin = player.GetOrigin();
-
 		if (player.IsSurvivor())
 		{
 			DropSpit(origin);
+		}
+	}
+	else if (specialRetchType == "Reeker")
+	{
+		if (player.IsSurvivor() && Mon_Retch)
+		{
+			player.OverrideFriction(0.5,1.5);
 		}
 	}
 }

@@ -18,6 +18,7 @@
 		z_charge_min_force 0
 
 		z_jockey_speed 210
+		z_jockey_ride_damage 0
 		z_jockey_ride_damage_interval 0.5
 		z_pounce_stumble_radius 180
 		z_jockey_control_variance 0
@@ -46,7 +47,6 @@
 		z_vomit_hit_pitch_min 0
 		z_vomit_hit_yaw_max 0
 		z_vomit_hit_yaw_min 0
-
 		inferno_child_spawn_max_depth 2
 		
 		z_witch_wander_personal_time 0
@@ -65,19 +65,30 @@
 		survivor_incapacitated_dizzy_severity 0
 		survivor_incapacitated_dizzy_timer 0
 		survivor_incapacitated_reload_multiplier 1
+		survivor_friendly_fire_factor_easy 0
+		survivor_friendly_fire_factor_normal 0.05
+		survivor_friendly_fire_factor_hard 0.15
+		survivor_friendly_fire_factor_expert 0.25
+		survivor_burn_factor_easy 0.025
+		survivor_burn_factor_normal 0.025
+		survivor_burn_factor_hard 0.05
+		survivor_burn_factor_expert 0.08
+
 		rescue_distance 100
+		z_use_tolerance 0.99
+		player_use_radius 86
+		player_incap_use_radius 86
+		sb_separation_danger_min_range 100
+		sb_separation_danger_max_range 350
+		sb_max_team_melee_weapons 2
+		car_alarm_distance 1500
+
+		inferno_damage 500
 		first_aid_heal_percent 0
 		first_aid_kit_max_heal 1000
 		pain_pills_health_value 0
 		pain_pills_health_threshold 1000
 		adrenaline_health_buffer 0
-		z_use_tolerance 0.99
-		player_use_radius 86
-		player_incap_use_radius 86
-		sb_separation_danger_min_range 50
-		sb_separation_danger_max_range 300
-		sb_max_team_melee_weapons 2
-		car_alarm_distance 1500
 
 		//sleeper
 		z_lunge_power 700
@@ -95,12 +106,6 @@
 		hunter_pounce_ready_range 450
 		z_pounce_crouch_delay 0.2
 		survivor_pounce_victim_eye_height 64
-
-		inferno_damage 500
-		survivor_burn_factor_easy 0.025
-		survivor_burn_factor_normal 0.025
-		survivor_burn_factor_hard 0.05
-		survivor_burn_factor_expert 0.08
 
 		z_throttle_hit_interval_easy 0.5
 		z_throttle_hit_interval_normal 0.5

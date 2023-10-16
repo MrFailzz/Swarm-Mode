@@ -391,7 +391,7 @@ function AllowTakeDamage(damageTable)
 						local zombieType = attacker.GetZombieType();
 						local baseDamage = -1;
 
-						if (!victim.IsDominatedBySpecialInfected())
+						if (weaponClass == "weapon_boomer_claw" || weaponClass == "weapon_charger_claw" || weaponClass == "weapon_jockey_claw" || weaponClass == "weapon_smoker_claw"  )
 						{
 							switch(zombieType)
 							{
@@ -399,10 +399,10 @@ function AllowTakeDamage(damageTable)
 									switch(specialHockerType)
 									{
 										case "Hocker":
-											baseDamage = 2 * Fer_HockerDamageScale * Mon_HockerDamageScale;
+											baseDamage = 2 * HockerDamageScale;
 										break;
 										case "Stinger":
-											baseDamage = 2 * Fer_StingerDamageScale * Mon_StingerDamageScale;
+											baseDamage = 1 * HockerDamageScale;
 										break;
 									}
 								break;
@@ -410,13 +410,13 @@ function AllowTakeDamage(damageTable)
 									switch(specialRetchType)
 									{
 										case "Retch":
-											baseDamage = 4 * Fer_RetchDamageScale * Mon_RetchDamageScale;
+											baseDamage = 4 * RetchDamageScale;
 										break;
 										case "Exploder":
-											baseDamage = 8 * Fer_ExploderDamageScale * Mon_ExploderDamageScale;
+											baseDamage = 8 * RetchDamageScale;
 										break;
 										case "Reeker":
-											baseDamage = 4 * Fer_ReekerDamageScale * Mon_ReekerDamageScale;
+											baseDamage = 4 * RetchDamageScale;
 										break;
 									}
 								break;
@@ -424,7 +424,7 @@ function AllowTakeDamage(damageTable)
 									switch (specialHockerType)
 									{
 										case "Stalker":
-											baseDamage = 3 * Fer_StalkerDamageScale * Mon_StalkerDamageScale;
+											baseDamage = 3 * HockerDamageScale;
 										break;
 									}
 								break;
@@ -432,80 +432,13 @@ function AllowTakeDamage(damageTable)
 									switch(specialTallboyType)
 									{
 										case "Tallboy":
-											baseDamage = 20 * Fer_TallboyDamageScale * Mon_TallboyDamageScale;
+											baseDamage = 20 * TallboyDamageScale;
 										break;
 										case "Crusher":
-											baseDamage = 10 * Fer_CrusherDamageScale * Mon_CrusherDamageScale;
+											baseDamage = 5 * TallboyDamageScale;
 										break;
 										case "Bruiser":
-											baseDamage = 17.5 * Fer_CrusherDamageScale * Mon_CrusherDamageScale;
-										break;
-									}
-								break;
-								case 8:
-									switch(corruptionBoss)
-									{
-										case "hazardBreaker":
-										case "hazardBreakerRaging":
-											baseDamage = 20;
-										break;
-										case "hazardOgre":
-										case "hazardOgreRaging":
-											baseDamage = 20;
-										break;
-									}
-								break;
-							}
-						}
-						// Rework infected grab DMG
-						else
-						{
-							switch(zombieType)
-							{
-								case 1:
-									switch(specialHockerType)
-									{
-										case "Hocker":
-											baseDamage = 8 * Fer_HockerDamageScale * Mon_HockerDamageScale;
-										break;
-										case "Stinger":
-											baseDamage = 8 * Fer_StingerDamageScale * Mon_StingerDamageScale;
-										break;
-									}
-								break;
-								case 2:
-									switch(specialRetchType)
-									{
-										case "Retch":
-											baseDamage = 4 * Fer_RetchDamageScale * Mon_RetchDamageScale;
-										break;
-										case "Exploder":
-											baseDamage = 8 * Fer_ExploderDamageScale * Mon_ExploderDamageScale;
-										break;
-										case "Reeker":
-											baseDamage = 4 * Fer_ReekerDamageScale * Mon_ReekerDamageScale;
-										break;
-									}
-								break;
-								case 5:
-									switch (specialHockerType)
-									{
-										case "Stalker":
-											baseDamage = 8 * Fer_StalkerDamageScale * Mon_StalkerDamageScale;
-										break;
-									}
-								break;
-								case 6:
-									switch(specialTallboyType)
-									{
-										case "Tallboy":
-											baseDamage = 20 * Fer_TallboyDamageScale * Mon_TallboyDamageScale;
-										break;
-										case "Crusher":
-											baseDamage = 15 * Fer_CrusherDamageScale * Mon_CrusherDamageScale;
-										break;
-										case "Bruiser":
-											baseDamage = 17.5 * Fer_CrusherDamageScale * Mon_CrusherDamageScale;
+											baseDamage = 17.5 * TallboyDamageScale;
 										break;
 									}
 								break;
@@ -579,9 +512,12 @@ function AllowTakeDamage(damageTable)
 				if ((damageType & 262144) == 262144 && (damageType & 1024) == 1024)
 				{
 					//Reduce acid damage globally and add a slowdown effect
-					damageTable.DamageDone = 0.5 * difficultyDamageScale;
-					victim.OverrideFriction(0.5,1.5);
+					if (Mon_Retch)
+					{
+						victim.OverrideFriction(0.5,1.5);
+					}
 
+					damageTable.DamageDone = 1 * difficultyDamageScale;
 					ChemicalBarrier = PlayerHasCard(victim, "ChemicalBarrier");
 				}
 

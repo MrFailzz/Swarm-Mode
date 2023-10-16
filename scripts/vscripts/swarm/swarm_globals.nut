@@ -347,44 +347,43 @@ function SetDifficulty()
 	switch(specialTallboyType)
 	{
 		case "Tallboy":
-			Convars.SetValue("z_charger_health", 725 * (difficultyHealthScale * Fer_TallboyHealthScale * Mon_TallboyHealthScale));
+			Convars.SetValue("z_charger_health", 725 * (difficultyHealthScale * TallboyHealthScale));
 		break;
 		case "Crusher":
-			Convars.SetValue("z_charger_health", 806 * (difficultyHealthScale * Fer_CrusherHealthScale * Mon_CrusherHealthScale));
+			Convars.SetValue("z_charger_health", 806 * (difficultyHealthScale * TallboyHealthScale));
 		break;
 		case "Bruiser":
-			Convars.SetValue("z_charger_health", 1021 * (difficultyHealthScale * Fer_BruiserHealthScale * Mon_BruiserHealthScale));
+			Convars.SetValue("z_charger_health", 1021 * (difficultyHealthScale * TallboyHealthScale));
 		break;
 	}
 
 	switch(specialRetchType)
 	{
 		case "Retch":
-			Convars.SetValue("z_exploding_health", 376 * (difficultyHealthScale * Fer_RetchHealthScale * Mon_RetchHealthScale));
-		break;
 		case "Exploder":
-			Convars.SetValue("z_exploding_health", 376 * (difficultyHealthScale * Fer_ExploderHealthScale * Mon_ExploderHealthScale));
+			Convars.SetValue("z_exploding_health", 376 * (difficultyHealthScale * RetchHealthScale));
 		break;
 		case "Reeker":
-			Convars.SetValue("z_exploding_health", 430 * (difficultyHealthScale * Fer_ReekerHealthScale * Mon_ReekerHealthScale));
+			Convars.SetValue("z_exploding_health", 430 * (difficultyHealthScale * RetchHealthScale));
 		break;
 	}
 
 	switch(specialHockerType)
 	{
 		case "Hocker":
-			Convars.SetValue("z_exploding_health", 161 * (difficultyHealthScale * Fer_HockerHealthScale * Mon_HockerHealthScale));
-		break;
 		case "Stinger":
-			Convars.SetValue("z_exploding_health", 161 * (difficultyHealthScale * Fer_StingerHealthScale * Mon_StingerHealthScale));
+			Convars.SetValue("z_exploding_health", 161 * (difficultyHealthScale * HockerHealthScale));
 		break;
 		case "Stalker":
-			Convars.SetValue("z_exploding_health", 241 * (difficultyHealthScale * Fer_StalkerHealthScale * Mon_StalkerHealthScale));
+			Convars.SetValue("z_exploding_health", 241 * (difficultyHealthScale * HockerHealthScale));
 		break;
 	}
 
 	Convars.SetValue("z_witch_health", 1000);
 	Convars.SetValue("z_health", 50 * (difficultyHealthScale));
+
+	Convars.SetValue("z_charge_max_damage", (5 * difficultyDamageScale * TallboyDamageScale));
+	Convars.SetValue("z_charger_pound_dmg", (5 * difficultyDamageScale * TallboyDamageScale));
 }
 
 DirectorOptions.SurvivorMaxIncapacitatedCount = BaseMaxIncaps;
@@ -416,43 +415,17 @@ exploderRunSpeed <- 320;			// Run speed while using explosion ability
 tallboyPunchKnockback <- 350;		// Max knockback
 tallboyRunSpeed <- 250;
 
-Fer_TallboyDamageScale <- 1;
-Fer_CrusherDamageScale <- 1;
-Fer_BruiserDamageScale <- 1;
-Mon_TallboyDamageScale <- 1;
-Mon_CrusherDamageScale <- 1;
-Mon_BruiserDamageScale <- 1;
-Fer_RetchDamageScale <- 1;
-Fer_ExploderDamageScale <- 1;
-Fer_ReekerDamageScale <- 1;
-Mon_RetchDamageScale <- 1;
-Mon_ExploderDamageScale <- 1;
-Mon_ReekerDamageScale <- 1;
-Fer_HockerDamageScale <- 1;
-Fer_StingerDamageScale <- 1;
-Fer_StalkerDamageScale <- 1;
-Mon_HockerDamageScale <- 1;
-Mon_StingerDamageScale <- 1;
-Mon_StalkerDamageScale <- 1;
+TallboyDamageScale <- 1;
+RetchDamageScale <- 1;
+HockerDamageScale <- 1;
 
-Fer_TallboyHealthScale <- 1;
-Fer_CrusherHealthScale <- 1;
-Fer_BruiserHealthScale <- 1;
-Mon_TallboyHealthScale <- 1;
-Mon_CrusherHealthScale <- 1;
-Mon_BruiserHealthScale <- 1;
-Fer_RetchHealthScale <- 1;
-Fer_ExploderHealthScale <- 1;
-Fer_ReekerHealthScale <- 1;
-Mon_RetchHealthScale <- 1;
-Mon_ExploderHealthScale <- 1;
-Mon_ReekerHealthScale <- 1;
-Fer_HockerHealthScale <- 1;
-Fer_StingerHealthScale <- 1;
-Fer_StalkerHealthScale <- 1;
-Mon_HockerHealthScale <- 1;
-Mon_StingerHealthScale <- 1;
-Mon_StalkerHealthScale <- 1;
+TallboyHealthScale <- 1;
+RetchHealthScale <- 1;
+HockerHealthScale <- 1;
+
+Mon_Tallboy <- false;
+Mon_Retch <- false;
+Mon_Hocker <- false;
 
 difficultyHealthScale <- 1; 		// (Easy (0): 0.75x, Normal (1): 1x, Advanced (2): 1.25x, Expert (3): 1.5x)
 difficultyDamageScale <- 1; 		// (Easy (0): 0.5x, Normal (1): 1x, Advanced (2): 1.5x, Expert (3): 2x)

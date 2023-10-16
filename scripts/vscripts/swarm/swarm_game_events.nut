@@ -107,6 +107,7 @@ function OnGameEvent_player_now_it(params)
 
 function OnGameEvent_jockey_ride(params)
 {
+	StalkerGrab(params);
 	CappedAlert();
 	BreakoutMsg(params);
 }

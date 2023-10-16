@@ -1207,14 +1207,15 @@ function ApplyTallboyCard()
 			break;
 		case "Fer_Tallboy":
 			specialTallboyType = "Tallboy";
-			Fer_TallboyDamageScale = 1.25;
-			Fer_TallboyHealthScale = 1.25;
+			TallboyDamageScale = 1.15;
+			TallboyHealthScale = 1.15;
 			CorruptionCard_Tallboy();
 			break;
 		case "Mon_Tallboy":
 			specialTallboyType = "Tallboy";
-			Mon_TallboyDamageScale = 1.5;
-			Mon_TallboyHealthScale = 1.5;
+			TallboyDamageScale = 1.3;
+			TallboyHealthScale = 1.3;
+			Mon_Tallboy = true;
 			CorruptionCard_Tallboy();
 			break;
 		case "Crusher":
@@ -1223,14 +1224,15 @@ function ApplyTallboyCard()
 			break;
 		case "Fer_Crusher":
 			specialTallboyType = "Crusher";
-			Fer_CrusherDamageScale = 1.25;
-			Fer_CrusherHealthScale = 1.25;
+			TallboyDamageScale = 1.15;
+			TallboyHealthScale = 1.15;
 			CorruptionCard_Crusher();
 			break;
 		case "Mon_Crusher":
 			specialTallboyType = "Crusher";
-			Mon_CrusherDamageScale = 1.25;
-			Mon_CrusherHealthScale = 1.25;
+			TallboyDamageScale = 1.3;
+			TallboyHealthScale = 1.3;
+			Mon_Tallboy = true;
 			CorruptionCard_Crusher();
 			break;
 		case "Bruiser":
@@ -1239,14 +1241,15 @@ function ApplyTallboyCard()
 			break;
 		case "Fer_Bruiser":
 			specialTallboyType = "Bruiser";
-			Fer_BruiserDamageScale = 1.25;
-			Fer_BruiserHealthScale = 1.25;
+			TallboyDamageScale = 1.15;
+			TallboyHealthScale = 1.15;
 			CorruptionCard_Bruiser();
 			break;
 		case "Mon_Bruiser":
 			specialTallboyType = "Bruiser";
-			Mon_BruiserDamageScale = 1.5;
-			Mon_BruiserHealthScale = 1.5;
+			TallboyDamageScale = 1.3;
+			TallboyHealthScale = 1.3;
+			Mon_Tallboy = true;
 			CorruptionCard_Bruiser();
 			break;
 	}
@@ -1284,14 +1287,15 @@ function ApplyHockerCard()
 			break;
 		case "Fer_Hocker":
 			specialHockerType = "Hocker";
-			Fer_HockerDamageScale = 1.25;
-			Fer_HockerHealthScale = 1.25;
+			HockerDamageScale = 1.15;
+			HockerHealthScale = 1.15;
 			CorruptionCard_Hocker();
 			break;
 		case "Mon_Hocker":
 			specialHockerType = "Hocker";
-			Mon_HockerDamageScale = 1.5;
-			Mon_HockerHealthScale = 1.5;
+			HockerDamageScale = 1.3;
+			HockerHealthScale = 1.3;
+			Mon_Hocker = true;
 			CorruptionCard_Hocker();
 			break;
 		case "Stinger":
@@ -1300,14 +1304,15 @@ function ApplyHockerCard()
 			break;
 		case "Fer_Stinger":
 			specialHockerType = "Stinger";
-			Fer_StingerDamageScale = 1.25;
-			Fer_StingerHealthScale = 1.25;
+			HockerDamageScale = 1.15;
+			HockerHealthScale = 1.15;
 			CorruptionCard_Stinger();
 			break;
 		case "Mon_Stinger":
 			specialHockerType = "Stinger";
-			Mon_StingerDamageScale = 1.25;
-			Mon_StingerHealthScale = 1.25;
+			HockerDamageScale = 1.3;
+			HockerHealthScale = 1.3;
+			Mon_Hocker = true;
 			CorruptionCard_Stinger();
 			break;
 		case "Stalker":
@@ -1316,14 +1321,15 @@ function ApplyHockerCard()
 			break;
 		case "Fer_Stalker":
 			specialHockerType = "Stalker";
-			Fer_StalkerDamageScale = 1.25;
-			Fer_StalkerHealthScale = 1.25;
+			HockerDamageScale = 1.15;
+			HockerHealthScale = 1.15;
 			CorruptionCard_Stalker();
 			break;
 		case "Mon_Stalker":
 			specialHockerType = "Stalker";
-			Mon_StalkerDamageScale = 1.5;
-			Mon_StalkerHealthScale = 1.5;
+			HockerDamageScale = 1.3;
+			HockerHealthScale = 1.3;
+			Mon_Hocker = true;
 			CorruptionCard_Stalker();
 			break;
 	}
@@ -1358,14 +1364,15 @@ function ApplyRetchCard()
 			break;
 		case "Fer_Retch":
 			specialRetchType = "Retch";
-			Fer_RetchDamageScale = 1.25;
-			Fer_RetchHealthScale = 1.25;
+			RetchDamageScale = 1.15;
+			RetchHealthScale = 1.15;
 			CorruptionCard_Retch();
 			break;
 		case "Mon_Retch":
 			specialRetchType = "Retch";
-			Mon_RetchDamageScale = 1.5;
-			Mon_RetchHealthScale = 1.5;
+			RetchDamageScale = 1.3;
+			RetchHealthScale = 1.3;
+			Mon_Retch = true;
 			CorruptionCard_Retch();
 			break;
 		case "Exploder":
@@ -1374,14 +1381,15 @@ function ApplyRetchCard()
 			break;
 		case "Fer_Exploder":
 			specialRetchType = "Exploder";
-			Fer_ExploderDamageScale = 1.25;
-			Fer_ExploderHealthScale = 1.25;
+			RetchDamageScale = 1.15;
+			RetchHealthScale = 1.15;
 			CorruptionCard_Exploder();
 			break;
 		case "Mon_Exploder":
 			specialRetchType = "Exploder";
-			Mon_ExploderDamageScale = 1.25;
-			Mon_ExploderHealthScale = 1.25;
+			RetchDamageScale = 1.3;
+			RetchHealthScale = 1.3;
+			Mon_Retch = true;
 			CorruptionCard_Exploder();
 			break;
 		case "Reeker":
@@ -1390,14 +1398,15 @@ function ApplyRetchCard()
 			break;
 		case "Fer_Reeker":
 			specialRetchType = "Reeker";
-			Fer_ReekerDamageScale = 1.25;
-			Fer_ReekerHealthScale = 1.25;
+			RetchDamageScale = 1.15;
+			RetchHealthScale = 1.15;
 			CorruptionCard_Reeker();
 			break;
 		case "Mon_Reeker":
 			specialRetchType = "Reeker";
-			Mon_ReekerDamageScale = 1.5;
-			Mon_ReekerHealthScale = 1.5;
+			RetchDamageScale = 1.3;
+			RetchHealthScale = 1.3;
+			Mon_Retch = true;
 			CorruptionCard_Reeker();
 			break;
 	}
