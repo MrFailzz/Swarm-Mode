@@ -4,7 +4,7 @@
 function BossSettings_Breaker()
 {
 	tankModel = "models/infected/hulk.mdl";
-	bossBreakerEnable = true;
+	bBreakerEnable = true;
 	Convars.SetValue("z_tank_health", 7500);
 	Convars.SetValue("z_tank_speed", 190);
 	Convars.SetValue("z_tank_speed_vs", 190);
@@ -15,7 +15,7 @@ function BossSettings_Breaker()
 function BossSettings_Ogre()
 {
 	tankModel = "models/infected/hulk_dlc3.mdl";
-	bossOgreEnable = true;
+	bOgreEnable = true;
 	Convars.SetValue("z_tank_health", 8000);
 	Convars.SetValue("z_tank_speed", 200);
 	Convars.SetValue("z_tank_speed_vs", 200);
@@ -44,7 +44,7 @@ function TankSpawn(params)
 
 	if (corruptionBoss == "hazardOgreRaging")
 	{
-		ogreAggro = false;
+		bOgreAggro = false;
 	}
 }
 
@@ -183,7 +183,7 @@ if (!IsSoundPrecached("player/tank/voice/pain/tank_fire_06.wav"))
 
 function BreakerJump(player)
 {
-	if (bossBreakerEnable)
+	if (bBreakerEnable)
 	{
 		//Apply the jump
 		local eyeAngles = player.EyeAngles();

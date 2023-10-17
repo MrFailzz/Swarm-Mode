@@ -383,6 +383,12 @@ function AllowTakeDamage(damageTable)
 					return false;
 				}
 
+				// Rework common infected DMG
+				if (attackerType == "infected")
+				{
+					damageTable.DamageDone = 2.5 * CommonDmgScale * difficultyDmgScale_Common;
+				}
+
 				// Rework infected claw DMG
 				if (attackerPlayer)
 				{
@@ -391,7 +397,7 @@ function AllowTakeDamage(damageTable)
 						local zombieType = attacker.GetZombieType();
 						local baseDamage = -1;
 
-						if (weaponClass == "weapon_boomer_claw" || weaponClass == "weapon_charger_claw" || weaponClass == "weapon_jockey_claw" || weaponClass == "weapon_smoker_claw"  )
+						if (weaponClass == "weapon_boomer_claw" || weaponClass == "weapon_charger_claw" || weaponClass == "weapon_jockey_claw" || weaponClass == "weapon_smoker_claw" || weaponClass == "weapon_tank_claw")
 						{
 							switch(zombieType)
 							{
@@ -399,10 +405,10 @@ function AllowTakeDamage(damageTable)
 									switch(specialHockerType)
 									{
 										case "Hocker":
-											baseDamage = 2 * HockerDamageScale;
+											baseDamage = hockerClawDmg * HockerDmgScale;
 										break;
 										case "Stinger":
-											baseDamage = 1 * HockerDamageScale;
+											baseDamage = stingerClawDmg * HockerDmgScale;
 										break;
 									}
 								break;
@@ -410,13 +416,13 @@ function AllowTakeDamage(damageTable)
 									switch(specialRetchType)
 									{
 										case "Retch":
-											baseDamage = 4 * RetchDamageScale;
+											baseDamage = retchClawDmg * RetchDmgScale;
 										break;
 										case "Exploder":
-											baseDamage = 8 * RetchDamageScale;
+											baseDamage = exploderClawDmg * RetchDmgScale;
 										break;
 										case "Reeker":
-											baseDamage = 4 * RetchDamageScale;
+											baseDamage = reekerClawDmg * RetchDmgScale;
 										break;
 									}
 								break;
@@ -424,7 +430,7 @@ function AllowTakeDamage(damageTable)
 									switch (specialHockerType)
 									{
 										case "Stalker":
-											baseDamage = 3 * HockerDamageScale;
+											baseDamage = stalkerClawDmg * HockerDmgScale;
 										break;
 									}
 								break;
@@ -432,13 +438,13 @@ function AllowTakeDamage(damageTable)
 									switch(specialTallboyType)
 									{
 										case "Tallboy":
-											baseDamage = 20 * TallboyDamageScale;
+											baseDamage = tallboyClawDmg * TallboyDmgScale;
 										break;
 										case "Crusher":
-											baseDamage = 5 * TallboyDamageScale;
+											baseDamage = crusherClawDmg * TallboyDmgScale;
 										break;
 										case "Bruiser":
-											baseDamage = 17.5 * TallboyDamageScale;
+											baseDamage = bruiserClawDmg * TallboyDmgScale;
 										break;
 									}
 								break;
@@ -447,11 +453,11 @@ function AllowTakeDamage(damageTable)
 									{
 										case "hazardBreaker":
 										case "hazardBreakerRaging":
-											baseDamage = 20;
+											baseDamage = bossClawDmg * BossDamageScale;
 										break;
 										case "hazardOgre":
 										case "hazardOgreRaging":
-											baseDamage = 20;
+											baseDamage = bossClawDmg * BossDamageScale;
 										break;
 									}
 								break;
@@ -461,7 +467,7 @@ function AllowTakeDamage(damageTable)
 						//Only change damage when we specifically want to
 						if (baseDamage != -1)
 						{
-							damageTable.DamageDone = baseDamage * difficultyDamageScale;
+							damageTable.DamageDone = baseDamage * difficultyDmgScale_Special;
 						}
 					}
 				}
@@ -512,7 +518,7 @@ function AllowTakeDamage(damageTable)
 				if ((damageType & 262144) == 262144 && (damageType & 1024) == 1024)
 				{
 					//Reduce acid damage globally
-					damageTable.DamageDone = 1 * difficultyDamageScale;
+					damageTable.DamageDone = 1 * difficultyDmgScale_Special;
 					ChemicalBarrier = PlayerHasCard(victim, "ChemicalBarrier");
 				}
 

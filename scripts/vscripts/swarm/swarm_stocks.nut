@@ -173,11 +173,11 @@ function PlayerLeftSafeArea(params)
 			switch(corruptionHordes)
 			{
 				case "hordeHunted":
-					HuntedEnabled = true;
+					bHuntedEnabled = true;
 					HuntedTimer = Time() + HuntedTimerDefault + 30;
 					break;
 				case "hordeOnslaught":
-					OnslaughtEnabled = true;
+					bOnslaughtEnabled = true;
 					OnslaughtTimer = Time() + OnslaughtTimerDefault + 30;
 					break;
 				case "hordeTallboy":
@@ -196,10 +196,10 @@ function PlayerLeftSafeArea(params)
 			switch(corruptionEnvironmental)
 			{
 				case "environmentBiohazard":
-					biohazardEnabled = true;
+					bBiohazardEnabled = true;
 					break;
 				case "environmentFrozen":
-					frigidOutskirtsEnabled = true;
+					bFrigidOutskirtsEnabled = true;
 					break;
 			}
 
@@ -285,7 +285,7 @@ function PlayerHurt(params)
 		{
 			if ("type" in params)
 			{
-				if (params.type == 2 && bossOgreEnable && params.health < stagger_dmg)
+				if (params.type == 2 && bOgreEnable && params.health < stagger_dmg)
 				{
 					//Stagger tank
 					player.Stagger(Vector(-1, -1, -1));
@@ -637,8 +637,8 @@ function Update_CheckpointWarp()
 				}
 			}
 
-			// Warp all survivors to the checkpoint if there are more than 3 and the survivorWarped flag is false
-			if (numSurvivor > 3 && !survivorWarped)
+			// Warp all survivors to the checkpoint if there are more than 3 and the bSurvivorWarped flag is false
+			if (numSurvivor > 3 && !bSurvivorWarped)
 			{
 				local safedoor = null;
 				while ((safedoor = Entities.FindByClassnameWithin(safedoor, "prop_door_rotating_checkpoint", survivorOrigin, 1024)) != null)
@@ -647,7 +647,7 @@ function Update_CheckpointWarp()
 					if (NetProps.GetPropInt(safedoor, "m_eDoorState") == 0)
 					{
 						Director.WarpAllSurvivorsToCheckpoint();
-						survivorWarped = true;
+						bSurvivorWarped = true;
 					}
 				}
 			}

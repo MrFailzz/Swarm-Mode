@@ -61,7 +61,7 @@ function InitAlarmDoors()
 
 	if (corruptionHazards == "hazardLockdown")
 	{
-		remainingDoors = ceil(RandomInt(alarmDoorCountMin, alarmDoorCountMax) * hazardDifficultyScale * 4);
+		remainingDoors = ceil(RandomInt(alarmDoorCountMin, alarmDoorCountMax) * difficultyHazardScale * 4);
 	}
 	else
 	{
@@ -191,7 +191,7 @@ function InitCrows()
 
 	if (corruptionHazards == "hazardBirds")
 	{
-		crowGroupsToSpawn = ceil(RandomInt(crowGroupCountMin, crowGroupCountMax) * hazardDifficultyScale * 3);
+		crowGroupsToSpawn = ceil(RandomInt(crowGroupCountMin, crowGroupCountMax) * difficultyHazardScale * 3);
 	}
 	else
 	{
@@ -715,10 +715,10 @@ function difficulty_RandomBoss()
 	if (difficulty > 1)
 	{
 		local progressPct = ( Director.GetFurthestSurvivorFlow() / GetMaxFlowDistance() )
-		if (progressPct > spawnBoss && !bossSpawned)
+		if (progressPct > spawnBoss && !bBossSpawned)
 		{
 			BreakerSpawn();
-			bossSpawned = true;
+			bBossSpawned = true;
 		}
 	}
 }
@@ -727,28 +727,28 @@ function SpawnBoss()
 {
 	local progressPct = ( Director.GetFurthestSurvivorFlow() / GetMaxFlowDistance() )
 	    
-	if (progressPct > spawnSnitch && !snitchSpawned && corruptionHazards == "hazardSnitch")
+	if (progressPct > spawnSnitch && !bSnitchSpawned && corruptionHazards == "hazardSnitch")
 	{
 		SnitchSpawn();
-		snitchSpawned = true;
+		bSnitchSpawned = true;
 	}
-	if (progressPct > spawnBreaker && !breakerSpawned && (corruptionBoss == "hazardBreaker" || corruptionBoss == "hazardBreakerRaging"))
+	if (progressPct > spawnBreaker && !bBreakerSpawned && (corruptionBoss == "hazardBreaker" || corruptionBoss == "hazardBreakerRaging"))
 	{
 		BreakerSpawn();
-		breakerSpawned = true;
+		bBreakerSpawned = true;
 	}
-	if (progressPct > spawnOgre && !ogreSpawned && (corruptionBoss == "hazardOgre" || corruptionBoss == "hazardOgreRaging"))
+	if (progressPct > spawnOgre && !bOgreSpawned && (corruptionBoss == "hazardOgre" || corruptionBoss == "hazardOgreRaging"))
 	{
 		BreakerSpawn();
-		ogreSpawned = true;
+		bOgreSpawned = true;
 	}
 
 	if (corruptionBoss == "hazardOgreRaging")
 	{
-		if (!ogreAggro)
+		if (!bOgreAggro)
 		{
-			ogreAggro = Director.IsTankInPlay();
-			if (ogreAggro)
+			bOgreAggro = Director.IsTankInPlay();
+			if (bOgreAggro)
 			{
 				SpawnMob(1, 10, false);
 			}

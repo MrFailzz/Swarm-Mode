@@ -232,9 +232,9 @@ function GetEntityType(entity)
 				break;
 
 				case 8:
-					if (bossBreakerEnable)
+					if (bBreakerEnable)
 						return "Breaker";
-					if (bossOgreEnable)
+					if (bOgreEnable)
 						return "Ogre";
 				break;
 

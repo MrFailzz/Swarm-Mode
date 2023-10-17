@@ -87,7 +87,7 @@ function TongueGrab(params)
 		Convars.SetValue("tongue_victim_acceleration", -450);
 		Convars.SetValue("tongue_victim_max_speed", 450);
 		NetProps.SetPropInt(attacker, "m_tongueVictim", 0);
-		victim.TakeDamage((8 * difficultyDamageScale * HockerDamageScale), 128, attacker)
+		victim.TakeDamage((8 * HockerDmgScale * difficultyDmgScale_Special), 128, attacker)
 
 		if (attacker.ValidateScriptScope())
 		{
@@ -150,7 +150,7 @@ function StingerProjectile(params)
 		local attacker = GetPlayerFromUserID(params["userid"]);
 
 		// DMG victim
-		player.TakeDamage((6 * difficultyDamageScale * HockerDamageScale), 128, attacker)
+		player.TakeDamage((6 * HockerDmgScale * difficultyDmgScale_Special), 128, attacker)
 		player.OverrideFriction(0.5,1.35);
 		
 		// Break Tongue
@@ -180,7 +180,7 @@ function StalkerGrab(params)
 	local player = GetPlayerFromUserID(params["victim"]);
 	local attacker = GetPlayerFromUserID(params["userid"]);
 
-	player.TakeDamage((15 * difficultyDamageScale * HockerDamageScale), 128, attacker)
+	player.TakeDamage((15 * HockerDmgScale * difficultyDmgScale_Special), 128, attacker)
 }
 
 
@@ -271,7 +271,7 @@ function BoomerExplosion(boomerOrigin, isExploder, exploder)
 					damage = (1 - (distanceVector / boomerExplosionRange)) * boomerExplosionDamage;
 					survivor.TakeDamage(damage, DMG_BLAST_SURFACE, exploder);
 					
-					if (Mon_Retch)
+					if (bMonRetch)
 					{
 						survivor.OverrideFriction(0.5,1.5);
 					}
@@ -344,7 +344,7 @@ function BruiserKnockback(bruiser)
 				local survivorOrigin = survivor.GetOrigin();
 				local angle = GetVectorAngle(survivorOrigin, bruiserOrigin);
 
-				survivor.TakeDamage(12.5, 128, bruiser)
+				survivor.TakeDamage((12.5 * TallboyDmgScale * difficultyDmgScale_Special), 128, bruiser)
 				survivor.SetOrigin(Vector(survivorOrigin.x, survivorOrigin.y, survivorOrigin.z + 1));
 				survivor.SetVelocity(Vector(sin(angle + 90) * tallboyPunchKnockback, sin(angle) * tallboyPunchKnockback, 180));
 			}
@@ -393,7 +393,7 @@ function InitSleepers()
 
 	if (corruptionHazards == "hazardSleepers")
 	{
-		sleepersToSpawn = ceil(RandomInt(sleeperCountMin, sleeperCountMax) * hazardDifficultyScale * 2);
+		sleepersToSpawn = ceil(RandomInt(sleeperCountMin, sleeperCountMax) * difficultyHazardScale * 2);
 	}
 	else
 	{

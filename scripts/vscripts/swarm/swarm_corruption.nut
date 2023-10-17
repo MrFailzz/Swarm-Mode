@@ -613,7 +613,7 @@ function CorruptionCard_Biohazard()
 
 function BiohazardTimer()
 {
-	if (!biohazardEnabled)
+	if (!bBiohazardEnabled)
 	{
 		biohazardTickTime = Time();
 		return;
@@ -640,7 +640,7 @@ function BiohazardTimer()
 
 function ApplyBiohazardMutationKill(attacker, victim)
 {
-	if (biohazardEnabled)
+	if (bBiohazardEnabled)
 	{
 		Heal_TempHealth(attacker, 1.5);
 	}
@@ -710,17 +710,17 @@ function CorruptionCard_FrigidOutskirts()
 
 function FrigidOutskirtsTimer()
 {
-	if (!frigidOutskirtsEnabled)
+	if (!bFrigidOutskirtsEnabled)
 	{
 		frigidOutskirtsTimer = Time();
 		return;
 	}
 
-	if (!frigidOutskirtsStormActive)
+	if (!bFrigidOutskirtsStormActive)
 	{
 		if ((Time() - frigidOutskirtsTimer) >= frigidOutskirtsCalmTime)
 		{
-			frigidOutskirtsStormActive = true;
+			bFrigidOutskirtsStormActive = true;
 			frigidOutskirtsTimer = Time();
 			pingRange = 2000;
 			pingDuration = 8;
@@ -767,7 +767,7 @@ function FrigidOutskirtsTimer()
 	{
 		if ((Time() - frigidOutskirtsTimer) >= frigidOutskirtsStormTime)
 		{
-			frigidOutskirtsStormActive = false;
+			bFrigidOutskirtsStormActive = false;
 			frigidOutskirtsTimer = Time();
 			pingRange = 1000;
 			pingDuration = 4;
@@ -863,13 +863,13 @@ function CorruptionCard_Hunted()
 
 function HuntedTimerFunc()
 {
-	if (HuntedTimer < Time() && HuntedEnabled && HuntedTimer != null)
+	if (HuntedTimer < Time() && bHuntedEnabled && HuntedTimer != null)
 	{
 		SpawnMob(1, 10, false);
 		HuntedTimer = Time() + HuntedTimerDefault;
 		ClientPrint(null, 3, "\x04" + "Here comes the horde!");
 	}
-	else if (HuntedTimer < Time() + 5 && HuntedEnabled && HuntedTimer != null)
+	else if (HuntedTimer < Time() + 5 && bHuntedEnabled && HuntedTimer != null)
 	{
 		ClientPrint(null, 3, "\x01" + "Prepare for the horde in \x04" + ceil(HuntedTimer - Time()) + "...");
 	}
@@ -883,13 +883,13 @@ function CorruptionCard_Onslaught()
 
 function OnslaughtTimerFunc()
 {
-	if (OnslaughtTimer < Time() && OnslaughtEnabled == true && OnslaughtTimer != null)
+	if (OnslaughtTimer < Time() && bOnslaughtEnabled == true && OnslaughtTimer != null)
 	{
 		SpawnMob(1, 10, false);
 		OnslaughtTimer = Time() + OnslaughtTimerDefault;
 		ClientPrint(null, 3, "\x04" + "Here comes the horde!");
 	}
-	else if (OnslaughtTimer < Time() + 5 && OnslaughtEnabled && OnslaughtTimer != null)
+	else if (OnslaughtTimer < Time() + 5 && bOnslaughtEnabled && OnslaughtTimer != null)
 	{
 		ClientPrint(null, 3, "\x01" + "Prepare for the horde in \x04" + ceil(OnslaughtTimer - Time()) + "...");
 	}
@@ -1207,15 +1207,15 @@ function ApplyTallboyCard()
 			break;
 		case "Fer_Tallboy":
 			specialTallboyType = "Tallboy";
-			TallboyDamageScale = 1.15;
-			TallboyHealthScale = 1.15;
+			TallboyDmgScale = 1.15;
+			TallboyHPScale = 1.15;
 			CorruptionCard_Tallboy();
 			break;
 		case "Mon_Tallboy":
 			specialTallboyType = "Tallboy";
-			TallboyDamageScale = 1.3;
-			TallboyHealthScale = 1.3;
-			Mon_Tallboy = true;
+			TallboyDmgScale = 1.3;
+			TallboyHPScale = 1.3;
+			bMonTallboy = true;
 			CorruptionCard_Tallboy();
 			break;
 		case "Crusher":
@@ -1224,15 +1224,15 @@ function ApplyTallboyCard()
 			break;
 		case "Fer_Crusher":
 			specialTallboyType = "Crusher";
-			TallboyDamageScale = 1.15;
-			TallboyHealthScale = 1.15;
+			TallboyDmgScale = 1.15;
+			TallboyHPScale = 1.15;
 			CorruptionCard_Crusher();
 			break;
 		case "Mon_Crusher":
 			specialTallboyType = "Crusher";
-			TallboyDamageScale = 1.3;
-			TallboyHealthScale = 1.3;
-			Mon_Tallboy = true;
+			TallboyDmgScale = 1.3;
+			TallboyHPScale = 1.3;
+			bMonTallboy = true;
 			CorruptionCard_Crusher();
 			break;
 		case "Bruiser":
@@ -1241,15 +1241,15 @@ function ApplyTallboyCard()
 			break;
 		case "Fer_Bruiser":
 			specialTallboyType = "Bruiser";
-			TallboyDamageScale = 1.15;
-			TallboyHealthScale = 1.15;
+			TallboyDmgScale = 1.15;
+			TallboyHPScale = 1.15;
 			CorruptionCard_Bruiser();
 			break;
 		case "Mon_Bruiser":
 			specialTallboyType = "Bruiser";
-			TallboyDamageScale = 1.3;
-			TallboyHealthScale = 1.3;
-			Mon_Tallboy = true;
+			TallboyDmgScale = 1.3;
+			TallboyHPScale = 1.3;
+			bMonTallboy = true;
 			CorruptionCard_Bruiser();
 			break;
 	}
@@ -1287,15 +1287,15 @@ function ApplyHockerCard()
 			break;
 		case "Fer_Hocker":
 			specialHockerType = "Hocker";
-			HockerDamageScale = 1.15;
-			HockerHealthScale = 1.15;
+			HockerDmgScale = 1.15;
+			HockerHPScale = 1.15;
 			CorruptionCard_Hocker();
 			break;
 		case "Mon_Hocker":
 			specialHockerType = "Hocker";
-			HockerDamageScale = 1.3;
-			HockerHealthScale = 1.3;
-			Mon_Hocker = true;
+			HockerDmgScale = 1.3;
+			HockerHPScale = 1.3;
+			bMonHocker = true;
 			CorruptionCard_Hocker();
 			break;
 		case "Stinger":
@@ -1304,15 +1304,15 @@ function ApplyHockerCard()
 			break;
 		case "Fer_Stinger":
 			specialHockerType = "Stinger";
-			HockerDamageScale = 1.15;
-			HockerHealthScale = 1.15;
+			HockerDmgScale = 1.15;
+			HockerHPScale = 1.15;
 			CorruptionCard_Stinger();
 			break;
 		case "Mon_Stinger":
 			specialHockerType = "Stinger";
-			HockerDamageScale = 1.3;
-			HockerHealthScale = 1.3;
-			Mon_Hocker = true;
+			HockerDmgScale = 1.3;
+			HockerHPScale = 1.3;
+			bMonHocker = true;
 			CorruptionCard_Stinger();
 			break;
 		case "Stalker":
@@ -1321,15 +1321,15 @@ function ApplyHockerCard()
 			break;
 		case "Fer_Stalker":
 			specialHockerType = "Stalker";
-			HockerDamageScale = 1.15;
-			HockerHealthScale = 1.15;
+			HockerDmgScale = 1.15;
+			HockerHPScale = 1.15;
 			CorruptionCard_Stalker();
 			break;
 		case "Mon_Stalker":
 			specialHockerType = "Stalker";
-			HockerDamageScale = 1.3;
-			HockerHealthScale = 1.3;
-			Mon_Hocker = true;
+			HockerDmgScale = 1.3;
+			HockerHPScale = 1.3;
+			bMonHocker = true;
 			CorruptionCard_Stalker();
 			break;
 	}
@@ -1364,15 +1364,15 @@ function ApplyRetchCard()
 			break;
 		case "Fer_Retch":
 			specialRetchType = "Retch";
-			RetchDamageScale = 1.15;
-			RetchHealthScale = 1.15;
+			RetchDmgScale = 1.15;
+			RetchHPScale = 1.15;
 			CorruptionCard_Retch();
 			break;
 		case "Mon_Retch":
 			specialRetchType = "Retch";
-			RetchDamageScale = 1.3;
-			RetchHealthScale = 1.3;
-			Mon_Retch = true;
+			RetchDmgScale = 1.3;
+			RetchHPScale = 1.3;
+			bMonRetch = true;
 			CorruptionCard_Retch();
 			break;
 		case "Exploder":
@@ -1381,15 +1381,15 @@ function ApplyRetchCard()
 			break;
 		case "Fer_Exploder":
 			specialRetchType = "Exploder";
-			RetchDamageScale = 1.15;
-			RetchHealthScale = 1.15;
+			RetchDmgScale = 1.15;
+			RetchHPScale = 1.15;
 			CorruptionCard_Exploder();
 			break;
 		case "Mon_Exploder":
 			specialRetchType = "Exploder";
-			RetchDamageScale = 1.3;
-			RetchHealthScale = 1.3;
-			Mon_Retch = true;
+			RetchDmgScale = 1.3;
+			RetchHPScale = 1.3;
+			bMonRetch = true;
 			CorruptionCard_Exploder();
 			break;
 		case "Reeker":
@@ -1398,15 +1398,15 @@ function ApplyRetchCard()
 			break;
 		case "Fer_Reeker":
 			specialRetchType = "Reeker";
-			RetchDamageScale = 1.15;
-			RetchHealthScale = 1.15;
+			RetchDmgScale = 1.15;
+			RetchHPScale = 1.15;
 			CorruptionCard_Reeker();
 			break;
 		case "Mon_Reeker":
 			specialRetchType = "Reeker";
-			RetchDamageScale = 1.3;
-			RetchHealthScale = 1.3;
-			Mon_Retch = true;
+			RetchDmgScale = 1.3;
+			RetchHPScale = 1.3;
+			bMonRetch = true;
 			CorruptionCard_Reeker();
 			break;
 	}
