@@ -345,7 +345,8 @@ function Update()
 		SwarmCircleApplyDamage();
 		CancelRockAnimation();
 	}
-	
+
+/*	
 	if (specialTallboyType == "Tallboy")
 	{
 		if (bChargerSpawned)
@@ -353,6 +354,7 @@ function Update()
 			RemoveCharge();
 		}
 	}
+*/
 
 	CommonsUpdate();
 
@@ -368,7 +370,7 @@ function Update()
 
 	difficulty_RandomBoss();
 
-	if (corruptionHazards == "hazardSnitch" || bOgreEnable || bBreakerEnable)
+	if (corruptionHazards == "hazardSnitch" || corruptionBoss == "bossBreaker" || corruptionBoss == "bossOgre" || corruptionBoss == "bossBreakerFer" || corruptionBoss == "bossOgreFer" || corruptionBoss == "bossBreakerMon" || corruptionBoss == "bossOgreMon")
 	{
 		SpawnBoss();
 	}
@@ -577,9 +579,9 @@ function Update_GiveupTimer()
 							GiveupTimer[survivorID]++;
 
 							// Add progress bar for giving up
-							NetProps.SetPropInt(player, "m_iCurrentUseAction", 10);
 							NetProps.SetPropFloat(player, "m_flProgressBarStartTime", startGiveupTime);
 							NetProps.SetPropFloat(player, "m_flProgressBarDuration", GiveupTimerDefault);
+							NetProps.SetPropInt(player, "m_iCurrentUseAction", 10);
 						}
 						else if ((player.GetButtonMask() & IN_DUCK) && GiveupTimer[survivorID] > 0)
 						{

@@ -33,7 +33,7 @@ mapNumber <- Director.GetMapNumber();
 z_speed <- Convars.GetFloat("z_speed");
 BaseMaxIncaps <- 2;
 
-// Fog Map Defaults
+//Fog Map Defaults
 savedFogSettings <- {};
 
 //Breaker
@@ -47,9 +47,23 @@ swarmTickTime <- 0;
 swarmOrigin <- null;
 safeSurvivors <- array(4);
 
+//Boss DMG & HP Scaling
+BossDmgMulti <- 1;
+BossHpMulti <- 1;
+
 //Tank HUD
 bTankHudExists <- false;
 tankHudTanks <- [null, null];
+
+//Specials DMG & HP Scaling
+TallboyDmgMulti <- 1;
+RetchDmgMulti <- 1;
+HockerDmgMulti <- 1;
+TallboyHpMulti <- 1;
+RetchHpMulti <- 1;
+HockerHpMulti <- 1;
+difficulty_SpecialHpMulti <- 1;
+difficulty_SpecialDmgMulti <- 1;
 
 //Commons
 commonVarList <- array(50, null);
@@ -62,6 +76,12 @@ fireCommonsTimer <- 1;
 explodingCommonsTimer <- 3;
 explodingCommonsFiltersExist <- false;
 uncommonsTimer <- 0;
+
+//Commons DMG & HP Scaling
+CommonDmgMulti <- 1;
+CommonHpMulti <- 1;
+difficulty_CommonDmgMulti <- 1;		// Difficulty scaling (Commons only)
+difficulty_CommonHpMulti <- 1;
 
 //Corruption
 corruptionCards <- [];
@@ -87,6 +107,9 @@ corruptionMission <- null;
 specialTallboyType <- null;
 specialRetchType <- null;
 specialHockerType <- null;
+bMonTallboy <- false;
+bMonRetch <- false;
+bMonHocker <- false;
 
 //Corruption - Biohazard
 bBiohazardEnabled <- false;
@@ -223,6 +246,7 @@ cardHudTimeout <- 5;
 BaseTempHealthDecayRate <- 0.27;
 BaseSurvivorIncapDecayRate <- 3;
 MaxTraumaDamage <- 20;
+TraumaDmg <- [0, 0, 0, 0];
 baseShovePenalty <- [0, 0, 0, 0];
 experiencedEMT <- [0, 0, 0, 0];
 
@@ -410,12 +434,7 @@ bBreakerEnable <- false;
 
 bOgreAggro <- false;
 
-// Base DMG
 bossClawDmg <- 20;
-
-// DMG & HP Scaling
-BossDmgMulti <- 1;
-BossHpMulti <- 1;
 
 // INFECTED //
 boomerExplosionRange <- 250;
@@ -427,7 +446,6 @@ exploderRunSpeed <- 320;			// Run speed while using explosion ability
 tallboyPunchKnockback <- 350;		// Max knockback
 tallboyRunSpeed <- 250;
 
-// Base DMG
 tallboyClawDmg <- 20;
 crusherClawDmg <- 5;
 bruiserClawDmg <- 17.5;
@@ -439,22 +457,6 @@ stalkerClawDmg <- 3
 retchClawDmg <- 4;
 exploderClawDmg <- 8;
 reekerClawDmg <- 4;
-
-// DMG & HP Scaling
-TallboyDmgMulti <- 1;
-RetchDmgMulti <- 1;
-HockerDmgMulti <- 1;
-
-TallboyHpMulti <- 1;
-RetchHpMulti <- 1;
-HockerHpMulti <- 1;
-
-bMonTallboy <- false;
-bMonRetch <- false;
-bMonHocker <- false;
-
-difficulty_SpecialHpMulti <- 1;		// Difficulty scaling (Specials & Bosses)
-difficulty_SpecialDmgMulti <- 1;
 
 // COMMON //
 acidCommonsMax <- 4;
@@ -476,13 +478,6 @@ explodingCommonSpawnRate <- 30;		// How often a group will be spawned in seconds
 
 // Base DMG
 commonClawDmg <- 2.5;
-
-// DMG & HP Scaling
-CommonDmgMulti <- 1;
-CommonHpMulti <- 1;
-
-difficulty_CommonDmgMulti <- 1;		// Difficulty scaling (Commons only)
-difficulty_CommonHpMulti <- 1;
 
 // UNCOMMON //
 uncommonMax <- 7;

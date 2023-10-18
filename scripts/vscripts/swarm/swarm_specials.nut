@@ -300,6 +300,7 @@ function RetchVomitHit(params)
 ///////////////////////////////////////////////
 //                  TALLBOY                  //
 ///////////////////////////////////////////////
+/*
 function TallboySpawn(params)
 {
 	local item = params["item"];
@@ -319,6 +320,7 @@ function RemoveCharge()
 	}
 	bChargerSpawned = false;
 }
+*/
 
 function TallboyKnockback(tallboy, survivor)
 {
