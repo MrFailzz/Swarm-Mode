@@ -1030,6 +1030,7 @@ function UpdateBreakoutTimer(player)
 				// Add progress bar for breakout
 				NetProps.SetPropFloat(player, "m_flProgressBarStartTime", startBreakoutTime);
 				NetProps.SetPropFloat(player, "m_flProgressBarDuration", BreakoutTimerDefault);
+				NetProps.SetPropInt(player, "m_iCurrentUseAction", 10);
 			}
 			else if ((player.GetButtonMask() & IN_ATTACK2) && BreakoutTimer[survivorID] > 0)
 			{
@@ -1046,15 +1047,16 @@ function UpdateBreakoutTimer(player)
 
 					// Staggering survivor gets them out of grabs
 					player.Stagger(Vector(-1, -1, -1));
-
-					// Limit use to once per map
+					
 					BreakoutUsed[survivorID]++;
+					NetProps.SetPropInt(player, "m_iCurrentUseAction", 0);
 				}
 			}
 			else
 			{
 				BreakoutTimer[survivorID] = 0;
 				NetProps.SetPropFloat(player, "m_flProgressBarDuration", 0);
+				NetProps.SetPropInt(player, "m_iCurrentUseAction", 0);
 			}
 		}
 	}

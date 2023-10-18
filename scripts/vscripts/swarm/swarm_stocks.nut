@@ -577,6 +577,7 @@ function Update_GiveupTimer()
 							GiveupTimer[survivorID]++;
 
 							// Add progress bar for giving up
+							NetProps.SetPropInt(player, "m_iCurrentUseAction", 10);
 							NetProps.SetPropFloat(player, "m_flProgressBarStartTime", startGiveupTime);
 							NetProps.SetPropFloat(player, "m_flProgressBarDuration", GiveupTimerDefault);
 						}
@@ -588,12 +589,14 @@ function Update_GiveupTimer()
 							{
 								// Kill player
 								player.TakeDamage(9999, 0, null);
+								NetProps.SetPropInt(player, "m_iCurrentUseAction", 0);
 							}
 						}
 						else
 						{
 							GiveupTimer[survivorID] = 0;
 							NetProps.SetPropFloat(player, "m_flProgressBarDuration", 0);
+							NetProps.SetPropInt(player, "m_iCurrentUseAction", 0);
 						}
 					}
 				}
