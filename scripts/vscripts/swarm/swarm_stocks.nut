@@ -368,7 +368,7 @@ function Update()
 
 	difficulty_RandomBoss();
 
-	if (corruptionHazards == "hazardSnitch" || corruptionBoss == "hazardBreaker" || corruptionBoss == "hazardOgre" || corruptionBoss == "hazardBreakerRaging" || corruptionBoss == "hazardOgreRaging")
+	if (corruptionHazards == "hazardSnitch" || bOgreEnable || bBreakerEnable)
 	{
 		SpawnBoss();
 	}

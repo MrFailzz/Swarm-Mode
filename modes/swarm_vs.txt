@@ -60,7 +60,8 @@
 		vs_tank_damage 18
 		z_max_survivor_damage 100
 		
-		survivor_limp_health 15
+		survivor_limp_health 25
+		survivor_limp_walk_speed 165
 		survivor_incapacitated_cycle_time 0.3
 		survivor_incapacitated_dizzy_severity 0
 		survivor_incapacitated_dizzy_timer 0

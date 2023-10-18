@@ -42,7 +42,7 @@ function TankSpawn(params)
 		}
 	}
 
-	if (corruptionBoss == "hazardOgreRaging")
+	if (corruptionBoss == "bossOgreMon")
 	{
 		bOgreAggro = false;
 	}
@@ -113,7 +113,7 @@ function CreateSwarmCircle(tankID)
 				disableshadows = 1
 			});
 
-			if (corruptionBoss == "hazardBreakerRaging")
+			if (corruptionBoss == "bossBreakerMon")
 			{
 				SpawnMob(1, 10, false);
 			}

@@ -62,7 +62,6 @@ fireCommonsTimer <- 1;
 explodingCommonsTimer <- 3;
 explodingCommonsFiltersExist <- false;
 uncommonsTimer <- 0;
-BaseCommonDamage <- 2.5;
 
 //Corruption
 corruptionCards <- [];
@@ -300,11 +299,11 @@ function SetDifficulty()
 			stagger_dmg = 4000;
 			DirectorOptions.MobSpawnSize = 30;
 			DirectorOptions.MegaMobSize = 50;
-			difficultyDmgScale_Common = 0.5;
-			difficultyHPScale_Common = 0.75;
-			difficultyDmgScale_Special = 0.5;
-			difficultyHPScale_Special = 0.75;
-			difficultyHazardScale = 0.5;
+			difficulty_CommonDmgMulti = 0.5;
+			difficulty_CommonHpMulti = 0.75;
+			difficulty_SpecialDmgMulti = 0.5;
+			difficulty_SpecialHpMulti = 0.75;
+			difficultyHazardMulti = 0.5;
 		break;
 
 		//Normal
@@ -314,11 +313,11 @@ function SetDifficulty()
 			stagger_dmg = 4000;
 			DirectorOptions.MobSpawnSize = 30;
 			DirectorOptions.MegaMobSize = 50;
-			difficultyDmgScale_Common = 1;
-			difficultyHPScale_Common = 1;
-			difficultyDmgScale_Special = 1;
-			difficultyHPScale_Special = 1;
-			difficultyHazardScale = 1;
+			difficulty_CommonDmgMulti = 1;
+			difficulty_CommonHpMulti = 1;
+			difficulty_SpecialDmgMulti = 1;
+			difficulty_SpecialHpMulti = 1;
+			difficultyHazardMulti = 1;
 		break;
 
 		//Advanced
@@ -328,11 +327,11 @@ function SetDifficulty()
 			stagger_dmg = 10000;
 			DirectorOptions.MobSpawnSize = 35;
 			DirectorOptions.MegaMobSize = 60;
-			difficultyDmgScale_Common = 2;
-			difficultyHPScale_Common = 1.5;
-			difficultyDmgScale_Special = 1.5;
-			difficultyHPScale_Special = 1.25;
-			difficultyHazardScale = 1.5;
+			difficulty_CommonDmgMulti = 2;
+			difficulty_CommonHpMulti = 1.5;
+			difficulty_SpecialDmgMulti = 1.5;
+			difficulty_SpecialHpMulti = 1.25;
+			difficultyHazardMulti = 1.5;
 		break;
 
 		//Expert
@@ -342,24 +341,24 @@ function SetDifficulty()
 			stagger_dmg = 10000;
 			DirectorOptions.MobSpawnSize = 40;
 			DirectorOptions.MegaMobSize = 70;
-			difficultyDmgScale_Common = 4;
-			difficultyHPScale_Common = 2;
-			difficultyDmgScale_Special = 2;
-			difficultyHPScale_Special = 1.5;
-			difficultyHazardScale = 2;
+			difficulty_CommonDmgMulti = 4;
+			difficulty_CommonHpMulti = 2;
+			difficulty_SpecialDmgMulti = 2;
+			difficulty_SpecialHpMulti = 1.5;
+			difficultyHazardMulti = 2;
 		break;
 	}
 
 	switch(specialTallboyType)
 	{
 		case "Tallboy":
-			Convars.SetValue("z_charger_health", 725 * (difficultyHPScale_Special * TallboyHPScale));
+			Convars.SetValue("z_charger_health", (725 * TallboyHpMulti * difficulty_SpecialHpMulti));
 		break;
 		case "Crusher":
-			Convars.SetValue("z_charger_health", 806 * (difficultyHPScale_Special * TallboyHPScale));
+			Convars.SetValue("z_charger_health", (806 * TallboyHpMulti * difficulty_SpecialHpMulti));
 		break;
 		case "Bruiser":
-			Convars.SetValue("z_charger_health", 1021 * (difficultyHPScale_Special * TallboyHPScale));
+			Convars.SetValue("z_charger_health", (1021 * TallboyHpMulti * difficulty_SpecialHpMulti));
 		break;
 	}
 
@@ -367,10 +366,10 @@ function SetDifficulty()
 	{
 		case "Retch":
 		case "Exploder":
-			Convars.SetValue("z_exploding_health", 376 * (difficultyHPScale_Special * RetchHPScale));
+			Convars.SetValue("z_exploding_health", (376 * RetchHpMulti * difficulty_SpecialHpMulti));
 		break;
 		case "Reeker":
-			Convars.SetValue("z_exploding_health", 430 * (difficultyHPScale_Special * RetchHPScale));
+			Convars.SetValue("z_exploding_health", (430 * RetchHpMulti * difficulty_SpecialHpMulti));
 		break;
 	}
 
@@ -378,18 +377,18 @@ function SetDifficulty()
 	{
 		case "Hocker":
 		case "Stinger":
-			Convars.SetValue("z_exploding_health", 161 * (difficultyHPScale_Special * HockerHPScale));
+			Convars.SetValue("z_exploding_health", (161 * HockerHpMulti * difficulty_SpecialHpMulti));
 		break;
 		case "Stalker":
-			Convars.SetValue("z_exploding_health", 241 * (difficultyHPScale_Special * HockerHPScale));
+			Convars.SetValue("z_exploding_health", (241 * HockerHpMulti * difficulty_SpecialHpMulti));
 		break;
 	}
 
 	Convars.SetValue("z_witch_health", 1000);
-	Convars.SetValue("z_health", 50 * (difficultyHPScale_Common));
+	Convars.SetValue("z_health", 50 * (CommonHpMulti * difficulty_CommonHpMulti));
 
-	Convars.SetValue("z_charge_max_damage", (5 * difficultyDmgScale_Special * TallboyDmgScale));
-	Convars.SetValue("z_charger_pound_dmg", (5 * difficultyDmgScale_Special * TallboyDmgScale));
+	Convars.SetValue("z_charge_max_damage", (5 * TallboyDmgMulti * difficulty_SpecialDmgMulti));
+	Convars.SetValue("z_charger_pound_dmg", (5 * TallboyDmgMulti * difficulty_SpecialDmgMulti));
 }
 
 DirectorOptions.SurvivorMaxIncapacitatedCount = BaseMaxIncaps;
@@ -411,10 +410,12 @@ bBreakerEnable <- false;
 
 bOgreAggro <- false;
 
+// Base DMG
 bossClawDmg <- 20;
 
-BossDamageScale <- 1;		// Card scaling
-BossHealthScale <- 1;
+// DMG & HP Scaling
+BossDmgMulti <- 1;
+BossHpMulti <- 1;
 
 // INFECTED //
 boomerExplosionRange <- 250;
@@ -422,12 +423,11 @@ boomerExplosionDamage <- 45;		// Max damage
 boomerExplosionKnockback <- 275;	// Max knockback
 boomerExplodeTime <- 3;				// In seconds
 exploderRunSpeed <- 320;			// Run speed while using explosion ability
-retchClawDmg <- 4;
-exploderClawDmg <- 8;
-reekerClawDmg <- 4;
 
 tallboyPunchKnockback <- 350;		// Max knockback
 tallboyRunSpeed <- 250;
+
+// Base DMG
 tallboyClawDmg <- 20;
 crusherClawDmg <- 5;
 bruiserClawDmg <- 17.5;
@@ -436,20 +436,25 @@ hockerClawDmg <- 2
 stingerClawDmg <- 1
 stalkerClawDmg <- 3
 
-TallboyDmgScale <- 1;		// Card scaling
-RetchDmgScale <- 1;
-HockerDmgScale <- 1;
+retchClawDmg <- 4;
+exploderClawDmg <- 8;
+reekerClawDmg <- 4;
 
-TallboyHPScale <- 1;
-RetchHPScale <- 1;
-HockerHPScale <- 1;
+// DMG & HP Scaling
+TallboyDmgMulti <- 1;
+RetchDmgMulti <- 1;
+HockerDmgMulti <- 1;
+
+TallboyHpMulti <- 1;
+RetchHpMulti <- 1;
+HockerHpMulti <- 1;
 
 bMonTallboy <- false;
 bMonRetch <- false;
 bMonHocker <- false;
 
-difficultyHPScale_Special <- 1;		// Difficulty scaling (Specials & Bosses)
-difficultyDmgScale_Special <- 1;
+difficulty_SpecialHpMulti <- 1;		// Difficulty scaling (Specials & Bosses)
+difficulty_SpecialDmgMulti <- 1;
 
 // COMMON //
 acidCommonsMax <- 4;
@@ -469,11 +474,15 @@ explodingCommonSpawnRate <- 30;		// How often a group will be spawned in seconds
 ::explodingCommonRange <- 200;		// Explosion range
 ::explodingCommonKnockback <- 275;	// Explosion force
 
-CommonDmgScale <- 1;		// Card scaling
-CommonHPScale <- 1;
+// Base DMG
+commonClawDmg <- 2.5;
 
-difficultyHPScale_Common <- 1;		// Difficulty scaling (Commons only)
-difficultyDmgScale_Common <- 1;
+// DMG & HP Scaling
+CommonDmgMulti <- 1;
+CommonHpMulti <- 1;
+
+difficulty_CommonDmgMulti <- 1;		// Difficulty scaling (Commons only)
+difficulty_CommonHpMulti <- 1;
 
 // UNCOMMON //
 uncommonMax <- 7;
@@ -485,7 +494,7 @@ uncommonFallenMax <- 3;
 uncommonFallenSpawnAmount <- 3;			// Size of group to spawn
 
 // HAZARDS //
-difficultyHazardScale <- 1;			// Number of hazards to be scaled with difficulty (Easy (0): 0.5x, Normal (1): 1x, Advanced (2): 1.5x, Expert (3): 2x)
+difficultyHazardMulti <- 1;			// Number of hazards to be scaled with difficulty (Easy (0): 0.5x, Normal (1): 1x, Advanced (2): 1.5x, Expert (3): 2x)
 alarmDoorCountMin <- 2;				// Min number of alarm doors to spawn per map
 alarmDoorCountMax <- 2;				// Max number of alarm doors to spawn per map
 crowGroupCountMin <- 4;				// Mix number of crow groups to spawn

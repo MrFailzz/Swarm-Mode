@@ -416,10 +416,12 @@ EN_TranslationTable <- {
 	"#cor_Mon_Reeker": "Monstrous Reekers"
 
 	"#cor_hazardSnitch": "Tattlers"
-	"#cor_hazardBreaker": "Breaker"
-	"#cor_hazardBreakerRaging": "Raging Breaker"
-	"#cor_hazardOgre": "Ogre"
-	"#cor_hazardOgreRaging": "Raging Ogre"
+	"#cor_bossBreaker": "Breaker"
+	"#cor_bossBreakerFer": "Ferocious Breaker"
+	"#cor_bossBreakerMon": "Monstrous Breaker"
+	"#cor_bossOgre": "Ogre"
+	"#cor_bossOgreFer": "Ferocious Ogre"
+	"#cor_bossOgreMon": "Monstrous Ogre"
 
 	"#cor_missionSpeedrun": "Speedrun"
 	"#cor_missionAllAlive": "No One Left Behind"
@@ -799,10 +801,12 @@ RU_TranslationTable <- {
  	"#cor_Mon_Reeker": "Монструозные Рикеры"
 
  	"#cor_hazardSnitch": "Стукачи"
- 	"#cor_hazardBreaker": "Брейкер"
- 	"#cor_hazardBreakerRaging": "Разгневанный Брейкер"
- 	"#cor_hazardOgre": "Огр"
- 	"#cor_hazardOgreRaging": "Разгневанный Огр"
+ 	"#cor_bossBreaker": "Брейкер"
+	"#cor_bossBreakerFer": "свирепый Брейкер"
+ 	"#cor_bossBreakerMon": "Разгневанный Брейкер"
+ 	"#cor_bossOgre": "Огр"
+	"#cor_bossOgreFer": "свирепый Огр"
+ 	"#cor_bossOgreMon": "Разгневанный Огр"
 
  	"#cor_missionSpeedrun": "Спидран"
  	"#cor_missionAllAlive": "Своих не оставляем"

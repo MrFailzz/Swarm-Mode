@@ -218,12 +218,22 @@ function InitCorruptionCards()
 	cardsBoss.append("None");
 	if (!IsMissionFinalMap())
 	{
-		cardsBoss.append("hazardBreaker");
-		cardsBoss.append("hazardBreaker");
-		cardsBoss.append("hazardBreakerRaging");
-		cardsBoss.append("hazardOgre");
-		cardsBoss.append("hazardOgre");
-		cardsBoss.append("hazardOgreRaging");
+		cardsBoss.append("bossBreaker");
+		cardsBoss.append("bossBreaker");
+		cardsBoss.append("bossOgre");
+		cardsBoss.append("bossOgre");
+	}
+	if (!IsMissionFinalMap() && mapNumber > 0)
+	{
+		cardsBoss.append("bossBreakerFer");
+		cardsBoss.append("bossBreakerFer");
+		cardsBoss.append("bossOgreFer");
+		cardsBoss.append("bossOgreFer");
+	}
+	if (!IsMissionFinalMap() && mapNumber > 0 && difficulty > 1)
+	{
+		cardsBoss.append("bossBreakerMon");
+		cardsBoss.append("bossOgreMon");
 	}
 	
 	if (swarmSettingsTable["cardsBoss"] != "null")
@@ -1207,14 +1217,14 @@ function ApplyTallboyCard()
 			break;
 		case "Fer_Tallboy":
 			specialTallboyType = "Tallboy";
-			TallboyDmgScale = 1.15;
-			TallboyHPScale = 1.15;
+			TallboyDmgMulti = 1.15;
+			TallboyHpMulti = 1.15;
 			CorruptionCard_Tallboy();
 			break;
 		case "Mon_Tallboy":
 			specialTallboyType = "Tallboy";
-			TallboyDmgScale = 1.3;
-			TallboyHPScale = 1.3;
+			TallboyDmgMulti = 1.3;
+			TallboyHpMulti = 1.3;
 			bMonTallboy = true;
 			CorruptionCard_Tallboy();
 			break;
@@ -1224,14 +1234,14 @@ function ApplyTallboyCard()
 			break;
 		case "Fer_Crusher":
 			specialTallboyType = "Crusher";
-			TallboyDmgScale = 1.15;
-			TallboyHPScale = 1.15;
+			TallboyDmgMulti = 1.15;
+			TallboyHpMulti = 1.15;
 			CorruptionCard_Crusher();
 			break;
 		case "Mon_Crusher":
 			specialTallboyType = "Crusher";
-			TallboyDmgScale = 1.3;
-			TallboyHPScale = 1.3;
+			TallboyDmgMulti = 1.3;
+			TallboyHpMulti = 1.3;
 			bMonTallboy = true;
 			CorruptionCard_Crusher();
 			break;
@@ -1241,14 +1251,14 @@ function ApplyTallboyCard()
 			break;
 		case "Fer_Bruiser":
 			specialTallboyType = "Bruiser";
-			TallboyDmgScale = 1.15;
-			TallboyHPScale = 1.15;
+			TallboyDmgMulti = 1.15;
+			TallboyHpMulti = 1.15;
 			CorruptionCard_Bruiser();
 			break;
 		case "Mon_Bruiser":
 			specialTallboyType = "Bruiser";
-			TallboyDmgScale = 1.3;
-			TallboyHPScale = 1.3;
+			TallboyDmgMulti = 1.3;
+			TallboyHpMulti = 1.3;
 			bMonTallboy = true;
 			CorruptionCard_Bruiser();
 			break;
@@ -1287,14 +1297,14 @@ function ApplyHockerCard()
 			break;
 		case "Fer_Hocker":
 			specialHockerType = "Hocker";
-			HockerDmgScale = 1.15;
-			HockerHPScale = 1.15;
+			HockerDmgMulti = 1.15;
+			HockerHpMulti = 1.15;
 			CorruptionCard_Hocker();
 			break;
 		case "Mon_Hocker":
 			specialHockerType = "Hocker";
-			HockerDmgScale = 1.3;
-			HockerHPScale = 1.3;
+			HockerDmgMulti = 1.3;
+			HockerHpMulti = 1.3;
 			bMonHocker = true;
 			CorruptionCard_Hocker();
 			break;
@@ -1304,14 +1314,14 @@ function ApplyHockerCard()
 			break;
 		case "Fer_Stinger":
 			specialHockerType = "Stinger";
-			HockerDmgScale = 1.15;
-			HockerHPScale = 1.15;
+			HockerDmgMulti = 1.15;
+			HockerHpMulti = 1.15;
 			CorruptionCard_Stinger();
 			break;
 		case "Mon_Stinger":
 			specialHockerType = "Stinger";
-			HockerDmgScale = 1.3;
-			HockerHPScale = 1.3;
+			HockerDmgMulti = 1.3;
+			HockerHpMulti = 1.3;
 			bMonHocker = true;
 			CorruptionCard_Stinger();
 			break;
@@ -1321,14 +1331,14 @@ function ApplyHockerCard()
 			break;
 		case "Fer_Stalker":
 			specialHockerType = "Stalker";
-			HockerDmgScale = 1.15;
-			HockerHPScale = 1.15;
+			HockerDmgMulti = 1.15;
+			HockerHpMulti = 1.15;
 			CorruptionCard_Stalker();
 			break;
 		case "Mon_Stalker":
 			specialHockerType = "Stalker";
-			HockerDmgScale = 1.3;
-			HockerHPScale = 1.3;
+			HockerDmgMulti = 1.3;
+			HockerHpMulti = 1.3;
 			bMonHocker = true;
 			CorruptionCard_Stalker();
 			break;
@@ -1364,14 +1374,14 @@ function ApplyRetchCard()
 			break;
 		case "Fer_Retch":
 			specialRetchType = "Retch";
-			RetchDmgScale = 1.15;
-			RetchHPScale = 1.15;
+			RetchDmgMulti = 1.15;
+			RetchHpMulti = 1.15;
 			CorruptionCard_Retch();
 			break;
 		case "Mon_Retch":
 			specialRetchType = "Retch";
-			RetchDmgScale = 1.3;
-			RetchHPScale = 1.3;
+			RetchDmgMulti = 1.3;
+			RetchHpMulti = 1.3;
 			bMonRetch = true;
 			CorruptionCard_Retch();
 			break;
@@ -1381,14 +1391,14 @@ function ApplyRetchCard()
 			break;
 		case "Fer_Exploder":
 			specialRetchType = "Exploder";
-			RetchDmgScale = 1.15;
-			RetchHPScale = 1.15;
+			RetchDmgMulti = 1.15;
+			RetchHpMulti = 1.15;
 			CorruptionCard_Exploder();
 			break;
 		case "Mon_Exploder":
 			specialRetchType = "Exploder";
-			RetchDmgScale = 1.3;
-			RetchHPScale = 1.3;
+			RetchDmgMulti = 1.3;
+			RetchHpMulti = 1.3;
 			bMonRetch = true;
 			CorruptionCard_Exploder();
 			break;
@@ -1398,14 +1408,14 @@ function ApplyRetchCard()
 			break;
 		case "Fer_Reeker":
 			specialRetchType = "Reeker";
-			RetchDmgScale = 1.15;
-			RetchHPScale = 1.15;
+			RetchDmgMulti = 1.15;
+			RetchHpMulti = 1.15;
 			CorruptionCard_Reeker();
 			break;
 		case "Mon_Reeker":
 			specialRetchType = "Reeker";
-			RetchDmgScale = 1.3;
-			RetchHPScale = 1.3;
+			RetchDmgMulti = 1.3;
+			RetchHpMulti = 1.3;
 			bMonRetch = true;
 			CorruptionCard_Reeker();
 			break;
@@ -1458,16 +1468,30 @@ function ApplyBossCard()
 	{
 		case "None":
 			break;
-		case "hazardBreaker":
+		case "bossBreaker":
 			CorruptionCard_Breaker();
 			break;
-		case "hazardOgre":
+		case "bossOgre":
 			CorruptionCard_Ogre();
 			break;
-		case "hazardBreakerRaging":
+		case "bossBreakerFer":
+			BossDmgMulti = 1.15;
+			BossHpMulti = 1.15;
 			CorruptionCard_Breaker();
 			break;
-		case "hazardOgreRaging":
+		case "bossOgreFer":
+			BossDmgMulti = 1.15;
+			BossHpMulti = 1.15;
+			CorruptionCard_Ogre();
+			break;
+		case "bossBreakerMon":
+			BossDmgMulti = 1.3;
+			BossHpMulti = 1.3;
+			CorruptionCard_Breaker();
+			break;
+		case "bossOgreMon":
+			BossDmgMulti = 1.3;
+			BossHpMulti = 1.3;
 			CorruptionCard_Ogre();
 			break;
 	}

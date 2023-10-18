@@ -61,7 +61,7 @@ function InitAlarmDoors()
 
 	if (corruptionHazards == "hazardLockdown")
 	{
-		remainingDoors = ceil(RandomInt(alarmDoorCountMin, alarmDoorCountMax) * difficultyHazardScale * 4);
+		remainingDoors = ceil(RandomInt(alarmDoorCountMin, alarmDoorCountMax) * difficultyHazardMulti * 4);
 	}
 	else
 	{
@@ -191,7 +191,7 @@ function InitCrows()
 
 	if (corruptionHazards == "hazardBirds")
 	{
-		crowGroupsToSpawn = ceil(RandomInt(crowGroupCountMin, crowGroupCountMax) * difficultyHazardScale * 3);
+		crowGroupsToSpawn = ceil(RandomInt(crowGroupCountMin, crowGroupCountMax) * difficultyHazardMulti * 3);
 	}
 	else
 	{
@@ -732,18 +732,18 @@ function SpawnBoss()
 		SnitchSpawn();
 		bSnitchSpawned = true;
 	}
-	if (progressPct > spawnBreaker && !bBreakerSpawned && (corruptionBoss == "hazardBreaker" || corruptionBoss == "hazardBreakerRaging"))
+	if (progressPct > spawnBreaker && !bBreakerSpawned && bBreakerEnable)
 	{
 		BreakerSpawn();
 		bBreakerSpawned = true;
 	}
-	if (progressPct > spawnOgre && !bOgreSpawned && (corruptionBoss == "hazardOgre" || corruptionBoss == "hazardOgreRaging"))
+	if (progressPct > spawnOgre && !bOgreSpawned && bOgreEnable)
 	{
 		BreakerSpawn();
 		bOgreSpawned = true;
 	}
 
-	if (corruptionBoss == "hazardOgreRaging")
+	if (corruptionBoss == "bossOgreMon")
 	{
 		if (!bOgreAggro)
 		{
