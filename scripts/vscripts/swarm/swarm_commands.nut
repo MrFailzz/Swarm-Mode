@@ -72,24 +72,15 @@ function InterceptChat(message, speaker)
 			break;
 
 			case "autohidehud":
-				if (textArgs.len() < 2)
+				if (swarmSettingsTable["autoHideHUD"])
 				{
-					return;
+					swarmSettingsTable["autoHideHUD"] = false;
+					ClientPrint(null, 3, "\x04" + "Auto hide card HUD off");
 				}
-				if (GetListenServerHost() == speaker || swarmSettingsTable["debug_mode"] > 0)
+				else if (!swarmSettingsTable["autoHideHUD"])
 				{
-					switch(textArgs[1].tolower())
-					{
-						case "true":
-							swarmSettingsTable["autoHideHUD"] = true;
-							ClientPrint(null, 3, "\x04" + "Card HUD will hide automatically");
-						break;
-
-						case "false":
-							swarmSettingsTable["autoHideHUD"] = false;
-							ClientPrint(null, 3, "\x04" + "Card HUD will hide after all players pick cards");
-						break;
-					}
+					swarmSettingsTable["autoHideHUD"] = true;
+					ClientPrint(null, 3, "\x04" + "Auto hide card HUD on");
 				}
 			break;
 
@@ -108,30 +99,6 @@ function InterceptChat(message, speaker)
 					speaker.DropItem(weaponClass);
 				}
 			break;
-
-/*
-			case "гивеуп":
-			case "giveup":
-				if (speaker.IsSurvivor() && speaker.IsIncapacitated())
-				{
-					speaker.TakeDamage(9999, 0, null);
-				}
-				if (speaker.IsSurvivor())
-				{
-					local player = null;
-					while ((player = Entities.FindByClassname(player, "player")) != null)
-					{
-						if (player.IsSurvivor() && player.IsIncapacitated())
-						{
-							if (IsPlayerABot(player))
-							{
-								player.TakeDamage(9999, 0, null);
-							}
-						}
-					}
-				}
-			break;
-*/
 
 			case "карты":
 			case "cards":
@@ -210,11 +177,11 @@ function InterceptChat(message, speaker)
 
 					if (swarmSettingsTable["hardcore"])
 					{
-						ClientPrint(null, 3, "\x04" + "Hardcore mode enabled");
+						ClientPrint(null, 3, Loc("#enablehardcore_msg"));
 					}
 					else
 					{
-						ClientPrint(null, 3, "\x04" + "Hardcore mode disabled");
+						ClientPrint(null, 3, Loc("#disablehardcore_msg"));
 					}
 
 					SaveSettingsTable();

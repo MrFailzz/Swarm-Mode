@@ -50,6 +50,8 @@ EN_TranslationTable <- {
  	"#lang_localization": "English localization"
 	"#giveup_msg": "\x01" + "Hold " + "\x03" + "[CROUCH]" + "\x01" + " to die..."
 	"#breakout_msg": "\x01" + "Hold " + "\x03" + "[SHOVE]" + "\x01" + " to break out!"
+	"#enablehardcore_msg": "\x04" + "Hardcore mode enabled"
+	"#disablehardcore_msg": "\x04" + "Hardcore mode disabled"
 
 	//BOT NAMES
 	"#bot_Nick": "NICK"
@@ -450,6 +452,8 @@ RU_TranslationTable <- {
  	"#lang_localization": "Русская локализация"
  	"#giveup_msg": "\x01" + "Удерживайте " + "\x03" + "[ПРИСЕДАНИЕ]" + "\x01" + " чтобы умереть..."
  	"#breakout_msg": "\x01" + "Удерживайте " + "\x03" + "[ОТТАЛКИВАНИЕ]" + "\x01" + " чтобы вырваться!"
+	"#enablehardcore_msg": "\x04" + "Хардкорный режим включен"
+	"#disablehardcore_msg": "\x04" + "Хардкорный режим отключен"
 
  	//BOT NAMES
 	"#bot_Nick": "НИК"
