@@ -36,16 +36,26 @@ BaseMaxIncaps <- 2;
 //Fog Map Defaults
 savedFogSettings <- {};
 
-//Breaker
+//Bosses
 tankModel <- "models/infected/hulk.mdl"
 randomPct <- RandomInt(1,100)
 spawnBoss <- RandomFloat(0.1,0.9)
-spawnBreaker <- RandomFloat(0.1,0.9)
-spawnOgre <- RandomFloat(0.1,0.9)
+spawnRngBoss <- RandomFloat(0.1,0.9)
+bossType <- null;
+
+bBreakerSpawned <- false;
+bOgreSpawned <- false;
+bBossSpawned <- false;
+bOgreAggro <- false;
+
+//Breaker
 bSwarmCircleActive <- false;
 swarmTickTime <- 0;
 swarmOrigin <- null;
 safeSurvivors <- array(4);
+
+//Ogre
+stagger_dmg <- null;
 
 //Boss DMG & HP Scaling
 BossDmgMulti <- 1;
@@ -80,7 +90,7 @@ uncommonsTimer <- 0;
 //Commons DMG & HP Scaling
 CommonDmgMulti <- 1;
 CommonHpMulti <- 1;
-difficulty_CommonDmgMulti <- 1;		// Difficulty scaling (Commons only)
+difficulty_CommonDmgMulti <- 1;
 difficulty_CommonHpMulti <- 1;
 
 //Corruption
@@ -183,9 +193,6 @@ chainsaw_damage <- 100;
 //Grenade Launcher
 grenadelauncher_damage <- 400;
 
-//Ogre Stagger
-stagger_dmg <- null;
-
 //Player Cards
 ::p1Cards <- {};
 ::p2Cards <- {};
@@ -250,9 +257,6 @@ TraumaDmg <- [0, 0, 0, 0];
 baseShovePenalty <- [0, 0, 0, 0];
 experiencedEMT <- [0, 0, 0, 0];
 
-//Specials
-bChargerSpawned <- false;
-
 //Stocks
 firstLeftCheckpoint <- false;
 survivorHealthBuffer <- [0, 0, 0, 0];
@@ -269,6 +273,94 @@ Convars.SetValue("z_versus_hunter_limit", 0);
 Convars.SetValue("z_versus_spitter_limit", 0);
 Convars.SetValue("z_ghost_delay_minspawn", 20);
 Convars.SetValue("fire_dmginterval", 0.5);
+
+///////////////////////////////////////////////
+//             SETTINGS / OPTIONS            //
+///////////////////////////////////////////////
+swarmTickInterval <- 0.5;				// In seconds
+swarmDamagePerTick <- 1;
+
+tankJumpVelocity <- 475;
+tankJumpExtraHeight <- 450;			// Max extra height from aiming up
+
+bossClawDmg <- 20;
+
+// INFECTED //
+boomerExplosionRange <- 250;
+boomerExplosionDamage <- 45;		// Max damage
+boomerExplosionKnockback <- 275;	// Max knockback
+boomerExplodeTime <- 3;				// In seconds
+exploderRunSpeed <- 320;			// Run speed while using explosion ability
+
+tallboyPunchKnockback <- 350;		// Max knockback
+tallboyRunSpeed <- 250;
+
+tallboyClawDmg <- 20;
+crusherClawDmg <- 5;
+bruiserClawDmg <- 17.5;
+
+hockerClawDmg <- 2
+stingerClawDmg <- 1
+stalkerClawDmg <- 3
+
+retchClawDmg <- 4;
+exploderClawDmg <- 8;
+reekerClawDmg <- 4;
+
+// COMMON //
+acidCommonsMax <- 4;
+acidCommonSpawnAmount <- 4;			// Size of group to spawn
+acidCommonSpawnRate <- 30;			// How often a group will be spawned in seconds
+
+fireCommonsMax <- 7;
+fireCommonSpawnAmount <- 4;			// Size of group to spawn
+fireCommonSpawnRate <- 30;			// How often a group will be spawned in seconds
+fireCommonDamage <- 2;				// Damage per tick from burning
+fireCommonRange <- 40;				// Size of fire damage hitbox
+
+explodingCommonsMax <- 7;
+explodingCommonSpawnAmount <- 4;	// Size of group to spawn
+explodingCommonSpawnRate <- 30;		// How often a group will be spawned in seconds
+::explodingCommonDamage <- 8;			// Max damage from explosion
+::explodingCommonRange <- 200;		// Explosion range
+::explodingCommonKnockback <- 275;	// Explosion force
+
+// Base DMG
+commonClawDmg <- 2.5;
+
+// UNCOMMON //
+uncommonMax <- 7;
+uncommonSpawnAmount <- 4;			// Size of group to spawn
+uncommonSpawnRate <- 30;			// How often a group will be spawned in seconds
+uncommonJimmyMax <- 3;
+uncommonJimmySpawnAmount <- 3;			// Size of group to spawn
+uncommonFallenMax <- 3;
+uncommonFallenSpawnAmount <- 3;			// Size of group to spawn
+
+// HAZARDS //
+difficultyHazardMulti <- 1;			// Number of hazards to be scaled with difficulty (Easy (0): 0.5x, Normal (1): 1x, Advanced (2): 1.5x, Expert (3): 2x)
+alarmDoorCountMin <- 2;				// Min number of alarm doors to spawn per map
+alarmDoorCountMax <- 2;				// Max number of alarm doors to spawn per map
+crowGroupCountMin <- 4;				// Mix number of crow groups to spawn
+crowGroupCountMax <- 4;				// Max number of crow groups to spawn
+sleeperCountMin <- 4;				// Mix number of sleepers to spawn
+sleeperCountMax <- 4;				// Max number of sleepers to spawn
+explosiveCarHealth <- 1000;			// HP of explosive cars
+spawnSnitch <- (RandomFloat(0.1,0.9));
+bSnitchSpawned <- false;
+
+// HEALING //
+medkitHealAmount <- 50;				// HP healed by first aid kits
+pillsHealAmount <- 50;				// HP healed by pain pills
+adrenalineHealAmount <- 25;			// HP healed by adrenaline
+antibioticHealAmount <- 15;
+
+// PINGING //
+pingRange <- 2000;					// Max range for pinging an object
+pingDuration <- 8;					// How many seconds do objects stay pinged
+
+// SURVIVOR //
+survivorCrawlSpeed <- 30;			// Last Legs base crawl speed
 
 ///////////////////////////////////////////////
 //              DIRECTOR OPTIONS             //
@@ -416,99 +508,3 @@ function SetDifficulty()
 }
 
 DirectorOptions.SurvivorMaxIncapacitatedCount = BaseMaxIncaps;
-
-///////////////////////////////////////////////
-//             SETTINGS / OPTIONS            //
-///////////////////////////////////////////////
-swarmTickInterval <- 0.5;				// In seconds
-swarmDamagePerTick <- 1;
-
-tankJumpVelocity <- 475;
-tankJumpExtraHeight <- 450;			// Max extra height from aiming up
-
-bBreakerSpawned <- false;
-bOgreSpawned <- false;
-bBossSpawned <- false;
-bOgreEnable <- false;
-bBreakerEnable <- false;
-
-bOgreAggro <- false;
-
-bossClawDmg <- 20;
-
-// INFECTED //
-boomerExplosionRange <- 250;
-boomerExplosionDamage <- 45;		// Max damage
-boomerExplosionKnockback <- 275;	// Max knockback
-boomerExplodeTime <- 3;				// In seconds
-exploderRunSpeed <- 320;			// Run speed while using explosion ability
-
-tallboyPunchKnockback <- 350;		// Max knockback
-tallboyRunSpeed <- 250;
-
-tallboyClawDmg <- 20;
-crusherClawDmg <- 5;
-bruiserClawDmg <- 17.5;
-
-hockerClawDmg <- 2
-stingerClawDmg <- 1
-stalkerClawDmg <- 3
-
-retchClawDmg <- 4;
-exploderClawDmg <- 8;
-reekerClawDmg <- 4;
-
-// COMMON //
-acidCommonsMax <- 4;
-acidCommonSpawnAmount <- 4;			// Size of group to spawn
-acidCommonSpawnRate <- 30;			// How often a group will be spawned in seconds
-
-fireCommonsMax <- 7;
-fireCommonSpawnAmount <- 4;			// Size of group to spawn
-fireCommonSpawnRate <- 30;			// How often a group will be spawned in seconds
-fireCommonDamage <- 2;				// Damage per tick from burning
-fireCommonRange <- 40;				// Size of fire damage hitbox
-
-explodingCommonsMax <- 7;
-explodingCommonSpawnAmount <- 4;	// Size of group to spawn
-explodingCommonSpawnRate <- 30;		// How often a group will be spawned in seconds
-::explodingCommonDamage <- 8;			// Max damage from explosion
-::explodingCommonRange <- 200;		// Explosion range
-::explodingCommonKnockback <- 275;	// Explosion force
-
-// Base DMG
-commonClawDmg <- 2.5;
-
-// UNCOMMON //
-uncommonMax <- 7;
-uncommonSpawnAmount <- 4;			// Size of group to spawn
-uncommonSpawnRate <- 30;			// How often a group will be spawned in seconds
-uncommonJimmyMax <- 3;
-uncommonJimmySpawnAmount <- 3;			// Size of group to spawn
-uncommonFallenMax <- 3;
-uncommonFallenSpawnAmount <- 3;			// Size of group to spawn
-
-// HAZARDS //
-difficultyHazardMulti <- 1;			// Number of hazards to be scaled with difficulty (Easy (0): 0.5x, Normal (1): 1x, Advanced (2): 1.5x, Expert (3): 2x)
-alarmDoorCountMin <- 2;				// Min number of alarm doors to spawn per map
-alarmDoorCountMax <- 2;				// Max number of alarm doors to spawn per map
-crowGroupCountMin <- 4;				// Mix number of crow groups to spawn
-crowGroupCountMax <- 4;				// Max number of crow groups to spawn
-sleeperCountMin <- 4;				// Mix number of sleepers to spawn
-sleeperCountMax <- 4;				// Max number of sleepers to spawn
-explosiveCarHealth <- 1000;			// HP of explosive cars
-spawnSnitch <- (RandomFloat(0.1,0.9));
-bSnitchSpawned <- false;
-
-// HEALING //
-medkitHealAmount <- 50;				// HP healed by first aid kits
-pillsHealAmount <- 50;				// HP healed by pain pills
-adrenalineHealAmount <- 25;			// HP healed by adrenaline
-antibioticHealAmount <- 15;
-
-// PINGING //
-pingRange <- 2000;					// Max range for pinging an object
-pingDuration <- 8;					// How many seconds do objects stay pinged
-
-// SURVIVOR //
-survivorCrawlSpeed <- 30;			// Last Legs base crawl speed

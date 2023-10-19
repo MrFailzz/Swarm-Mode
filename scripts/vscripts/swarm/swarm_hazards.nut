@@ -696,66 +696,6 @@ function AlarmPoliceStopSound(carIndex)
 }
 ::AlarmPoliceStopSound <- AlarmPoliceStopSound;
 
-function difficulty_RandomBoss()
-{
-	//No boss card played, set tank to be Breaker or Ogre randomly
-	if (corruptionBoss == "None")
-	{
-		if (randomPct < 50)
-		{
-			BossSettings_Breaker();
-		}
-		else
-		{
-			BossSettings_Ogre();
-		}
-	}
-
-	//Only spawn random bosses above Normal
-	if (difficulty > 1)
-	{
-		local progressPct = ( Director.GetFurthestSurvivorFlow() / GetMaxFlowDistance() )
-		if (progressPct > spawnBoss && !bBossSpawned)
-		{
-			BreakerSpawn();
-			bBossSpawned = true;
-		}
-	}
-}
-
-function SpawnBoss()
-{
-	local progressPct = ( Director.GetFurthestSurvivorFlow() / GetMaxFlowDistance() )
-	    
-	if (progressPct > spawnSnitch && !bSnitchSpawned && corruptionHazards == "hazardSnitch")
-	{
-		SnitchSpawn();
-		bSnitchSpawned = true;
-	}
-	if (progressPct > spawnBreaker && !bBreakerSpawned && bBreakerEnable)
-	{
-		BreakerSpawn();
-		bBreakerSpawned = true;
-	}
-	if (progressPct > spawnOgre && !bOgreSpawned && bOgreEnable)
-	{
-		BreakerSpawn();
-		bOgreSpawned = true;
-	}
-
-	if (corruptionBoss == "bossOgreMon")
-	{
-		if (!bOgreAggro)
-		{
-			bOgreAggro = Director.IsTankInPlay();
-			if (bOgreAggro)
-			{
-				SpawnMob(1, 10, false);
-			}
-		}
-	}
-}
-
 function SnitchSpawn(count = RandomInt(1,3), zType = 7)
 {
 	local i = 0;
@@ -765,14 +705,3 @@ function SnitchSpawn(count = RandomInt(1,3), zType = 7)
 		i++;
 	}
 }
-
-function BreakerSpawn(count = 1, zType = 8)
-{
-	local i = 0;
-	while (i < count)
-	{
-		ZSpawn({type = zType});
-		i++;
-	}
-}
-

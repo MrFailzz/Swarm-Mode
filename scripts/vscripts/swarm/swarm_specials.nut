@@ -71,7 +71,6 @@ function MutationSpawn(player)
 	}
 }
 
-
 ///////////////////////////////////////////////
 //                  HOCKER                   //
 ///////////////////////////////////////////////
@@ -182,7 +181,6 @@ function StalkerGrab(params)
 
 	player.TakeDamage((15 * HockerDmgMulti * difficulty_SpecialDmgMulti), 128, attacker)
 }
-
 
 ///////////////////////////////////////////////
 //                   RETCH                   //
@@ -300,28 +298,6 @@ function RetchVomitHit(params)
 ///////////////////////////////////////////////
 //                  TALLBOY                  //
 ///////////////////////////////////////////////
-/*
-function TallboySpawn(params)
-{
-	local item = params["item"];
-	if (item == "charger_claw")
-	{
-		bChargerSpawned = true;
-	}
-}
-
-function RemoveCharge()
-{
-	local charger_ability = null;
-	while ((charger_ability = Entities.FindByClassname(charger_ability, "ability_charge")) != null)
-	{
-		NetProps.SetPropFloatArray(charger_ability, "m_nextActivationTimer", 99999, 0);
-		NetProps.SetPropFloatArray(charger_ability, "m_nextActivationTimer", Time() + 99999, 1);
-	}
-	bChargerSpawned = false;
-}
-*/
-
 function TallboyKnockback(tallboy, survivor)
 {
 	local tallboyOrigin = tallboy.GetOrigin();
@@ -361,8 +337,8 @@ function CrusherGrab(tallboy, survivor)
 		local charger_ability = NetProps.GetPropEntity(tallboy,"m_customAbility")
 
 		NetProps.SetPropEntity(charger_ability, "m_hPotentialTarget", survivor)
-		NetProps.SetPropEntity(tallboy, "m_pummelVictim", survivor);
-		NetProps.SetPropEntity(survivor, "m_pummelAttacker", tallboy);
+		NetProps.SetPropEntity(tallboy, "m_pummelVictim", tallboy);
+		NetProps.SetPropEntity(survivor, "m_pummelAttacker", survivor);
 		NetProps.SetPropEntityArray(charger_ability, "m_nextActivationTimer", 6, 0);
 		NetProps.SetPropEntityArray(charger_ability, "m_nextActivationTimer", Time() + 6, 1);
 	}
@@ -373,15 +349,11 @@ function CrusherGrab(tallboy, survivor)
 ///////////////////////////////////////////////
 function SnitchAlerted(params)
 {
-	local witch = params.witchid;
-	local witchEnt = EntIndexToHScript(witch);
-
 	if (params.first == 1)
 	{
 		SpawnMob();
 	}
 }
-
 
 ///////////////////////////////////////////////
 //                  SLEEPERS                 //

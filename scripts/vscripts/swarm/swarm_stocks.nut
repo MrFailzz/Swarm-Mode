@@ -285,7 +285,7 @@ function PlayerHurt(params)
 		{
 			if ("type" in params)
 			{
-				if (params.type == 2 && bOgreEnable && params.health < stagger_dmg)
+				if (params.type == 2 && bossType == "Ogre" && params.health < stagger_dmg)
 				{
 					//Stagger tank
 					player.Stagger(Vector(-1, -1, -1));
@@ -346,16 +346,6 @@ function Update()
 		CancelRockAnimation();
 	}
 
-/*	
-	if (specialTallboyType == "Tallboy")
-	{
-		if (bChargerSpawned)
-		{
-			RemoveCharge();
-		}
-	}
-*/
-
 	CommonsUpdate();
 
 	if (corruptionEnvironmental == "environmentBiohazard")
@@ -370,7 +360,7 @@ function Update()
 
 	difficulty_RandomBoss();
 
-	if (corruptionHazards == "hazardSnitch" || corruptionBoss == "bossBreaker" || corruptionBoss == "bossOgre" || corruptionBoss == "bossBreakerFer" || corruptionBoss == "bossOgreFer" || corruptionBoss == "bossBreakerMon" || corruptionBoss == "bossOgreMon")
+	if (corruptionHazards == "hazardSnitch" || bossType == "Breaker" || bossType == "Ogre")
 	{
 		SpawnBoss();
 	}
