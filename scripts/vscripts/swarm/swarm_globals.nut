@@ -7,6 +7,7 @@
 swarmSettingsTable <-
 {
 	language = "English",
+	autoHideHUD = true,
 	hardcore = false,
 	debug_mode = 0,
 

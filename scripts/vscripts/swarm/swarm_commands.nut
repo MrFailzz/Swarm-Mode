@@ -71,6 +71,28 @@ function InterceptChat(message, speaker)
 				}
 			break;
 
+			case "autohidehud":
+				if (textArgs.len() < 2)
+				{
+					return;
+				}
+				if (GetListenServerHost() == speaker || swarmSettingsTable["debug_mode"] > 0)
+				{
+					switch(textArgs[1].tolower())
+					{
+						case "true":
+							swarmSettingsTable["autoHideHUD"] = true;
+							ClientPrint(null, 3, "\x04" + "Card HUD will hide automatically");
+						break;
+
+						case "false":
+							swarmSettingsTable["autoHideHUD"] = false;
+							ClientPrint(null, 3, "\x04" + "Card HUD will hide after all players pick cards");
+						break;
+					}
+				}
+			break;
+
 			case "пинг":
 			case "ping":
 				TraceEye(speaker);
