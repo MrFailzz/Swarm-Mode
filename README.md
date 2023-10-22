@@ -1,56 +1,55 @@
 # Swarm-Mode
 ## Corruption Cards
 ### Common Ridden
-* **Acid Commons:** Acid commons will drop acid pools after death
-* **Fire Commons:** Fire commons will deal fire damage if when near
-* **Exploding Commons:** Exploding commons will cause an explosion if shot in the head
+* **Acid Commons:** A Mutation has turned the infected blood into acid, they leave behind pools of caustic acid on death
+* **Fire Commons:** Keep your distance or burn alive from these burning infected.
+* **Exploding Commons:** These infected have developed an unstable cyst in their skull cavity. Head trauma will cause them to explode violently.
 * **Clown Show:** Clown infected will alert other commons.
-* **Crowd Control:** Riot infected have more health. Aim for the head.
+* **Crowd Control:** SWAT armor was meant to protect against bullets. These Ridden are going to be harder to take down.
 * **Mud Crawlers:** Mudmen will obscure the survivors vision when hit.
 * **CEDA Operatives:** CEDA infected have more health. Aim for the head.
 * **Construction Site:** Construction commons have more health. Aim for the head.
 * **Jimmy Gibbs and Cousins:** Jimmy Gibbs has significantly more health, and will attract other common infected.
 * **Fallen Cleaners:** Fallen cleaners have significantly more health, and have a chance to drop an item.
-* **Shambling Commons:** Common infected move slower.
-* **Running Commons:** Common infected move at a normal speed.
-* **Blitzing Commons:** Common infected are faster.
+* **Shambling Commons:** This is what remains of the living. Aim for the head to put them down quickly.
+* **Running Commons:** This is what remains of the living. Aim for the head to put them down quickly.
+* **Blitzing Commons:** This is what remains of the living. Aim for the head to put them down quickly.
 
 ### Special Ridden
-* **Tallboys:** This Tallboy variant will punch and knockback survivors. Low health, high speed.
-* **Crushers:** This Tallboy variant will charge and grab survivors. Medium health, medium speed.
-* **Bruisers:** This Tallboy variant will punch and knockback survivors. High health, low speed.
-* **Hockers:** This Hocker variant will trap survivors in their goo(?). Low health, high speed.
-* **Stinger:** This Hocker variant will damage survivors by shooting projectiles at them. Low health, high speed.
-* **Stalkers:** This Hocker variant will grab and stun survivors High health, slow speed.
-* **Retches:** This Retch variant will vomit on the survivors damaging and slowing them. Low health, low speed.
-* **Exploders:** This Retch variant will explode on death dealing high damage to survivors nearby. Low health, high speed.
-* **Reeker:** This Retch variant will punch the survivors, and their guts will attract a horde. High health, high speed.
-* **Tattlers:** Snitches will call a horde if disturbed. Does not damage survivors.
+* **Tallboys:** These towering mutations can surge into powerful slam attacks. Aim for the head or use fire to take them out.
+* **Crushers:** Getting crushed is the worst way to die. Attack the Crusher to free your teammates.
+* **Bruisers:** Bruisers can take a lot of punishment. Keep moving and don't let them get close.
+* **Hockers:** Melee teammates to free them from Hocker pins.
+* **Stinger:** Stingers spit toxic projectiles from long distances or high vantage points.
+* **Stalkers:** A grabbed teammate is a dead teammate. Quickly kill the Stalker to free teammates.
+* **Retches:** Acidic vomit leaves dangerous bile pools.
+* **Exploders:** Stay away from these two-legged death bombs!
+* **Reeker:** Reeker guts can call the horde if they explode on you.
+* **Tattlers:** The mindless babbling of Snitches can be heard constantly here. Work together to avoid notice.
 * **Breaker:** Breakers will call the Swarm which will surround the area and damage survivors. Also able to launch himself towards survivors.
 * **Ogre:** Ogres will throw rocks at the survivors. Also has a lot of health.
 
 ### Hordes
-* **Hunted:** The infected are on your tail. Hordes every 180s.
-* **Onslaught:** The infected are right behind you... Hordes every 90s.
-* **Tallboy Hordes:** Hordes of Tallboys every 120s.
-* **Crusher Hordes:** Hordes of Crushers every 120s.
-* **Bruiser Hordes:** Hordes of Bruisers every 120s.
-* **Hocker Hordes:** Hordes of Hockers every 120s.
-* **Stinger Hordes:** Hordes of Stingers every 120s.
-* **Stalker Hordes:** Hordes of Stalkers every 120s.
-* **Exploder Hordes:** Hordes of Exploders every 120s.
-* **Retch Hordes:** Hordes of Retches every 120s.
-* **Reeker Hordes:** Hordes of Reekers every 120s.
-* **Raging Swarm:** When the breaker calls the Swarm a horde will be called.
+* **Hunted:** There are rampaging hordes in this area. It's only a matter of time before they find us. (Horde Spawns every 3 minutes)
+* **Onslaught:** The horde is right on our heels, move fast or be overrun.
+* **Tallboy Hordes:** Huge hordes of Tallboys will attack on a timer.
+* **Crusher Hordes:** Huge hordes of Crushers will attack on a timer.
+* **Bruiser Hordes:** Huge hordes of Bruisers will attack on a timer.
+* **Hocker Hordes:** Huge hordes of Hockers will attack on a timer.
+* **Stinger Hordes:** Huge hordes of Stingers will attack on a timer.
+* **Stalker Hordes:** Huge hordes of Stalkers will attack on a timer.
+* **Exploder Hordes:** Huge hordes of Exploders will attack on a timer.
+* **Retch Hordes:** Huge hordes of Retches will attack on a timer.
+* **Reeker Hordes:** Huge hordes of Reekers will attack on a timer.
 
 ### Hazards
-* **The Birds:** Birds have flocked to the area. Disturbing them will call a horde.
-* **The Lockdown:** This area has active alarms. Setting one off will call a horde.
-* **Slumber Party:** Sleepers are in the area. They will hide until survivors are nearby and then try to pounce them.
-* **The Dark:** The sun is down and the lights are out. Keep your flashlight handy.
-* **The Fog:** A heavy fog has surrounded the area.
-* **Biohazard:** A toxic fog damages the survivors periodically. Killing infected grants a small amount of Temp HP.
-* **Frigid Outskirts:** A winter storm is passing through the area.
+* **The Birds:** Large flocks of crows have gathered in this area to feast on the dead. Startling them could call the horde down on you.
+* **The Lockdown:** Entering a High Security Area. Many of the Alarmed doors are still intact. Proceed with Caution.
+* **Slumber Party:** The area is infested with Sleepers, stay together and keep your eyes open.
+* **The Dark:** The Power is out. Stay quiet and you may make it through.
+* **The Fog:** 	An Unnatural fog has settled on this area.
+* **Biohazard:** Your health slowly rots away, but kills grant a small reprieve.
+* **Frigid Outskirts:** A winter storm is passing through. High power winds will slow you down.
 * **Swarm Stream:** Infected have a random chance to spawn with a bright light that blinds the survivors.
 
 ### Player
