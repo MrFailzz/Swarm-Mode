@@ -200,5 +200,8 @@ function PrecacheAndSetModel(entity, model)
 
 function ValidAliveSurvivor(player)
 {
-	return !player.IsDead() && !player.IsDying() && !player.IsIncapacitated() && !player.IsHangingFromLedge();
+	if (player.IsSurvivor())
+	{
+		return !player.IsDead() && !player.IsDying() && !player.IsIncapacitated() && !player.IsHangingFromLedge();
+	}
 }
