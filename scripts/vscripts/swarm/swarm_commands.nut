@@ -82,6 +82,8 @@ function InterceptChat(message, speaker)
 					swarmSettingsTable["autoHideHUD"] = true;
 					ClientPrint(null, 3, "\x04" + "Auto hide card HUD on");
 				}
+				
+				SaveSettingsTable();
 			break;
 
 			case "пинг":
