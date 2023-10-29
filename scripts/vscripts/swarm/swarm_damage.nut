@@ -464,6 +464,9 @@ function AllowTakeDamage(damageTable)
 								case "bossOgreMon":
 									baseDamage = bossClawDmg * BossDmgMulti;
 								break;
+								default:
+									baseDamage = bossClawDmg * BossDmgMulti;
+								break;
 							}
 						}
 

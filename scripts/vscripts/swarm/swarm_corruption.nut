@@ -365,8 +365,11 @@ function InitCorruptionCards()
 
 	// Missions
 	local cardsMission = [];
-	//cardsMission.append("None");
-	if (!IsMissionFinalMap())
+	if (IsMissionFinalMap())
+	{
+		cardsMission.append("None");
+	}
+	else
 	{
 		cardsMission.append("missionSpeedrun");
 		cardsMission.append("missionAllAlive");
