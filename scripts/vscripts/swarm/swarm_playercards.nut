@@ -101,7 +101,7 @@ function InitCardPicking(shuffle = false)
 		}
 		
 		cardPickingAllowed = [cardPicks, cardPicks, cardPicks, cardPicks];
-		ClientPrint(null, 3, "\x01" + "Use " + "\x03" + "!pick [A-H]\x01" + " to choose a card (" + "\x03" + cardPicks + " remaining" + "\x01" + ")");
+		ClientPrint(null, 3, "\x01" + "Use " + "\x03" + "!pick [1-8]\x01" + " to choose a card (" + "\x03" + cardPicks + " remaining" + "\x01" + ")");
 	}
 }
 
