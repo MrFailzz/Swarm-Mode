@@ -147,7 +147,7 @@ function InterceptChat(message, speaker)
 
 			case "ливес":
 			case "lives":
-				local MaxIncaps = DirectorOptions.SurvivorMaxIncapacitatedCount;
+				local MaxIncaps = MutationOptions.SurvivorMaxIncapacitatedCount;
 				local player = null;
 				while ((player = Entities.FindByClassname(player, "player")) != null)
 				{

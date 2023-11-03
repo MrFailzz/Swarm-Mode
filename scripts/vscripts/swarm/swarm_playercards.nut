@@ -452,7 +452,7 @@ function CalcMaxHealth(heal = true)
 			}
 
 			local PlayerIncaps = NetProps.GetPropInt(player, "m_currentReviveCount");
-			local MaxIncaps = DirectorOptions.SurvivorMaxIncapacitatedCount;
+			local MaxIncaps = MutationOptions.SurvivorMaxIncapacitatedCount;
 			local TraumaDamage = ((PlayerIncaps.tofloat() / MaxIncaps.tofloat()) * MaxTraumaDamage) * TraumaResistance;
 			
 			/*(if (!IsPlayerABot(player))
@@ -695,7 +695,7 @@ function ApplyAdrenalineRush()
 
 function ApplyNeedsOfTheMany()
 {
-	DirectorOptions.SurvivorMaxIncapacitatedCount = BaseMaxIncaps + TeamHasCard("NeedsOfTheMany");
+	MutationOptions.SurvivorMaxIncapacitatedCount = BaseMaxIncaps + TeamHasCard("NeedsOfTheMany");
 }
 
 function ApplyCauterized()
@@ -703,11 +703,11 @@ function ApplyCauterized()
 	local Cauterized = TeamHasCard("Cauterized");
 	if (Cauterized > 0)
 	{
-		DirectorOptions.TempHealthDecayRate = BaseTempHealthDecayRate * (0.5 / Cauterized);
+		MutationOptions.TempHealthDecayRate = BaseTempHealthDecayRate * (0.5 / Cauterized);
 	}
 	else
 	{
-		DirectorOptions.TempHealthDecayRate = BaseTempHealthDecayRate
+		MutationOptions.TempHealthDecayRate = BaseTempHealthDecayRate
 	}
 }
 

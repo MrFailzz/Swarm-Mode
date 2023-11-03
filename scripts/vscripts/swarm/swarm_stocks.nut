@@ -360,7 +360,7 @@ function Update()
 
 	difficulty_RandomBoss();
 
-	if (corruptionHazards == "hazardSnitch" || bossType == "Breaker" || bossType == "Ogre")
+	if (corruptionHazards == "hazardSnitch" || corruptionBoss == "bossBreaker" || corruptionBoss == "bossOgre" || corruptionBoss == "bossBreakerFer" || corruptionBoss == "bossOgreFer" || corruptionBoss == "bossBreakerMon" || corruptionBoss == "bossOgreMon")
 	{
 		SpawnBoss();
 	}
