@@ -1111,7 +1111,7 @@ function CardPickReminder()
 			{
 				if (cardPickingAllowed[survivorID] > 0)
 				{
-					ClientPrint(player, 3, "\x01" + "Use " + "\x03" + "!pick [A-H]\x01" + " to choose a card (" + "\x03" + cardPickingAllowed[survivorID] + " remaining" + "\x01" + ")");
+					ClientPrint(player, 3, "\x01" + "Use " + "\x03" + "!pick [1-8]\x01" + " to choose a card (" + "\x03" + cardPickingAllowed[survivorID] + " remaining" + "\x01" + ")");
 
 					local voteCount = 0;
 					foreach(vote in cardShuffleVote)
