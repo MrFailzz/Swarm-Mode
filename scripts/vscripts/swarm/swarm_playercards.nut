@@ -759,10 +759,10 @@ function SurvivorPickupItem(params)
 
 					if (weaponClass == "weapon_shotgun_chrome" || weaponClass == "weapon_pumpshotgun" || weaponClass == "weapon_autoshotgun" || weaponClass == "weapon_shotgun_spas")
 					{
-						local shotgunThinker = SpawnEntityFromTable("info_target", { targetname = "shotgunThinker" + weaponID });
-						if (shotgunThinker.ValidateScriptScope())
+						//local shotgunThinker = SpawnEntityFromTable("info_target", { targetname = "shotgunThinker" + weaponID });
+						if (weapon.ValidateScriptScope())
 						{
-							local entityscript = shotgunThinker.GetScriptScope();
+							local entityscript = weapon.GetScriptScope();
 							entityscript["player"] <- player;
 							entityscript["weapon"] <- weapon;
 							entityscript["weaponClass"] <- weaponClass;
@@ -801,15 +801,15 @@ function SurvivorPickupItem(params)
 								}
 							}
 
-							AddThinkToEnt(shotgunThinker, "ShotgunReload");
+							AddThinkToEnt(weapon, "ShotgunReload");
 						}
 					}
 					else if (weaponClass == "weapon_melee")
 					{
-						local meleeThinker = SpawnEntityFromTable("info_target", { targetname = "meleeThinker" + weaponID });
-						if (meleeThinker.ValidateScriptScope())
+						//local meleeThinker = SpawnEntityFromTable("info_target", { targetname = "meleeThinker" + weaponID });
+						if (weapon.ValidateScriptScope())
 						{
-							local entityscript = meleeThinker.GetScriptScope();
+							local entityscript = weapon.GetScriptScope();
 							entityscript["player"] <- player;
 							entityscript["weapon"] <- weapon;
 							entityscript["weaponSequence"] <- weapon.GetSequence();
@@ -836,7 +836,7 @@ function SurvivorPickupItem(params)
 										entityscript["baseMeleeSpeed"] = entityscript["weapon"].GetSequenceDuration(entityscript["weaponSequence"]);
 										entityscript["meleeModifier"] = GetMeleeSpeedModifier(entityscript["player"]);
 										entityscript["newMeleeSpeed"] = entityscript["baseMeleeSpeed"] / entityscript["meleeModifier"];
-										entityscript["newNextAttack"] = entityscript["storedNextAttack"] - entityscript["baseMeleeSpeed"] + entityscript["newMeleeSpeed"];
+										entityscript["newNextAttack"] = (entityscript["storedNextAttack"] - entityscript["baseMeleeSpeed"]) + entityscript["newMeleeSpeed"];
 										entityscript["playbackRate"] = entityscript["baseMeleeSpeed"] / entityscript["newMeleeSpeed"];
 
 										if (entityscript["meleeModifier"] != 1)
@@ -850,7 +850,7 @@ function SurvivorPickupItem(params)
 								}
 							}
 
-							AddThinkToEnt(meleeThinker, "MeleeThink");
+							AddThinkToEnt(weapon, "MeleeThink");
 						}
 					}
 				}
