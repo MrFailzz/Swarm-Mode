@@ -34,6 +34,8 @@
 		tongue_dropping_to_ground_time 0.5
 		tongue_los_forgiveness_time 1.5
 		tongue_no_progress_choke_early_delay 1.0
+		tongue_choke_damage_amount 0
+		tongue_drag_damage_amount 0
 
 		z_vomit_velocity 4000
 		z_vomit_velocityfadestart 1.8

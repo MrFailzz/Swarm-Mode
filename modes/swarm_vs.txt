@@ -1,6 +1,6 @@
 "swarm_vs"
 {
-	"base"		"coop"
+	"base"		"versus"
 	"maxplayers"    "8"
 	"playercontrolledzombies"	"1"
 	"Author"	"Failzz, Derpduck"
@@ -36,6 +36,8 @@
 		tongue_dropping_to_ground_time 0.5
 		tongue_los_forgiveness_time 1.5
 		tongue_no_progress_choke_early_delay 1.0
+		tongue_choke_damage_amount 0
+		tongue_drag_damage_amount 0
 
 		z_vomit_velocity 4000
 		z_vomit_velocityfadestart 1.8
@@ -145,5 +147,6 @@
 		versus_tank_flow_team_variation 0
 		vomitjar_duration_infected_pz 15
 		z_frustration_spawn_delay 15
+		z_versus_hunter_limit 0
 	}
 }

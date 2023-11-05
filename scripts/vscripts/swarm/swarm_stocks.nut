@@ -346,6 +346,14 @@ function Update()
 		CancelRockAnimation();
 	}
 
+	if (specialTallboyType == "Tallboy")
+	{
+		if (bChargerSpawned)
+		{
+			RemoveCharge();
+		}
+	}
+
 	CommonsUpdate();
 
 	if (corruptionEnvironmental == "environmentBiohazard")

@@ -298,6 +298,26 @@ function RetchVomitHit(params)
 ///////////////////////////////////////////////
 //                  TALLBOY                  //
 ///////////////////////////////////////////////
+function TallboySpawn(params)
+{
+	local item = params["item"];
+	if (item == "charger_claw")
+	{
+		bChargerSpawned = true;
+	}
+}
+
+function RemoveCharge()
+{
+	local charger_ability = null;
+	while ((charger_ability = Entities.FindByClassname(charger_ability, "ability_charge")) != null)
+	{
+		NetProps.SetPropFloatArray(charger_ability, "m_nextActivationTimer", 99999, 0);
+		NetProps.SetPropFloatArray(charger_ability, "m_nextActivationTimer", Time() + 99999, 1);
+	}
+	bChargerSpawned = false;
+}
+
 function TallboyKnockback(tallboy, survivor)
 {
 	local tallboyOrigin = tallboy.GetOrigin();
