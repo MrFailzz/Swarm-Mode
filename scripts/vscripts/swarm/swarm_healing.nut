@@ -245,7 +245,7 @@ function DefibrillatorUsed(params)
 	}
 
 	//Set lives
-	local lifeRestoreAmount = MutationOptions.SurvivorMaxIncapacitatedCount - MedicalProfessional;
+	local lifeRestoreAmount = DirectorOptions.SurvivorMaxIncapacitatedCount - MedicalProfessional;
 	if (lifeRestoreAmount < 0)
 	{
 		lifeRestoreAmount = 0;
@@ -253,7 +253,7 @@ function DefibrillatorUsed(params)
 
 	NetProps.SetPropInt(subject, "m_currentReviveCount", lifeRestoreAmount);
 
-	if (lifeRestoreAmount == MutationOptions.SurvivorMaxIncapacitatedCount)
+	if (lifeRestoreAmount == DirectorOptions.SurvivorMaxIncapacitatedCount)
 	{
 		NetProps.SetPropInt(subject, "m_bIsOnThirdStrike", 1);
 		NetProps.SetPropInt(subject, "m_isGoingToDie", 1);

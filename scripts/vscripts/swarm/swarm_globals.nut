@@ -66,6 +66,9 @@ BossHpMulti <- 1;
 bTankHudExists <- false;
 tankHudTanks <- [null, null];
 
+//Specials
+bChargerSpawned <- false;
+
 //Specials DMG & HP Scaling
 TallboyDmgMulti <- 1;
 RetchDmgMulti <- 1;
@@ -366,7 +369,7 @@ survivorCrawlSpeed <- 30;			// Last Legs base crawl speed
 ///////////////////////////////////////////////
 //              DIRECTOR OPTIONS             //
 ///////////////////////////////////////////////
-MutationOptions <-
+DirectorOptions <-
 {
 	ActiveChallenge = 1
 
@@ -414,8 +417,8 @@ function SetDifficulty()
 			BaseMaxIncaps = 3;
 			MaxTraumaDamage = 0;
 			stagger_dmg = 4000;
-			MutationOptions.MobSpawnSize = 30;
-			MutationOptions.MegaMobSize = 50;
+			DirectorOptions.MobSpawnSize = 30;
+			DirectorOptions.MegaMobSize = 50;
 			difficulty_CommonDmgMulti = 0.5;
 			difficulty_CommonHpMulti = 0.75;
 			difficulty_SpecialDmgMulti = 0.5;
@@ -428,8 +431,8 @@ function SetDifficulty()
 			BaseMaxIncaps = 3;
 			MaxTraumaDamage = 20;
 			stagger_dmg = 4000;
-			MutationOptions.MobSpawnSize = 30;
-			MutationOptions.MegaMobSize = 50;
+			DirectorOptions.MobSpawnSize = 30;
+			DirectorOptions.MegaMobSize = 50;
 			difficulty_CommonDmgMulti = 1;
 			difficulty_CommonHpMulti = 1;
 			difficulty_SpecialDmgMulti = 1;
@@ -442,8 +445,8 @@ function SetDifficulty()
 			BaseMaxIncaps = 2;
 			MaxTraumaDamage = 30;
 			stagger_dmg = 10000;
-			MutationOptions.MobSpawnSize = 35;
-			MutationOptions.MegaMobSize = 60;
+			DirectorOptions.MobSpawnSize = 35;
+			DirectorOptions.MegaMobSize = 60;
 			difficulty_CommonDmgMulti = 2;
 			difficulty_CommonHpMulti = 1.5;
 			difficulty_SpecialDmgMulti = 1.5;
@@ -456,8 +459,8 @@ function SetDifficulty()
 			BaseMaxIncaps = 2;
 			MaxTraumaDamage = 40;
 			stagger_dmg = 10000;
-			MutationOptions.MobSpawnSize = 40;
-			MutationOptions.MegaMobSize = 70;
+			DirectorOptions.MobSpawnSize = 40;
+			DirectorOptions.MegaMobSize = 70;
 			difficulty_CommonDmgMulti = 4;
 			difficulty_CommonHpMulti = 2;
 			difficulty_SpecialDmgMulti = 2;
@@ -508,4 +511,4 @@ function SetDifficulty()
 	Convars.SetValue("z_charger_pound_dmg", (5 * TallboyDmgMulti * difficulty_SpecialDmgMulti));
 }
 
-MutationOptions.SurvivorMaxIncapacitatedCount = BaseMaxIncaps;
+DirectorOptions.SurvivorMaxIncapacitatedCount = BaseMaxIncaps;

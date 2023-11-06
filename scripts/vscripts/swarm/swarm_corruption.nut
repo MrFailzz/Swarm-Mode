@@ -621,7 +621,7 @@ function CorruptionCard_Biohazard()
 		NetProps.SetPropInt(player, "m_Local.m_skybox3d.fog.colorPrimary", GetColorInt(Vector(1, 56, 1)));
 	}
 	
-	MutationOptions.TempHealthDecayRate = BaseTempHealthDecayRate * 0.5;
+	DirectorOptions.TempHealthDecayRate = BaseTempHealthDecayRate * 0.5;
 }
 
 function BiohazardTimer()
@@ -871,7 +871,7 @@ function ApplyHordeCard()
 // Hunted
 function CorruptionCard_Hunted()
 {
-	MutationOptions.cm_CommonLimit = 30
+	DirectorOptions.cm_CommonLimit = 30
 }
 
 function HuntedTimerFunc()
@@ -891,7 +891,7 @@ function HuntedTimerFunc()
 // Onslaught
 function CorruptionCard_Onslaught()
 {
-	MutationOptions.cm_CommonLimit = 30;
+	DirectorOptions.cm_CommonLimit = 30;
 }
 
 function OnslaughtTimerFunc()
@@ -911,7 +911,7 @@ function OnslaughtTimerFunc()
 // Specials
 function CorruptionCard_SpecialHordes()
 {
-	MutationOptions.cm_AggressiveSpecials = 1;
+	DirectorOptions.cm_AggressiveSpecials = 1;
 }
 
 function SpecialTimerFunc(zType)
@@ -1350,19 +1350,19 @@ function ApplyHockerCard()
 
 function CorruptionCard_Hocker()
 {
-	MutationOptions.JockeyLimit = 0;
+	DirectorOptions.JockeyLimit = 0;
 	Convars.SetValue("tongue_release_fatigue_penalty", 2500);
 }
 
 function CorruptionCard_Stinger()
 {
-	MutationOptions.JockeyLimit = 0;
+	DirectorOptions.JockeyLimit = 0;
 	Convars.SetValue("tongue_release_fatigue_penalty", 0);
 }
 
 function CorruptionCard_Stalker()
 {
-	MutationOptions.SmokerLimit = 0;
+	DirectorOptions.SmokerLimit = 0;
 	Convars.SetValue("tongue_release_fatigue_penalty", 2500);
 }
 
@@ -1459,7 +1459,7 @@ function CorruptionCard_Reeker()
 	Convars.SetValue("z_exploding_inner_radius", 130);
 	Convars.SetValue("z_exploding_outer_radius", 200);
 	Convars.SetValue("z_exploding_splat_radius", 200);
-	MutationOptions.BileMobSize = 20;
+	DirectorOptions.BileMobSize = 20;
 }
 
 ///////////////////////////////////////////////
