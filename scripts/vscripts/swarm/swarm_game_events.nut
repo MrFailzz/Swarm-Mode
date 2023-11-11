@@ -205,7 +205,7 @@ function OnGameEvent_player_shoved(params)
 
 function OnGameEvent_item_pickup(params)
 {
-	//TallboySpawn(params);
+	TallboySpawn(params);
 	SurvivorPickupItem(params);
 	InitOptics(params);
 }

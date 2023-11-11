@@ -28,6 +28,27 @@ function PlayerSpawn(params)
 				CorruptionCard_SwarmStreamGlow(player);
 			}
 		}
+		if (swarmMode == "vs")
+		{
+			switch(player.GetZombieType())
+			{
+				case 1:
+					ClientPrint(player, 3, "\x01" + "You are a " + "\x04" + specialHockerType);
+					break;
+				case 2:
+					ClientPrint(player, 3, "\x01" + "You are a " + "\x04" + specialRetchType);
+					break;
+				case 5:
+					ClientPrint(player, 3, "\x01" + "You are a " + "\x04" + specialHockerType);
+					break;
+				case 6:
+					ClientPrint(player, 3, "\x01" + "You are a " + "\x04" + specialTallboyType);
+					break;
+				case 8:
+					ClientPrint(player, 3, "\x01" + "You are a " + "\x04" + bossType);
+					break;
+			}
+		}
 	}
 }
 
