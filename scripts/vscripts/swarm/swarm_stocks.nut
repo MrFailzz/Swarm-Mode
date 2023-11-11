@@ -68,6 +68,7 @@ function PlayerDeath(params)
 
 				//ConfidentKiller
 				ConfidentKillerCounter++;
+				printl("Confident Killer: " + ConfidentKillerCounter);
 
 				if ("attacker" in params)
 				{

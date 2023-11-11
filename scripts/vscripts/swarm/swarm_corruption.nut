@@ -365,11 +365,8 @@ function InitCorruptionCards()
 
 	// Missions
 	local cardsMission = [];
-	if (IsMissionFinalMap())
-	{
-		cardsMission.append("None");
-	}
-	else
+	cardsMission.append("None");
+	if (!IsMissionFinalMap())
 	{
 		cardsMission.append("missionSpeedrun");
 		cardsMission.append("missionAllAlive");
@@ -655,7 +652,7 @@ function ApplyBiohazardMutationKill(attacker, victim)
 {
 	if (bBiohazardEnabled)
 	{
-		Heal_TempHealth(attacker, 1.5);
+		Heal_TempHealth(attacker, 2);
 	}
 }
 

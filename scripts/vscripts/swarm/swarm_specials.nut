@@ -350,15 +350,15 @@ function BruiserKnockback(bruiser)
 	}
 }
 
-function CrusherGrab(tallboy, survivor)
+function CrusherGrab(attacker, victim)
 {
-	if (!survivor.IsDominatedBySpecialInfected())
+	if (!victim.IsDominatedBySpecialInfected())
 	{
-		local charger_ability = NetProps.GetPropEntity(tallboy,"m_customAbility")
+		local charger_ability = NetProps.GetPropEntity(attacker,"m_customAbility")
 
-		NetProps.SetPropEntity(charger_ability, "m_hPotentialTarget", survivor)
-		NetProps.SetPropEntity(tallboy, "m_pummelVictim", tallboy);
-		NetProps.SetPropEntity(survivor, "m_pummelAttacker", survivor);
+		NetProps.SetPropEntity(charger_ability, "m_hPotentialTarget", victim)
+		NetProps.SetPropEntity(attacker, "m_pummelVictim", victim);
+		NetProps.SetPropEntity(victim, "m_pummelAttacker", attacker);
 		NetProps.SetPropEntityArray(charger_ability, "m_nextActivationTimer", 6, 0);
 		NetProps.SetPropEntityArray(charger_ability, "m_nextActivationTimer", Time() + 6, 1);
 	}
