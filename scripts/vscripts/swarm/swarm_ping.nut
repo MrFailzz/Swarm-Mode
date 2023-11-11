@@ -70,7 +70,7 @@ function PingEntity(entity, player, tracepos, automatedPing = false)
 			ping_entityscript["Owner"] <- player;
 			ping_entityscript["PingKill"] <- function()
 			{
-				if (ping_entityscript["TickCount"] > (applyPingDuration / 0.1) || ping_entityscript["Owner"].IsDead())
+				if (ping_entityscript["TickCount"] > (applyPingDuration / 0.1) || ping_entityscript["Owner"].IsDying())
 				{
 					NetProps.SetPropInt(entity, "m_Glow.m_iGlowType", 0);
 					return;
@@ -143,10 +143,6 @@ function HeightendSensesPing(player)
 {
 	local autoPingDuration = 2;
 	local entity = null;
-	if (player.IsDead() || player.IsDying())
-	{
-		return;
-	}
 
 	while ((entity = Entities.FindInSphere(entity, player.GetOrigin(), 300)) != null)
 	{
@@ -160,7 +156,7 @@ function HeightendSensesPing(player)
 		//Ignore survivors
 		if (entity.GetClassname() == "player")
 		{
-			if (entity.IsSurvivor())
+			if (entity.IsSurvivor() || entity.IsDying())
 			{
 				continue;
 			}
