@@ -156,7 +156,7 @@ function HeightendSensesPing(player)
 		//Ignore survivors
 		if (entity.GetClassname() == "player")
 		{
-			if (entity.IsSurvivor() || entity.IsDying())
+			if (entity.IsSurvivor() || entity.IsDying() || entity.IsDead())
 			{
 				continue;
 			}

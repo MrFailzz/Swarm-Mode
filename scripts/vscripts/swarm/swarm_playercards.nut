@@ -203,7 +203,7 @@ function MapTransition(params)
 
 function SavePlayerCards()
 {
-	if (swarmMode != "vs" && swarmMode != "survival_vs")
+	if (swarmMode != "vs")
 	{
 		//End of map
 		printl("SAVED CARDS");
@@ -218,7 +218,7 @@ function SavePlayerCards()
 
 function SaveMissions()
 {
-	if (swarmMode != "vs" && swarmMode != "survival_vs")
+	if (swarmMode != "vs")
 	{
 		local completed = false;
 		switch(corruptionMission)
@@ -310,7 +310,7 @@ function RoundFreezeEnd(params)
 
 function LoadPlayerCards()
 {
-	if (swarmMode != "vs" && swarmMode != "survival_vs")
+	if (swarmMode != "vs")
 	{
 		//Start of a new map
 		printl("LOADED CARDS");
