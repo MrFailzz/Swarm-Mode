@@ -88,6 +88,12 @@ function ZombieDeath(params)
 
 			if (commonName.find("__acid_common") != null)
 			{
+				local navTable = {};
+				NavMesh.GetNavAreasInRadius(common.GetOrigin(), 64, navTable);
+				foreach(area in navTable)
+				{
+					area.MarkAsDamaging(5);
+				}
 				DropSpit(common.GetOrigin());
 				EntFire(commonName + "spitTrail", "Kill");
 			}
