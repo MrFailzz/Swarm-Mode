@@ -102,7 +102,7 @@ function OnGameEvent_lunge_pounce(params)
 
 function OnGameEvent_player_now_it(params)
 {
-	RetchVomitHit(params);
+	//RetchVomitHit(params);
 }
 
 function OnGameEvent_jockey_ride(params)

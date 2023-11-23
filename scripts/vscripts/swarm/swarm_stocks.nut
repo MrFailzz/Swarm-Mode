@@ -361,6 +361,7 @@ function Update()
 	Update_GiveupTimer();
 	Update_CheckpointWarp();
 	Update_PlayerCards();
+	RetchVomit();
 
 	if (bSwarmCircleActive)
 	{

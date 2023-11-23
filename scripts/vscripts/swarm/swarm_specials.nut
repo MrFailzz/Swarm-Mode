@@ -192,6 +192,12 @@ function BoomerDeath(player)
 
 	if (specialRetchType == "Retch")
 	{
+		local navTable = {};
+		NavMesh.GetNavAreasInRadius(boomerOrigin, 64, navTable);
+		foreach(area in navTable)
+		{
+			area.MarkAsDamaging(5);
+		}
 		DropSpit(boomerOrigin);
 	}
 	if (specialRetchType == "Exploder")
@@ -279,16 +285,46 @@ function BoomerExplosion(boomerOrigin, isExploder, exploder)
 	}
 }
 
+function RetchVomit()
+{
+	if (specialRetchType == "Retch")
+	{
+		local vomit_particle = null;
+		if ((vomit_particle = Entities.FindByClassname(vomit_particle, "vomit_particle")) != null)
+		{
+			if (NetProps.GetPropInt(vomit_particle, "touchStamp") > 1)
+			{
+				// This is mega stupid but there doesn't seem to be a good way to check
+				// if the vomit particle has hit something
+				local vomitOrigin = vomit_particle.GetOrigin();
+				local navTable = {};
+				NavMesh.GetNavAreasInRadius(vomitOrigin, 64, navTable);
+				foreach(area in navTable)
+				{
+					area.MarkAsDamaging(5);
+				}
+				DropSpit(vomitOrigin);
+			}
+		}
+	}
+}
+
 function RetchVomitHit(params)
 {
 	local player = GetPlayerFromUserID(params["userid"]);
-	local origin = player.GetOrigin();
+	local playerOrigin = player.GetOrigin();
 
 	if (player.IsSurvivor())
 	{
 		if (specialRetchType == "Retch")
 		{
-			DropSpit(origin);
+			local navTable = {};
+			NavMesh.GetNavAreasInRadius(playerOrigin, 64, navTable);
+			foreach(area in navTable)
+			{
+				area.MarkAsDamaging(5);
+			}
+			DropSpit(playerOrigin);
 		}
 
 		player.OverrideFriction(0.5,1.5);
