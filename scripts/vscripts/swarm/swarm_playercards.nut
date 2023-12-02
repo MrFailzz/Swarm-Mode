@@ -740,6 +740,35 @@ function WeaponReload(params)
 	}
 }
 
+function WeaponFirerate(params)
+{
+	local player = GetPlayerFromUserID(params["userid"]);
+
+	if (player != null)
+	{
+		if (player.IsPlayer())
+		{
+			if (player.IsSurvivor())
+			{
+				local weapon = player.GetActiveWeapon();
+				//local weaponClass = weapon.GetClassname();
+				local weaponSequence = weapon.GetSequence();
+				local baseFirerate = weapon.GetSequenceDuration(weaponSequence);
+				local firerateModifier = GetFirerateModifier(player);
+				local newFirerate = baseFirerate / firerateModifier;
+
+				local oldNextAttack = NetProps.GetPropFloat(weapon, "m_flNextPrimaryAttack");
+				local newNextAttack = oldNextAttack - baseFirerate + newFirerate;
+				local playbackRate = baseFirerate / newFirerate;
+
+				NetProps.SetPropFloat(weapon, "m_flNextPrimaryAttack", newNextAttack);
+				NetProps.SetPropFloat(player, "m_flNextAttack", newNextAttack);
+				NetProps.SetPropFloat(weapon, "m_flPlaybackRate", playbackRate);
+			}
+		}
+	}
+}
+
 function SurvivorPickupItem(params)
 {
 	local player = GetPlayerFromUserID(params["userid"]);

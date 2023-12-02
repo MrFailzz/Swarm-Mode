@@ -334,6 +334,9 @@ EN_TranslationTable <- {
 	"#name_HyperFocused": "Hyper Focused"
 	"#desc_HyperFocused": "100% Weakspot DMG, Movement slower while shooting"
 
+	"#name_TriggerHappy": "Trigger Happy"
+	"#desc_TriggerHappy": "+15% Firerate"
+
 	//CORRUPTION CARDS
 	"#cor_commonAcid": "Acid Commons"
 	"#cor_commonFire": "Fire Commons"
@@ -735,6 +738,9 @@ RU_TranslationTable <- {
 
  	"#name_HyperFocused": "Гиперфокусированный"
  	"#desc_HyperFocused": "100% урон по слабым местам, замедление движения при стрельбе"
+
+	"#name_TriggerHappy": "Триггер Счастливый"
+	"#desc_TriggerHappy": "+15% Скорострельность"
 
 	//CORRUPTION CARDS
  	"#cor_commonAcid": "Кислотные заражённые"

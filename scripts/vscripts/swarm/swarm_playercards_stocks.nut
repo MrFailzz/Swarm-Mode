@@ -26,6 +26,7 @@ reflexCards <-
 	"Screwdriver",
 	"SmellingSalts",
 	"HyperFocused",
+	"TriggerHappy",
 ];
 
 brawnCards <-
@@ -296,6 +297,22 @@ function GetReloadSpeedModifier(player)
 	return reloadModifier;
 }
 ::GetReloadSpeedModifier <- GetReloadSpeedModifier;
+
+function GetFirerateModifier(player)
+{
+	//Modifiers
+	local TriggerHappy = PlayerHasCard(player, "TriggerHappy");
+
+	local firerateModifier = 1 + (0.15 * TriggerHappy);
+
+	if (firerateModifier <= 0)
+	{
+		firerateModifier = 0.01;
+	}
+
+	return firerateModifier;
+}
+::GetFirerateModifier <- GetFirerateModifier;
 
 function GetMeleeSpeedModifier(player)
 {
