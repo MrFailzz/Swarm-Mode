@@ -225,5 +225,5 @@ function OnGameEvent_weapon_fire(params)
 {
 	ApplyCardsOnWeaponFire(params);
 	WeaponFireM60(params);
-	//WeaponFirerate(params);
+	WeaponFirerate(params);
 }
