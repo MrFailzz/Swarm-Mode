@@ -375,6 +375,9 @@ EN_TranslationTable <- {
 	"#cor_hordeExploder": "Exploder Hordes"
 	"#cor_hordeRetch": "Retch Hordes"
 	"#cor_hordeReeker": "Reeker Hordes"
+	"#cor_hordeFer_Exploder": "Exploder Hordes"
+	"#cor_hordeFer_Retch": "Retch Hordes"
+	"#cor_hordeFer_Reeker": "Reeker Hordes"
 	"#cor_hordeMon_Exploder": "Exploder Hordes"
 	"#cor_hordeMon_Retch": "Retch Hordes"
 	"#cor_hordeMon_Reeker": "Reeker Hordes"
@@ -780,6 +783,9 @@ RU_TranslationTable <- {
  	"#cor_hordeExploder": "Орда Эксплодеров"
  	"#cor_hordeRetch": "Орда Ретчей"
  	"#cor_hordeReeker": "Орда Рикеров"
+	"#cor_hordeFer_Exploder": "Орда Эксплодеров"
+	"#cor_hordeFer_Retch": "Орда Ретчей"
+	"#cor_hordeFer_Reeker": "Орда Рикеров"
  	"#cor_hordeFer_Exploder": "Орда Эксплодеров"
  	"#cor_hordeFer_Retch": "Орда Ретчей"
  	"#cor_hordeFer_Reeker": "Орда Рикеров"
@@ -856,4 +862,409 @@ RU_TranslationTable <- {
  	"#cor_missionGnomeAlone": "Один Гнома"
  	"#cor_missionSilenceIsGolden": "Silence Is Golden"
  	"#cor_missionSafetyFirst": "Safety First"
+}
+
+ESP_TranslationTable <- {
+	//CHAT MESSAGES
+ 	"#lang_localization": "Spanish localization"
+	"#giveup_msg": "\x01" + "Mantener presionado " + "\x03" + "[AGACHARSE]" + "\x01" + " para morir..."
+	"#breakout_msg": "\x01" + "Mantén presionado " + "\x03" + "[EMPUJAR]" + "\x01" + " para escapar!"
+	"#enablehardcore_msg": "\x04" + "Modo intenso habilitado"
+	"#disablehardcore_msg": "\x04" + "Modo extremo deshabilitado"
+
+	//BOT NAMES
+	"#bot_Nick": "NICK"
+	"#bot_Rochelle": "ROCHELLE"
+	"#bot_Coach": "COACH"
+	"#bot_Ellis": "ELLIS"
+	"#bot_Bill": "BILL"
+	"#bot_Zoey": "ZOEY"
+	"#bot_Louis": "LOUIS"
+	"#bot_Francis": "FRANCIS"
+
+	//PLAYER CARDS
+	"#name_Nick": "Nick (+5% DAÑO)"
+	"#desc_Nick": "+5% DAÑO"
+
+	"#name_Rochelle": "Rochelle (+10% de curación EFF)"
+	"#desc_Rochelle": "+10% de curación EFF"
+
+	"#name_Coach": "Coach (+10 HP máximo)"
+	"#desc_Coach": "+10 HP máximos"
+
+	"#name_Ellis": "Ellis (+5% de probabilidad de CRIT)"
+	"#desc_Ellis": "+5% de probabilidad de CRIT"
+
+	"#name_Bill": "Bill (+10% de velocidad de recarga)"
+	"#desc_Bill": "+10% de velocidad de recarga"
+
+	"#name_Zoey": "Zoey (+10% de daño cuerpo a cuerpo)"
+	"#desc_Zoey": "+10 % de daño cuerpo a cuerpo"
+
+	"#name_Louis": "Louis (+10 % de velocidad de movimiento)"
+	"#desc_Louis": "+10 % de velocidad de movimiento"
+
+	"#name_Francis": "Francis (+10% DEF)"
+	"#desc_Francis": "+10% DEF"
+
+	"#name_GlassCannon": "Cañón de vidrio"
+	"#desc_GlassCannon": "+30% DAÑO, -20% DEF"
+
+	"#name_Sharpshooter": "Tirador de primera"
+	"#desc_Sharpshooter": "+25 % de daño después de 10 m"
+
+	"#name_Outlaw": "Proscrito"
+	"#desc_Outlaw": "+100 % de daño de pistola/mágnum"
+
+	"#name_Overconfident": "Demasiado seguro"
+	"#desc_Overconfident": "+25% DEF en vidas máximas"
+
+	"#name_Slugger": "Bateador"
+	"#desc_Slugger": "+30 % de velocidad cuerpo a cuerpo"
+
+	"#name_MethHead": "Cabeza de metanfetamina"
+	"#desc_MethHead": "+2,5% de velocidad de movimiento/cuerpo a cuerpo por muerte por mutación"
+
+	"#name_OpticsEnthusiast": "Apasionado de la óptica"
+	"#desc_OpticsEnthusiast": "Obtén miras láser (+60% ACC)"
+
+	"#name_Breakout": "Fugarse"
+	"#desc_Breakout": "Mantén presionado [EMPUJAR] para escapar de los agarres, +1 intentos de fuga"
+
+	"#name_AdrenalineRush": "Subidón de adrenalina"
+	"#desc_AdrenalineRush": "Adrenalina en el equipo incap"
+
+	"#name_HelpingHand": "Mano amiga"
+	"#desc_HelpingHand": "+50 % de velocidad de reanimación del equipo"
+
+	"#name_CombatMedic": "Medico de combate"
+	"#desc_CombatMedic": "+15 HP en todas las reanimaciones, +15 % de velocidad de reanimación del equipo"
+
+	"#name_AmpedUp": "Amplificado"
+	"#desc_AmpedUp": "Las hordas sin eventos curan +20 HP del equipo (5s CD)"
+
+	"#name_Addict": "Adicto"
+	"#desc_Addict": "+50 % de efecto de curación temporal, ventajas según el nivel de HP temporal"
+
+	"#name_FleetOfFoot": "Flota de a pie"
+	"#desc_FleetOfFoot": "+12,5% de velocidad de movimiento, -10 HP máximo"
+
+	"#name_CrossTrainers": "Elípticas"
+	"#desc_CrossTrainers": "+7 % de velocidad de movimiento, +5 HP máximo"
+
+	"#name_Multitool": "Herramienta multiple"
+	"#desc_Multitool": "+50 % de velocidad de uso del equipo, -5 % DEF"
+
+	"#name_RunLikeHell": "Correr rapidamente"
+	"#desc_RunLikeHell": "+30% velocidad de movimiento, -15% DEF, +75% CD de empuje"
+
+	"#name_Quickdraw": "Dibujo rapido"
+	"#desc_Quickdraw": "+50 % de velocidad de intercambio"
+
+	"#name_Broken": "Jefe asesino"
+	"#desc_Broken": "+20 % de daño contra jefes"
+
+	"#name_Pyromaniac": "Incendiario"
+	"#desc_Pyromaniac": "+150 % de daño de fuego"
+
+	"#name_BombSquad": "Escuadrón bomba"
+	"#desc_BombSquad": "+100 % de daño explosivo del equipo"
+
+	"#name_ConfidentKiller": "Asesino confiado"
+	"#desc_ConfidentKiller": "+2,5 % de daño por muerte por mutación"
+
+	"#name_CannedGoods": "Productos enlatados"
+	"#desc_CannedGoods": "+40 HP máximo, +25% CD de empuje"
+
+	"#name_SlowAndSteady": "Lento pero seguro"
+	"#desc_SlowAndSteady": "+50 HP máximo, -10 % de velocidad de movimiento"
+
+	"#name_ToughSkin": "Piel dura"
+	"#desc_ToughSkin": "+40% DEF frente a los comunes"
+
+	"#name_ScarTissue": "Cicatriz"
+	"#desc_ScarTissue": "+30% DEF, -50% Curación EFF"
+
+	"#name_ChemicalBarrier": "Barrera química"
+	"#desc_ChemicalBarrier": "+50 % DEF ácido"
+
+	"#name_FaceYourFears": "Enfrenta tus miedos"
+	"#desc_FaceYourFears": "+2 HP temporal al matar dentro de 2,5 m"
+
+	"#name_Numb": "Adormecer"
+	"#desc_Numb": "Temp HP da +10% DEF"
+
+	"#name_MeanDrunk": "Mal borracho"
+	"#desc_MeanDrunk": "+20 % de daño cuerpo a cuerpo, +20 HP máximo"
+
+	"#name_BattleLust": "Lujuria de batalla"
+	"#desc_BattleLust": "+1 HP al matar cuerpo a cuerpo"
+
+	"#name_Brawler": "Alborotador"
+	"#desc_Brawler": "+50 Daño de empujón"
+
+	"#name_Berserker": "Frenético"
+	"#desc_Berserker": "+25 % de daño cuerpo a cuerpo, +5 % de velocidad de movimiento"
+
+	"#name_HeavyHitter": "Peso pesado"
+	"#desc_HeavyHitter": "El cuerpo a cuerpo tropieza con las mutaciones"
+
+	"#name_Rampage": "Alboroto"
+	"#desc_Rampage": "Cargar hacia adelante, 100 DAÑO cuerpo a cuerpo, REEMPLAZA: Empujón (CD de los años 20)"
+
+	"#name_SwanSong": "Canción del cisne"
+	"#desc_SwanSong": "+100 % de probabilidad de CRIT mientras estás bajo el límite"
+
+	"#name_LastLegs": "Últimas piernas"
+	"#desc_LastLegs": "El equipo puede gatear mientras está incapacitado"
+
+	"#name_StrengthInNumbers": "Fuerza en números"
+	"#desc_StrengthInNumbers": "+2,5 % de daño de equipo por limpiador vivo"
+
+	"#name_BOOM": "¡AUGE!"
+	"#desc_BOOM": "Los disparos en la cabeza provocan una explosión"
+
+	"#name_FireProof": "A prueba de fuego"
+	"#desc_FireProof": "+50 % DEF de fuego"
+
+	"#name_Kneecapper": "Rodilla"
+	"#desc_Kneecapper": "Las mutaciones cuerpo a cuerpo se mueven un 30% más lento"
+
+	"#name_Brazen": "Descarado"
+	"#desc_Brazen": "+40 % de daño cuerpo a cuerpo, -25 % de velocidad de recarga"
+
+	"#name_MarkedForDeath": "Marcado para morir"
+	"#desc_MarkedForDeath": "+10 % de daño de equipo frente a mutaciones detectadas"
+
+	"#name_PackMule": "Mula de carga"
+	"#desc_PackMule": "+40 % de munición máxima del equipo"
+
+	"#name_Resupply": "Reabastecimiento"
+	"#desc_Resupply": "+10% de munición al matar por mutación"
+
+	"#name_Suppression": "Supresión"
+	"#desc_Suppression": "+100 % de poder de detención de balas"
+
+	"#name_EyeOfTheSwarm": "Ojo del enjambre"
+	"#desc_EyeOfTheSwarm": "+50 % de daño en el círculo del enjambre"
+
+	"#name_EMTBag": "Bolsa de EMT"
+	"#desc_EMTBag": "+50 % de curación EFF"
+
+	"#name_AntibioticOintment": "Ungüento antibiótico"
+	"#desc_AntibioticOintment": "+25 % de curación EFF, +15 HP temporal para el objetivo"
+
+	"#name_MedicalExpert": "Experto médico"
+	"#desc_MedicalExpert": "+30 % de EFF de curación del equipo, +10 % de velocidad de reanimación del equipo"
+
+	"#name_Cauterized": "Cauterizado"
+	"#desc_Cauterized": "Decaimiento de HP temporal del equipo +50 % más lento"
+
+	"#name_GroupTherapy": "Terapia de grupo"
+	"#desc_GroupTherapy": "El equipo comparte el 20% de los usos de los artículos de salud"
+
+	"#name_InspiringSacrifice": "Sacrificio inspirador"
+	"#desc_InspiringSacrifice": "+25 HP temporal del equipo después de la incap"
+
+	"#name_ReloadDrills": "Taladros de recarga"
+	"#desc_ReloadDrills": "+25% de velocidad de recarga"
+
+	"#name_MagCoupler": "Acoplador magnético"
+	"#desc_MagCoupler": "+75 % de velocidad de recarga, +100 % de empuje del CD"
+
+	"#name_LuckyShot": "Tiro de suerte"
+	"#desc_LuckyShot": "+7 % de probabilidad de CRIT del equipo (+400 % de daño)"
+
+	"#name_Selfless": "Abnegado"
+	"#desc_Selfless": "-15 HP máximo, +20 HP máximo del equipo"
+
+	"#name_Selfish": "Egoísta"
+	"#desc_Selfish": "+40 HP máximo, -5 HP máximo del equipo"
+
+	"#name_OutWithABang": "Fuera con una explosión"
+	"#desc_OutWithABang": "Lanza una bomba casera sobre incap"
+
+	"#name_HeightendSenses": "Sentidos elevados"
+	"#desc_HeightendSenses": "Ping mutaciones, peligros y elementos en 7,5 m"
+
+	"#name_HotShot": "Tiro caliente"
+	"#desc_HotShot": "Aplicar mejora de munición al matar por mutación"
+
+	"#name_Pinata": "Piñata"
+	"#desc_Pinata": "+15% de probabilidad de obtener un objeto al morir por mutación"
+
+	"#name_RefundPolicy": "Politica de reembolso"
+	"#desc_RefundPolicy": "+25% de probabilidad de no consumir artículos"
+
+	"#name_Stockpile": "Reservas"
+	"#desc_Stockpile": "DESC"
+
+	"#name_LifeInsurance": "Seguro de vida"
+	"#desc_LifeInsurance": "+1 vida de equipo"
+
+	"#name_WellRested": "Bien descansado"
+	"#desc_WellRested": "El equipo cura completamente cada capítulo"
+
+	"#name_BuckshotBruiser": "Matón de perdigones"
+	"#desc_BuckshotBruiser": "+0,25 HP temporal por perdigón de escopeta"
+
+	"#name_Arsonist": "Incendiario"
+	"#desc_Arsonist": "+0,1 HP temporal por daño de fuego"
+
+	"#name_NeedsOfTheMany": "Necesidades de muchos"
+	"#desc_NeedsOfTheMany": "+1 vida de equipo, -10 HP máximo"
+
+	"#name_Lumberjack": "Leñador"
+	"#desc_Lumberjack": "+200 % de daño del equipo Motosierra"
+
+	"#name_Cannoneer": "Servidor del cañón"
+	"#desc_Cannoneer": "+200 % de daño del lanzagranadas del equipo"
+
+	"#name_Gambler": "Jugador"
+	"#desc_Gambler": "¡Estadísticas aleatorias en cada mapa!"
+
+	"#name_DownInFront": "Abajo al frente"
+	"#desc_DownInFront": "No hay FF DMG cuando estás agachado"
+
+	"#name_Shredder": "Desfibradora"
+	"#desc_Shredder": "+1% de daño por disparo realizado hasta recargar"
+
+	"#name_CleanKill": "Muerte limpia"
+	"#desc_CleanKill": "Las muertes de precisión dan +5% de daño, se reinicia cuando se recibe daño"
+
+	"#name_ExperiencedEMT": "EMT experimentado"
+	"#desc_ExperiencedEMT": "Los limpiadores que curas obtienen +25 HP máximo"
+
+	"#name_WellFed": "Bien alimentado"
+	"#desc_WellFed": "+10 HP máximo del equipo"
+
+	"#name_MedicalProfessional": "Profesional médico"
+	"#desc_MedicalProfessional": "Los botiquines y desfibriladores curan +10 HP y 1 vida extra"
+
+	"#name_Screwdriver": "Destornillador"
+	"#desc_Screwdriver": "+25 % de velocidad de uso en equipo"
+
+	"#name_SmellingSalts": "Sales aromáticas"
+	"#desc_SmellingSalts": "+150% de velocidad de reanimación del equipo, reduce HP de reanimación"
+
+	"#name_Overwatch": "Supervisión"
+	"#desc_Overwatch": "Las muertes desde 10 m curan a los limpiadores dentro de 10 m del objetivo"
+
+	"#name_HyperFocused": "Hiperconcentrado"
+	"#desc_HyperFocused": "100% Daño en el punto débil, movimiento más lento al disparar"
+
+	"#name_TriggerHappy": "Gatillo fácil"
+	"#desc_TriggerHappy": "+15 % de velocidad de disparo"
+
+	//CORRUPTION CARDS
+	"#cor_commonAcid": "Bienes comunes ácidos"
+	"#cor_commonFire": "Fuego común"
+	"#cor_commonExplode": "Explosión de los bienes comunes"
+
+	"#cor_hazardBirds": "Las aves"
+	"#cor_hazardLockdown": "El cierre de emergencia"
+	"#cor_hazardSleepers": "Pijamada"
+
+	"#cor_environmentDark": "La oscuridad"
+	"#cor_environmentFog": "La niebla"
+	"#cor_environmentBiohazard": "Peligro biológico"
+	"#cor_environmentFrozen": "Afueras heladas"
+	"#cor_environmentSwarmStream": "Corriente de enjambre"
+
+	"#cor_hordeHunted": "Cazado"
+	"#cor_hordeOnslaught": "Embate"
+	"#cor_hordeTallboy": "Hordas de tallboys"
+	"#cor_hordeCrusher": "Hordas trituradoras"
+	"#cor_hordeBruiser": "Hordas de matones"
+	"#cor_hordeFer_Tallboy": "Hordas de tallboys"
+	"#cor_hordeFer_Crusher": "Hordas trituradoras"
+	"#cor_hordeFer_Bruiser": "Hordas de matones"
+	"#cor_hordeMon_Tallboy": "Hordas de tallboys"
+	"#cor_hordeMon_Crusher": "Hordas trituradoras"
+	"#cor_hordeMon_Bruiser": "Hordas de matones"
+	"#cor_hordeHocker": "Hordas de Hocker"
+	"#cor_hordeStinger": "Hordas de aguijones"
+	"#cor_hordeStalker": "Hordas de acosadores"
+	"#cor_hordeFer_Hocker": "Hordas de Hocker"
+	"#cor_hordeFer_Stinger": "Hordas de aguijones"
+	"#cor_hordeFer_Stalker": "Hordas de acosadores"
+	"#cor_hordeMon_Hocker": "Hordas de Hocker"
+	"#cor_hordeMon_Stinger": "Hordas de aguijones"
+	"#cor_hordeMon_Stalker": "Hordas de acosadores"
+	"#cor_hordeExploder": "Hordas explosivas"
+	"#cor_hordeRetch": "Hordas de arcadas"
+	"#cor_hordeReeker": "Hordas apestosas"
+	"#cor_hordeMon_Exploder": "Hordas explosivas"
+	"#cor_hordeMon_Retch": "Hordas de arcadas"
+	"#cor_hordeMon_Reeker": "Hordas apestosas"
+
+	"#cor_gameplayNoGrenades": "Bolsillos vacíos"
+	"#cor_gameplayNoOutlines": "Sin contornos"
+	"#cor_gameplayNoSupport": "Supervivencia del más apto"
+	"#cor_gameplayNoRespawn": "Haz o muere"
+
+	"#cor_playerLessAmmo": "Escasez de munición"
+	"#cor_playerFatigue": "Fatiga"
+
+	"#cor_uncommonClown": "Espectáculo de payasos"
+	"#cor_uncommonRiot": "Control de la multitud"
+	"#cor_uncommonMud": "Rastreadores de barro"
+	"#cor_uncommonCeda": "Operadores de la CEDA"
+	"#cor_uncommonConstruction": "Sitio de construcción"
+	"#cor_uncommonJimmy": "Jimmy Gibbs y primos"
+	"#cor_uncommonFallen": "Limpiadores caídos"
+
+	"#cor_commonShamble": "Comunes tambaleantes"
+	"#cor_commonRunning": "Ejecución de los bienes comunes"
+	"#cor_commonBlitzing": "Arrasando los bienes comunes"
+
+	"#cor_Tallboy": "Niños altos"
+	"#cor_Fer_Tallboy": "Tallboys feroces"
+	"#cor_Mon_Tallboy": "Taluboys monstruosos"
+
+	"#cor_Crusher": "Trituradoras"
+	"#cor_Fer_Crusher": "Trituradores feroces"
+	"#cor_Mon_Crusher": "Trituradores monstruosos"
+
+	"#cor_Bruiser": "Guerreros"
+	"#cor_Fer_Bruiser": "Matones feroces"
+	"#cor_Mon_Bruiser": "Matones monstruosos"
+
+	"#cor_Hocker": "Hockers"
+	"#cor_Fer_Hocker": "Hockers feroces"
+	"#cor_Mon_Hocker": "Hockers monstruosos"
+
+	"#cor_Stinger": "Aguijones"
+	"#cor_Fer_Stinger": "Aguijones feroces"
+	"#cor_Mon_Stinger": "Aguijones monstruosos"
+
+	"#cor_Stalker": "Acosadores"
+	"#cor_Fer_Stalker": "Acosadores feroces"
+	"#cor_Mon_Stalker": "Acosadores monstruosos"
+
+	"#cor_Retch": "Arcadas"
+	"#cor_Fer_Retch": "Arcadas feroces"
+	"#cor_Mon_Retch": "Arcadas monstruosas"
+
+	"#cor_Exploder": "Explosionadores"
+	"#cor_Fer_Exploder": "Explosivos feroces"
+	"#cor_Mon_Exploder": "Explosivos monstruosos"
+
+	"#cor_Reeker": "Apestosos"
+	"#cor_Fer_Reeker": "Apestosos feroces"
+	"#cor_Mon_Reeker": "Apestosos monstruosos"
+
+	"#cor_hazardSnitch": "Chismosos"
+	"#cor_bossBreaker": "Rompedor"
+	"#cor_bossBreakerFer": "Rompedor feroz"
+	"#cor_bossBreakerMon": "Rompedor monstruoso"
+	"#cor_bossOgre": "Ogro"
+	"#cor_bossOgreFer": "Ogro feroz"
+	"#cor_bossOgreMon": "Ogro monstruoso"
+
+	"#cor_missionSpeedrun": "Carrera de velocidad"
+	"#cor_missionAllAlive": "Nadie se queda atrás"
+	"#cor_missionGnomeAlone": "Gnomo solo"
+	"#cor_missionSilenceIsGolden": "El silencio es oro"
+	"#cor_missionSafetyFirst": "Seguridad primero"
 }
