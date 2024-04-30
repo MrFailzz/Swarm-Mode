@@ -30,7 +30,7 @@ function InterceptChat(message, speaker)
 	{
 		return;
 	}
-	
+
 	local command = textArgs[0].tolower().slice(1);
 	local commandPrefix = textArgs[0].slice(0, 1);
 
@@ -71,6 +71,16 @@ function InterceptChat(message, speaker)
 				}
 			break;
 
+			case "help":
+				ClientPrint(null, 3, "\x04" + "!ping" + "\x01" + " - Pings enemies and world");
+				ClientPrint(null, 3, "\x04" + "!cards" + "\x01" + " - Displays card HUD");
+				ClientPrint(null, 3, "\x04" + "!shuffle" + "\x01" + " - Shuffles current cards players can pick");
+				ClientPrint(null, 3, "\x04" + "!pick" + "\x01" + " - Pick a player card [1-8]");
+				ClientPrint(null, 3, "\x04" + "!botpick" + "\x01" + " - Pick a player card for bots [1-8]");
+				ClientPrint(null, 3, "\x04" + "!drop" + "\x01" + " - Drop current in hand item");
+				ClientPrint(null, 3, "\x04" + "!lives" + "\x01" + " - Shows all current players number of lives");
+			break;
+
 			case "autohidehud":
 				if (swarmSettingsTable["autoHideHUD"])
 				{
@@ -82,7 +92,7 @@ function InterceptChat(message, speaker)
 					swarmSettingsTable["autoHideHUD"] = true;
 					ClientPrint(null, 3, "\x04" + "Auto hide card HUD on");
 				}
-				
+
 				SaveSettingsTable();
 			break;
 
