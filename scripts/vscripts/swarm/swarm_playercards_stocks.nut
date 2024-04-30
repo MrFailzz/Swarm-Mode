@@ -26,7 +26,7 @@ reflexCards <-
 	"Screwdriver",
 	"SmellingSalts",
 	"HyperFocused",
-	//"TriggerHappy",
+	"TriggerHappy",
 ];
 
 brawnCards <-

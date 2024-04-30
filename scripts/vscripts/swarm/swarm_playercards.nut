@@ -752,7 +752,7 @@ function WeaponFirerate(params)
 			{
 				local weapon = player.GetActiveWeapon();
 				local weaponClass = weapon.GetClassname();
-				if (weaponClass == "weapon_molotov" || weaponClass == "weapon_pipebomb" || weaponClass == "weapon_vomitjar") {return}
+				if (weaponClass == "weapon_molotov" || weaponClass == "weapon_pipe_bomb" || weaponClass == "weapon_vomitjar") {return}
 				local weaponSequence = weapon.GetSequence();
 				local baseFirerate = weapon.GetSequenceDuration(weaponSequence);
 				local firerateModifier = GetFirerateModifier(player);
