@@ -60,37 +60,44 @@ function InterceptChat(message, speaker)
 							swarmSettingsTable["language"] = "Russian";
 							success = true;
 						break;
+
+						case "spanish":
+						case "espanol":
+						case "es":
+							swarmSettingsTable["language"] = "Spanish";
+							success = true;
+						break;
 					}
 
 					if (success)
 					{
 						UpdateLanguage();
 						SaveSettingsTable();
-						ClientPrint(null, 3, "\x04" + Loc("#lang_localization"));
+						ClientPrint(null, 3, Loc("#lang_localization"));
 					}
 				}
 			break;
 
 			case "help":
-				ClientPrint(null, 3, "\x04" + "!ping" + "\x01" + " - Pings enemies and world");
-				ClientPrint(null, 3, "\x04" + "!cards" + "\x01" + " - Displays card HUD");
-				ClientPrint(null, 3, "\x04" + "!shuffle" + "\x01" + " - Shuffles current cards players can pick");
-				ClientPrint(null, 3, "\x04" + "!pick" + "\x01" + " - Pick a player card [1-8]");
-				ClientPrint(null, 3, "\x04" + "!botpick" + "\x01" + " - Pick a player card for bots [1-8]");
-				ClientPrint(null, 3, "\x04" + "!drop" + "\x01" + " - Drop current in hand item");
-				ClientPrint(null, 3, "\x04" + "!lives" + "\x01" + " - Shows all current players number of lives");
+				ClientPrint(null, 3, Loc("#helpping_msg"));
+				ClientPrint(null, 3, Loc("#helpcards_msg"));
+				ClientPrint(null, 3, Loc("#helpshuffle_msg"));
+				ClientPrint(null, 3, Loc("#helppick_msg"));
+				ClientPrint(null, 3, Loc("#helpbotpick_msg"));
+				ClientPrint(null, 3, Loc("#helpdrop_msg"));
+				ClientPrint(null, 3, Loc("#helplives_msg"));
 			break;
 
 			case "autohidehud":
 				if (swarmSettingsTable["autoHideHUD"])
 				{
 					swarmSettingsTable["autoHideHUD"] = false;
-					ClientPrint(null, 3, "\x04" + "Auto hide card HUD off");
+					ClientPrint(null, 3, Loc("#autohudoff_msg"));
 				}
 				else if (!swarmSettingsTable["autoHideHUD"])
 				{
 					swarmSettingsTable["autoHideHUD"] = true;
-					ClientPrint(null, 3, "\x04" + "Auto hide card HUD on");
+					ClientPrint(null, 3, Loc("#autohudon_msg"));
 				}
 
 				SaveSettingsTable();
@@ -101,7 +108,7 @@ function InterceptChat(message, speaker)
 				TraceEye(speaker);
 			break;
 
-			case "дроп":
+			case "уронить":
 			case "drop":
 				local activeWeapon = speaker.GetActiveWeapon();
 
@@ -117,7 +124,7 @@ function InterceptChat(message, speaker)
 				ShowCardsCommand();
 			break;
 
-			case "нарвать":
+			case "выбирать":
 			case "pick":
 				if (textArgs.len() < 2)
 				{
@@ -131,7 +138,7 @@ function InterceptChat(message, speaker)
 				}
 			break;
 
-			case "ботнарвать":
+			case "ботпик":
 			case "botpick":
 				if (textArgs.len() < 2)
 				{
@@ -155,7 +162,7 @@ function InterceptChat(message, speaker)
 				}
 			break;
 
-			case "ливес":
+			case "жизни":
 			case "lives":
 				local MaxIncaps = DirectorOptions.SurvivorMaxIncapacitatedCount;
 				local player = null;
@@ -177,11 +184,12 @@ function InterceptChat(message, speaker)
 				}
 			break;
 
-			case "шаркать":
+			case "перетасовать":
 			case "shuffle":
 				ShuffleVote(speaker);
 			break;
 
+			case "хардкор":
 			case "hardcore":
 				if (GetListenServerHost() == speaker)
 				{

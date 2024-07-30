@@ -13,6 +13,9 @@ function Loc(msg)
 			case "Russian":
 				return Translation_RU(msg);
 			break;
+			case "Spanish":
+				return Translation_ES(msg);
+			break;
 		}
 	}
 	else
@@ -23,11 +26,11 @@ function Loc(msg)
 
 function Translation_EN(msg)
 {
-	if(msg in EN_TranslationTable) 
+	if(msg in EN_TranslationTable)
 	{
 		return EN_TranslationTable[msg];
-	} 
-	else 
+	}
+	else
 	{
 		return msg;
 	}
@@ -35,11 +38,25 @@ function Translation_EN(msg)
 
 function Translation_RU(msg)
 {
-	if(msg in RU_TranslationTable) 
+	if(msg in RU_TranslationTable)
 	{
+		printl(RU_TranslationTable[msg]);
 		return RU_TranslationTable[msg];
-	} 
-	else 
+	}
+	else
+	{
+		return msg;
+	}
+}
+
+function Translation_ES(msg)
+{
+	if(msg in ES_TranslationTable)
+	{
+		printl(ES_TranslationTable[msg]);
+		return ES_TranslationTable[msg];
+	}
+	else
 	{
 		return msg;
 	}
@@ -47,11 +64,23 @@ function Translation_RU(msg)
 
 EN_TranslationTable <- {
 	//CHAT MESSAGES
- 	"#lang_localization": "English localization"
+ 	"#lang_localization": "\x04" + "English localization"
 	"#giveup_msg": "\x01" + "Hold " + "\x03" + "[CROUCH]" + "\x01" + " to die..."
 	"#breakout_msg": "\x01" + "Hold " + "\x03" + "[SHOVE]" + "\x01" + " to break out!"
+
 	"#enablehardcore_msg": "\x04" + "Hardcore mode enabled"
 	"#disablehardcore_msg": "\x04" + "Hardcore mode disabled"
+
+	"#autohudoff_msg": "\x04" + "Auto hide card HUD off"
+	"#autohudon_msg": "\x04" + "Auto hide card HUD on"
+
+	"#helpping_msg": "\x04" + "!ping" + "\x01" + " - Pings enemies and world"
+	"#helpcards_msg": "\x04" + "!cards" + "\x01" + " - Displays card HUD"
+	"#helpshuffle_msg": "\x04" + "!shuffle" + "\x01" + " - Shuffles current cards players can pick"
+	"#helppick_msg": "\x04" + "!pick" + "\x01" + " - Pick a player card [1-8]"
+	"#helpbotpick_msg": "\x04" + "!botpick" + "\x01" + " - Pick a player card for bots [1-8]"
+	"#helpdrop_msg": "\x04" + "!drop" + "\x01" + " - Drop current in hand item"
+	"#helplives_msg": "!lives" + "\x01" + " - Shows all current players number of lives"
 
 	//BOT NAMES
 	"#bot_Nick": "NICK"
@@ -455,11 +484,23 @@ EN_TranslationTable <- {
 
 RU_TranslationTable <- {
 	//CHAT MESSAGES
- 	"#lang_localization": "Русская локализация"
+ 	"#lang_localization": "\x04" + "Русская локализация"
  	"#giveup_msg": "\x01" + "Удерживайте " + "\x03" + "[ПРИСЕДАНИЕ]" + "\x01" + " чтобы умереть..."
  	"#breakout_msg": "\x01" + "Удерживайте " + "\x03" + "[ОТТАЛКИВАНИЕ]" + "\x01" + " чтобы вырваться!"
+
 	"#enablehardcore_msg": "\x04" + "Хардкорный режим включен"
 	"#disablehardcore_msg": "\x04" + "Хардкорный режим отключен"
+
+	"#autohudoff_msg": "\x04" + "Auto hide card HUD off"
+	"#autohudon_msg": "\x04" + "Auto hide card HUD on"
+
+	"#helpping_msg": "\x04" + "!пинг" + "\x01" + " - Пингует врагов и мир"
+	"#helpcards_msg": "\x04" + "!карты" + "\x01" + " - Отображает HUD карты"
+	"#helpshuffle_msg": "\x04" + "!перетасовать" + "\x01" + "- Перетасовывает текущие карты, которые игроки могут выбрать"
+	"#helppick_msg": "\x04" + "!выбирать" + "\x01" + "- Выберите карту игрока [1-8]"
+	"#helpbotpick_msg": "\x04" + "!ботпик" + "\x01" + " - Выбрать карту игрока для ботов [1-8]"
+	"#helpdrop_msg": "\x04" + "!уронить" + "\x01" + "- Удалить текущий предмет в руке"
+	"#helplives_msg": "!жизни" + "\x01" + " - Показывает количество жизней всех текущих игроков"
 
  	//BOT NAMES
 	"#bot_Nick": "НИК"
@@ -864,13 +905,25 @@ RU_TranslationTable <- {
  	"#cor_missionSafetyFirst": "Safety First"
 }
 
-ESP_TranslationTable <- {
+ES_TranslationTable <- {
 	//CHAT MESSAGES
- 	"#lang_localization": "Spanish localization"
+ 	"#lang_localization": "\x04" + "localización española"
 	"#giveup_msg": "\x01" + "Mantener presionado " + "\x03" + "[AGACHARSE]" + "\x01" + " para morir..."
 	"#breakout_msg": "\x01" + "Mantén presionado " + "\x03" + "[EMPUJAR]" + "\x01" + " para escapar!"
+
 	"#enablehardcore_msg": "\x04" + "Modo intenso habilitado"
 	"#disablehardcore_msg": "\x04" + "Modo extremo deshabilitado"
+
+	"#autohudoff_msg": "\x04" + "Auto hide card HUD off"
+	"#autohudon_msg": "\x04" + "Auto hide card HUD on"
+
+	"#helpping_msg": "\x04" + "!ping" + "\x01" + " - Pings enemies and world"
+	"#helpcards_msg": "\x04" + "!cards" + "\x01" + " - Displays card HUD"
+	"#helpshuffle_msg": "\x04" + "!shuffle" + "\x01" + " - Shuffles current cards players can pick"
+	"#helppick_msg": "\x04" + "!pick" + "\x01" + " - Pick a player card [1-8]"
+	"#helpbotpick_msg": "\x04" + "!botpick" + "\x01" + " - Pick a player card for bots [1-8]"
+	"#helpdrop_msg": "\x04" + "!drop" + "\x01" + " - Drop current in hand item"
+	"#helplives_msg": "!lives" + "\x01" + " - Shows all current players number of lives"
 
 	//BOT NAMES
 	"#bot_Nick": "NICK"

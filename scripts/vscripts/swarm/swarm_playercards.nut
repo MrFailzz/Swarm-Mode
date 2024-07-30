@@ -99,7 +99,7 @@ function InitCardPicking(shuffle = false)
 		{
 			cardPicks = 1 + missionsCompleted["completed"];
 		}
-		
+
 		cardPickingAllowed = [cardPicks, cardPicks, cardPicks, cardPicks];
 		ClientPrint(null, 3, "\x01" + "Use " + "\x03" + "!pick [1-8]\x01" + " to choose a card (" + "\x03" + cardPicks + " remaining" + "\x01" + ")");
 	}
@@ -454,7 +454,7 @@ function CalcMaxHealth(heal = true)
 			local PlayerIncaps = NetProps.GetPropInt(player, "m_currentReviveCount");
 			local MaxIncaps = DirectorOptions.SurvivorMaxIncapacitatedCount;
 			local TraumaDamage = ((PlayerIncaps.tofloat() / MaxIncaps.tofloat()) * MaxTraumaDamage) * TraumaResistance;
-			
+
 			/*(if (!IsPlayerABot(player))
 			{
 				printl("incaps " + PlayerIncaps);
@@ -677,7 +677,7 @@ function ApplyAdrenalineRush()
 	//AdrenalineRush
 	local AdrenalineRush = 0;
 	local adrenalineDuration = Convars.GetFloat("adrenaline_duration");
-	
+
 	local player = null;
 	while ((player = Entities.FindByClassname(player, "player")) != null)
 	{
@@ -874,7 +874,7 @@ function SurvivorPickupItem(params)
 											NetProps.SetPropFloat(entityscript["weapon"], "m_flNextPrimaryAttack", entityscript["newNextAttack"]);
 											NetProps.SetPropFloat(entityscript["weapon"], "m_flPlaybackRate", entityscript["playbackRate"]);
 										}
-										
+
 										//printl("time " + Time() + " next " + NetProps.GetPropFloat(entityscript["weapon"], "m_flNextPrimaryAttack"));
 									}
 								}
@@ -1077,7 +1077,7 @@ function UpdateBreakoutTimer(player)
 
 					// Staggering survivor gets them out of grabs
 					player.Stagger(Vector(-1, -1, -1));
-					
+
 					BreakoutUsed[survivorID]++;
 					NetProps.SetPropInt(player, "m_iCurrentUseAction", 0);
 				}
