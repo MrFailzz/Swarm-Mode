@@ -58,6 +58,7 @@ function PlayerDeath(params)
 	if ("userid" in params)
 	{
 		local player = GetPlayerFromUserID(params["userid"]);
+		local attacker = GetPlayerFromUserID(params["attacker"]);
 
 		if (player.IsSurvivor())
 		{
@@ -72,7 +73,7 @@ function PlayerDeath(params)
 			{
 				TankDeath(player);
 			}
-			else if (params.victimname == "Boomer")
+			if (params.victimname == "Boomer")
 			{
 				BoomerDeath(player);
 			}
@@ -88,20 +89,24 @@ function PlayerDeath(params)
 				}
 
 				//ConfidentKiller
-				ConfidentKillerCounter++;
-				printl("Confident Killer: " + ConfidentKillerCounter);
+				if (attacker.IsSurvivor() && PlayerHasCard(attacker, "ConfidentKiller"))
+				{
+					ConfidentKillerCounter++;
+					printl("Confident Killer: " + ConfidentKillerCounter);
+				}
 
 				if ("attacker" in params)
 				{
 					local attacker = GetPlayerFromUserID(params["attacker"]);
 					local headshot = params.headshot;
+					local weapon = params.weapon;
 					if (attacker.IsValid())
 					{
 						if (attacker.IsPlayer())
 						{
 							if (attacker.IsSurvivor())
 							{
-								ApplyCardsOnMutationKill(attacker, player, headshot);
+								ApplyCardsOnMutationKill(attacker, player, headshot, weapon);
 								ApplyBiohazardMutationKill(attacker, player);
 							}
 						}
@@ -573,7 +578,7 @@ function PropModels()
 	while (ince_pack = Entities.FindByModel(ince_pack, "models/w_models/weapons/w_eq_incendiary_ammopack.mdl"))
 	{
 		PrecacheAndSetModel(ince_pack, "models/swarm/props/w_eq_incendiary_ammopack.mdl");
-	}	
+	}
 }
 
 function Update_GiveupTimer()

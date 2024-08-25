@@ -249,6 +249,7 @@ addictPlaySound <- false;
 ConfidentKillerCounter <- 0;
 ::MethHeadCounter <- [0, 0, 0, 0];
 ::CleanKillCounter <- [0, 0, 0, 0];
+::HeavyHitterMult <- [0, 0, 0, 0];
 ::BreakoutTimer <- [0, 0, 0, 0];
 ::BreakoutUsed <- [0, 0, 0, 0];
 BreakoutTimerDefault <- 2;
@@ -374,7 +375,7 @@ DirectorOptions <-
 	ActiveChallenge = 1
 
 	cm_AggressiveSpecials = 0
-	
+
 	cm_MaxSpecials = 6 //Game limits max players on server to 18 (Surviors + Infected)
 	cm_TankLimit = 2
 	cm_WitchLimit = -1
@@ -399,7 +400,7 @@ DirectorOptions <-
 
 	EscapeSpawnTanks = false
 	SurvivorMaxIncapacitatedCount = 2
-	
+
 	TempHealthDecayRate = BaseTempHealthDecayRate
 }
 

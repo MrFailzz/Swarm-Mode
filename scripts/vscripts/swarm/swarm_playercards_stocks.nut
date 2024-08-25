@@ -43,10 +43,10 @@ brawnCards <-
 	"FaceYourFears",
 	//"Numb",
 	"MeanDrunk",
-	//"BattleLust",
+	"BattleLust",
 	"Brawler",
 	"Berserker",
-	//"HeavyHitter",
+	"HeavyHitter",
 	//"Rampage",
 	"SwanSong",
 	"LastLegs",
@@ -82,6 +82,7 @@ disciplineCards <-
 	"CleanKill",
 	"ExperiencedEMT",
 	"MedicalProfessional",
+	"Vanguard",
 ];
 
 fortuneCards <-
@@ -93,7 +94,7 @@ fortuneCards <-
 	"HeightendSenses",
 	"HotShot",
 	"Pinata",
-	//"RefundPolicy",
+	"RefundPolicy",
 	//"Stockpile",
 	//"LifeInsurance",
 	//"Resupply",
@@ -319,9 +320,10 @@ function GetMeleeSpeedModifier(player)
 	local Slugger = PlayerHasCard(player, "Slugger");
 	local MethHead = PlayerHasCard(player, "MethHead");
 
-	local meleeModifier = (1 
+	local meleeModifier = (1
 						+ (0.30 * Slugger)
-						+ (0.025 * MethHead * MethHeadCounter[GetSurvivorID(player)]));
+						+ (0.025 * MethHead * MethHeadCounter[GetSurvivorID(player)])
+						+ (-0.5 * HeavyHitterMult[GetSurvivorID(player)]));
 
 	local Gambler = PlayerHasCard(player, "Gambler");
 	if (Gambler > 0)

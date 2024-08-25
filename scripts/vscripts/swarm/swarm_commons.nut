@@ -42,7 +42,7 @@ function ZombieDeath(params)
 			{
 				local player = EntIndexToHScript(params.attacker);
 
-				// FaceYourFears|
+				// FaceYourFears
 				local FaceYourFears = PlayerHasCard(player, "FaceYourFears");
 				if (GetVectorDistance(player.GetOrigin(), common.GetOrigin()) < 100)
 				{
@@ -83,6 +83,31 @@ function ZombieDeath(params)
 				if (bBiohazardEnabled)
 				{
 					Heal_TempHealth(player, 2);
+				}
+
+				if ("weapon_id" in params)
+				{
+					// BattleLust
+					local BattleLust = PlayerHasCard(player, "BattleLust");
+					if (params.weapon_id == 19)	// 19 is the ID for all melee weapons?
+					{
+						Heal_PermaHealth(player, 1 * BattleLust, player.GetHealthBuffer());
+					}
+					// Vanguard
+					local Vanguard = PlayerHasCard(player, "Vanguard");
+					if (Vanguard > 0)
+					{
+						local survivor = null;
+						local playerOrigin = player.GetOrigin();
+
+						while ((survivor = Entities.FindByClassnameWithin(survivor, "player", playerOrigin, 600)) != null)
+						{
+							if (survivor.IsSurvivor())
+							{
+								Heal_TempHealth(survivor, 1 * Vanguard);
+							}
+						}
+					}
 				}
 			}
 

@@ -217,7 +217,7 @@ EN_TranslationTable <- {
 	"#desc_Berserker": "+25% Melee DMG, +5% Move Speed"
 
 	"#name_HeavyHitter": "Heavy Hitter"
-	"#desc_HeavyHitter": "Melee stumbles Mutations"
+	"#desc_HeavyHitter": "Hold [RELOAD] to perform a heavy attack"
 
 	"#name_Rampage": "Rampage"
 	"#desc_Rampage": "Charge forwards, 100 Melee DMG, REPLACES: Shove (20s CD)"
@@ -304,7 +304,7 @@ EN_TranslationTable <- {
 	"#desc_Pinata": "+15% chance of item on Mutation death"
 
 	"#name_RefundPolicy": "Refund Policy"
-	"#desc_RefundPolicy": "+25% chance to not consume items"
+	"#desc_RefundPolicy": "+15% chance to not consume items"
 
 	"#name_Stockpile": "Stockpile"
 	"#desc_Stockpile": "DESC"
@@ -365,6 +365,9 @@ EN_TranslationTable <- {
 
 	"#name_TriggerHappy": "Trigger Happy"
 	"#desc_TriggerHappy": "+15% Firerate"
+
+	"#name_Vanguard": "Vanguard"
+	"#desc_Vanguard": "Melee kills heal cleaners within 10m by 1 Temp HP"
 
 	//CORRUPTION CARDS
 	"#cor_commonAcid": "Acid Commons"
@@ -628,7 +631,7 @@ RU_TranslationTable <- {
  	"#desc_MeanDrunk": "+20% Рукопашного УРН, +20 МАКС ХП"
 
  	"#name_BattleLust": "Battle Lust"
- 	"#desc_BattleLust": "+1 HP on Melee kill"
+ 	"#desc_BattleLust": "+1 HP за убийство в ближнем бою"
 
  	"#name_Brawler": "Дебошир"
  	"#desc_Brawler": "+50 УРН Отталкиванием"
@@ -637,7 +640,7 @@ RU_TranslationTable <- {
  	"#desc_Berserker": "+25% УРН Рукопашным боем, +5% Скорости Передвижения"
 
  	"#name_HeavyHitter": "Heavy Hitter"
- 	"#desc_HeavyHitter": "Melee stumbles Mutations"
+	"#desc_HeavyHitter": "Удерживайте [RELOAD], чтобы выполнить тяжелую атаку"
 
  	"#name_Rampage": "Rampage"
  	"#desc_Rampage": "Charge forwards, 100 Melee DMG, REPLACES: Shove (20s CD)"
@@ -724,7 +727,7 @@ RU_TranslationTable <- {
  	"#desc_Pinata": "+15% шанс получить предмет после убийства Мутанта"
 
  	"#name_RefundPolicy": "Refund Policy"
- 	"#desc_RefundPolicy": "+25% chance to not consume items"
+ 	"#desc_RefundPolicy": "+15% шанс не израсходовать предметы"
 
  	"#name_Stockpile": "Stockpile"
  	"#desc_Stockpile": "DESC"
@@ -785,6 +788,9 @@ RU_TranslationTable <- {
 
 	"#name_TriggerHappy": "Триггер Счастливый"
 	"#desc_TriggerHappy": "+15% Скорострельность"
+
+	"#name_Vanguard": "Vanguard"
+	"#desc_Vanguard": "Убийства в ближнем бою исцеляют чистильщиков в радиусе 10 м на 1 Temp HP"
 
 	//CORRUPTION CARDS
  	"#cor_commonAcid": "Кислотные заражённые"
@@ -1060,7 +1066,7 @@ ES_TranslationTable <- {
 	"#desc_Berserker": "+25 % de daño cuerpo a cuerpo, +5 % de velocidad de movimiento"
 
 	"#name_HeavyHitter": "Peso pesado"
-	"#desc_HeavyHitter": "El cuerpo a cuerpo tropieza con las mutaciones"
+	"#desc_HeavyHitter": "Mantén presionado [RELOAD] para realizar un ataque fuerte"
 
 	"#name_Rampage": "Alboroto"
 	"#desc_Rampage": "Cargar hacia adelante, 100 DAÑO cuerpo a cuerpo, REEMPLAZA: Empujón (CD de los años 20)"
@@ -1147,7 +1153,7 @@ ES_TranslationTable <- {
 	"#desc_Pinata": "+15% de probabilidad de obtener un objeto al morir por mutación"
 
 	"#name_RefundPolicy": "Politica de reembolso"
-	"#desc_RefundPolicy": "+25% de probabilidad de no consumir artículos"
+	"#desc_RefundPolicy": "+15% de probabilidad de no consumir artículos"
 
 	"#name_Stockpile": "Reservas"
 	"#desc_Stockpile": "DESC"
@@ -1208,6 +1214,9 @@ ES_TranslationTable <- {
 
 	"#name_TriggerHappy": "Gatillo fácil"
 	"#desc_TriggerHappy": "+15 % de velocidad de disparo"
+
+	"#name_Vanguard": "Vanguard"
+	"#desc_Vanguard": "Las muertes cuerpo a cuerpo curan a los limpiadores en un radio de 10 m con 1 Temp HP"
 
 	//CORRUPTION CARDS
 	"#cor_commonAcid": "Bienes comunes ácidos"

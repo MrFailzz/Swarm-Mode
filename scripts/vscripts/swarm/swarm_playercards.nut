@@ -711,6 +711,22 @@ function ApplyCauterized()
 	}
 }
 
+function WeaponDrop(params)
+{
+	local player = GetPlayerFromUserID(params["userid"]);
+	local item = params.item;
+
+	// RefundPolicy
+	local RefundPolicy = PlayerHasCard(player, "RefundPolicy");
+	if (RefundPolicy > 0)
+	{
+		if (RandomInt(1, 100) <= RefundPolicy * 15)
+		{
+			player.GiveItem(item)
+		}
+	}
+}
+
 function WeaponReload(params)
 {
 	local player = GetPlayerFromUserID(params["userid"]);
@@ -889,7 +905,7 @@ function SurvivorPickupItem(params)
 	}
 }
 
-function ApplyCardsOnMutationKill(attacker, victim, headshot)
+function ApplyCardsOnMutationKill(attacker, victim, headshot, weapon)
 {
 	//MethHead
 	local MethHead = PlayerHasCard(attacker, "MethHead");
@@ -944,6 +960,31 @@ function ApplyCardsOnMutationKill(attacker, victim, headshot)
 			}
 		}
 	}
+
+	if (weapon == "melee")
+	{
+		// BattleLust
+		local BattleLust = PlayerHasCard(attacker, "BattleLust");
+		if (BattleLust > 0)
+		{
+			Heal_PermaHealth(attacker, 1 * BattleLust, attacker.GetHealthBuffer());
+		}
+		// Vanguard
+		local Vanguard = PlayerHasCard(attacker, "Vanguard");
+		if (Vanguard > 0)
+		{
+			local survivor = null;
+			local attackerOrigin = attacker.GetOrigin();
+
+			while ((survivor = Entities.FindByClassnameWithin(survivor, "player", attackerOrigin, 600)) != null)
+			{
+				if (survivor.IsSurvivor())
+				{
+					Heal_TempHealth(survivor, 1 * Vanguard);
+				}
+			}
+		}
+	}
 }
 
 function ApplyCardsOnWeaponFire(params)
@@ -993,6 +1034,23 @@ function UpdateAddict(player)
 	else
 	{
 		StopSoundOn("Player.Heartbeat", player);
+	}
+}
+
+function UpdateHeavyHitter(player)
+{
+	local survivorID = GetSurvivorID(player);
+
+	if (PlayerHasCard(player, "HeavyHitter"))
+	{
+		if ((player.GetButtonMask() & IN_RELOAD))
+		{
+			HeavyHitterMult[survivorID] = 1;
+		}
+		else
+		{
+			HeavyHitterMult[survivorID] = 0;
+		}
 	}
 }
 
@@ -1193,6 +1251,7 @@ function Update_PlayerCards()
 					}
 				}
 
+				UpdateHeavyHitter(player);
 				UpdateShovePenalty(player);
 				UpdateBreakoutTimer(player);
 			}

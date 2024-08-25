@@ -54,6 +54,11 @@ function OnGameEvent_weapon_reload(params)
 	WeaponReload(params);
 }
 
+function OnGameEvent_weapon_drop(params)
+{
+	WeaponDrop(params);
+}
+
 //Specials
 function OnGameEvent_ability_use(params)
 {
@@ -73,7 +78,7 @@ function OnGameEvent_ability_use(params)
 		case "ability_vomit":
 			ExploderAbility(player);
 		break;
-		
+
 		case "ability_lunge":
 			SleeperLunge(player);
 		break;

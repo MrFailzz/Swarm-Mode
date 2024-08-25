@@ -115,6 +115,7 @@ function AllowTakeDamage(damageTable)
 	local Multitool = 0;
 	local HyperFocused = 0;
 	local HyperFocusedMultiplier = 0;
+	local HeavyHitter = 0;
 
 	//Modify Attacker damage
 	if (attacker.IsValid())
@@ -242,7 +243,7 @@ function AllowTakeDamage(damageTable)
 						MarkedForDeath = TeamHasCard("MarkedForDeath");
 					}
 				}
-				
+
 				//Pyromaniac
 				//Arsonist
 				if ((damageType & DMG_BURN) == DMG_BURN)
@@ -294,6 +295,11 @@ function AllowTakeDamage(damageTable)
 							Berserker = PlayerHasCard(attacker, "Berserker");
 							Zoey = PlayerHasCard(attacker, "Zoey");
 							MeanDrunk = PlayerHasCard(attacker, "MeanDrunk");
+							HeavyHitter = PlayerHasCard(attacker, "HeavyHitter");
+							if (HeavyHitter > 0 && (attacker.GetButtonMask() & IN_RELOAD))
+							{
+								victim.Stagger(Vector(-1, -1, -1));
+							}
 						}
 					}
 				}
@@ -347,6 +353,7 @@ function AllowTakeDamage(damageTable)
 								 + (0.025 * CleanKill * CleanKillCounter[GetSurvivorID(attacker)])
 								 + (0.1 * MarkedForDeath)
 								 + (1 * HyperFocused)
+								 + (0.25 * HeavyHitter)
 								 + (HeadMultiplier));
 				if (GamblerAttacker > 0)
 				{
