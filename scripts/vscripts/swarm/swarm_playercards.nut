@@ -720,9 +720,12 @@ function WeaponDrop(params)
 	local RefundPolicy = PlayerHasCard(player, "RefundPolicy");
 	if (RefundPolicy > 0)
 	{
-		if (RandomInt(1, 100) <= RefundPolicy * 15)
+		if (item == "pipe_bomb" || item == "molotov" || item == "vomitjar")
 		{
-			player.GiveItem(item)
+			if (RandomInt(1, 100) <= RefundPolicy * 15)
+			{
+				player.GiveItem(item)
+			}
 		}
 	}
 }
