@@ -714,17 +714,24 @@ function ApplyCauterized()
 function WeaponDrop(params)
 {
 	local player = GetPlayerFromUserID(params["userid"]);
-	local item = params.item;
 
-	// RefundPolicy
-	local RefundPolicy = PlayerHasCard(player, "RefundPolicy");
-	if (RefundPolicy > 0)
+	if (player != null)
 	{
-		if (item == "pipe_bomb" || item == "molotov" || item == "vomitjar")
+		if (player.IsPlayer())
 		{
-			if (RandomInt(1, 100) <= RefundPolicy * 15)
+			if (player.IsSurvivor())
 			{
-				player.GiveItem(item)
+				local item = params.item;
+
+				// RefundPolicy
+				local RefundPolicy = PlayerHasCard(player, "RefundPolicy");
+				if (RefundPolicy > 0)
+				{
+					if (RandomInt(1, 100) <= RefundPolicy * 15)
+					{
+						player.GiveItem(item)
+					}
+				}
 			}
 		}
 	}
