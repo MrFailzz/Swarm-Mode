@@ -87,24 +87,28 @@ function ZombieDeath(params)
 
 				if ("weapon_id" in params)
 				{
-					// BattleLust
-					local BattleLust = PlayerHasCard(player, "BattleLust");
 					if (params.weapon_id == 19)	// 19 is the ID for all melee weapons?
 					{
-						Heal_PermaHealth(player, 1 * BattleLust, player.GetHealthBuffer());
-					}
-					// Vanguard
-					local Vanguard = PlayerHasCard(player, "Vanguard");
-					if (Vanguard > 0)
-					{
-						local survivor = null;
-						local playerOrigin = player.GetOrigin();
-
-						while ((survivor = Entities.FindByClassnameWithin(survivor, "player", playerOrigin, 600)) != null)
+						// BattleLust
+						local BattleLust = PlayerHasCard(player, "BattleLust");
+						if (BattleLust > 0)
 						{
-							if (survivor.IsSurvivor())
+							Heal_PermaHealth(player, 1 * BattleLust, player.GetHealthBuffer());
+						}
+
+						// Vanguard
+						local Vanguard = PlayerHasCard(player, "Vanguard");
+						if (Vanguard > 0)
+						{
+							local survivor = null;
+							local playerOrigin = player.GetOrigin();
+
+							while ((survivor = Entities.FindByClassnameWithin(survivor, "player", playerOrigin, 600)) != null)
 							{
-								Heal_TempHealth(survivor, 1 * Vanguard);
+								if (survivor.IsSurvivor())
+								{
+									Heal_TempHealth(survivor, 1 * Vanguard);
+								}
 							}
 						}
 					}

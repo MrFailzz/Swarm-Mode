@@ -969,6 +969,7 @@ function ApplyCardsOnMutationKill(attacker, victim, headshot, weapon)
 		{
 			Heal_PermaHealth(attacker, 1 * BattleLust, attacker.GetHealthBuffer());
 		}
+
 		// Vanguard
 		local Vanguard = PlayerHasCard(attacker, "Vanguard");
 		if (Vanguard > 0)
