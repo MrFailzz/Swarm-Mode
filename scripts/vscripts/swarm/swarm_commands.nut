@@ -145,17 +145,64 @@ function InterceptChat(message, speaker)
 					return;
 				}
 
-				local cardPick = textArgs[1].tointeger();
-				if (cardPick <= 8 && cardPick >= 1 && speaker.IsSurvivor())
+				if (textArgs[1].len() < 2)
 				{
-					local player = null;
-					while ((player = Entities.FindByClassname(player, "player")) != null)
+					local cardPick = textArgs[1].tointeger();
+					if (cardPick <= 8 && cardPick >= 1 && speaker.IsSurvivor())
 					{
-						if (player.IsSurvivor())
+						local player = null;
+						while ((player = Entities.FindByClassname(player, "player")) != null)
 						{
-							if (IsPlayerABot(player))
+							if (player.IsSurvivor())
 							{
-								PickCard(player, cardPick);
+								if (IsPlayerABot(player))
+								{
+									PickCard(player, cardPick);
+								}
+							}
+						}
+					}
+				}
+				else
+				{
+					local cardPick = textArgs[2].tointeger();
+					if (cardPick <= 8 && cardPick >= 1 && speaker.IsSurvivor())
+					{
+						local player = null;
+						while ((player = Entities.FindByClassname(player, "player")) != null)
+						{
+							if (player.IsSurvivor())
+							{
+								if (IsPlayerABot(player))
+								{
+									switch(textArgs[1].tolower())
+									{
+										case "nick":
+											if (GetSurvivorID(player) == 0) {PickCard(player, cardPick)}
+										break;
+										case "rochelle":
+											if (GetSurvivorID(player) == 1) {PickCard(player, cardPick)}
+										break;
+										case "coach":
+											if (GetSurvivorID(player) == 2) {PickCard(player, cardPick)}
+										break;
+										case "ellis":
+											if (GetSurvivorID(player) == 3) {PickCard(player, cardPick)}
+										break;
+										case "bill":
+											if (GetSurvivorID(player) == 0) {PickCard(player, cardPick)}
+										break;
+										case "zoey":
+											if (GetSurvivorID(player) == 1) {PickCard(player, cardPick)}
+										break;
+										case "louis":
+											if (GetSurvivorID(player) == 2) {PickCard(player, cardPick)}
+										break;
+										case "francis":
+											if (GetSurvivorID(player) == 3) {PickCard(player, cardPick)}
+										break;
+									}
+								}
 							}
 						}
 					}
