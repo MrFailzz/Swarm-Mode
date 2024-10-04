@@ -36,48 +36,41 @@ function InterceptChat(message, speaker)
 
 	if (commandPrefix == "!" || commandPrefix == "/")
 	{
+		if (GetListenServerHost() == speaker || swarmSettingsTable["debug_mode"] > 0)
+		{
+			local success = false;
+			switch(command)
+			{
+				case "english":
+				case "en":
+					swarmSettingsTable["language"] = "English";
+					success = true;
+				break;
+
+				case "русский":
+				case "russian":
+				case "ru":
+					swarmSettingsTable["language"] = "Russian";
+					success = true;
+				break;
+
+				case "spanish":
+				case "espanol":
+				case "es":
+					swarmSettingsTable["language"] = "Spanish";
+					success = true;
+				break;
+			}
+
+			if (success)
+			{
+				UpdateLanguage();
+				SaveSettingsTable();
+				ClientPrint(null, 3, Loc("#lang_localization"));
+			}
+		}
 		switch(command)
 		{
-			case "language":
-				if (textArgs.len() < 2)
-				{
-					return;
-				}
-				if (GetListenServerHost() == speaker || swarmSettingsTable["debug_mode"] > 0)
-				{
-					local success = false;
-					switch(textArgs[1].tolower())
-					{
-						case "english":
-						case "en":
-							swarmSettingsTable["language"] = "English";
-							success = true;
-						break;
-
-						case "русский":
-						case "russian":
-						case "ru":
-							swarmSettingsTable["language"] = "Russian";
-							success = true;
-						break;
-
-						case "spanish":
-						case "espanol":
-						case "es":
-							swarmSettingsTable["language"] = "Spanish";
-							success = true;
-						break;
-					}
-
-					if (success)
-					{
-						UpdateLanguage();
-						SaveSettingsTable();
-						ClientPrint(null, 3, Loc("#lang_localization"));
-					}
-				}
-			break;
-
 			case "help":
 				ClientPrint(null, 3, Loc("#helpping_msg"));
 				ClientPrint(null, 3, Loc("#helpcards_msg"));
