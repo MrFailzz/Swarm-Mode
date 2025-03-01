@@ -248,6 +248,14 @@ function InterceptChat(message, speaker)
 				}
 			break;
 
+			case "togglehud":
+				if (GetListenServerHost() == speaker)
+				{
+					CardHudToggle();
+				}
+			break;
+
+
 			case "debug":
 				if (GetListenServerHost() == speaker)
 				{
