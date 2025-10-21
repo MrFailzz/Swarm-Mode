@@ -82,14 +82,14 @@ function InterceptChat(message, speaker)
 			break;
 
 			case "autohidehud":
-				if (swarmSettingsTable["autoHideHUD"])
+				if (swarmSettingsTable["bAutoHideHUD"])
 				{
-					swarmSettingsTable["autoHideHUD"] = false;
+					swarmSettingsTable["bAutoHideHUD"] = false;
 					ClientPrint(null, 3, Loc("#autohudoff_msg"));
 				}
-				else if (!swarmSettingsTable["autoHideHUD"])
+				else if (!swarmSettingsTable["bAutoHideHUD"])
 				{
-					swarmSettingsTable["autoHideHUD"] = true;
+					swarmSettingsTable["bAutoHideHUD"] = true;
 					ClientPrint(null, 3, Loc("#autohudon_msg"));
 				}
 
@@ -233,9 +233,9 @@ function InterceptChat(message, speaker)
 			case "hardcore":
 				if (GetListenServerHost() == speaker)
 				{
-					swarmSettingsTable["hardcore"] = !swarmSettingsTable["hardcore"];
+					swarmSettingsTable["bHardcore"] = !swarmSettingsTable["bHardcore"];
 
-					if (swarmSettingsTable["hardcore"])
+					if (swarmSettingsTable["bHardcore"])
 					{
 						ClientPrint(null, 3, Loc("#enablehardcore_msg"));
 					}
@@ -255,6 +255,23 @@ function InterceptChat(message, speaker)
 				}
 			break;
 
+			case "togglecheckpointwarp":
+				if (GetListenServerHost() == speaker)
+				{
+					swarmSettingsTable["bCheckpointWarp"] = !swarmSettingsTable["bCheckpointWarp"];
+
+					if (swarmSettingsTable["bCheckpointWarp"])
+					{
+						ClientPrint(null, 3, Loc("#enablecheckpointwarp_msg"));
+					}
+					else
+					{
+						ClientPrint(null, 3, Loc("#disablecheckpointwarp_msg"));
+					}
+
+					SaveSettingsTable();
+				}
+			break;
 
 			case "debug":
 				if (GetListenServerHost() == speaker)
@@ -424,7 +441,7 @@ function SaveSettingsTable()
 function LoadSettingsTable()
 {
 	local language = swarmSettingsTable["language"];
-	local hardcore = swarmSettingsTable["hardcore"];
+	local bHardcore = swarmSettingsTable["bHardcore"];
 	//local debug_mode = swarmSettingsTable["debug_mode"];
 
 	RestoreTable("swarmSettingsTable", swarmSettingsTable);
@@ -455,7 +472,7 @@ function UpdateLanguage()
 function UpdateHardcore()
 {
 	//Ends the game after the third wipe
-	if (swarmSettingsTable["hardcore"])
+	if (swarmSettingsTable["bHardcore"])
 	{
 		if (Director.GetMissionWipes() > 1)
 		{

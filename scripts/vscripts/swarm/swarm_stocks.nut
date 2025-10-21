@@ -186,7 +186,7 @@ function PlayerLeftSafeArea(params)
 
 		if (player.IsSurvivor())
 		{
-			if (swarmMode == "hardcore")
+			if (swarmMode == "bHardcore")
 			{
 				// Print the number of continues left.
 				ClientPrint(null, 3, "\x04" + "Continues: " + "\x01"+ (3 - Director.GetMissionWipes()));
@@ -364,9 +364,14 @@ function WeaponFireM60(params)
 function Update()
 {
 	Update_GiveupTimer();
-	Update_CheckpointWarp();
+
 	Update_PlayerCards();
 	RetchVomit();
+
+	if (swarmSettingsTable["bCheckpointWarp"])
+	{
+		Update_CheckpointWarp();
+	}
 
 	if (bSwarmCircleActive)
 	{

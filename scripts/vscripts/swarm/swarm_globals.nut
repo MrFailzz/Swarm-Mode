@@ -7,8 +7,9 @@
 swarmSettingsTable <-
 {
 	language = "English",
-	autoHideHUD = true,
-	hardcore = false,
+	bAutoHideHUD = true,
+	bCheckpointWarp = true,
+	bHardcore = false,
 	debug_mode = 0,
 
 	//Forced Corruption Cards

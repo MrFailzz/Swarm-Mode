@@ -68,6 +68,9 @@ EN_TranslationTable <- {
 	"#giveup_msg": "\x01" + "Hold " + "\x03" + "[CROUCH]" + "\x01" + " to die..."
 	"#breakout_msg": "\x01" + "Hold " + "\x03" + "[SHOVE]" + "\x01" + " to break out!"
 
+	"#enablecheckpointwarp_msg": "\x04" + "Saferoom bot warping enabled"
+	"#disablecheckpointwarp_msg": "\x04" + "Saferoom bot warping disabled"
+
 	"#enablehardcore_msg": "\x04" + "Hardcore mode enabled"
 	"#disablehardcore_msg": "\x04" + "Hardcore mode disabled"
 
@@ -80,7 +83,7 @@ EN_TranslationTable <- {
 	"#helppick_msg": "\x04" + "!pick" + "\x01" + " - Pick a player card [1-8]"
 	"#helpbotpick_msg": "\x04" + "!botpick" + "\x01" + " - Pick a player card for bots [1-8]"
 	"#helpdrop_msg": "\x04" + "!drop" + "\x01" + " - Drop current in hand item"
-	"#helplives_msg": "!lives" + "\x01" + " - Shows all current players number of lives"
+	"#helplives_msg": "\x04" + "!lives" + "\x01" + " - Shows all current players number of lives"
 
 	//BOT NAMES
 	"#bot_Nick": "NICK"
@@ -491,6 +494,9 @@ RU_TranslationTable <- {
  	"#giveup_msg": "\x01" + "Удерживайте " + "\x03" + "[ПРИСЕДАНИЕ]" + "\x01" + " чтобы умереть..."
  	"#breakout_msg": "\x01" + "Удерживайте " + "\x03" + "[ОТТАЛКИВАНИЕ]" + "\x01" + " чтобы вырваться!"
 
+	"#enablecheckpointwarp_msg": "\x04" + "Saferoom bot warping enabled"
+	"#disablecheckpointwarp_msg": "\x04" + "Saferoom bot warping disabled"
+
 	"#enablehardcore_msg": "\x04" + "Хардкорный режим включен"
 	"#disablehardcore_msg": "\x04" + "Хардкорный режим отключен"
 
@@ -503,7 +509,7 @@ RU_TranslationTable <- {
 	"#helppick_msg": "\x04" + "!выбирать" + "\x01" + "- Выберите карту игрока [1-8]"
 	"#helpbotpick_msg": "\x04" + "!ботпик" + "\x01" + " - Выбрать карту игрока для ботов [1-8]"
 	"#helpdrop_msg": "\x04" + "!уронить" + "\x01" + "- Удалить текущий предмет в руке"
-	"#helplives_msg": "!жизни" + "\x01" + " - Показывает количество жизней всех текущих игроков"
+	"#helplives_msg": "\x04" + "!жизни" + "\x01" + " - Показывает количество жизней всех текущих игроков"
 
  	//BOT NAMES
 	"#bot_Nick": "НИК"
@@ -917,6 +923,9 @@ ES_TranslationTable <- {
 	"#giveup_msg": "\x01" + "Mantener presionado " + "\x03" + "[AGACHARSE]" + "\x01" + " para morir..."
 	"#breakout_msg": "\x01" + "Mantén presionado " + "\x03" + "[EMPUJAR]" + "\x01" + " para escapar!"
 
+	"#enablecheckpointwarp_msg": "\x04" + "Saferoom bot warping enabled"
+	"#disablecheckpointwarp_msg": "\x04" + "Saferoom bot warping disabled"
+
 	"#enablehardcore_msg": "\x04" + "Modo intenso habilitado"
 	"#disablehardcore_msg": "\x04" + "Modo extremo deshabilitado"
 
@@ -929,7 +938,7 @@ ES_TranslationTable <- {
 	"#helppick_msg": "\x04" + "!pick" + "\x01" + " - Pick a player card [1-8]"
 	"#helpbotpick_msg": "\x04" + "!botpick" + "\x01" + " - Pick a player card for bots [1-8]"
 	"#helpdrop_msg": "\x04" + "!drop" + "\x01" + " - Drop current in hand item"
-	"#helplives_msg": "!lives" + "\x01" + " - Shows all current players number of lives"
+	"#helplives_msg": "\x04" + "!lives" + "\x01" + " - Shows all current players number of lives"
 
 	//BOT NAMES
 	"#bot_Nick": "NICK"

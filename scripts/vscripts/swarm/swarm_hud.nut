@@ -17,7 +17,7 @@ Free HUD Panels:
 
 swarmHUD <-
 {
-	Fields = 
+	Fields =
 	{
 		corruptionCards = {name = "corruptionCards", slot = HUD_SCORE_4, dataval = "", flags = HUD_FLAG_ALIGN_LEFT},
 		corruptionCardsInfected = {name = "corruptionCardsInfected", slot = HUD_SCORE_1, dataval = "", flags = HUD_FLAG_ALIGN_LEFT},
@@ -201,14 +201,14 @@ function UpdateCorruptionCardHUD()
 ///////////////////////////////////////////////
 function CardHudUpdate()
 {
-	if (swarmSettingsTable["autoHideHUD"])
+	if (swarmSettingsTable["bAutoHideHUD"])
 	{
 		if (cardHudTimeout == 0)
 		{
 			CardHudToggle();
 		}
 	}
-	else if (!swarmSettingsTable["autoHideHUD"])
+	else if (!swarmSettingsTable["bAutoHideHUD"])
 	{
 		if (cardPickingAllowed[0] == 0 && cardPickingAllowed[1] == 0 && cardPickingAllowed[2] == 0 && cardPickingAllowed[3] == 0)
 		{
@@ -394,7 +394,7 @@ function CalculateTankHudString()
 
 		local healthCurrent = [tankHudTanks[0] == null ? 8000 : tankHudTanks[0].GetHealth(), tankHudTanks[1] == null ? 8000 : tankHudTanks[1].GetHealth()];
 		local healthMax = [tankHudTanks[0] == null ? 8000 : tankHudTanks[0].GetMaxHealth(), tankHudTanks[1] == null ? 8000 : tankHudTanks[1].GetMaxHealth()];
-		
+
 		local healthPerBlock = [healthMax[0] / maxBlocks, healthMax[1] / maxBlocks];
 		local fullBlocks = [ceil(healthCurrent[0] / healthPerBlock[0]), ceil(healthCurrent[1] / healthPerBlock[1])];
 		local emptyBlocks = [maxBlocks - fullBlocks[0], maxBlocks - fullBlocks[1]];
@@ -427,7 +427,7 @@ function CalculateTankHudString()
 			}
 			finalString = hudString[1];
 		}
-		
+
 		if (tankHudTanks[0] != null && tankHudTanks[1] != null)
 		{
 			finalString = hudString[0] + "\n" + hudString[1];
