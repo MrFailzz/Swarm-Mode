@@ -706,3 +706,53 @@ function Reset_GiveupTimer()
 		}
 	}
 }
+
+::ammoNum <- 0;
+
+function AmmoDrop(player)
+{
+	// Get current weapon and amount of ammo per clip
+	local weaponEnt = player.GetActiveWeapon();
+	ammoNum = weaponEnt.Clip1();
+
+	// Force player to reload to "lose ammo"
+	weaponEnt.SetClip1(0);
+
+	// Create ammo pile
+	local ammoX = player.GetOrigin().x;
+	local ammoY = player.GetOrigin().y;
+	local ammoZ = player.GetOrigin().z;
+	local ammoAngleX = player.GetAngles().x;
+	local ammoAngleY = player.GetAngles().y;
+	local ammoName = "ammoDrop";
+	local ammoPile = SpawnEntityFromTable("prop_dynamic",
+	{
+    	targetname = ammoName + "_prop",
+    	origin = Vector(ammoX, ammoY, ammoZ),
+    	angles = Vector(ammoAngleX, ammoAngleY, 0)
+    	model = "models/props/terror/ammo_stack.mdl",
+    	solid = 0,
+    	disableshadows = 1,
+	});
+
+	local ammoButton = SpawnEntityFromTable("func_button",
+	{
+		targetname = ammoName + "_button",
+    	origin = Vector(ammoX, ammoY, ammoZ),
+		spawnflags = 1024,
+	});
+
+	EntFire(ammoName + "_button", "AddOutput", "OnPressed worldspawn:RunScriptCode:PickupAmmo(activator):0:-1");
+}
+
+
+function PickupAmmo(player)
+{
+	local ammoName = "ammoDrop";
+
+	player.GiveAmmo(ammoNum);
+	EntFire(ammoName + "_button", "Kill");
+	EntFire(ammoName + "_prop", "Kill");
+}
+
+::PickupAmmo <- PickupAmmo;

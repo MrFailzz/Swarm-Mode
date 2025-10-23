@@ -112,6 +112,10 @@ function InterceptChat(message, speaker)
 				}
 			break;
 
+			case "dropammo":
+				AmmoDrop(speaker);
+			break;
+
 			case "карты":
 			case "cards":
 				ShowCardsCommand();
