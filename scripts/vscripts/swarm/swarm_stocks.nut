@@ -690,3 +690,19 @@ function Update_CheckpointWarp()
 		}
 	}
 }
+
+function Reset_GiveupTimer()
+{
+	local player = null;
+	while ((player = Entities.FindByClassname(player, "player")) != null)
+	{
+		if (player.IsValid())
+		{
+			if (player.IsSurvivor())
+			{
+				NetProps.SetPropFloat(player, "m_flProgressBarDuration", 0);
+				NetProps.SetPropInt(player, "m_iCurrentUseAction", 0);
+			}
+		}
+	}
+}

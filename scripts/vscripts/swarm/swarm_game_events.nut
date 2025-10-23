@@ -150,6 +150,7 @@ function OnGameEvent_round_start(params)
 	SetSpeedrunTimer();
 	InitCorruptionCards();
 	SetDifficulty();
+	Reset_GiveupTimer();
 }
 
 function OnGameEvent_player_activate(params)

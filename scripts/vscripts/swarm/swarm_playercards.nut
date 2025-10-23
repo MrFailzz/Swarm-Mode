@@ -719,7 +719,7 @@ function WeaponDrop(params)
 	{
 		if (player.IsPlayer())
 		{
-			if (player.IsSurvivor())
+			if (player.IsSurvivor() && !player.IsDead() && !player.IsDying())
 			{
 				local item = params.item;
 
