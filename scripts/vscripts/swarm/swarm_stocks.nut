@@ -715,9 +715,18 @@ function AmmoDrop(player)
 	// Check current weapon and return if invalid type
 	local weaponEnt = player.GetActiveWeapon();
 	local weaponClass = weaponEnt.GetClassname();
-	if (weaponClass == "weapon_pistol" || weaponClass == "weapon_pistol_magnum" || weaponClass == "weapon_melee") {return}
+	local invalidWepTable =
+	[
+		"weapon_pistol",
+		"weapon_pistol_magnum",
+		"weapon_melee",
+		"weapon_molotov",
+		"weapon_pipe_bomb",
+		"weapon_vomitjar",
+	]
+	if (invalidWepTable.find(weaponClass) != null) {return}
 
-	// Check amount of ammo in clip
+	// Check amount of ammo in clip and save it
 	local weaponClipNum = weaponEnt.Clip1();
 	if (weaponClipNum < 1) {return}
 	ammoNum.append(weaponClipNum);
@@ -730,23 +739,31 @@ function AmmoDrop(player)
 	local ammoAngleX = player.GetAngles().x;
 	local ammoAngleY = player.GetAngles().y;
 	local ammoName = "ammoDrop_" + ammoSpawnID;
+
+	// Change ammo pile model based on how much ammo dropped
+	local ammoModel = "models/props/terror/ammo_stack.mdl";
+	if (weaponClipNum < 20) {ammoModel = "models/props_unique/spawn_apartment/coffeeammo.mdl"}
+
 	local ammoPile = SpawnEntityFromTable("prop_dynamic",
 	{
-    	targetname = ammoName,
-    	origin = ammoOrigin,
-    	angles = Vector(ammoAngleX, ammoAngleY, 0)
-    	model = "models/props/terror/ammo_stack.mdl",
-    	solid = 0,
-    	disableshadows = 1,
+		targetname = ammoName,
+		origin = ammoOrigin,
+		angles = Vector(ammoAngleX, ammoAngleY, 0),
+		model = ammoModel,
+		solid = 0,
+		disableshadows = 1,
+		glowstate = 2,
+		glowrange = 64,
 	});
-
 	local ammoButton = SpawnEntityFromTable("func_button",
 	{
 		targetname = ammoName + "_button",
-    	origin = ammoOrigin,
-		spawnflags = 1024,
-		glow = ammoName,
+		origin = ammoOrigin,
+		spawnflags = 1025,
 	});
+
+	DoEntFire("!self", "AddOutput", "mins -16 -16 -4", 0, null, ammoButton);
+	DoEntFire("!self", "AddOutput", "maxs 16 16 4", 0, null, ammoButton);
 
 	// Give ammo when player activates button, and delete entity afterwards
 	EntFire(ammoName + "_button", "AddOutput", "OnPressed worldspawn:RunScriptCode:activator.GiveAmmo("+ ammoNum[ammoSpawnID] +"):0:-1");
@@ -754,7 +771,7 @@ function AmmoDrop(player)
 	EntFire(ammoName + "_button", "AddOutput", "OnPressed "+ ammoName +":Kill::0:-1");
 
 	// Shrink ammo pile size if ammo amount is smaller
-	if (weaponClipNum < 20) {ammoPile.SetModelScale(0.5, 0)}
+	//if (weaponClipNum < 20) {ammoPile.SetModelScale(0.5, 0)}
 
 	ammoSpawnID++;
 }
